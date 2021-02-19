@@ -16,3 +16,4 @@ If your issue is directly related to one of the client libraries, please ensure 
 - [Python](https://github.com/Midnighter/structurizr-python/issues)
 - [Go](https://github.com/goadesign/model/issues)
 - [Arch as code](https://github.com/trilogy-group/arch-as-code/issues)
+- [Clojure](https://github.com/aldosolorzano/structurizr-clj/issues)
