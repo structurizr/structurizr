@@ -1,0 +1,604 @@
+body {
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    padding-left: 0;
+    padding-right: 0;
+    line-height: 1.5;
+}
+.centered {
+    text-align: center;
+}
+.hidden {
+    display: none;
+}
+#footer {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 0;
+    padding-right: 0;
+    font-size: 13px;
+}
+.container {
+    font-size: 18px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.section {
+    margin-right: 0;
+    margin-left: 0;
+    padding-top: 40px;
+    padding-bottom: 100px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.row {
+    padding-bottom: 20px;
+}
+h1 {
+    font-size: 50px;
+    font-weight: normal;
+    margin-top: 30px;
+}
+h2 {
+    font-size: 40px;
+    font-weight: normal;
+    margin-top: 30px;
+}
+h3 {
+    font-size: 30px;
+    font-weight: normal;
+    margin-top: 30px;
+}
+h4 {
+    font-size: 25px;
+    font-weight: normal;
+    margin-top: 30px;
+}
+h5 {
+    font-size: 16px;
+    font-weight: normal;
+}
+h6 {
+    font-size: 13px;
+    font-weight: normal;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+#diagramDefinition {
+    padding: 0;
+    background: #dddddd;
+}
+.c4MetaModel td {
+    font-size: 13px;
+}
+.c4MetaModel td ul {
+    padding: 0 0 0 20px;
+}
+.dashboardMetaData {
+    font-size: 14px;
+}
+.workspaceMetaData {
+    font-size: 11px;
+    color: gray;
+}
+a:hover {
+    text-decoration: none;
+}
+
+.hideHorizontalScrollbars {
+    overflow-x: hidden !important;
+}
+.hideVerticalScrollbars {
+    overflow-y: hidden !important;
+}
+
+.panel-title {
+    font-size: 24px;
+}
+.table-vcenter td {
+    vertical-align: middle!important;
+}
+.pricingSmallPrint {
+    font-size: 13px;
+}
+#buildNumber {
+}
+.inactive {
+    opacity:0.4;
+    filter:alpha(opacity=40);
+}
+.pricingPagePrice {
+    font-size: 80px;
+    font-weight: bold;
+}
+.thumbnail {
+    border: solid 1px #dddddd;
+}
+.img-thumbnail {
+    color: #ddd;
+}
+label {
+    font-weight: normal;
+}
+.label {
+    font-weight: normal;
+    padding: 5px;
+    border-radius: 4px;
+}
+.imageTitle {
+    font-size: 13px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+.structurizrEmbed {
+    padding: 0;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+}
+.embedCode {
+    font-size: 11px;
+}
+.codeSample {
+    font-size: 11px;
+}
+
+a {
+    color: #1168BD;
+    text-decoration: none;
+}
+
+.structurizrBackgroundGray {
+    background: #777777;
+    color: #ffffff;
+}
+.structurizrBackgroundDarker {
+    background: #02172C;
+    color: #ffffff;
+}
+.structurizrBackgroundDark {
+    background: #08427B;
+    color: #ffffff;
+}
+.structurizrBackgroundBase {
+    background: #1168BD;
+    color: #ffffff;
+}
+.structurizrBackgroundLight {
+    background: #438DD5;
+    color: #ffffff;
+}
+.structurizrBackgroundLighter {
+    background: #85BBF0;
+    color: #ffffff;
+}
+.structurizrBackgroundDarker a, .structurizrBackgroundDark a, .structurizrBackgroundBase a, .structurizrBackgroundLight a {
+    color: #85BBF0;
+}
+
+.label-primary {
+    background: #1168BD;
+}
+.label-branch {
+    background: #ffc107;
+    color: #ffffff;
+    font-size: 12px;
+}
+.label-version {
+    background: #85BBF0;
+    font-size: 12px;
+}
+
+th {
+    font-weight: normal;
+}
+
+.grayscale {
+    -webkit-filter: grayscale(100%); /* Chrome, Safari, Opera */
+    filter: grayscale(100%);
+}
+
+code {
+    color: #08427B;
+    background: #E9F4FE;
+}
+.marker-vertex {
+    fill: #dddddd;
+    r: 20;
+}
+
+.marker-vertex:hover {
+    fill: #ff0000;
+}
+
+.smaller {
+    font-size: 11px;
+}
+
+.dashboardPublicWorkspace {
+    border-color: #d9534f;
+}
+
+.dashboardPublicWorkspace a {
+    color: #d9534f;
+}
+
+.dashboardPrivateWorkspace {
+    border-color: #337ab7;
+}
+
+#documentationContent {
+    margin-bottom: 100px;
+}
+
+#documentationContent img {
+    cursor: pointer;
+}
+
+#documentationContent table th, #decisionLogContent table th {
+    padding: 5px 10px 5px 10px;
+    border: solid 1px gray;
+    font-weight: bold;
+    background: #eeeeee;
+}
+
+#documentationContent table td, #decisionLogContent table td {
+    padding: 5px 10px 5px 10px;
+    border: solid 1px gray;
+}
+
+#documentationNavigation {
+    padding: 0px 0px 20px 5px;
+    line-height: 200%;
+}
+
+.documentationNavigationLink {
+
+}
+
+.documentationNavigationLinkActive {
+    font-weight: bold;
+}
+
+.documentationNavigationHeading {
+    font-size: 20px;
+    margin-bottom: 0px;
+    margin-top: 20px;
+}
+
+.documentationNavigationSection {
+    font-size: 12px;
+}
+
+.documentationNavigationSubSection {
+    padding-left: 20px;
+    font-size: 11px;
+}
+
+.documentationNavigationSubSubSection {
+    padding-left: 30px;
+    font-size: 10px;
+}
+
+.documentationSection {
+    font-size: 18px;
+    padding-left: 10px;
+    padding-right: 30px;
+}
+
+#documentationNavigationPanel {
+    overflow-y: scroll;
+}
+#documentationPanel {
+    overflow-y: scroll;
+    padding-top: 20px;
+    padding-bottom: 50px;
+}
+
+#documentationMetadata {
+    font-size: 9px;
+    color: #777777;
+}
+
+.decisionNavigationLink {
+
+}
+
+.decisionNavigationLinkActive {
+    font-weight: bold;
+}
+
+.decisionNavigationHeading {
+    font-size: 20px;
+    margin-bottom: 0px;
+    margin-top: 20px;
+}
+
+.decisionNavigationItem {
+    font-size: 12px;
+}
+
+.decisionLogSummary {
+    font-size: 18px;
+}
+
+.decisionLogSummary table td {
+    border-top: 1px solid #ddd !important;
+    border-bottom: none !important;
+    border-left: none !important;
+    border-right: none !important;
+}
+
+.faded {
+    color: #aaaaaa;
+}
+
+.btn {
+    text-shadow: none;
+}
+
+.icon-btn {
+    width: 18px;
+    height: 18px;
+    margin-bottom: 1px;
+    vertical-align: middle;
+}
+.icon-xs {
+    width: 12px;
+    height: 12px;
+    margin: 2px 2px 4px 0;
+}
+.icon-sm {
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
+    margin: 2px 2px 4px 0;
+}
+.icon-md {
+    width: 26px;
+    height: 26px;
+    margin: 2px 2px 4px 0;
+}
+.icon-lg {
+    width: 36px;
+    height: 36px;
+    margin: 2px 2px 4px 0;
+}
+.icon-xxl {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+.icon-white {
+    filter: invert(1);
+}
+.icon-h1 {
+    width: 45px;
+    height: 45px;
+    vertical-align: bottom;
+    line-height: 1;
+    margin-bottom: 0;
+}
+.icon-h2 {
+    width: 32px;
+    height: 32px;
+    vertical-align: bottom;
+    margin-bottom: 4px;
+}
+
+hr {
+    border-top: 1px solid #ddd;
+}
+.modal-xl {
+    width: 95%
+}
+
+.img-light {
+    display: block;
+}
+.img-dark {
+    display: none;
+}
+
+#exploreGraphPanel, #exploreTreePanel {
+    background: #ffffff;
+}
+
+#exploreGraph text, #exploreTree text {
+    fill: #000000;
+    stroke: #ffffff;
+    paint-order: stroke;
+}
+
+#exploreGraph .nodeName {
+    font-size: 13px;
+    fill: #000000;
+    cursor: default;
+}
+#exploreGraph .nodeMetadata {
+    font-size: 8px;
+    fill: #444444;
+    cursor: default;
+}
+#exploreGraph .link {
+    fill: none;
+}
+
+#topNavigation, #workspaceSummaryControls {
+    background: #ffffff;
+    border-bottom: solid 1px #dddddd;
+    box-shadow: 0px 0px 3px #dddddd;
+    font-size: 18px;
+    font-weight: normal;
+}
+.topNavigationItem {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+#editorControls, #diagramControls, #explorationControls, #documentationControls, #decisionLogControls, #healthControls {
+    background: #ffffff;
+    border-bottom: solid 1px #dddddd;
+    box-shadow: 0px 0px 3px #dddddd;
+}
+#topNavigation .row, #workspaceSummaryControls .row, #diagramControls .row, #explorationControls .row, #documentationControls .row, #decisionLogControls .row, #healthControls .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#diagramNavigationPanel {
+    background: #ffffff;
+    overflow-y: scroll;
+    border-right: solid 1px #dddddd;
+}
+
+#diagram {
+    background: gray;
+    margin: 0;
+    padding: 0;
+    border-style: none;
+}
+
+.diagramThumbnail {
+    cursor: pointer;
+    margin: 0 0 40px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.diagramThumbnail img {
+    max-height: 160px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+}
+
+.diagramThumbnailActive {
+    background: #aaaaaa;
+    color: #ffffff;
+}
+
+.structurizrDiagramViewport {
+    text-align: center;
+    margin: 0 auto 0 auto;
+    padding: 0;
+    border-style: none;
+    overflow: scroll;
+}
+
+.structurizrDiagramCanvas {
+    border-style: none;
+    background: white;
+    padding: 0;
+    margin: auto;
+}
+
+.structurizrElement .highlightedElement {
+    stroke-width: 5px;
+    stroke: #777777;
+    stroke-dasharray: 10 10;
+}
+
+.joint-element * {
+    vector-effect: none;
+}
+
+.joint-link.joint-theme-default .marker-vertex {
+    fill: #1168BD;
+    r: 25px;
+}
+
+.joint-link.joint-theme-default .marker-vertex:hover {
+    fill: #08427B;
+    r: 25px;
+}
+
+.joint-link.joint-theme-default .connection-wrap:hover {
+    opacity: 0;
+    stroke-opacity: 0;
+}
+
+#navigationModal option {
+    padding: 5px;
+}
+
+#filterModal .tag {
+    padding: 5px 5px 5px 5px;
+    margin: 3px 3px 3px 3px;
+    border-radius: 7px;
+    font-size: 12px;
+    white-space: nowrap;
+    display: inline-block;
+    cursor: default;
+    user-select: none;
+    -webkit-user-select: none;
+}
+#filterModal .tagOn {
+    background: #aaaaaa;
+    color: #ffffff;
+    border: solid 1px #aaaaaa;
+}
+#filterModal .tagOff {
+    background: #ffffff;
+    color: #777777;
+    border: solid 1px #777777;
+}
+
+#quickFindModal .viewKey {
+    font-size: 75%;
+}
+
+#banner {
+    text-align: center;
+    font-size: 14px;
+}
+
+.brandingLogo {
+    max-height: 35px;
+    margin-top: 5px;
+}
+
+.btn {
+    cursor: default;
+}
+.btn-active {
+    background: #999999;
+}
+
+#quickFindModal .selected {
+    background: #85BBF0;
+    color: #ffffff;
+}
+#quickFindModal .quickNavigationItem {
+    padding: 4px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+#progressMessage {
+    position: fixed;
+    z-index: 1000;
+    opacity: .90;
+    bottom: 10px;
+    right: 10px;
+    text-align: center;
+    font-size: 20px;
+    border-radius: 5px;
+    padding: 20px;
+    background: #999999;
+    max-width: 80%;
+}
+.btn-default, .btn-default:hover {
+    background: #ffffff;
+    border: solid 1px #dddddd;
+}
+.btn-default:disabled {
+    background: #ffffff;
+    border: solid 1px #ffffff;
+}

@@ -1,0 +1,110 @@
+<div class="modal fade" id="clientSideEncryptedWorkspacePassphraseModal" tabindex="-1" role="dialog" aria-labelledby="keyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+               <h2 class="modal-title">Client-side encrypted workspace</h2>
+            </div>
+            <div class="modal-body">
+                <p>
+                    The workspace "<span id="clientSideEncryptedWorkspacePassphraseModalName"></span>" has been client-side encrypted, please enter the passphrase to decrypt it.
+                </p>
+
+                <div class="form-group">
+                    <input id="passphrase" type="password" class="form-control" placeholder="Passphrase" required="true" />
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input id="storePassphraseInLocalStorage" type="checkbox" /> Save passphrase in browser local storage
+                    </label>
+                </div>
+
+                <div id="decryptionAlert" class="alert alert-danger" role="alert" style="display:none">
+                    The workspace could not be decrypted.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="decryptButton" type="button" class="btn btn-primary">Decrypt</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script nonce="${scriptNonce}">
+    function showPassphraseModalAndDecryptWorkspace(workspace, callback) {
+        var modal = $('#clientSideEncryptedWorkspacePassphraseModal');
+        var workspaceName = $('#clientSideEncryptedWorkspacePassphraseModalName');
+        workspaceName.append(workspace.name);
+
+        modal.on('shown.bs.modal', function (e) {
+            $('#passphrase').focus();
+        });
+
+        modal.find('#decryptButton').click(function () {
+            promptForPassphraseAndDecryptWorkspace(workspace, callback);
+        });
+
+        modal.find('#passphrase').keydown(function(evt) {
+            if (evt.keyCode === 13) { // the enter key
+                promptForPassphraseAndDecryptWorkspace(workspace, callback);
+            }
+        });
+
+        var passphrase = getWorkspaceEncryptionPassphraseFromLocalStorage(workspace.id);
+        if (passphrase) {
+            decryptWorkspace(workspace, passphrase, callback);
+        } else {
+            modal.modal({ keyboard: false });
+        }
+    }
+
+    function promptForPassphraseAndDecryptWorkspace(workspace, callback) {
+        var modal = $('#clientSideEncryptedWorkspacePassphraseModal');
+        var passphrase = modal.find('#passphrase').val();
+        var storePassphrase = modal.find('#storePassphraseInLocalStorage')[0].checked;
+        if (storePassphrase === true) {
+            putWorkspaceEncryptionPassphraseInLocalStorage(workspace.id, passphrase);
+        }
+
+        decryptWorkspace(workspace, passphrase, callback);
+    }
+
+    function decryptWorkspace(workspace, passphrase, callback) {
+        var modal = $('#clientSideEncryptedWorkspacePassphraseModal');
+
+        try {
+            structurizrEncryptionStrategy = new structurizr.io.EncryptionStrategy(
+                {
+                    iterationCount: workspace.encryptionStrategy.iterationCount,
+                    iv: workspace.encryptionStrategy.iv,
+                    keySize: workspace.encryptionStrategy.keySize,
+                    location: 'Client',
+                    salt: workspace.encryptionStrategy.salt,
+                    type: workspace.encryptionStrategy.type,
+                    passphrase: passphrase
+                }
+            );
+
+            var decryptedWorkspace = structurizrEncryptionStrategy.decrypt(workspace);
+
+            modal.modal('hide');
+            callback(decryptedWorkspace);
+        } catch (e) {
+            console.error("Could not decrypt the workspace with the given passphrase");
+            removeWorkspaceEncryptionPassphraseFromLocalStorage(workspace.id);
+
+            modal.find('#decryptionAlert').show();
+        }
+    }
+
+    function getWorkspaceEncryptionPassphraseFromLocalStorage(id) {
+        return localStorage.getItem("workspace/" + id + "/passphrase");
+    }
+
+    function removeWorkspaceEncryptionPassphraseFromLocalStorage(id) {
+        return localStorage.removeItem("workspace/" + id + "/passphrase");
+    }
+
+    function putWorkspaceEncryptionPassphraseInLocalStorage(id, passphrase) {
+        return localStorage.setItem("workspace/" + id + "/passphrase", passphrase);
+    }
+</script>

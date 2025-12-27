@@ -1,0 +1,17 @@
+<c:if test="${autoSaveInterval > 0}">
+<script nonce="${scriptNonce}">
+    var autoSaveInterval = ${autoSaveInterval};
+    structurizr.autoSave = true;
+
+    function autoSave() {
+        setTimeout(function() {
+            if (unsavedChanges) {
+                saveWorkspace();
+            }
+            autoSave();
+        }, autoSaveInterval);
+    }
+
+    autoSave();
+</script>
+</c:if>

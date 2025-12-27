@@ -1,0 +1,76 @@
+<div class="modal fade" id="tagsModal" tabindex="-1" role="dialog" aria-labelledby="tagsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title">Tags</h2>
+            </div>
+            <div class="modal-body">
+                <p>
+                    The tags included in the software architecture model are listed below.
+                    Viewing a diagram with one or more tags selected will highlight all elements and relationships with those tags.
+                </p>
+
+                <div>
+                    <div class="form-group">
+                        <select class="form-control" id="tagsList" multiple="multiple" size="15"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="clearTagsButton" type="button" class="btn btn-default">Clear tags</button>
+                <button id="viewTagsButton" type="button" class="btn btn-default">View tags</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script nonce="${scriptNonce}">
+
+    $('#clearTagsButton').click(function() { clearTags(true); });
+    $('#viewTagsButton').click(function() { showTags(); });
+
+    function initTags() {
+        var tags = structurizr.workspace.getTags();
+        var tagsList = $('#tagsList');
+        tagsList.empty();
+
+        tags.forEach(function(tag) {
+            tagsList.append(
+                $('<option></option>').val(structurizr.util.escapeHtml(tag)).html(structurizr.util.escapeHtml(tag))
+            );
+        });
+
+        tagsList.attr('size', Math.min(8, tags.length));
+
+    }
+
+    function openTagsModal() {
+        $('#tagsModal').modal();
+    }
+
+    function clearTags(render) {
+        structurizr.diagram.clearTags();
+
+        $('#tagsModal').modal('hide');
+        $('#tagsOnButton').removeClass('hidden');
+        $('#tagsOffButton').addClass('hidden');
+        $('#tagsOffButton').attr('title', 'Tags');
+
+        if (render === true) {
+            structurizr.diagram.renderPerspectiveOrTagsFilter();
+        }
+    }
+
+    function showTags() {
+        clearPerspective(false);
+        var tags = $('#tagsList').val();
+        structurizr.diagram.changeTags(tags);
+        structurizr.diagram.renderPerspectiveOrTagsFilter();
+
+        $('#tagsModal').modal('hide');
+        $('#tagsOnButton').addClass('hidden');
+        $('#tagsOffButton').removeClass('hidden');
+        $('#tagsOffButton').attr('title', 'Tags (' + tags + ')');
+    }
+</script>

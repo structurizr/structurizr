@@ -1,0 +1,80 @@
+h1 {
+    font-size: 50px;
+    font-weight: normal;
+    margin-top: 20px;
+}
+h2 {
+    margin-top: 100px;
+    margin-bottom: 10px;
+    font-size: 40px;
+    font-weight: normal;
+}
+h3 {
+    margin-top: 50px;
+    margin-bottom: 10px;
+    font-size: 30px;
+    font-weight: normal;
+}
+h4 {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: normal;
+}
+h5 {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: normal;
+}
+h6 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    font-weight: normal;
+}
+p {
+    margin-bottom: 16px;
+}
+code {
+    font-family: "Courier New", Courier, monospace;
+    color: #000000;
+    background-color: #f5f5f5;
+    font-size: 90%;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+pre {
+    font-family: "Courier New", Courier, monospace;
+    margin-bottom: 16px;
+    font-size: 14px;
+    background-color: #f5f5f5;
+    border: 1px solid #cccccc;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+#documentationNavigationDropDown {
+
+}
+
+#documentationHeader {
+    text-align: center;
+}
+
+#documentationContent a {
+    text-decoration: underline;
+}
+
+.navigationItem {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.navigationItemSeparator {
+    margin-bottom: 40px;
+}
+
+#documentationHeader .brandingLogo {
+    max-height: 100px;
+}∫

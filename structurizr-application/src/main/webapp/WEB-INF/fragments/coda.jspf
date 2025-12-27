@@ -1,0 +1,43 @@
+    </div>
+
+    <c:if test="${showFooter eq true}">
+    <div id="footer">
+        <p>
+            <a href="https://docs.structurizr.com" target="_blank">Structurizr - <span id="buildNumber">${version.buildNumber}</span></a>
+            <c:if test="${authenticated}">
+            | <a href="/signout">Sign out</a>
+            </c:if>
+        </p>
+        <p>
+            <a id="renderingModeLightLink" href="" title="Light"><img src="/static/bootstrap-icons/sun.svg" class="icon-sm" /></a> |
+            <a id="renderingModeDarkLink" href="" title="Dark"><img src="/static/bootstrap-icons/moon-fill.svg" class="icon-sm" /></a> |
+            <a id="renderingModeSystemLink" href="" title="System"><img src="/static/bootstrap-icons/sliders.svg" class="icon-sm" /></a>
+        </p>
+    </div>
+    </c:if>
+
+    <script nonce="${scriptNonce}">
+        window.onerror = function (msg, url, lineNo, columnNo, error) {
+            console.log(msg);
+            console.log(url + ':' + lineNo + ':' + columnNo);
+            console.log(error);
+        };
+
+        $('#renderingModeLightLink').click(function(event) {
+            event.preventDefault();
+            structurizr.ui.setRenderingMode(structurizr.ui.RENDERING_MODE_LIGHT);
+        });
+
+        $('#renderingModeDarkLink').click(function(event) {
+            event.preventDefault();
+            structurizr.ui.setRenderingMode(structurizr.ui.RENDERING_MODE_DARK);
+        });
+
+        $('#renderingModeSystemLink').click(function(event) {
+            event.preventDefault();
+            structurizr.ui.setRenderingMode(structurizr.ui.RENDERING_MODE_SYSTEM);
+        });
+    </script>
+
+    </body>
+</html>

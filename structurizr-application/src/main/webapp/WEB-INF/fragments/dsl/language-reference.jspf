@@ -1,0 +1,48 @@
+<select id="keywords" class="form-select" style="width: auto; display: inline-block">
+    <option value="https://docs.structurizr.com/dsl">Structurizr DSL documentation</option>
+    <option value="https://docs.structurizr.com/dsl/tutorial">Structurizr DSL tutorial</option>
+    <option value="https://docs.structurizr.com/dsl/cookbook">Structurizr DSL cookbook</option>
+    <option value="https://docs.structurizr.com/dsl/basics">Basics</option>
+    <option value="https://docs.structurizr.com/dsl/identifiers">Identifiers</option>
+    <option value="https://docs.structurizr.com/dsl/implied-relationships">Implied relationships</option>
+    <option value="https://docs.structurizr.com/dsl/expressions">Expressions</option>
+    <option value="https://docs.structurizr.com/dsl/language">Structurizr DSL language reference</option>
+    <option value="https://docs.structurizr.com/dsl/language#workspace">workspace</option>
+    <option value="https://docs.structurizr.com/dsl/language#model">&nbsp;- model</option>
+    <option value="https://docs.structurizr.com/dsl/language#group">&nbsp;&nbsp;&nbsp;- group</option>
+    <option value="https://docs.structurizr.com/dsl/language#person">&nbsp;&nbsp;&nbsp;- person</option>
+    <option value="https://docs.structurizr.com/dsl/language#softwaresystem">&nbsp;&nbsp;&nbsp;- softwareSystem</option>
+    <option value="https://docs.structurizr.com/dsl/language#deploymentenvironment">&nbsp;&nbsp;&nbsp;- deploymentEnvironment</option>
+    <option value="https://docs.structurizr.com/dsl/language#deploymentnode">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- deploymentNode</option>
+    <option value="https://docs.structurizr.com/dsl/language#infrastructurenode">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- infrastructureNode</option>
+    <option value="https://docs.structurizr.com/dsl/language#softwaresysteminstance">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- softwareSystemInstance</option>
+    <option value="https://docs.structurizr.com/dsl/language#containerinstance">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- containerInstance</option>
+    <option value="https://docs.structurizr.com/dsl/language#element">&nbsp;&nbsp;&nbsp;- element</option>
+    <option value="https://docs.structurizr.com/dsl/language#relationship">&nbsp;&nbsp;&nbsp;- -> (relationship)</option>
+    <option value="https://docs.structurizr.com/dsl/language#views">&nbsp;- views</option>
+    <option value="https://docs.structurizr.com/dsl/language#systemlandscape-view">&nbsp;&nbsp;&nbsp;- systemLandscape</option>
+    <option value="https://docs.structurizr.com/dsl/language#systemcontext-view">&nbsp;&nbsp;&nbsp;- systemContext</option>
+    <option value="https://docs.structurizr.com/dsl/language#container-view">&nbsp;&nbsp;&nbsp;- container</option>
+    <option value="https://docs.structurizr.com/dsl/language#component-view">&nbsp;&nbsp;&nbsp;- component</option>
+    <option value="https://docs.structurizr.com/dsl/language#filtered-view">&nbsp;&nbsp;&nbsp;- filtered</option>
+    <option value="https://docs.structurizr.com/dsl/language#dynamic-view">&nbsp;&nbsp;&nbsp;- dynamic</option>
+    <option value="https://docs.structurizr.com/dsl/language#deployment-view">&nbsp;&nbsp;&nbsp;- deployment</option>
+    <option value="https://docs.structurizr.com/dsl/language#custom-view">&nbsp;&nbsp;&nbsp;- custom</option>
+    <option value="https://docs.structurizr.com/dsl/language#image-view">&nbsp;&nbsp;&nbsp;- image</option>
+    <option value="https://docs.structurizr.com/dsl/language#styles">&nbsp;&nbsp;&nbsp;- styles</option>
+    <option value="https://docs.structurizr.com/dsl/language#element-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- element</option>
+    <option value="https://docs.structurizr.com/dsl/language#relationship-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- relationship</option>
+    <option value="https://docs.structurizr.com/dsl/language#themes">&nbsp;&nbsp;&nbsp;- themes</option>
+    <option value="https://docs.structurizr.com/dsl/language#branding">&nbsp;&nbsp;&nbsp;- branding</option>
+    <option value="https://docs.structurizr.com/dsl/language#terminology">&nbsp;&nbsp;&nbsp;- terminology</option>
+    <option value="https://docs.structurizr.com/dsl/language#configuration">&nbsp;- configuration</option>
+    <option value="https://docs.structurizr.com/dsl/language#visibility">&nbsp;&nbsp;&nbsp;- visibility</option>
+    <option value="https://docs.structurizr.com/dsl/language#scope">&nbsp;&nbsp;&nbsp;- scope</option>
+    <option value="https://docs.structurizr.com/dsl/language#users">&nbsp;&nbsp;&nbsp;- users</option>
+</select>
+
+<script nonce="${scriptNonce}">
+    $('#keywords').change(function () {
+        window.open($('#keywords').val(), "structurizrDslLanguageReference", "top=100,left=300,width=800,height=800,location=no,menubar=no,status=no,toolbar=no");
+    });
+</script>

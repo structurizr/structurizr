@@ -1,0 +1,71 @@
+body {
+    font-size: 18px;
+}
+#diagramControls, #keyModal, #embedModal {
+    display: none !important;
+}
+#diagramContainer, #diagramViewport, #diagramCanvas {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+#progressBar {
+    display: none;
+}
+
+.marker-vertices {
+    display: none;
+}
+#topNavigation {
+    display: none;
+}
+.modal {
+    display: none;
+}
+#tooltip {
+    display: none;
+}
+#workspaceNavigation, #documentationNavigation, #softwareSystemNavigation, #documentationSubsectionNavigation {
+    display: none;
+}
+#footer {
+    display: none;
+}
+#documentationContent .imageTitle {
+    display: none;
+}
+img {
+    max-width: 100% !important;
+}
+iframe {
+}
+.structurizrNavigation {
+    display: none;
+}
+#explorationControls, #documentationControls, #decisionLogControls, #embeddedControls {
+    display: none;
+}
+
+#documentationNavigationPanel {
+    display: none;
+}
+
+#progressMessage {
+    display:none;
+}
+
+.hidden {
+    display: none;
+}
+
+.highlightedLink {
+    display: none;
+}
+
+#documentationNavigationDropDown, #decisionLogNavigationDropDown {
+    display: none;
+}
+
+button {
+    display: none;
+}

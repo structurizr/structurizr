@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<html lang="en">
+<head>
+    <title>${pageTitle}</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <link rel="icon" href="/static/img/favicon.png" />
+    <link rel="apple-touch-icon" href="/static/img/apple-touch-icon.png" />
+
+    <link href="/static/css/bootstrap-5.3.7.min.css" rel="stylesheet" media="screen" />
+    <link href="<c:url value="/static/css/structurizr.css" />" rel="stylesheet" media="screen" />
+
+    <c:if test="${not empty css}">
+    <style>
+    ${css}
+    </style>
+    </c:if>
+
+    <c:if test="${embed eq true}">
+    <link href="<c:url value="/static/css/structurizr-embed.css" />" rel="stylesheet" media="screen" />
+    </c:if>
+    <link href="<c:url value="/static/css/structurizr-print.css" />" rel="stylesheet" media="print" />
+    <link href="/static/css/open-sans.css" rel="stylesheet" />
+
+    <script src="/static/js/jquery-3.7.1.min.js"></script>
+    <script src="/static/js/bootstrap-5.3.7.min.js"></script>
+    <script type="text/javascript" src="<c:url value="/static/js/structurizr.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/static/js/structurizr-ui.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/static/js/structurizr-util.js" />"></script>
+
+    <c:if test="${not empty js}">
+    <script nonce="${scriptNonce}">
+        try {
+    ${js}
+        } catch (err) {
+            console.error(err);
+        }
+    </script>
+    </c:if>
+</head>
+
+<script nonce="${scriptNonce}">
+    structurizr.ui.initDarkMode('<c:url value="/static/css/structurizr-dark.css" />');
+</script>
+
+<body>
+    <c:choose>
+    <c:when test="${showHeader eq true}">
+    <div id="topNavigation">
+        <div id="banner"></div>
+        
+        <div class="row">
+            <div class="col-2" style="padding: 18px 20px 10px 20px">
+                <a id="brandingLogoAnchor" href="/"><img src="/static/img/structurizr-banner.png" alt="Structurizr" class="img-light img-responsive brandingLogo" /><img src="/static/img/structurizr-banner-dark.png" alt="Structurizr" class="img-dark img-responsive brandingLogo" /></a>
+            </div>
+            <div class="col-10 centered" style="padding: 20px 20px 10px 20px; text-align: right;">
+                <span class="topNavigationItem" style="margin-right: 0">
+                    <form id="searchForm" method="get" action="/search" style="display: inline-block">
+                        <div class="form-inline" style="margin-top: 8px">
+                            <div class="form-group">
+                                <input type="text" name="query" class="form-control" placeholder="Search" value="${query}" style="width: 300px" />
+                            </div>
+                        </div>
+                    </form>
+                </span>
+
+                <c:if test="${authenticationEnabled}">
+                <c:choose>
+                    <c:when test="${authenticated eq true}">
+                        <span class="topNavigationItem" style="margin-right: 0">
+                            <a href="/user/profile"><span class="label structurizrBackgroundLight" style="font-size: 18px"><img src="/static/bootstrap-icons/person.svg" class="icon-sm icon-white" /> ${user.username}</span></a>
+                        </span>
+                    </c:when>
+                    <c:otherwise>
+                        <span class="topNavigationItem" style="margin-right: 0">
+                            <a href="/dashboard"><span class="label structurizrBackgroundBase" style="font-size: 18px"><img src="/static/bootstrap-icons/box-arrow-in-right.svg" class="icon-sm icon-white" /> Sign in</span></a>
+                        </span>
+                    </c:otherwise>
+                </c:choose>
+                </c:if>
+            </div>
+        </div>
+    </div>
+
+    <c:forEach var="message" items="${messages.unreadMessages}">
+    <div style="margin: 10px" class="alert alert-${message.type} alert-dismissible" role="alert" style="margin-bottom: 0">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        ${message.text}
+    </div>
+    </c:forEach>
+
+    </c:when>
+    <c:otherwise>
+        <style>
+            body {
+                padding-top: 0;
+            }
+        </style>
+    </c:otherwise>
+    </c:choose>
+
+    <div id="content">

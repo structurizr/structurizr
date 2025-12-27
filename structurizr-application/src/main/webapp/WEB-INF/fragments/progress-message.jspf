@@ -1,0 +1,19 @@
+<div id="progressMessage" class="structurizrBackgroundBase hidden"></div>
+
+<script nonce="${scriptNonce}">
+    structurizr.ui.ProgressMessage = class ProgressMessage {
+
+        #progressMessage = $('#progressMessage');
+
+        show(html) {
+            this.#progressMessage.html(html);
+            this.#progressMessage.removeClass('hidden');
+        }
+
+        hide() {
+            this.#progressMessage.addClass('hidden');
+        }
+    }
+
+    const progressMessage = new structurizr.ui.ProgressMessage();
+</script>

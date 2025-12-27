@@ -1,0 +1,153 @@
+.diagramTitle {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 20px;
+}
+.diagramContainer {
+    margin: 20px 20px 50px 20px;
+}
+.diagramViewport {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+.diagramWrapper {
+    transform-origin: 0 0;
+}
+
+.comment {
+    color: #ffffff;
+    position: absolute;
+    text-align: center;
+    opacity: 1.0;
+    cursor: default;
+    padding: 10px;
+    background-origin: content-box;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.comment:hover {
+    opacity: 0.1;
+}
+
+.commentGeneral {
+    background-image: url("/static/img/review/comment-General.svg");
+}
+.commentRiskLow {
+    background-image: url("/static/img/review/comment-RiskLow.svg");
+}
+.commentRiskMedium {
+    background-image: url("/static/img/review/comment-RiskMedium.svg");
+}
+.commentRiskHigh {
+    background-image: url("/static/img/review/comment-RiskHigh.svg");
+}
+
+.commentSTRIDE_Spoofing {
+    background-image: url("/static/img/review/comment-STRIDE_Spoofing.svg");
+}
+
+.commentSTRIDE_Tampering {
+    background-image: url("/static/img/review/comment-STRIDE_Tampering.svg");
+}
+
+.commentSTRIDE_Repudiation {
+    background-image: url("/static/img/review/comment-STRIDE_Repudiation.svg");
+}
+
+.commentSTRIDE_InformationDisclosure {
+    background-image: url("/static/img/review/comment-STRIDE_InformationDisclosure.svg");
+}
+
+.commentSTRIDE_DenialOfService {
+    background-image: url("/static/img/review/comment-STRIDE_DenialOfService.svg");
+}
+
+.commentSTRIDE_ElevationOfPrivilege {
+    background-image: url("/static/img/review/comment-STRIDE_ElevationOfPrivilege.svg");
+}
+
+#commentTypeButtons {
+    display: inline-block;
+}
+
+.commentTypeButton {
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+#commentModalContent {
+    border-radius: 10px;
+    width: 620px;
+}
+
+#commentDescription {
+    font-size: 22px;
+    resize: none;
+}
+
+#commentModalButtons {
+    display: inline-block;
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+}
+#commentModalButtons button {
+    border: solid 1px #ffffff;
+}
+
+#commentModalAuthor {
+    font-size: 15px;
+    color: #ffffff;
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+}
+
+.embeddedControls {
+    opacity: 0.5;
+    text-align: right;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 100;
+}
+
+.embeddedControls:hover {
+    opacity: 1;
+}
+
+#floatingControls {
+    opacity: 0.5;
+    text-align: center;
+    position: sticky;
+    bottom: 10px;
+    left: 10px;
+    z-index: 100;
+    margin-left: 10px;
+}
+
+#floatingControls:hover {
+    opacity: 1;
+}
+
+#tooltip {
+    color: #ffffff;
+    background: #eeeeee;
+    padding: 10px;
+    margin: 20px;
+    position: absolute;
+    z-index: 10;
+    opacity: 0.98;
+    border-radius: 5px;
+    width: 33%;
+    max-width: 33%;
+    overflow: hidden;
+}
+#tooltipAuthor {
+    font-size: 15px;
+    font-weight: normal;
+    margin-top: 10px;
+}
+#tooltipDescription {
+    font-size: 22px;
+}

@@ -1,0 +1,27 @@
+<div class="modal fade" id="noViewsModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title"><span id="diagramInformationTitle">Please note</span></h2>
+            </div>
+            <div class="modal-body">
+                <p>There are no views defined in this workspace.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script nonce="${scriptNonce}">
+    function openNoViewsModal() {
+        const modal = $('#noViewsModal');
+        modal.on('hidden.bs.modal', function (e) {
+            window.location.href = '<c:out value="${urlPrefix}" /><c:out value="${urlSuffix}" escapeXml="false" />';
+        });
+
+        modal.modal('show');
+    }
+</script>

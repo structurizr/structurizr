@@ -1,0 +1,54 @@
+<script nonce="${scriptNonce}">
+
+    function initPerspectives() {
+        const perspectiveNames = structurizr.workspace.getPerspectiveNames();
+        if (perspectiveNames.length > 0) {
+            $('#perspectivesOnButton').removeClass('hidden');
+        }
+    }
+
+    function openPerspectivesModal() {
+        const perspectiveNames = structurizr.workspace.getPerspectiveNames();
+
+        if (perspectiveNames.length > 0) {
+            const options = [
+                {
+                    label: '(none)',
+                    value: ''
+                }
+            ].concat(perspectiveNames.map(function (name) {
+                return {
+                    label: name,
+                    value: name
+                };
+            }));
+
+            openNavigationModal(options, structurizr.diagram.getPerspective(), function(perspective) {
+                if (perspective.length > 0) {
+                    structurizr.diagram.showPerspective(perspective);
+                    tooltip.disable();
+                    toggleTooltip();
+
+                    $('#perspectivesOnButton').addClass('hidden');
+                    $('#perspectivesOffButton').removeClass('hidden');
+                    $('#perspectivesOffButton').attr('title', 'Perspective: ' + perspective);
+                } else {
+                    if (structurizr.diagram.hasPerspective()) {
+                        deactivatePerspective();
+                    }
+                }
+            });
+        }
+    }
+
+    function deactivatePerspective() {
+        structurizr.diagram.clearPerspective();
+        tooltip.enable();
+        toggleTooltip();
+
+        $('#perspectivesOnButton').removeClass('hidden');
+        $('#perspectivesOffButton').addClass('hidden');
+        $('#perspectivesOffButton').attr('title', 'Perspectives');
+    }
+
+</script>

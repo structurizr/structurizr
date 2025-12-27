@@ -1,0 +1,103 @@
+<div class="modal fade" id="autoLayoutModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-horizontal">
+                    <div id="autoLayoutRankDirectionFormGroup" class="form-group row">
+                        <label class="control-label col-4" for="autoLayoutRankDirection">Direction</label>
+                        <div class="col-8">
+                            <select class="form-select" id="autoLayoutRankDirection">
+                                <option value="TopBottom">Top to bottom</option>
+                                <option value="BottomTop">Bottom to top</option>
+                                <option value="LeftRight">Left to right</option>
+                                <option value="RightLeft">Right to left</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="autoLayoutRankSeparationFormGroup" class="form-group row">
+                        <label class="control-label col-4" for="autoLayoutRankSeparation">Rank separation</label>
+                        <div class="col-8">
+                            <input type="number" id="autoLayoutRankSeparation" value="300" class="form-control" />
+                            <span class="form-text">(pixels)</span>
+                        </div>
+                    </div>
+
+                    <div id="autoLayoutNodeSeparationFormGroup" class="form-group row">
+                        <label class="control-label col-4" for="autoLayoutNodeSeparation">Node separation</label>
+                        <div class="col-8">
+                            <input type="number" id="autoLayoutNodeSeparation" value="300" class="form-control" />
+                            <span class="form-text">(pixels)</span>
+                        </div>
+                    </div>
+
+                    <div id="autoLayoutEdgeSeparationFormGroup" class="form-group row">
+                        <label class="control-label col-4" for="autoLayoutEdgeSeparation">Edge separation</label>
+                        <div class="col-8">
+                            <input type="number" id="autoLayoutEdgeSeparation" value="300" class="form-control" />
+                            <span class="form-text">(pixels)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="autoLayoutVerticesFormGroup" class="form-group row">
+                    <label class="control-label col-4" for="autoLayoutVertices">Vertices</label>
+                    <div class="col-8">
+                        <input type="checkbox" id="autoLayoutVertices" class="form-check-input" />
+                    </div>
+                </div>
+
+                <div class="form-group centered" style="margin-top: 40px">
+                    <button id="gatherElementsButton" class="btn btn-secondary" title="Bring elements back onto the diagram"><img src="/static/bootstrap-icons/magnet.svg" class="icon-btn icon-white" /> Bring elements back onto canvas</button>
+                    <button id="removeAllVerticesButton" class="btn btn-secondary" title="Remove all vertices"><img src="/static/bootstrap-icons/slash-lg.svg" class="icon-btn icon-white" /> Remove all vertices</button>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button id="runAutoLayoutButton" type="button" class="btn btn-primary">Auto layout</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script nonce="${scriptNonce}">
+
+    $('#gatherElementsButton').click(function() { structurizr.diagram.gatherElementsOnCanvas(); closeAutoLayoutModal(); });
+    $('#removeAllVerticesButton').click(function() { structurizr.diagram.removeAllVertices(); closeAutoLayoutModal(); });
+    $('#runAutoLayoutButton').click(function() { runAutoLayout(); });
+
+    function initAutoLayout() {
+        $('#autoLayoutImplementation').change(function () {
+            showOptionsForDagre();
+        });
+    }
+
+    function showOptionsForDagre() {
+        $('#autoLayoutVerticesFormGroup').removeClass('hidden');
+        $('#autoLayoutEdgeSeparationFormGroup').removeClass('hidden');
+    }
+
+    function openAutoLayoutModal() {
+        $('#autoLayoutModal').modal('show');
+    }
+
+    function closeAutoLayoutModal() {
+        $('#autoLayoutModal').modal('hide');
+    }
+
+    function runAutoLayout() {
+        closeAutoLayoutModal();
+
+        structurizr.diagram.applyAutomaticLayout(
+            $('#autoLayoutRankDirection').val(),
+            parseInt($('#autoLayoutRankSeparation').val()),
+            parseInt($('#autoLayoutNodeSeparation').val()),
+            parseInt($('#autoLayoutEdgeSeparation').val()),
+            $('#autoLayoutVertices').is(':checked')
+        )
+    }
+</script>

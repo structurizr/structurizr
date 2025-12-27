@@ -1,0 +1,14 @@
+<div class="modal fade" id="quickFindModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input id="quickFindModalFilter" type="text" placeholder="Start typing..." class="form-control" />
+            </div>
+            <div class="modal-body">
+                <div id="quickFindModalItems"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="<c:url value="/static/js/structurizr-quick-navigation.js" />"></script>

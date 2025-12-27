@@ -1,0 +1,15 @@
+<style>
+    #lasso {
+        background: #dddddd;
+        position: absolute;
+        z-index: 10;
+        opacity: 0.5;
+        border: 2px #cccccc solid;
+    }
+</style>
+
+<div id="lasso" class="hidden"></div>
+
+<script nonce="${scriptNonce}">
+    const lasso = $('#lasso');
+</script>

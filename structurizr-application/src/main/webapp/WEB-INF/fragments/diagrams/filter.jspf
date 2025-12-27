@@ -1,0 +1,108 @@
+<div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content centered">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <span id="tagSelector"></span>
+                <span>
+                    <button id="deselectAllTagsButton" type="button" class="btn btn-default" title="Deselect all tags"><img src="/static/bootstrap-icons/tags.svg" class="icon-btn" /></button>
+                    <button id="selectAllTagsButton" type="button" class="btn btn-default" title="Select all tags"><img src="/static/bootstrap-icons/tags-fill.svg" class="icon-btn" /></button>
+                    <button id="deactivateFilter" type="button" class="btn btn-default" title="Deactivate filter"><img src="/static/bootstrap-icons/x-circle.svg" class="icon-btn" /></button>
+                    <button id="activateFilter" type="button" class="btn btn-default" title="Activate filter"><img src="/static/bootstrap-icons/check-circle.svg" class="icon-btn" /></button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script nonce="${scriptNonce}">
+
+    function initFilter() {
+        const tags = structurizr.workspace.getUserDefinedTags();
+
+        if (tags.length === 0) {
+            $('#filterOnButton').addClass('hidden');
+            return;
+        }
+
+        const filter = structurizr.diagram.getFilter();
+        filter.tags = tags;
+        structurizr.diagram.setFilter(filter);
+
+        const tagSelector = $('#tagSelector');
+
+        $('#deselectAllTagsButton').click(function() {
+            const filter = structurizr.diagram.getFilter();
+            filter.tags = [];
+            structurizr.diagram.setFilter(filter);
+
+            $('#filterModal .tag').removeClass('tagOn');
+            $('#filterModal .tag').addClass('tagOff');
+        });
+        $('#selectAllTagsButton').click(function() {
+            const filter = structurizr.diagram.getFilter();
+            filter.tags = structurizr.workspace.getUserDefinedTags();
+            structurizr.diagram.setFilter(filter);
+
+            $('#filterModal .tag').removeClass('tagOff');
+            $('#filterModal .tag').addClass('tagOn');
+        });
+        $('#deactivateFilter').click(function() {
+            structurizr.diagram.filterOff();
+            $('#filterOnButton').removeClass('hidden');
+            $('#filterOffButton').addClass('hidden');
+            closeFilterModal();
+        });
+        $('#activateFilter').click(function() {
+            closeFilterModal();
+        });
+
+        tags.forEach(function(tag) {
+            const span = document.createElement('span');
+            span.classList.add('tag');
+            span.classList.add('tagOn');
+            span.innerHTML = structurizr.util.escapeHtml(tag);
+
+            span.onclick = function() {
+                const filter = structurizr.diagram.getFilter();
+
+                if (filter.tags.indexOf(tag) > -1) {
+                    filter.tags.splice(filter.tags.indexOf(tag), 1);
+                    structurizr.diagram.setFilter(filter);
+                    span.classList.remove('tagOn');
+                    span.classList.add('tagOff');
+                } else {
+                    filter.tags.push(tag);
+                    structurizr.diagram.setFilter(filter);
+                    span.classList.remove('tagOff');
+                    span.classList.add('tagOn');
+                }
+            };
+
+            tagSelector[0].appendChild(span);
+        });
+    }
+
+    function openFilterModal() {
+        const filter = structurizr.diagram.getFilter();
+        if (filter.active === false) {
+            filter.active = true;
+            structurizr.diagram.setFilter(filter);
+        }
+
+        // $('#filterModal').modal({ backdrop: false });
+        $('#filterModal').modal('show');
+    }
+
+    function closeFilterModal() {
+        $('#filterModal').modal('hide');
+    }
+
+    function deactivateFilter() {
+        structurizr.diagram.filterOff();
+        $('#filterOffButton').addClass('hidden');
+        $('#filterOnButton').removeClass('hidden');
+    }
+</script>

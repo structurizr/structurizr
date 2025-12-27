@@ -1,0 +1,83 @@
+<div class="modal fade" id="embedModal" tabindex="-1" role="dialog" aria-labelledby="embedModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div id="diagramEmbed" class="modal-body">
+                <p>
+                    The code below allows you to embed your diagram(s) using a responsive iframe.
+                    See <a href="https://docs.structurizr.com/onpremises/embed" target="_blank">Structurizr - Embed</a> for more details.
+                </p>
+
+                <c:choose>
+                    <c:when test="${workspace.open}">
+                    <pre class="embedCode"><code id="embedCodeFragment">&lt;iframe <b>id="myEmbeddedDiagram"</b> src="<span class="baseUrl"></span>/embed/${workspace.id}?diagram=<span class="diagramEmbedDiagramId"></span>&diagramSelector=<span class="diagramEmbedDiagramSelector">false</span>&<b>iframe=myEmbeddedDiagram</b>" width="100%" marginwidth="0" marginheight="0" frameborder="0" scrolling="no" allowfullscreen="true"&gt;&lt;/iframe&gt;
+
+&lt;script type="text/javascript" src="<span class="staticContentUrl"></span>/js/structurizr-embed.js"&gt;&lt;/script&gt;</code></pre>
+                    </c:when>
+                    <c:when test="${workspace.shareable}">
+                <pre class="embedCode"><code id="embedCodeFragment">&lt;iframe <b>id="myEmbeddedDiagram"</b> src="<span class="baseUrl"></span>/embed/${workspace.id}/${workspace.sharingToken}?&diagram=<span class="diagramEmbedDiagramId"></span>&diagramSelector=<span class="diagramEmbedDiagramSelector">false</span>&<b>iframe=myEmbeddedDiagram</b>" width="100%" marginwidth="0" marginheight="0" frameborder="0" scrolling="no" allowfullscreen="true"&gt;&lt;/iframe&gt;
+
+&lt;script type="text/javascript" src="<span class="staticContentUrl"></span>/js/structurizr-embed.js"&gt;&lt;/script&gt;</code></pre>
+                    </c:when>
+                    <c:otherwise>
+                <pre class="embedCode"><code id="embedCodeFragment">&lt;iframe <b>id="myEmbeddedDiagram"</b> src="<span class="baseUrl"></span>/embed/${workspace.id}?apiKey=${workspace.apiKey}&diagram=<span class="diagramEmbedDiagramId"></span>&diagramSelector=<span class="diagramEmbedDiagramSelector">false</span>&<b>iframe=myEmbeddedDiagram</b>" width="100%" marginwidth="0" marginheight="0" frameborder="0" scrolling="no" allowfullscreen="true"&gt;&lt;/iframe&gt;
+
+&lt;script type="text/javascript" src="<span class="staticContentUrl"></span>/js/structurizr-embed.js"&gt;&lt;/script&gt;</code></pre>
+                    </c:otherwise>
+                </c:choose>
+
+                <div>
+                    <label>Include diagram selector <input type="checkbox" id="diagramSelectorToggle" /></label>
+                </div>
+
+                <c:if test="${not workspace.open}">
+                    <div class="centered">
+                        <h3><img src="/static/bootstrap-icons/exclamation-triangle.svg" class="icon-md" /> Warning</h3>
+                        This workspace is private, so the above embed code includes your workspace API key or sharing token
+                        - <b>it is not recommended to use the above embed code on the Internet</b>.
+                    </div>
+                </c:if>
+
+                <c:if test="${workspace.clientEncrypted}">
+                    <div class="centered">
+                        <h3><img src="/static/bootstrap-icons/info-circle.svg" class="icon-md" /> Information</h3>
+                        This is a client-side encrypted workspace, so viewers will be prompted for the password when diagrams from this workspace are embedded in web pages.
+                    </div>
+                </c:if>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script nonce="${scriptNonce}">
+
+    $('#embedCodeFragment').click(function() { structurizr.util.selectText('embedCodeFragment'); });
+    $('#notionUrl').click(function() { structurizr.util.selectText('notionUrl'); });
+
+    $('#diagramSelectorToggle').click(function() {
+        if ($('#diagramSelectorToggle').is(':checked')) {
+            $('.diagramEmbedDiagramSelector').html('true');
+        } else {
+            $('.diagramEmbedDiagramSelector').html('false');
+        }
+    });
+
+    function initEmbed() {
+        const baseUrl = window.location.protocol + '//' + window.location.host;
+        $('.baseUrl').text(baseUrl);
+
+        var staticContentUrl = '/static/';
+        if (staticContentUrl.indexOf("/") === 0) {
+            staticContentUrl = baseUrl + staticContentUrl;
+        }
+        $('.staticContentUrl').text(staticContentUrl);
+
+    }
+
+    function openEmbedModal() {
+        $('#embedModal').modal('show');
+    }
+</script>

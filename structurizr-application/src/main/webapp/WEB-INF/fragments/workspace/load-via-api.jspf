@@ -1,0 +1,61 @@
+<script nonce="${scriptNonce}">
+    var username = "${user.username}";
+    <c:if test="${collaborationEnabled eq true}">
+    username = 'Collaboration Session';
+    </c:if>
+    const agent = '${userAgent}';
+
+    structurizr.autoSave = false;
+    var structurizrEncryptionStrategy;
+    const structurizrApiClient = new structurizr.io.StructurizrApiClient(
+        "${structurizrConfiguration.apiUrl}",
+        "${workspace.id}",
+        "${workspace.apiKey}",
+        "${workspace.apiSecret}",
+        "${workspace.branch}",
+        username,
+        agent
+    );
+
+    structurizrApiClient.getWorkspace(
+        "<c:out value="${workspace.internalVersion}" />",
+        function(response) {
+            if (response.success) {
+                const json = response.json;
+                json.id = ${workspace.id}; // force the workspace ID to be set correctly
+
+                if (json.ciphertext && json.encryptionStrategy) {
+                    showPassphraseModalAndDecryptWorkspace(json, loadWorkspace);
+                } else {
+                    loadWorkspace(json);
+                }
+            } else {
+                if (response.message) {
+                    console.log(response.message);
+                    if (progressMessage) {
+                        progressMessage.show('<p>Error</p><p style="font-size: 75%">' + structurizr.util.escapeHtml(response.message) + '</p>');
+                    }
+                }
+            }
+        }
+    );
+
+    structurizr.saveWorkspace = function(callback) {
+        const workspace = structurizr.workspace.getJson();
+        workspace.views = structurizr.workspace.views;
+
+        if (structurizrEncryptionStrategy) {
+            try {
+                const encryptedWorkspace = structurizrEncryptionStrategy.encrypt(workspace);
+                if (encryptedWorkspace) {
+                    structurizrApiClient.putWorkspace(encryptedWorkspace, callback);
+                }
+            } catch (e) {
+                console.error(e);
+                alert("Workspace " + id + " could not be saved - " + e);
+            }
+        } else {
+            structurizrApiClient.putWorkspace(workspace, callback);
+        }
+    };
+</script>

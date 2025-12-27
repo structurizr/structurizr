@@ -1,0 +1,37 @@
+<c:choose>
+    <c:when test="${pageNumber gt 1}">
+        <a href="?sort=${sort}&pageNumber=1&pageSize=${pageSize}"><img src="/static/bootstrap-icons/chevron-double-left.svg" class="icon-sm" /></a>
+    </c:when>
+    <c:otherwise>
+        <img src="/static/bootstrap-icons/chevron-double-left.svg" class="icon-sm" style="opacity: 0.25" />
+    </c:otherwise>
+</c:choose>
+
+<c:choose>
+    <c:when test="${not empty previousPage}">
+        <a href="?sort=${sort}&pageNumber=${previousPage}&pageSize=${pageSize}"><img src="/static/bootstrap-icons/chevron-left.svg" class="icon-sm" /></a>
+    </c:when>
+    <c:otherwise>
+        <img src="/static/bootstrap-icons/chevron-left.svg" class="icon-sm" style="opacity: 0.25" />
+    </c:otherwise>
+</c:choose>
+
+Page ${pageNumber}
+
+<c:choose>
+    <c:when test="${not empty nextPage}">
+        <a href="?sort=${sort}&pageNumber=${nextPage}&pageSize=${pageSize}"><img src="/static/bootstrap-icons/chevron-right.svg" class="icon-sm" /></a>
+    </c:when>
+    <c:otherwise>
+        <img src="/static/bootstrap-icons/chevron-right.svg" class="icon-sm" style="opacity: 0.25" />
+    </c:otherwise>
+</c:choose>
+
+<c:choose>
+    <c:when test="${pageNumber < maxPage}">
+        <a href="?sort=${sort}&pageNumber=${maxPage}&pageSize=${pageSize}"><img src="/static/bootstrap-icons/chevron-double-right.svg" class="icon-sm" /></a>
+    </c:when>
+    <c:otherwise>
+        <img src="/static/bootstrap-icons/chevron-double-right.svg" class="icon-sm" style="opacity: 0.25" />
+    </c:otherwise>
+</c:choose>

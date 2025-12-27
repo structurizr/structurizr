@@ -1,0 +1,77 @@
+<style>
+    #tooltip {
+        font-size: 14px;
+        color: #000000;
+        background: #eeeeee;
+        padding: 10px;
+        margin: 20px;
+        position: absolute;
+        z-index: 10;
+        opacity: 0.98;
+        border: 2px #666666 solid;
+        border-radius: 5px;
+        width: 33%;
+        max-width: 33%;
+        overflow: hidden;
+    }
+    #tooltipName {
+        font-size: 20px;
+        font-weight: normal;
+    }
+    #tooltipParent {
+        font-size: 8px;
+    }
+    #tooltipMetadata {
+        font-size: 10px;
+    }
+    #tooltipType {
+        font-size: 10px;
+    }
+    #tooltipDescription {
+        font-size: 12px;
+        margin-top: 10px;
+    }
+    #tooltipTags {
+        margin-top: 10px;
+        font-size: 10px;
+    }
+    #tooltipProperties {
+        margin-top: 15px;
+        font-size: 10px;
+    }
+    #tooltipUrl {
+        margin-top: 10px;
+        font-size: 10px;
+    }
+    #tooltip .tag {
+        border-width: 1px;
+        border-style: solid;
+        padding: 3px 3px 3px 3px;
+        margin: 3px 3px 3px 0;
+        border-radius: 6px;
+        white-space: nowrap;
+        display: inline-block;
+    }
+</style>
+
+<style media="print">
+    #tooltip {
+        display: none;
+    }
+</style>
+
+<div id="tooltip" class="hidden">
+    <div id="tooltipHeader">
+        <div id="tooltipName"></div>
+        <div id="tooltipParent"></div>
+        <div id="tooltipMetadata"></div>
+        <div id="tooltipDescription"></div>
+        <hr />
+    </div>
+    <div id="tooltipTags"></div>
+    <div id="tooltipProperties"></div>
+    <div id="tooltipUrl"></div>
+    <div id="tooltipAdditionalContent"></div>
+</div>
+
+<script type="text/javascript" src="<c:url value="/static/js/structurizr-tooltip.js" />"></script>

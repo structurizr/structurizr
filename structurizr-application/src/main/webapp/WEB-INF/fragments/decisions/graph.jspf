@@ -1,0 +1,400 @@
+<div class="modal fade" id="graphModal" tabindex="-1" role="dialog" aria-labelledby="informationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div id="graphContent" class="modal-body">
+                <%@ include file="/WEB-INF/fragments/tooltip.jspf" %>
+                <div class="centered">
+                    <div id="exploreGraph" style="width: 100%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script nonce="${scriptNonce}">
+    var node, link;
+    var linkedById = {};
+    var width, height;
+    var simulation;
+
+    function neighboring(a, b) {
+        return linkedById[a.id + "," + b.id] !== undefined;
+    }
+
+    function resetGraph() {
+        node.style("stroke-width", "2px");
+        node.style("opacity", '1');
+        link.style("opacity", '1');
+    }
+
+    function showConnectedNodes(nodeClicked, reset) {
+        var d = d3.select(nodeClicked).node().__data__;
+        if (d.decision === undefined) {
+            resetGraph();
+
+            return;
+        }
+
+        if (reset === true) {
+            resetGraph();
+        }
+
+        $(nodeClicked).css("stroke-width", "4px");
+
+        var hasMore = true;
+        var network = [];
+        network.push(d.decision.id);
+
+        while (hasMore) {
+            hasMore = false;
+
+            decisions.forEach(function(decision) {
+                if (decision.links) {
+                    decision.links.forEach(function(link) {
+                        if (network.indexOf(decision.id) > -1 && network.indexOf(link.id) === -1) {
+                            network.push(link.id);
+                            hasMore = true;
+                        }
+
+                        if (network.indexOf(link.id) > -1 && network.indexOf(decision.id) === -1) {
+                            network.push(decision.id);
+                            hasMore = true;
+                        }
+                    });
+                }
+            });
+        }
+
+        node.style("opacity", function(o) {
+            var currentOpacity = $('#element' + o.id).css('opacity');
+            return network.indexOf(o.id) > -1 ? 1 : (reset === true ? 0.1 : currentOpacity);
+        });
+
+        link.style("opacity", function(o) {
+            var currentOpacity = $('#relationship' + o.id).css('opacity');
+            return (network.indexOf(o.source.id) > -1 || network.indexOf(o.target.id) > -1) ? 1 : (reset === true ? 0.1 : currentOpacity);
+        });
+    }
+
+    function click(event, d) {
+        showConnectedNodes(this, true);
+
+        if (d.id > 0) {
+            window.location.hash = '#' + d.id;
+        }
+    }
+
+    function dblclick(event, d) {
+        if (d.id > 0) {
+            window.location.hash = '#' + d.id;
+            $('#graphModal').modal('hide');
+        }
+    }
+
+    function renderGraph() {
+        $("#exploreGraph").empty();
+
+        try {
+            var svg = d3.select("#exploreGraph").append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .append("g");
+
+            svg.append("svg:defs").selectAll("marker")
+                .data(["arrowStraight"])
+                .enter().append("svg:marker")
+                .attr("id", String)
+                .attr("viewBox", "0 0 14 14")
+                .attr("refX", 35)
+                .attr("refY", 6)
+                .attr("markerWidth", 12)
+                .attr("markerHeight", 12)
+                .attr("orient", "auto")
+                .append("svg:path")
+                .attr("d", "M0,0 L12,6 L0,12 L0,0")
+                .attr("fill", '#dddddd');
+
+            var distance = Math.min(width, height) / 3;
+
+            simulation = d3.forceSimulation(graph.nodes)
+                .force("link", d3.forceLink().distance(distance).id(function (d) {
+                    return d.id;
+                }))
+                .force("charge", d3.forceManyBody().strength(-distance))
+                .force("center", d3.forceCenter(width / 2, height / 2))
+                .stop();
+
+            link = svg.selectAll(".link")
+                .data(graph.links)
+                .enter()
+                .append("svg:path")
+                .attr("class", "link")
+                .attr("stroke", function (d) {
+                    return d.source === 'root' ? undefined : '#dddddd';
+                })
+                .attr("marker-end", function(d) {
+                    return d.source === 'root' ? undefined : 'url(#arrowStraight)';
+                })
+                .on("mouseover", showTooltipForLink)
+                .on("mousemove", moveTooltip)
+                .on("mouseout", hideTooltip);
+
+            node = svg.selectAll(".node")
+                .data(graph.nodes)
+                .enter()
+                .append("g")
+                .attr("class", "node")
+                .call(d3.drag()
+                    .on("start", dragstarted)
+                    .on("drag", dragged)
+                    .on("end", dragended)
+                )
+                .on("click", click)
+                .on("dblclick", dblclick)
+                .on("mouseover", showTooltipForDecision)
+                .on("mousemove", moveTooltip)
+                .on("mouseout", hideTooltip);
+
+            node.append("circle")
+                .attr("id", function (d) {
+                    return 'decision' + d.id;
+                })
+                .attr("r", '20')
+                .style("fill", function (d) {
+                    if (d.status) {
+                        return getDecisionStyle(d).background;
+                    } else {
+                        return '#777777';
+                    }
+                })
+                .style("stroke", function (d) {
+                    var color;
+                    if (d.status) {
+                        color = getDecisionStyle(d).background;
+                    } else {
+                        color = '#777777';
+                    }
+
+                    return structurizr.util.shadeColor(color, -20);
+                });
+
+            node.append("text")
+                .attr("class", "nodeName")
+                .attr("dy", function (d) {
+                    return 0;
+                })
+                .attr("dx", function (d) {
+                    return 25;
+                })
+                .text(function (d) {
+                    return d.name;
+                });
+
+            node.append("text")
+                .attr("class", "nodeMetadata")
+                .attr("dy", function(d) {
+                    return 10;
+                })
+                .attr("dx", function(d) {
+                    return 25;
+                })
+                .text(function (d) { return d.status ; });
+
+            simulation.nodes(graph.nodes).on("tick", ticked);
+
+            simulation.force("link").links(graph.links);
+
+            simulation.alphaTarget(0.9);
+
+            for (var i = 0; i < 300; ++i) {
+                simulation.tick();
+            }
+
+            simulation.alphaTarget(0).restart();
+
+            function ticked() {
+                link.attr("d", function (d) {
+                    if (isLinked(d.source.id, d.target.id) && isLinked(d.target.id, d.source.id)) {
+                        // bi-directional relationship
+                        var dx = d.target.x - d.source.x,
+                            dy = d.target.y - d.source.y,
+                            dr = Math.sqrt(dx * dx + dy * dy) * 2;
+                        return "M" +
+                            d.source.x + "," +
+                            d.source.y + "A" +
+                            dr + "," + dr + " 0 0,1 " +
+                            d.target.x + "," +
+                            d.target.y;
+                    } else {
+                        // uni-directional relationship
+                        return "M" + d.source.x + "," + d.source.y + " " + "L" + d.target.x + "," + d.target.y;
+                    }
+
+                });
+
+                node.attr("transform", function (d) {
+                    return "translate(" + Math.max(0, Math.min(width, d.x)) + "," + Math.max(0, Math.min(height, d.y)) + ")";
+                });
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    function calculateSize(d) {
+        return 20;
+    }
+
+    function dragstarted(event, d) {
+        if (!event.active) {
+            simulation.alphaTarget(0.3).restart();
+        }
+        d.fx = d.x;
+        d.fy = d.y;
+    }
+
+    function dragged(event, d) {
+        d.fx = event.x;
+        d.fy = event.y;
+    }
+
+    function dragended(event, d) {
+        if (!event.active) {
+            simulation.alphaTarget(0);
+        }
+        d.fx = null;
+        d.fy = null;
+    }
+
+    function createGraph() {
+        if (decisions === undefined || decisions.length === 0) {
+            return undefined;
+        }
+
+        $('#graphButton').removeClass('hidden');
+
+        var rootNodeName = 'Decisions';
+        var graph = { nodes: [
+                {
+                    id: 'root',
+                    name: rootNodeName,
+                    description: '',
+                    status: undefined,
+                    decision: undefined
+                }
+            ], links: []};
+
+        decisions.forEach(function(decision) {
+            graph.nodes.push({
+                id: decision.id,
+                name: decision.title,
+                description: decision.description,
+                status: decision.status,
+                decision: decision
+            });
+
+            registerLink('root', decision.id);
+            registerLink(decision.id, decision.id); // this prevents the nodes in the graph linking to themselves
+
+            graph.links.push({
+                id: decision.id,
+                source: 'root',
+                target: decision.id,
+                description: ''
+            });
+
+            if (decision.links) {
+                decision.links.forEach(function(link) {
+                    var targetId = link.id;
+
+                    if (!isLinked(decision.id, targetId)) {
+                        registerLink(decision.id, targetId);
+
+                        graph.links.push({
+                            id: decision.id + '-' + targetId,
+                            source: decision.id,
+                            target: targetId,
+                            description: link.description
+                        });
+                    }
+                });
+            }
+        });
+
+        return graph;
+    }
+
+    function highlightDecisionInGraph(decision) {
+        if (node !== undefined) {
+            highlightNode(decision.id);
+        }
+    }
+
+    function highlightNode(id) {
+        node.filter(function (d) {
+            return d.decision !== undefined && d.decision.id === id;
+        }).nodes().forEach(function (d, i) {
+            showConnectedNodes(d, true);
+        });
+    }
+
+    function isLinked(sourceId, destinationId) {
+        return linkedById[sourceId + "," + destinationId] !== undefined;
+    }
+
+    function registerLink(sourceId, destinationId) {
+        linkedById[sourceId + "," + destinationId] = 1;
+    }
+
+    function showTooltipForDecision(event, d) {
+        if (d.id === 'root') {
+            return;
+        }
+
+        var decision = d.decision;
+        var style = getDecisionStyle(d);
+        tooltip.showTooltip(decision.id + '. ' + decision.title, '', '[' + decision.status + ']', style.background, style.color);
+    }
+
+    function showTooltipForLink(event, d) {
+        if (d.description) {
+            const summary = d.source.name + ' - ' + d.description + ' - ' + d.target.name;
+            tooltip.showTooltip(d.description, summary, '', '#ffffff', '#000000');
+        }
+    }
+
+    function moveTooltip(event) {
+        tooltip.reposition(event.pageX, event.pageY);
+    }
+
+    function hideTooltip(event) {
+        tooltip.hide();
+    }
+
+    function setWidthAndHeight() {
+        width = window.innerWidth * 0.90;
+        height = window.innerHeight * 0.90;
+    }
+
+    function resizeGraph() {
+        setWidthAndHeight();
+        $("#exploreGraph svg").attr('width', width);
+        $("#exploreGraph svg").attr('height', height);
+
+        simulation.force("center")
+            .x(width / 2)
+            .y(height / 2);
+
+        simulation.alpha(0.3).restart();
+    }
+
+    function openGraphModal() {
+        if (graph !== undefined) {
+            $('#graphModal').modal('show');
+        }
+    }
+
+    $('#graphModal').on('shown.bs.modal', function (e) {
+        resizeGraph();
+    });
+</script>

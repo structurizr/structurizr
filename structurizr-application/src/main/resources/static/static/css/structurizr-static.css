@@ -1,0 +1,153 @@
+body {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    padding-left: 0;
+    padding-right: 0;
+    line-height: 1.5;
+    margin: 0;
+}
+.centered {
+    text-align: center;
+}
+.btn {
+    text-shadow: none;
+}
+.icon-btn {
+    width: 18px;
+    height: 18px;
+    margin-bottom: 1px;
+    vertical-align: middle;
+}
+.icon-xs {
+    width: 12px;
+    height: 12px;
+    margin: 2px 2px 4px 0;
+}
+.icon-sm {
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
+    margin: 2px 2px 4px 0;
+}
+.icon-md {
+    width: 26px;
+    height: 26px;
+    margin: 2px 2px 4px 0;
+}
+.icon-lg {
+    width: 36px;
+    height: 36px;
+    margin: 2px 2px 4px 0;
+}
+.icon-xxl {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+.icon-white {
+    filter: invert(1);
+}
+.icon-h1 {
+    width: 45px;
+    height: 45px;
+    vertical-align: bottom;
+    line-height: 1;
+    margin-bottom: 0;
+}
+.icon-h2 {
+    width: 32px;
+    height: 32px;
+    vertical-align: bottom;
+    margin-bottom: 4px;
+}
+
+.modal-xl {
+    width: 95%;
+    max-width: 95%;
+}
+.modal-content {
+    font-size: 15px;
+}
+
+.btn-active {
+    background: #999999;
+}
+
+#quickFindModal .selected {
+    background: #85BBF0;
+    color: #ffffff;
+}
+#quickFindModal .quickNavigationItem {
+    padding: 4px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+#tooltip {
+    font-size: 14px;
+    color: #000000;
+    background: #eeeeee;
+    padding: 10px;
+    margin: 20px;
+    position: absolute;
+    z-index: 10;
+    opacity: 0.98;
+    border: 2px #666666 solid;
+    border-radius: 5px;
+    width: 33%;
+    max-width: 33%;
+    overflow: hidden;
+}
+#tooltipName {
+    font-size: 20px;
+    font-weight: normal;
+}
+#tooltipParent {
+    font-size: 8px;
+}
+#tooltipMetadata {
+    font-size: 10px;
+}
+#tooltipType {
+    font-size: 10px;
+}
+#tooltipDescription {
+    font-size: 12px;
+    margin-top: 10px;
+}
+#tooltipTags {
+    margin-top: 10px;
+    font-size: 10px;
+}
+#tooltipProperties {
+    margin-top: 15px;
+    font-size: 10px;
+}
+#tooltipUrl {
+    margin-top: 10px;
+    font-size: 10px;
+}
+#tooltip .tag {
+    border-width: 1px;
+    border-style: solid;
+    padding: 3px 3px 3px 3px;
+    margin: 3px 3px 3px 0;
+    border-radius: 6px;
+    white-space: nowrap;
+    display: inline-block;
+}
+.hidden {
+    display: none !important;
+}
+
+code {
+    color: #000000;
+    font-weight: bold;
+}
+
+.img-light {
+    display: block;
+}
+.img-dark {
+    display: none;
+}

@@ -1,0 +1,58 @@
+<script src="/static/js/crypto-js-4.1.1.min.js"></script>
+
+<script type="text/javascript" src="<c:url value="/static/js/structurizr-client.js" />"></script>
+<script type="text/javascript" src="<c:url value="/static/js/structurizr-workspace.js" />"></script>
+<script type="text/javascript" src="<c:url value="/static/js/structurizr-encryption.js" />"></script>
+
+<script nonce="${scriptNonce}">
+    function loadWorkspace(json) {
+        try {
+            if (typeof beforeWorkspaceLoaded === 'function') {
+                beforeWorkspaceLoaded(json);
+            }
+
+            structurizr.workspace = new structurizr.Workspace(json);
+            workspaceLoaded();
+
+            if (typeof afterWorkspaceLoaded === 'function') {
+                afterWorkspaceLoaded(structurizr.workspace.getJson());
+                $(window).trigger('resize');
+            }
+        } catch (err) {
+            if (window.logError) {
+                logError('Error loading workspace', window.href, 1, err);
+            }
+            console.log(err);
+
+            if (progressMessage !== undefined) {
+                progressMessage.show('There is a problem loading your workspace - ' + err);
+            }
+        }
+    }
+
+    function loadWorkspaceFromParent() {
+        structurizr.workspace = parent.structurizr.workspace;
+
+        try {
+            if (typeof beforeWorkspaceLoaded === 'function') {
+                beforeWorkspaceLoaded(structurizr.workspace.getJson());
+            }
+
+            workspaceLoaded();
+
+            if (typeof afterWorkspaceLoaded === 'function') {
+                afterWorkspaceLoaded(structurizr.workspace.getJson());
+                $(window).trigger('resize');
+            }
+        } catch (err) {
+            logError('Error loading workspace', window.href, 1, err);
+            console.log(err);
+
+            if (progressMessage !== undefined) {
+                progressMessage.show('There is a problem loading your workspace - ' + err);
+            }
+        }
+    }
+</script>
+
+<%@ include file="/WEB-INF/fragments/workspace/client-side-encryption-passphrase-modal.jspf" %>

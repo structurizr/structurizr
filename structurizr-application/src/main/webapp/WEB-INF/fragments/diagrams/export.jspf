@@ -1,0 +1,444 @@
+<div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="exportModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <select multiple class="form-select" id="exportViewList" size="10"></select>
+                </div>
+
+                <div class="centered" id="exportPNGOptions" style="margin-top: 20px;">
+                    <label style="margin-right: 20px">
+                        <input type="checkbox" id="exportPNGDiagramMetadata" checked="checked" class="form-check-input" />
+                        Include diagram title, description, and metadata
+                    </label>
+
+                    <label style="margin-right: 20px">
+                        <input type="checkbox" id="exportPNGCropDiagrams" class="form-check-input" />
+                        Crop diagrams
+                    </label>
+
+                    <label style="margin-right: 20px">
+                        <input type="checkbox" id="exportPNGAnimationSteps" class="form-check-input" />
+                        Include animation steps
+                    </label>
+
+                    <label style="margin-right: 20px">
+                        <input type="checkbox" id="exportPNGDownload" class="form-check-input" />
+                        Automatically download
+                    </label>
+                </div>
+
+                <div class="centered" id="exportSVGOptions" style="margin-top: 20px;">
+                    <label style="margin-right: 20px">
+                        <input type="checkbox" id="exportSVGDiagramMetadata" checked="checked" class="form-check-input" />
+                        Include diagram title, description, and metadata
+                    </label>
+
+                    <label>
+                        <input type="checkbox" id="exportSVGDownload" class="form-check-input" />
+                        Automatically download
+                    </label>
+                </div>
+
+                <div class="centered" style="margin-top: 20px; margin-bottom: 10px">
+                    <label for="exportFilenamePrefix">Filename prefix</label> <input type="text" id="exportFilenamePrefix" class="form-control" style="width: auto; display: inline-block;" />
+                </div>
+
+                <div id="exportedDiagrams" class="centered" style="margin-top: 40px"></div>
+
+                <div id="exportAnimation" class="centered hidden" style="margin-top: 20px">
+                    <label for="animatedGIFInterval">Animated GIF frame duration (seconds)</label>
+                    <input type="number" id="animatedGIFInterval" value="3" style="width: 50px" />
+                    <button id="exportAnimatedGIFButton" type="button" class="btn btn-secondary">Create animated GIF</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="publishAllViewsButton" type="button" class="btn btn-default hidden">Publish all diagrams</button>
+                <button id="exportSelectedViewsButton" type="button" class="btn btn-primary">Export</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script nonce="${scriptNonce}">
+    var exportFormat = 'png';
+
+    $('#exportSelectedViewsButton').click(function() { exportSelectedViews(); });
+    $('#publishAllViewsButton').click(function() { publishAllViews(); });
+    $('#exportAnimatedGIFButton').click(function() { createGIF(); });
+
+    $('#exportModal').on('shown.bs.modal', function () {
+        structurizr.diagram.setKeyboardShortcutsEnabled(false)
+    });
+
+    $('#exportModal').on('hidden.bs.modal', function () {
+        structurizr.diagram.setKeyboardShortcutsEnabled(true)
+    });
+
+    function initExports() {
+        const viewList = $('#exportViewList');
+
+        views.forEach(function(view) {
+            viewList.append(
+                $('<option></option>').val(structurizr.util.escapeHtml(view.key)).html(structurizr.util.escapeHtml(structurizr.ui.getTitleForView(view)))
+            );
+        });
+
+        viewList.attr("size", Math.min(10, views.length));
+
+        viewList.change(function() {
+            var selectedItems = $(this).val();
+            $('#exportSelectedViewsButton').attr('disabled', !(selectedItems && selectedItems.length > 0));
+        });
+
+        $('#exportFilenamePrefix').val('structurizr-' + (structurizr.workspace.id > 0 ? structurizr.workspace.id + '-' : ''));
+
+        $('#exportPNGCropDiagrams').change(function() {
+            if ($('#exportPNGCropDiagrams').is(':checked') === true) {
+                $('#exportPNGDiagramMetadata').prop('checked', false);
+            }
+        });
+
+        $('#exportPNGDiagramMetadata').change(function() {
+            if ($('#exportPNGDiagramMetadata').is(':checked') === true) {
+                $('#exportPNGCropDiagrams').prop('checked', false);
+            }
+        });
+
+        <c:if test="${embed eq true && showDiagramSelector eq false}">
+        $('#exportViewList').addClass('hidden');
+        $('#exportSelectedViewsButton').addClass('hidden');
+        </c:if>
+
+        <c:if test="${embed ne true && fn:startsWith(urlPrefix, '/workspace') && (workspace.open || workspace.shareable) && not workspace.clientEncrypted && structurizrConfiguration.profile eq 'Team'}">
+        $('#publishAllViewsButton').removeClass('hidden');
+        </c:if>
+    }
+
+    function exportSelectedViews() {
+        $('#exportedDiagrams').empty();
+        $('#exportAnimation').addClass('hidden');
+        const currentView = structurizr.diagram.getCurrentViewOrFilter();
+
+        var viewList = $('#exportViewList');
+        var selectedValues = viewList.val();
+        if (selectedValues) {
+            if (exportFormat === 'svg') {
+                const includeMetadata = $('#exportSVGDiagramMetadata').is(':checked') === true;
+                const download = $('#exportSVGDownload').is(':checked') === true;
+
+                exportDiagramsToSVG(selectedValues, includeMetadata, download, currentView);
+            } else {
+                const includeMetadata = $('#exportPNGDiagramMetadata').is(':checked') === true;
+                const includeAnimationSteps = $('#exportPNGAnimationSteps').is(':checked') === true;
+                if (includeAnimationSteps === true) {
+                    $('#exportAnimation').removeClass('hidden');
+                } else {
+                    $('#exportAnimation').addClass('hidden');
+                }
+                const crop = $('#exportPNGCropDiagrams').is(':checked') === true;
+                const download = $('#exportPNGDownload').is(':checked') === true;
+
+                exportDiagramsToPNG(selectedValues, includeMetadata, includeAnimationSteps, crop, download, currentView);
+            }
+        }
+    }
+
+    function exportDiagramsToPNG(viewsToExport, includeDiagramMetadata, includeDiagramAnimations, crop, download, originalView) {
+        structurizr.diagram.onViewChanged(undefined);
+
+        if (viewsToExport && viewsToExport.length > 0) {
+            const viewToExport = structurizr.workspace.findViewByKey(viewsToExport[0]);
+
+            changeView(viewToExport, function () {
+                if (includeDiagramAnimations === true) {
+                    structurizr.diagram.exportCurrentDiagramKeyToPNG(function(diagramKeyAsPNG) {
+
+                        var stepNumber = 1;
+                        structurizr.diagram.startAnimation(false);
+
+                        const f = function () {
+                            structurizr.diagram.exportCurrentDiagramToPNG(includeDiagramMetadata, crop, function (diagramAsPNG) {
+                                addExportedPNGToPage(diagramAsPNG, undefined, stepNumber, download);
+
+                                structurizr.diagram.stepForwardInAnimation();
+                                stepNumber++;
+
+                                if (structurizr.diagram.animationStarted() === false) {
+                                    structurizr.diagram.exportCurrentDiagramToPNG(includeDiagramMetadata, crop, function (diagramAsPNG) {
+                                        addExportedPNGToPage(diagramAsPNG, diagramKeyAsPNG, stepNumber, download);
+                                        viewsToExport.splice(0, 1);
+                                        exportDiagramsToPNG(viewsToExport, includeDiagramMetadata, includeDiagramAnimations, crop, download, originalView);
+                                    });
+                                } else {
+                                    f();
+                                }
+                            });
+                        }
+
+                        f();
+                    });
+                } else {
+                    structurizr.diagram.exportCurrentDiagramToPNG(includeDiagramMetadata, crop, function(diagramAsPNG) {
+                        structurizr.diagram.exportCurrentDiagramKeyToPNG(function(diagramKeyAsPNG) {
+                            addExportedPNGToPage(diagramAsPNG, diagramKeyAsPNG, undefined, download);
+
+                            viewsToExport.splice(0, 1);
+                            exportDiagramsToPNG(viewsToExport, includeDiagramMetadata, includeDiagramAnimations, crop, download, originalView);
+                        });
+                    });
+                }
+            });
+        } else {
+            setTimeout(function() {
+                structurizr.diagram.onViewChanged(viewChanged);
+                changeView(originalView);
+            }, 1000);
+        }
+    }
+
+    function addExportedPNGToPage(diagramAsPNG, diagramKeyAsPNG, stepNumber, download) {
+        const currentView = structurizr.diagram.getCurrentViewOrFilter();
+        const viewTitle = structurizr.ui.getTitleForView(currentView);
+
+        var downloadFilenamePrefix = $('#exportFilenamePrefix').val();
+        downloadFilenamePrefix += currentView.key;
+        var downloadFilenameSuffix = '.png';
+
+        if (stepNumber !== undefined) {
+            var paddedStepNumber = ("00" + stepNumber);
+            downloadFilenameSuffix = '-' + paddedStepNumber.substr(paddedStepNumber.length-3) + '.png';
+        }
+
+        const exportedImageElement = document.getElementById("exportedDiagrams");
+
+        var div = document.createElement('div');
+        div.style = "display: inline-block; margin: 10px; vertical-align: top; max-width: 300px";
+        exportedImageElement.appendChild(div);
+
+        var title = document.createElement('h6');
+        title.appendChild(document.createTextNode(viewTitle));
+        div.appendChild(title);
+
+        var img = document.createElement('img');
+        img.className = "img-thumbnail exportedPNGDiagram";
+        img.style = "display: block; margin: 0 auto 5px auto";
+        var link = document.createElement("a");
+        link.appendChild(img);
+        div.appendChild(link);
+
+        var filename = document.createElement('div');
+        filename.appendChild(document.createTextNode(downloadFilenamePrefix + downloadFilenameSuffix));
+        filename.style = "font-size: 8px; margin-bottom: 10px";
+        div.appendChild(filename);
+
+        img.src = diagramAsPNG;
+        link.download = downloadFilenamePrefix + downloadFilenameSuffix;
+        link.href = URL.createObjectURL(structurizr.util.dataURIToBlob(diagramAsPNG));
+
+        if (download) {
+            link.click();
+        }
+
+        if (diagramKeyAsPNG !== undefined) {
+            var imgKey = document.createElement('img');
+            imgKey.className = "img-thumbnail";
+            img.style = "display: block; margin: 0 auto 5px auto";
+            var linkKey = document.createElement("a");
+            linkKey.appendChild(imgKey);
+            div.appendChild(linkKey);
+
+            filename = document.createElement('div');
+            filename.appendChild(document.createTextNode(downloadFilenamePrefix + '-key.png'));
+            filename.style = "font-size: 8px; margin-bottom: 10px";
+            div.appendChild(filename);
+
+            imgKey.src = diagramKeyAsPNG;
+            linkKey.download = downloadFilenamePrefix + '-key.png';
+            linkKey.href = URL.createObjectURL(structurizr.util.dataURIToBlob(diagramKeyAsPNG));
+
+            if (download) {
+                linkKey.click();
+            }
+        }
+    }
+
+    function exportDiagramsToSVG(viewsToExport, includeDiagramMetadata, download, originalView) {
+        structurizr.diagram.onViewChanged(undefined);
+
+        if (viewsToExport && viewsToExport.length > 0) {
+            const viewToExport = structurizr.workspace.findViewByKey(viewsToExport[0]);
+
+            changeView(viewToExport, function () {
+                var diagramAsSVG = structurizr.diagram.exportCurrentDiagramToSVG(includeDiagramMetadata);
+                diagramAsSVG = replaceLocalThemes(diagramAsSVG);
+
+                var diagramKeyAsSVG;
+                if (viewToExport.type !== structurizr.constants.IMAGE_VIEW_TYPE) {
+                    diagramKeyAsSVG = structurizr.diagram.exportCurrentDiagramKeyToSVG();
+                    diagramKeyAsSVG = replaceLocalThemes(diagramKeyAsSVG);
+                }
+
+                addExportedSVGToPage(diagramAsSVG, diagramKeyAsSVG, download);
+
+                viewsToExport.splice(0, 1);
+                exportDiagramsToSVG(viewsToExport, includeDiagramMetadata, download, originalView);
+            });
+        } else {
+            setTimeout(function() {
+                structurizr.diagram.onViewChanged(viewChanged);
+                changeView(originalView);
+            }, 1000);
+        }
+    }
+
+    function addExportedSVGToPage(diagramAsSVG, diagramKeyAsSVG, download) {
+        const currentView = structurizr.diagram.getCurrentViewOrFilter();
+        const viewTitle = structurizr.ui.getTitleForView(currentView);
+
+        var baseFilename = $('#exportFilenamePrefix').val();
+        baseFilename += currentView.key;
+        const diagramFilename = baseFilename + '.svg';
+        const keyFilename = baseFilename + '-key.svg'
+
+        var exportedImageElement = document.getElementById("exportedDiagrams");
+
+        var div = document.createElement('div');
+        div.style = "display: inline-block; margin: 10px; vertical-align: top; width: 300px; max-width: 300px";
+        exportedImageElement.appendChild(div);
+
+        var title = document.createElement('h6');
+        title.appendChild(document.createTextNode(viewTitle));
+        div.appendChild(title);
+
+        var img = document.createElement('div');
+        img.className = "img-thumbnail";
+        img.style = "display: block; margin-bottom: 5px";
+        var link = document.createElement("a");
+        link.appendChild(img);
+        div.appendChild(link);
+
+        var blob = structurizr.util.toBlob(diagramAsSVG, 'text/html;charset=utf-8');
+        var url = URL.createObjectURL(blob);
+        img.innerHTML = diagramAsSVG;
+        link.download = diagramFilename;
+        link.href = url;
+
+        var filename = document.createElement('div');
+        filename.appendChild(document.createTextNode(diagramFilename));
+        filename.style = "font-size: 8px; margin-bottom: 10px";
+        div.appendChild(filename);
+
+        if (download) {
+            link.click();
+        }
+
+        if (diagramKeyAsSVG) {
+            var imgKey = document.createElement('div');
+            imgKey.className = "img-thumbnail";
+            imgKey.style = "display: block; margin-bottom: 5px";
+            var linkKey = document.createElement("a");
+            linkKey.appendChild(imgKey);
+            div.appendChild(linkKey);
+
+            var blobKey = structurizr.util.toBlob(diagramKeyAsSVG, 'text/html;charset=utf-8');
+            var urlKey = URL.createObjectURL(blobKey);
+            imgKey.innerHTML = diagramKeyAsSVG;
+            linkKey.download = keyFilename;
+            linkKey.href = urlKey;
+
+            filename = document.createElement('div');
+            filename.appendChild(document.createTextNode(keyFilename));
+            filename.style = "font-size: 8px; margin-bottom: 10px";
+            div.appendChild(filename);
+
+            if (download) {
+                linkKey.click();
+            }
+        }
+    }
+
+    function createGIF() {
+        var images = [];
+
+        var gifWidth = $('.exportedPNGDiagram')[0].naturalWidth;
+        var gifHeight = $('.exportedPNGDiagram')[0].naturalHeight;
+
+        $('.exportedPNGDiagram').each(function() {
+            images.push($(this).attr('src'));
+        });
+
+        var durationPerFrame = parseInt($('#animatedGIFInterval').val());
+
+        var exportedImageElement = document.getElementById("exportedDiagrams");
+        var div = document.createElement('div');
+        div.style = "display: inline-block; margin: 10px; vertical-align: top; max-width: 300px";
+        exportedImageElement.appendChild(div);
+
+        var title = document.createElement('h6');
+        title.appendChild(document.createTextNode("Animated GIF (" + images.length + " frames; " + durationPerFrame + " seconds per frame)"));
+        div.appendChild(title);
+
+        var link = document.createElement("a");
+        link.download = 'structurizr.gif';
+
+        var img = document.createElement('img');
+        img.width = "300";
+        img.className = "img-thumbnail exportedGIFDiagram";
+        img.style = "display: block; margin-bottom: 5px";
+        img.src = "/static/img/progress.gif";
+        link.appendChild(img);
+        div.appendChild(link);
+        document.getElementById("exportedDiagrams").appendChild(div);
+
+        gifshot.createGIF({
+            gifWidth: gifWidth,
+            gifHeight: gifHeight,
+            'images': images,
+            'interval': durationPerFrame,
+            'frameDuration': 1
+        },function(obj) {
+            if(!obj.error) {
+                var image = obj.image;
+
+                img.src = image;
+
+                var blob = structurizr.util.dataURIToBlob(obj.image);
+                var url = URL.createObjectURL(blob);
+                link.href = url;
+            }
+        });
+    }
+
+    function exportToPNG() {
+        $('#exportModal .modal-title').html('Export to PNG');
+        exportFormat = 'png';
+        $('#exportPNGOptions').removeClass('hidden');
+        $('#exportSVGOptions').addClass('hidden');
+        $('#exportAnimation').addClass('hidden');
+        $('#exportedDiagrams').empty();
+
+        const currentView = structurizr.diagram.getCurrentViewOrFilter();
+        $('#exportViewList').val(currentView.key);
+
+        $('#exportModal').modal('show');
+    }
+
+    function exportToSVG() {
+        $('#exportModal .modal-title').html('Export to SVG');
+        exportFormat = 'svg';
+        $('#exportPNGOptions').addClass('hidden');
+        $('#exportSVGOptions').removeClass('hidden');
+        $('#exportAnimation').addClass('hidden');
+        $('#exportedDiagrams').empty();
+        $('#exportModal').modal('show');
+    }
+
+    function replaceLocalThemes(svg) {
+        return svg.replace(/xlink:href="\/static\/themes\//g, 'xlink:href="https://static.structurizr.com/themes/');
+    }
+
+</script>

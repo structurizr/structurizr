@@ -1,0 +1,199 @@
+body {
+    background: #111111;
+    color: #dddddd;
+}
+
+#footer {
+    background: #111111;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #191919;
+}
+
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    border-top: 1px solid #444444;
+}
+
+.table > thead > tr > th {
+    border-bottom: 2px solid #444444;
+}
+
+pre {
+    background: #444444;
+    border: 1px solid #999999;
+    color: #aaa;
+}
+
+code {
+    color: #08427B;
+    background: #85BBF0;
+}
+
+.img-thumbnail, .thumbnail {
+    background: #111111;
+}
+
+.icon-xs {
+    filter: invert(1.0);
+}
+
+.icon-sm {
+    filter: invert(1.0);
+}
+
+.icon-md {
+    filter: invert(1.0);
+}
+
+.icon-lg {
+    filter: invert(1.0);
+}
+
+.icon-xl {
+    filter: invert(1.0);
+}
+
+.icon-xxl {
+    filter: invert(1.0);
+}
+
+.icon-h1 {
+    filter: invert(1.0);
+}
+
+.icon-h2 {
+    filter: invert(1.0);
+}
+
+.form-control {
+    background: #222222;
+    color: #eeeeee;
+    border: 1px solid #999999;
+}
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+    cursor: not-allowed;
+    background-color: #111111;
+    color: #555555;
+    opacity: 1;
+}
+
+.modal-content {
+    background: #111111;
+    border: #dddddd 1px solid;
+    color: #dddddd;
+}
+
+.modal-header {
+    border-bottom: 1px solid #111111;
+}
+
+.modal-header .close {
+    color: #eeeeee;
+}
+
+.modal-footer {
+    border-top: 1px solid #111111;
+}
+
+#diagramViewport {
+    background: #333333;
+}
+
+.btn-default {
+    background-image: linear-gradient(to bottom, #ccc 0, #ddd 100%);
+}
+
+.btn-default.disabled, .btn-default:disabled, .btn-default[disabled] {
+    background-color: #777777;
+    background-image: none;
+}
+
+hr {
+    border-top: 1px solid #444444;
+}
+
+.img-light {
+    display: none;
+}
+.img-dark {
+    display: block;
+}
+
+#exploreGraphPanel, #exploreTreePanel {
+    background: #111111;
+}
+
+#exploreGraph text, #exploreTree text {
+    fill: #eeeeee;
+    stroke: #111111;
+    paint-order: stroke;
+}
+
+#exploreGraph .nodeName {
+    fill: #eeeeee;
+}
+
+#exploreGraph .nodeMetadata {
+    fill: #aaaaaa;
+}
+
+#topNavigation {
+    background: #111111;
+    border-bottom: solid 1px #000000;
+    box-shadow: 0px 0px 3px #000000;
+    text-shadow: none;
+}
+
+#workspaceSummaryControls, #editorControls, #diagramControls, #explorationControls, #documentationControls, #decisionLogControls, #healthControls {
+    background: #111111;
+    border-bottom: solid 1px #000000;
+    box-shadow: 0px 0px 3px #000000;
+}
+
+#diagramNavigationPanel {
+    background: #111111;
+    border-right: solid 1px #000000;
+}
+
+.structurizrDiagramViewport {
+    background: #333333;
+}
+
+.diagramThumbnailActive {
+    background: #333333;
+    color: #ffffff;
+    border: solid 1px #333333;
+}
+
+#filterModal .tagOn {
+    background: #aaaaaa;
+    color: #ffffff;
+    border: solid 1px #aaaaaa;
+}
+#filterModal .tagOff {
+    background: #111111;
+    color: #aaaaaa;
+    border: solid 1px #aaaaaa;
+}
+
+#documentationContent table th, #decisionLogContent table th {
+    background: #333333;
+}
+
+.decisionLogSummary table td {
+    border-top: 1px solid #333333 !important;
+}
+
+.btn-default, .btn-default:hover {
+    background: #333333;
+    border: solid 1px #333333;
+}
+.btn-default:disabled {
+    background: #111111;
+    border: solid 1px #222222;
+}
+.icon-btn {
+    filter: invert(1.0);
+}

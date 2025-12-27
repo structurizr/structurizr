@@ -1,0 +1,33 @@
+<c:if test="${autoRefreshInterval > 0}">
+<script nonce="${scriptNonce}">
+    var autoRefreshInterval = ${autoRefreshInterval};
+    var lastModifiedDate = ${autoRefreshLastModifiedDate};
+
+    setTimeout(refresh, autoRefreshInterval);
+
+    function refresh() {
+        $.ajax({
+            url: '/workspace/lastModified',
+            type: 'GET',
+            cache: false
+        })
+            .done(function(data, textStatus, jqXHR) {
+                if (data && data > lastModifiedDate && (window.unsavedChanges === undefined || !unsavedChanges)) {
+                        lastModifiedDate = data;
+                        window.location.reload();
+                } else {
+                    setTimeout(refresh, autoRefreshInterval);
+                }
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+                console.log(jqXHR.status);
+                console.log("Text status: " + textStatus);
+                console.log("Error thrown: " + errorThrown);
+
+                // try again
+                setTimeout(refresh, autoRefreshInterval);
+            });
+    }
+</script>
+</c:if>

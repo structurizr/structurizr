@@ -1,0 +1,19 @@
+#diagramContainer {
+    background: #ffffff;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+#diagramViewport {
+    text-align: center;
+    background: #ffffff;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+#diagramCanvas {
+    background: #ffffff;
+    margin: 0 auto;
+    border: 0;
+}

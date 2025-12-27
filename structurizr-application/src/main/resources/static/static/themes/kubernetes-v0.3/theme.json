@@ -1,0 +1,122 @@
+{
+  "name" : "Kubernetes",
+  "description" : "This theme includes element styles with icons for each of the Kubernetes components/resources, based upon the Kubernetes Icons Set (https://github.com/kubernetes/community/tree/master/icons).",
+  "elements" : [ {
+    "tag" : "Kubernetes - crb",
+    "icon" : "crb-256.png"
+  }, {
+    "tag" : "Kubernetes - pod",
+    "icon" : "pod-256.png"
+  }, {
+    "tag" : "Kubernetes - vol",
+    "icon" : "vol-256.png"
+  }, {
+    "tag" : "Kubernetes - c-role",
+    "icon" : "c-role-256.png"
+  }, {
+    "tag" : "Kubernetes - ing",
+    "icon" : "ing-256.png"
+  }, {
+    "tag" : "Kubernetes - svc",
+    "icon" : "svc-256.png"
+  }, {
+    "tag" : "Kubernetes - secret",
+    "icon" : "secret-256.png"
+  }, {
+    "tag" : "Kubernetes - ds",
+    "icon" : "ds-256.png"
+  }, {
+    "tag" : "Kubernetes - netpol",
+    "icon" : "netpol-256.png"
+  }, {
+    "tag" : "Kubernetes - sa",
+    "icon" : "sa-256.png"
+  }, {
+    "tag" : "Kubernetes - etcd",
+    "icon" : "etcd-256.png"
+  }, {
+    "tag" : "Kubernetes - kubelet",
+    "icon" : "kubelet-256.png"
+  }, {
+    "tag" : "Kubernetes - ns",
+    "icon" : "ns-256.png"
+  }, {
+    "tag" : "Kubernetes - cm",
+    "icon" : "cm-256.png"
+  }, {
+    "tag" : "Kubernetes - job",
+    "icon" : "job-256.png"
+  }, {
+    "tag" : "Kubernetes - sc",
+    "icon" : "sc-256.png"
+  }, {
+    "tag" : "Kubernetes - sts",
+    "icon" : "sts-256.png"
+  }, {
+    "tag" : "Kubernetes - api",
+    "icon" : "api-256.png"
+  }, {
+    "tag" : "Kubernetes - k-proxy",
+    "icon" : "k-proxy-256.png"
+  }, {
+    "tag" : "Kubernetes - limits",
+    "icon" : "limits-256.png"
+  }, {
+    "tag" : "Kubernetes - node",
+    "icon" : "node-256.png"
+  }, {
+    "tag" : "Kubernetes - rb",
+    "icon" : "rb-256.png"
+  }, {
+    "tag" : "Kubernetes - deploy",
+    "icon" : "deploy-256.png"
+  }, {
+    "tag" : "Kubernetes - ep",
+    "icon" : "ep-256.png"
+  }, {
+    "tag" : "Kubernetes - quota",
+    "icon" : "quota-256.png"
+  }, {
+    "tag" : "Kubernetes - role",
+    "icon" : "role-256.png"
+  }, {
+    "tag" : "Kubernetes - user",
+    "icon" : "user-256.png"
+  }, {
+    "tag" : "Kubernetes - c-m",
+    "icon" : "c-m-256.png"
+  }, {
+    "tag" : "Kubernetes - cronjob",
+    "icon" : "cronjob-256.png"
+  }, {
+    "tag" : "Kubernetes - crd",
+    "icon" : "crd-256.png"
+  }, {
+    "tag" : "Kubernetes - psp",
+    "icon" : "psp-256.png"
+  }, {
+    "tag" : "Kubernetes - rs",
+    "icon" : "rs-256.png"
+  }, {
+    "tag" : "Kubernetes - pvc",
+    "icon" : "pvc-256.png"
+  }, {
+    "tag" : "Kubernetes - group",
+    "icon" : "group-256.png"
+  }, {
+    "tag" : "Kubernetes - hpa",
+    "icon" : "hpa-256.png"
+  }, {
+    "tag" : "Kubernetes - master",
+    "icon" : "master-256.png"
+  }, {
+    "tag" : "Kubernetes - pv",
+    "icon" : "pv-256.png"
+  }, {
+    "tag" : "Kubernetes - c-c-m",
+    "icon" : "c-c-m-256.png"
+  }, {
+    "tag" : "Kubernetes - sched",
+    "icon" : "sched-256.png"
+  } ]
+}

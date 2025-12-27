@@ -1,0 +1,27 @@
+#decisionLogContent {
+    font-size: 18px;
+}
+
+.decisionTimelineYear {
+    font-size: 30px;
+    color: gray;
+    font-weight: normal;
+}
+
+.decisionSummaryMetadata {
+    color: gray;
+    font-size: 60%;
+}
+
+.otherStatus {
+    opacity: 0.2;
+}
+
+.navigationItem {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.navigationItemSeparator {
+    margin-bottom: 40px;
+}

@@ -1,0 +1,13 @@
+<div class="modal fade" id="navigationModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body" style="padding: 0">
+                <div>
+                    <select class="form-control" id="navigationList"></select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="<c:url value="/static/js/structurizr-navigation.js" />"></script>
