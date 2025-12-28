@@ -6,6 +6,8 @@ import com.structurizr.model.SoftwareSystem;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -54,7 +56,10 @@ public class WorkspaceUtilsTests {
 
     @Test
     void saveWorkspaceToJson_and_loadWorkspaceFromJson() throws Exception {
-        File file = new File("build/workspace-utils.json");
+        File file = Files.createTempFile("structurizr-", ".tmp").toFile();
+        file.mkdirs();
+        file.deleteOnExit();
+
         Workspace workspace = new Workspace("Name", "Description");
         WorkspaceUtils.saveWorkspaceToJson(workspace, file);
 
