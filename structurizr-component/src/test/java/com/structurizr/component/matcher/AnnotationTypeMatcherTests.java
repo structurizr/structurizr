@@ -42,7 +42,7 @@ public class AnnotationTypeMatcherTests {
 
     @Test
     void matches_ReturnsFalse_WhenThereIsNoMatch() throws Exception {
-        File classes = new File("build/classes/java/test");
+        File classes = new File("target/test-classes");
         ClassParser parser = new ClassParser(new File(classes, "com/structurizr/component/matcher/annotationTypeMatcher/CustomerController.class").getAbsolutePath());
         Type type = new Type(parser.parse());
 
@@ -51,7 +51,7 @@ public class AnnotationTypeMatcherTests {
 
     @Test
     void matches_ReturnsTrue_WhenThereIsAMatch() throws Exception {
-        File classes = new File("build/classes/java/test");
+        File classes = new File("target/test-classes");
         ClassParser parser = new ClassParser(new File(classes, "com/structurizr/component/matcher/annotationTypeMatcher/CustomerController.class").getAbsolutePath());
         Type type = new Type(parser.parse());
 

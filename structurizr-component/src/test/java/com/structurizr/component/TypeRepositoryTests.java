@@ -14,7 +14,7 @@ public class TypeRepositoryTests {
     @Test
     void add_MergesClassInformation() throws Exception {
         String fqn = "com.structurizr.component.TypeRepositoryTests";
-        File classes = new File("build/classes/java/test");
+        File classes = new File("target/test-classes");
         ClassParser parser = new ClassParser(new File(classes, "com/structurizr/component/TypeRepositoryTests.class").getAbsolutePath());
         JavaClass javaClass = parser.parse();
 
@@ -33,7 +33,7 @@ public class TypeRepositoryTests {
     @Test
     void add_MergesSourceInformation() throws Exception {
         String fqn = "com.structurizr.component.TypeRepositoryTests";
-        File classes = new File("build/classes/java/test");
+        File classes = new File("target/test-classes");
         ClassParser parser = new ClassParser(new File(classes, "com/structurizr/component/TypeRepositoryTests.class").getAbsolutePath());
         JavaClass javaClass = parser.parse();
 

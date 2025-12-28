@@ -28,7 +28,7 @@ public class ComponentFinderTests {
         ComponentFinder componentFinder = new ComponentFinderBuilder()
                 .forContainer(container)
                 .fromSource(new File("src/test/java"))
-                .fromClasses(new File("build/classes/java/test"))
+                .fromClasses(new File("target/test-classes"))
                 .filteredBy(new IncludeFullyQualifiedNameRegexFilter("com\\.structurizr\\.component\\.example\\..*"))
                 .withStrategy(new ComponentFinderStrategyBuilder()
                         .withTechnology("Web Controller")

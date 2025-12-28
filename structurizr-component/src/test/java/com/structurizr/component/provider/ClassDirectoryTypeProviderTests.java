@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ClassDirectoryTypeProviderTests {
 
-    private static final File classes = new File("build/classes/java/test");
+    private static final File classes = new File("target/test-classes");
 
     @Test
     void construction_ThrowsAnException_WhenPassedANullDirectory() {

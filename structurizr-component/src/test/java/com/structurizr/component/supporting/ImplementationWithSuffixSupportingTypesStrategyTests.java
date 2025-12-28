@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ImplementationWithSuffixSupportingTypesStrategyTests {
 
-    private final File classes = new File("build/classes/java/test");
+    private final File classes = new File("target/test-classes");
 
     @Test
     void findSupportingTypes() throws Exception {

@@ -29,7 +29,7 @@ public class TypeTests {
 
     @Test
     void getTags_WhenTypeHasOneTag() throws Exception {
-        File classes = new File("build/classes/java/test");
+        File classes = new File("target/test-classes");
         ClassParser parser = new ClassParser(new File(classes, "com/structurizr/component/types/TypeWithTag.class").getAbsolutePath());
         Type type = new Type(parser.parse());
 
@@ -40,7 +40,7 @@ public class TypeTests {
 
     @Test
     void getTags_WhenTypeHasManyTags() throws Exception {
-        File classes = new File("build/classes/java/test");
+        File classes = new File("target/test-classes");
         ClassParser parser = new ClassParser(new File(classes, "com/structurizr/component/types/TypeWithTags.class").getAbsolutePath());
         Type type = new Type(parser.parse());
 
@@ -53,7 +53,7 @@ public class TypeTests {
 
     @Test
     void getTags_WhenTypeHasOneProperty() throws Exception {
-        File classes = new File("build/classes/java/test");
+        File classes = new File("target/test-classes");
         ClassParser parser = new ClassParser(new File(classes, "com/structurizr/component/types/TypeWithProperty.class").getAbsolutePath());
         Type type = new Type(parser.parse());
 
@@ -64,7 +64,7 @@ public class TypeTests {
 
     @Test
     void getTags_WhenTypeHasManyProperties() throws Exception {
-        File classes = new File("build/classes/java/test");
+        File classes = new File("target/test-classes");
         ClassParser parser = new ClassParser(new File(classes, "com/structurizr/component/types/TypeWithProperties.class").getAbsolutePath());
         Type type = new Type(parser.parse());
 
