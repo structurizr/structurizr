@@ -77,9 +77,14 @@
                     <div id="editorControls" style="float: right">
                         <div class="btn-group">
                             <label class="btn btn-default small">
-                                <img src="/static/bootstrap-icons/cloud-upload.svg" class="icon-btn" />
+                                <img src="/static/bootstrap-icons/file-earmark-arrow-up.svg" class="icon-btn" />
                                 <input id="uploadFileInput" type="file" style="display: none;">
                             </label>
+                        </div>
+
+                        <div class="btn-group">
+                            <button id="loadFromLocalStorageButton" class="btn btn-default" title="Load from local storage"><img src="/static/bootstrap-icons/box-arrow-down.svg" class="icon-btn" /></button>
+                            <button id="saveToLocalStorageButton" class="btn btn-default" title="Save to local storage"><img src="/static/bootstrap-icons/box-arrow-up.svg" class="icon-btn" /></button>
                         </div>
 
                         <div class="btn-group">
@@ -146,6 +151,8 @@
     window.onresize = resize;
 
     $('#homeButton').click(function(event) { event.preventDefault(); window.location.href = '/'; });
+    $('#loadFromLocalStorageButton').click(function(event) { loadFromLocalStorage(event); });
+    $('#saveToLocalStorageButton').click(function(event) { saveToLocalStorage(event); });
     $('#sourceButton').click(function(event) { sourceButtonClicked(event); });
     $('#diagramsButton').click(function(event) { diagramsButtonClicked(event); });
     $('#viewSourceButton').click(function(event) { sourceButtonClicked(event); });
@@ -190,24 +197,6 @@
         ace.config.set('basePath', '/static/js/ace');
         editor.session.setMode("ace/mode/structurizr");
 
-        <c:if test="${loadFromLocalStorage eq true}">
-        var dslFromLocalStorage = localStorage.getItem(LOCAL_STORAGE_DSL);
-        if (dslFromLocalStorage && dslFromLocalStorage.length > 0) {
-            try {
-                $('#dsl').val(structurizr.util.atob(dslFromLocalStorage));
-
-                const jsonFromLocalStorage = localStorage.getItem(LOCAL_STORAGE_JSON);
-                if (jsonFromLocalStorage && jsonFromLocalStorage.length > 0) {
-                    $('#json').val(structurizr.util.atob(jsonFromLocalStorage));
-                }
-
-                document.getElementById('dslForm').submit();
-            } catch (e) {
-                editor.setValue('', -1);
-            }
-        }
-        </c:if>
-
         resize();
 
         <c:if test="${line gt 0}">
@@ -220,20 +209,6 @@
         setUnsavedChanges(true);
 
         $(window).on("beforeunload", function () {
-            try {
-                localStorage.setItem(LOCAL_STORAGE_DSL, structurizr.util.btoa(editor.getValue()));
-
-                if (structurizr.workspace) {
-                    const workspace = structurizr.workspace.getJson();
-                    workspace.views = structurizr.workspace.views;
-
-                    const jsonAsString = JSON.stringify(workspace);
-                    localStorage.setItem(LOCAL_STORAGE_JSON, structurizr.util.btoa(jsonAsString));
-                }
-            } catch (e) {
-                console.log(e);
-            }
-
             if (unsavedChanges) {
                 return "There are unsaved changes.";
             }
@@ -319,8 +294,6 @@
         if (dsl === undefined || dsl.length === 0) {
             $('#dsl').val('');
             $('#json').val('');
-            localStorage.removeItem(LOCAL_STORAGE_DSL);
-            localStorage.removeItem(LOCAL_STORAGE_JSON);
         } else {
             $('#dsl').val(dsl);
 
@@ -337,9 +310,6 @@
 
             const jsonAsString = JSON.stringify(workspace);
             $('#json').val(jsonAsString);
-
-            localStorage.setItem(LOCAL_STORAGE_DSL, structurizr.util.btoa(editor.getValue()));
-            localStorage.setItem(LOCAL_STORAGE_JSON, structurizr.util.btoa(jsonAsString));
         }
 
         return true;
@@ -347,6 +317,44 @@
 
     var sourceVisible = true;
     var diagramsVisible = true;
+
+    function loadFromLocalStorage(e) {
+        e.preventDefault();
+
+        const dslFromLocalStorage = localStorage.getItem(LOCAL_STORAGE_DSL);
+        if (dslFromLocalStorage && dslFromLocalStorage.length > 0) {
+            try {
+                $('#dsl').val(structurizr.util.atob(dslFromLocalStorage));
+
+                const jsonFromLocalStorage = localStorage.getItem(LOCAL_STORAGE_JSON);
+                if (jsonFromLocalStorage && jsonFromLocalStorage.length > 0) {
+                    $('#json').val(structurizr.util.atob(jsonFromLocalStorage));
+                }
+
+                document.getElementById('dslForm').submit();
+            } catch (e) {
+                editor.setValue('', -1);
+            }
+        }
+    }
+
+    function saveToLocalStorage(e) {
+        e.preventDefault();
+
+        try {
+            localStorage.setItem(LOCAL_STORAGE_DSL, structurizr.util.btoa(editor.getValue()));
+
+            if (structurizr.workspace) {
+                const workspace = structurizr.workspace.getJson();
+                workspace.views = structurizr.workspace.views;
+
+                const jsonAsString = JSON.stringify(workspace);
+                localStorage.setItem(LOCAL_STORAGE_JSON, structurizr.util.btoa(jsonAsString));
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
     function sourceButtonClicked(e) {
         e.preventDefault();
