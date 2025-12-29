@@ -70,7 +70,7 @@
                 <h1 id="decisionTitle" class="centered"></h1>
                 <div id="decisionDate" class="centered"></div>
                 <div class="centered" style="margin-top: 10px">
-                    <span id="decisionStatus" class="centered hidden" style="font-size: 30px"></span>
+                    <span id="decisionStatus" class="centered hidden"></span>
                     <button id="graphButton" type="button" class="btn btn-default hidden" style="height: 42px; margin-bottom: 8px;"><img src="/static/bootstrap-icons/diagram-2.svg" class="icon-btn" /> Decision explorer</button>
                 </div>
             </div>

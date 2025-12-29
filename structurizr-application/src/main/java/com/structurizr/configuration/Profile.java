@@ -4,6 +4,6 @@ public enum Profile {
 
     Playground,
     Local,
-    Team
+    Server
 
 }

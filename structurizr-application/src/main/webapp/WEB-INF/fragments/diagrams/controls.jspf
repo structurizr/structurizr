@@ -43,7 +43,7 @@
             <button id="exportToPNGButton" class="btn btn-default" title="Export diagram and key/legend to PNG"><img src="/static/bootstrap-icons/filetype-png.svg" class="icon-btn" /></button>
             <button id="exportToSVGButton" class="btn btn-default" title="Export diagram and key to SVG"><img src="/static/bootstrap-icons/filetype-svg.svg" class="icon-btn" /></button>
 
-            <c:if test="${structurizrConfiguration.profile eq 'Team'}">
+            <c:if test="${structurizrConfiguration.profile eq 'Server'}">
             <button id="embedDiagramButton" class="btn btn-default" title="Embed"><img src="/static/bootstrap-icons/code-slash.svg" class="icon-btn" /></button>
             <script nonce="${scriptNonce}">$('#embedDiagramButton').click(function() { openEmbedModal(); });</script>
             </c:if>

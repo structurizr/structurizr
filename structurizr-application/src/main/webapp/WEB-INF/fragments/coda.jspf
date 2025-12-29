@@ -3,7 +3,7 @@
     <c:if test="${showFooter eq true}">
     <div id="footer">
         <p>
-            <a href="https://docs.structurizr.com" target="_blank">Structurizr - <span id="buildNumber">${version.buildNumber}</span></a>
+            <a href="https://docs.structurizr.com" target="_blank">Structurizr v<span id="buildNumber">${version.buildNumber}</span></a>
             <c:if test="${authenticated}">
             | <a href="/signout">Sign out</a>
             </c:if>

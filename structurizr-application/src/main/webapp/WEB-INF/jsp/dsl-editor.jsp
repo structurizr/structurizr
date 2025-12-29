@@ -515,7 +515,7 @@
         }
     }
 
-    <c:if test="${workspace.editable && workspace.ownerUserType.allowedToLockWorkspaces && not empty workspace.apiKey}">
+    <c:if test="${workspace.editable && not empty workspace.apiKey}">
     new structurizr.Lock(${workspace.id}, '${userAgent}');
     </c:if>
 </script>

@@ -21,8 +21,9 @@ public class Configuration {
 
     private static final Log log = LogFactory.getLog(Configuration.class);
 
+    private static final String COMMA = ",";
+
     public static final String DEFAULT_STRUCTURIZR_DATA_DIRECTORY = "/usr/local/structurizr";
-    private static final String STRUCTURIZR_PROPERTIES_FILENAME = "structurizr.properties";
     private static final String WORK_DIRECTORY_NAME = ".structurizr";
 
     private static final String PROPERTY_NAME_PREFIX = "structurizr.";
@@ -46,12 +47,17 @@ public class Configuration {
         this.profile = profile;
         this.properties = properties;
 
+        setDefault(DATA_DIRECTORY, DEFAULT_DATA_DIRECTORY_PATH);
+
         loadProperties();
         loadSystemProperties();
         loadEnvironmentVariables();
         setDefaults();
 
-        configureFeatures();
+        if (profile == Profile.Server) {
+            configureFeatures();
+            setAdminUsersAndRoles(getProperty(ADMIN_USERS_AND_ROLES).split(COMMA));
+        }
 
         if (!getDataDirectory().exists()) {
             getDataDirectory().mkdirs();
@@ -60,8 +66,6 @@ public class Configuration {
         if (!getWorkDirectory().exists()) {
             getWorkDirectory().mkdirs();
         }
-
-        banner();
     }
 
     public static Configuration init(Profile profile, Properties properties) {
@@ -224,36 +228,40 @@ public class Configuration {
     }
 
     private void setDefaults() {
-        setDefault(DATA_DIRECTORY, DEFAULT_DATA_DIRECTORY_PATH);
-        setDefault(WORKSPACE_FILENAME, DEFAULT_FILENAME);
-
-        setDefault(AUTHENTICATION_IMPLEMENTATION, AUTHENTICATION_VARIANT_NONE);
-        setDefault(SESSION_IMPLEMENTATION, SESSION_VARIANT_LOCAL);
-        setDefault(URL, "");
         setDefault(NETWORK_TIMEOUT, DEFAULT_NETWORK_TIMEOUT_OF_SIXTY_SECONDS);
-        setDefault(API_KEY, "");
-        setDefault(DATA_STORAGE_IMPLEMENTATION, DATA_STORAGE_VARIANT_FILE);
-        setDefault(MAX_WORKSPACE_VERSIONS, DEFAULT_MAX_WORKSPACE_VERSIONS);
-        setDefault(WORKSPACE_THREADS, DEFAULT_NUMBER_OF_THREADS);
-        setDefault(SEARCH_IMPLEMENTATION, SEARCH_VARIANT_LUCENE);
-        setDefault(CACHE_IMPLEMENTATION, CACHE_VARIANT_NONE);
-        setDefault(CACHE_EXPIRY_IN_MINUTES, DEFAULT_CACHE_EXPIRY_IN_MINUTES);
-        setDefault(ADMIN_USERS_AND_ROLES, "");
-        setDefault(WORKSPACE_EVENT_LISTENER_PLUGIN, "");
-        setDefault(DSL_EDITOR, "false"); // backwards compatibility
 
-        setDefault(Features.UI_WORKSPACE_USERS, "true");
-        setDefault(Features.UI_WORKSPACE_SETTINGS, "true");
-        setDefault(Features.UI_DSL_EDITOR, "false");
-        setDefault(Features.WORKSPACE_ARCHIVING, "false");
-        setDefault(Features.WORKSPACE_BRANCHES, "false");
-        setDefault(Features.WORKSPACE_SCOPE_VALIDATION, Features.WORKSPACE_SCOPE_VALIDATION_RELAXED);
-        setDefault(Features.DIAGRAM_REVIEWS, "true");
-        setDefault(Features.DIAGRAM_ANONYMOUS_THUMBNAILS, "false");
+        if (profile != Profile.Playground) {
+            setDefault(AUTHENTICATION_IMPLEMENTATION, AUTHENTICATION_VARIANT_NONE);
+            setDefault(DATA_STORAGE_IMPLEMENTATION, DATA_STORAGE_VARIANT_FILE);
+            setDefault(SEARCH_IMPLEMENTATION, SEARCH_VARIANT_LUCENE);
+            setDefault(CACHE_IMPLEMENTATION, CACHE_VARIANT_NONE);
+            setDefault(WORKSPACE_THREADS, DEFAULT_NUMBER_OF_THREADS);
+        }
 
-        setDefault(WORKSPACES_PROPERTY, SINGLE_WORKSPACE);
-        setDefault(AUTO_SAVE_INTERVAL_PROPERTY, DEFAULT_AUTO_SAVE_INTERVAL_IN_MILLISECONDS);
-        setDefault(AUTO_REFRESH_INTERVAL_PROPERTY, DEFAULT_AUTO_REFRESH_INTERVAL_IN_MILLISECONDS);
+        if (profile == Profile.Local) {
+            setDefault(WORKSPACE_FILENAME, DEFAULT_FILENAME);
+            setDefault(WORKSPACES_PROPERTY, SINGLE_WORKSPACE);
+            setDefault(AUTO_SAVE_INTERVAL_PROPERTY, DEFAULT_AUTO_SAVE_INTERVAL_IN_MILLISECONDS);
+            setDefault(AUTO_REFRESH_INTERVAL_PROPERTY, DEFAULT_AUTO_REFRESH_INTERVAL_IN_MILLISECONDS);
+        } else if (profile == Profile.Server) {
+            setDefault(SESSION_IMPLEMENTATION, SESSION_VARIANT_LOCAL);
+            setDefault(URL, "");
+            setDefault(API_KEY, "");
+            setDefault(MAX_WORKSPACE_VERSIONS, DEFAULT_MAX_WORKSPACE_VERSIONS);
+            setDefault(CACHE_EXPIRY_IN_MINUTES, DEFAULT_CACHE_EXPIRY_IN_MINUTES);
+            setDefault(ADMIN_USERS_AND_ROLES, "");
+            setDefault(WORKSPACE_EVENT_LISTENER_PLUGIN, "");
+            setDefault(DSL_EDITOR, "false"); // backwards compatibility
+
+            setDefault(Features.UI_WORKSPACE_USERS, "true");
+            setDefault(Features.UI_WORKSPACE_SETTINGS, "true");
+            setDefault(Features.UI_DSL_EDITOR, "false");
+            setDefault(Features.WORKSPACE_ARCHIVING, "false");
+            setDefault(Features.WORKSPACE_BRANCHES, "false");
+            setDefault(Features.WORKSPACE_SCOPE_VALIDATION, Features.WORKSPACE_SCOPE_VALIDATION_RELAXED);
+            setDefault(Features.DIAGRAM_REVIEWS, "true");
+            setDefault(Features.DIAGRAM_ANONYMOUS_THUMBNAILS, "false");
+        }
     }
 
     private static void initLogger() {
@@ -332,8 +340,8 @@ public class Configuration {
         httpClient.setTimeout(timeoutInMilliseconds);
     }
 
-    private void banner() {
-        Log log = LogFactory.getLog(Configuration.class);
+    public void banner(Class<?> clazz) {
+        Log log = LogFactory.getLog(clazz);
 
         log.info("***********************************************************************************");
         log.info("  _____ _                   _              _          ");
@@ -343,22 +351,14 @@ public class Configuration {
         log.info(" ____) | |_| |  | |_| | (__| |_| |_| | |  | |/ /| |   ");
         log.info("|_____/ \\__|_|   \\__,_|\\___|\\__|\\__,_|_|  |_/___|_|   ");
         log.info("                                                      ");
-        log.info(profile);
-        log.info(" - build: " + new Version().getBuildNumber());
-
-        try {
-            log.info(" - structurizr-dsl: v" + Class.forName(StructurizrDslParser.class.getCanonicalName()).getPackage().getImplementationVersion());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        log.info("v" + new Version().getBuildNumber());
 
         logAllProperties(log, getProperties());
         log.info("***********************************************************************************");
     }
 
     private void logAllProperties(Log log, Properties properties) {
-        log.debug("***********************************************************************************");
-        log.debug("Configuration:");
+        log.info("***********************************************************************************");
 
         Set<String> propertiesToMask = Set.of(
                 ENCRYPTION_PASSPHRASE, API_KEY, AWS_S3_SECRET_ACCESS_KEY, AZURE_BLOB_STORAGE_ACCESS_KEY, ELASTICSEARCH_PASSWORD, REDIS_PASSWORD
@@ -369,12 +369,12 @@ public class Configuration {
             String value = properties.getProperty(name);
             if (propertiesToMask.contains(name)) {
                 if (!StringUtils.isNullOrEmpty(value)) {
-                    log.debug(" - " + name + ": ********");
+                    log.info(" - " + name + ": ********");
                 } else {
-                    log.debug(" - " + name + ":");
+                    log.info(" - " + name + ":");
                 }
             } else {
-                log.debug(" - " + name + ": " + value);
+                log.info(" - " + name + ": " + value);
             }
         }
     }

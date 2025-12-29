@@ -45,6 +45,7 @@ public class Server extends SpringBootServletInitializer {
 		properties.setProperty(DATA_DIRECTORY, structurizrDataDirectory.getAbsolutePath());
 
 		Configuration.init(Profile.Playground, properties);
+		Configuration.getInstance().banner(Server.class);
 
 		SpringApplication app = new SpringApplication(Server.class);
 		app.run(args);

@@ -10,6 +10,7 @@ import java.util.Map;
 public class Application {
 
 	private static final String PLAYGROUND_COMMAND = "playground";
+	private static final String LOCAL_COMMAND = "local";
 	private static final String PUSH_COMMAND = "push";
 	private static final String PULL_COMMAND = "pull";
 	private static final String LOCK_COMMAND = "lock";
@@ -26,6 +27,7 @@ public class Application {
 
 	static {
 		COMMANDS.put(PLAYGROUND_COMMAND, new PlaygroundCommand());
+		COMMANDS.put(LOCAL_COMMAND, new LocalCommand());
 		COMMANDS.put(PUSH_COMMAND, new PushCommand());
 		COMMANDS.put(PULL_COMMAND, new PullCommand());
 		COMMANDS.put(LOCK_COMMAND, new LockCommand());

@@ -1,4 +1,4 @@
-package com.structurizr.api;
+package com.structurizr.util;
 
 import org.junit.jupiter.api.Test;
 

@@ -29,7 +29,7 @@
     <div class="col-2" style="padding-left: 30px; margin-bottom: 100px">
         <div id="navigationPanel" class="hidden-xs">
 
-            <c:if test="${structurizrConfiguration.profile == 'Team'}">
+            <c:if test="${structurizrConfiguration.profile == 'Server'}">
             <c:if test="${not empty workspace.branch || not empty param.version}">
             <div class="navigationItem">
                 <c:if test="${not empty workspace.branch}">
@@ -102,7 +102,7 @@
             </div>
             </c:if>
 
-            <c:if test="${structurizrConfiguration.profile == 'Team'}">
+            <c:if test="${structurizrConfiguration.profile == 'Server'}">
             <div id="themeLink" class="navigationItem hidden">
                 <a href="<c:out value="${urlPrefix}" />/theme<c:out value="${urlSuffix}" escapeXml="false" />" target="_blank"><img src="/static/bootstrap-icons/palette.svg" class="icon-sm" /> Theme</a>
             </div>
@@ -114,7 +114,7 @@
             <div class="navigationItemSeparator"></div>
 
             <c:choose>
-            <c:when test="${structurizrConfiguration.profile == 'Team' && fn:startsWith(urlPrefix, '/workspace') && dslEditorEnabled}">
+            <c:when test="${structurizrConfiguration.profile == 'Server' && fn:startsWith(urlPrefix, '/workspace') && dslEditorEnabled}">
             <div class="navigationItem dslEditorNavigation">
                 <a href="<c:out value="${urlPrefix}" />/dsl<c:out value="${urlSuffix}" escapeXml="false" />"><img src="/static/bootstrap-icons/code-slash.svg" class="icon-sm" /> DSL editor</a>
             </div>

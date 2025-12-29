@@ -3,11 +3,11 @@ package com.structurizr.api;
 /**
  * Wraps up and combines a number of separate strings.
  */
-final class HmacContent {
+public final class HmacContent {
 
-    private String[] strings;
+    private final String[] strings;
 
-    HmacContent(String... strings) {
+    public HmacContent(String... strings) {
         this.strings = strings;
     }
 

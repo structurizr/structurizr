@@ -17,3 +17,5 @@ replay_pid*
 .idea
 */target
 */build
+
+structurizr-application/src/closed

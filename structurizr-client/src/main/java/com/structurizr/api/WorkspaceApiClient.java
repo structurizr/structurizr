@@ -9,6 +9,7 @@ import com.structurizr.io.json.EncryptedJsonWriter;
 import com.structurizr.io.json.JsonReader;
 import com.structurizr.io.json.JsonWriter;
 import com.structurizr.model.IdGenerator;
+import com.structurizr.util.Md5Digest;
 import com.structurizr.util.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

@@ -2,36 +2,38 @@ package com.structurizr.api;
 
 import java.util.Base64;
 
-/**
- * Represents the header used for authorization purposes.
- */
-final class HmacAuthorizationHeader {
+public final class HmacAuthorizationHeader {
 
-    private String apiKey;
-    private String hmac;
+    private final String apiKey;
+    private final String hmac;
 
     HmacAuthorizationHeader(String apiKey, String hmac) {
         this.apiKey = apiKey;
         this.hmac = hmac;
     }
 
-    String getApiKey() {
+    public String getApiKey() {
         return apiKey;
     }
 
-    String getHmac() {
+    public String getHmac() {
         return hmac;
     }
 
-    String format() {
+    public String format() {
         return apiKey + ":" + Base64.getEncoder().encodeToString(hmac.getBytes());
     }
 
-    static HmacAuthorizationHeader parse(String s) {
-        String apiKey = s.split(":")[0];
-        String hmac = new String(Base64.getDecoder().decode(s.split(":")[1]));
+    public static HmacAuthorizationHeader parse(String s) {
+        String[] parts = s.split(":");
+        if (parts.length == 2) {
+            String apiKey = parts[0];
+            String hmac = new String(Base64.getDecoder().decode(parts[1]));
 
-        return new HmacAuthorizationHeader(apiKey, hmac);
+            return new HmacAuthorizationHeader(apiKey, hmac);
+        } else {
+            throw new IllegalArgumentException("Invalid authorization header");
+        }
     }
 
 }
