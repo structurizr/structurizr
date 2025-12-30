@@ -25,7 +25,7 @@ public class LocalServer extends AbstractServer {
 		Configuration.getInstance().banner(LocalServer.class);
 
 		SpringApplication app = new SpringApplication(LocalServer.class);
-		app.setAdditionalProfiles("command-local", "authentication-none");
+		app.setAdditionalProfiles("command-local");
 		app.run(args);
 	}
 
