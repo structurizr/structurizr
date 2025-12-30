@@ -15,6 +15,13 @@ import java.util.Set;
 
 public class ControllerTestsBase {
 
+    protected void configureAsLocal() {
+        Properties properties = new Properties();
+        properties.setProperty(StructurizrProperties.AUTO_REFRESH_INTERVAL_PROPERTY, "12345");
+        Configuration.init(Profile.Local, properties);
+        clearUser();
+    }
+
     protected void enableAuthentication() {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);

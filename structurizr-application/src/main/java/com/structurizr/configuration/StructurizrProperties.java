@@ -89,9 +89,9 @@ public class StructurizrProperties {
     public static final String WORKSPACES_PROPERTY = "structurizr.workspaces";
     public static final String SINGLE_WORKSPACE = "1";
 
-    public static final String AUTO_SAVE_INTERVAL_PROPERTY = "structurizr.autoSaveInterval";
+    public static final String AUTO_SAVE_INTERVAL_PROPERTY = "structurizr.autosaveinterval";
     public static final String DEFAULT_AUTO_SAVE_INTERVAL_IN_MILLISECONDS = "5000";
-    public static final String AUTO_REFRESH_INTERVAL_PROPERTY = "structurizr.autoRefreshInterval";
+    public static final String AUTO_REFRESH_INTERVAL_PROPERTY = "structurizr.autorefreshinterval";
     public static final String DEFAULT_AUTO_REFRESH_INTERVAL_IN_MILLISECONDS = "0";
 
 }

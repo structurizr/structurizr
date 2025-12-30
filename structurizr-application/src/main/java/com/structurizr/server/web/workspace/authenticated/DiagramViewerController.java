@@ -35,7 +35,7 @@ class DiagramViewerController extends AbstractWorkspaceController {
         model.addAttribute("quickNavigationPath", "diagrams");
         model.addAttribute("perspective", HtmlUtils.filterHtml(perspective));
 
-        boolean editable = workspaceMetaData.hasNoUsersConfigured() || workspaceMetaData.isWriteUser(getUser());
+        boolean editable = !Configuration.getInstance().isAuthenticationEnabled() || workspaceMetaData.hasNoUsersConfigured() || workspaceMetaData.isWriteUser(getUser());
         model.addAttribute("includeEditButton", editable);
 
         if (Configuration.getInstance().getProfile() == Profile.Local) {
