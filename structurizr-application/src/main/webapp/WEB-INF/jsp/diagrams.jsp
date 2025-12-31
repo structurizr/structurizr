@@ -55,7 +55,7 @@
 </c:choose>
 
 <div class="row" style="padding: 0; margin: 0">
-    <div id="diagramNavigationPanel" class="col-2 hidden-xs hidden-sm <c:if test="${embed eq true}">hidden</c:if>">
+    <div id="diagramNavigationPanel" class="col-2 hidden-xs hidden-sm <c:if test="${embed eq true || workspace.editable}">hidden</c:if>">
         <c:if test="${not empty workspace.branch || not empty param.version}">
         <div style="margin-top: 20px">
             <c:if test="${not empty workspace.branch}">
@@ -932,6 +932,7 @@
 
         if (view) {
             changeView(view);
+            resize();
         }
 
         window.onhashchange = function () {
@@ -995,10 +996,11 @@
 
     function changeView(view, callback) {
         structurizr.diagram.reset();
-        var actualView = view;
-        if (view.type === structurizr.constants.FILTERED_VIEW_TYPE) {
-            actualView = structurizr.workspace.findViewByKey(view.baseViewKey);
-        }
+
+        // var actualView = view;
+        // if (view.type === structurizr.constants.FILTERED_VIEW_TYPE) {
+        //     actualView = structurizr.workspace.findViewByKey(view.baseViewKey);
+        // }
 
         // if (actualView.automaticLayout) {
         //     structurizr.diagram.changeView(view.key, function () {
