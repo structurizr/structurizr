@@ -8,6 +8,7 @@ import com.structurizr.model.Tags;
 import com.structurizr.view.AutomaticLayout;
 import com.structurizr.view.Shape;
 import com.structurizr.view.SystemContextView;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -18,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class GraphvizAutomaticLayoutTests {
 
     @Test
+    @Tag("IntegrationTest")
     public void apply_Workspace() throws Exception {
         File tempDir = Files.createTempDirectory("graphviz").toFile();
         GraphvizAutomaticLayout graphviz = new GraphvizAutomaticLayout(tempDir);
