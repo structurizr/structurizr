@@ -1,5 +1,6 @@
 package com.structurizr.server.web.workspace.authenticated;
 
+import com.structurizr.configuration.StructurizrProperties;
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
 import com.structurizr.server.domain.WorkspaceMetaData;
 import com.structurizr.server.web.ControllerTestsBase;
@@ -7,6 +8,8 @@ import com.structurizr.server.web.MockWorkspaceComponent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.ui.ModelMap;
+
+import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -51,6 +54,25 @@ public class DiagramEditorControllerTests extends ControllerTestsBase {
         });
 
         setUser("user1@example.com");
+        String view = controller.showAuthenticatedDiagramEditor(1, "main", "version", model);
+        assertEquals("404", view);
+    }
+
+    @Test
+    void showAuthenticatedDiagramEditor_ReturnsThe404Page_WhenRunningInLocalModeWithEditingDisabled() {
+        Properties properties = new Properties();
+        properties.setProperty(StructurizrProperties.EDITABLE_PROPERTY, "false");
+        configureAsLocal(properties);
+
+        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+
+        controller.setWorkspaceComponent(new MockWorkspaceComponent() {
+            @Override
+            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+                return workspaceMetaData;
+            }
+        });
+
         String view = controller.showAuthenticatedDiagramEditor(1, "main", "version", model);
         assertEquals("404", view);
     }

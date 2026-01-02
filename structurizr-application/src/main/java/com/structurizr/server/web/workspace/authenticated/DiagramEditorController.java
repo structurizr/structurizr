@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import static com.structurizr.configuration.Configuration.getInstance;
-import static com.structurizr.configuration.StructurizrProperties.AUTO_REFRESH_INTERVAL_PROPERTY;
-import static com.structurizr.configuration.StructurizrProperties.AUTO_SAVE_INTERVAL_PROPERTY;
+import static com.structurizr.configuration.StructurizrProperties.*;
 
 @Controller
 public class DiagramEditorController extends AbstractWorkspaceController {
@@ -32,15 +31,19 @@ public class DiagramEditorController extends AbstractWorkspaceController {
             return show404Page(model);
         }
 
+        if (Configuration.getInstance().getProfile() == com.structurizr.configuration.Profile.Local) {
+            if ("false".equalsIgnoreCase(Configuration.getInstance().getProperty(EDITABLE_PROPERTY))) {
+                return show404Page(model);
+            }
+
+            model.addAttribute("autoSaveInterval", Integer.parseInt(getInstance().getProperty(AUTO_SAVE_INTERVAL_PROPERTY)));
+            enableLocalRefresh(model);
+        }
+
         model.addAttribute("publishThumbnails", StringUtils.isNullOrEmpty(version));
         model.addAttribute("createReviews", true);
         model.addAttribute("quickNavigationPath", "diagram-editor");
         model.addAttribute("paperSizes", PaperSize.getOrderedPaperSizes());
-
-        if (Configuration.getInstance().getProfile() == com.structurizr.configuration.Profile.Local) {
-            model.addAttribute("autoSaveInterval", Integer.parseInt(getInstance().getProperty(AUTO_SAVE_INTERVAL_PROPERTY)));
-            enableLocalRefresh(model);
-        }
 
         if (!workspaceMetaData.hasNoUsersConfigured() && !workspaceMetaData.isWriteUser(getUser())) {
             if (workspaceMetaData.isReadUser(getUser())) {

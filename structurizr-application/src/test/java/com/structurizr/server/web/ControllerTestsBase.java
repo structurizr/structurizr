@@ -16,7 +16,10 @@ import java.util.Set;
 public class ControllerTestsBase {
 
     protected void configureAsLocal() {
-        Properties properties = new Properties();
+        configureAsLocal(new Properties());
+    }
+
+    protected void configureAsLocal(Properties properties) {
         properties.setProperty(StructurizrProperties.AUTO_REFRESH_INTERVAL_PROPERTY, "12345");
         Configuration.init(Profile.Local, properties);
         clearUser();

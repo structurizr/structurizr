@@ -22,6 +22,8 @@ public class Configuration {
     private static final Log log = LogFactory.getLog(Configuration.class);
 
     private static final String COMMA = ",";
+    private static final String TRUE = "true";
+    private static final String FALSE = "false";
 
     public static final String DEFAULT_STRUCTURIZR_DATA_DIRECTORY = "/usr/local/structurizr";
     private static final String WORK_DIRECTORY_NAME = ".structurizr";
@@ -239,6 +241,7 @@ public class Configuration {
         }
 
         if (profile == Profile.Local) {
+            setDefault(EDITABLE_PROPERTY, TRUE);
             setDefault(WORKSPACE_FILENAME, DEFAULT_FILENAME);
             setDefault(WORKSPACES_PROPERTY, SINGLE_WORKSPACE);
             setDefault(AUTO_SAVE_INTERVAL_PROPERTY, DEFAULT_AUTO_SAVE_INTERVAL_IN_MILLISECONDS);
@@ -251,16 +254,16 @@ public class Configuration {
             setDefault(CACHE_EXPIRY_IN_MINUTES, DEFAULT_CACHE_EXPIRY_IN_MINUTES);
             setDefault(ADMIN_USERS_AND_ROLES, "");
             setDefault(WORKSPACE_EVENT_LISTENER_PLUGIN, "");
-            setDefault(DSL_EDITOR, "false"); // backwards compatibility
+            setDefault(DSL_EDITOR, FALSE); // backwards compatibility
 
-            setDefault(Features.UI_WORKSPACE_USERS, "true");
-            setDefault(Features.UI_WORKSPACE_SETTINGS, "true");
-            setDefault(Features.UI_DSL_EDITOR, "false");
-            setDefault(Features.WORKSPACE_ARCHIVING, "false");
-            setDefault(Features.WORKSPACE_BRANCHES, "false");
+            setDefault(Features.UI_WORKSPACE_USERS, TRUE);
+            setDefault(Features.UI_WORKSPACE_SETTINGS, TRUE);
+            setDefault(Features.UI_DSL_EDITOR, FALSE);
+            setDefault(Features.WORKSPACE_ARCHIVING, FALSE);
+            setDefault(Features.WORKSPACE_BRANCHES, FALSE);
             setDefault(Features.WORKSPACE_SCOPE_VALIDATION, Features.WORKSPACE_SCOPE_VALIDATION_RELAXED);
-            setDefault(Features.DIAGRAM_REVIEWS, "true");
-            setDefault(Features.DIAGRAM_ANONYMOUS_THUMBNAILS, "false");
+            setDefault(Features.DIAGRAM_REVIEWS, TRUE);
+            setDefault(Features.DIAGRAM_ANONYMOUS_THUMBNAILS, FALSE);
         }
     }
 

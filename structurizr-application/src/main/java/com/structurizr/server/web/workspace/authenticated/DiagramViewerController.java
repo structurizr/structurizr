@@ -2,6 +2,7 @@ package com.structurizr.server.web.workspace.authenticated;
 
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Profile;
+import com.structurizr.configuration.StructurizrProperties;
 import com.structurizr.server.web.Views;
 import com.structurizr.util.HtmlUtils;
 import com.structurizr.util.StringUtils;
@@ -36,7 +37,11 @@ class DiagramViewerController extends AbstractWorkspaceController {
         return showAuthenticatedView(
                 Views.DIAGRAMS, workspaceId,
                 workspaceMetaData -> {
-                    model.addAttribute("includeEditButton", !Configuration.getInstance().isAuthenticationEnabled() || workspaceMetaData.hasNoUsersConfigured() || workspaceMetaData.isWriteUser(getUser()));
+                    if (Configuration.getInstance().getProfile() == Profile.Local) {
+                        model.addAttribute("includeEditButton", "true".equalsIgnoreCase(Configuration.getInstance().getProperty(StructurizrProperties.EDITABLE_PROPERTY)));
+                    } else {
+                        model.addAttribute("includeEditButton", !Configuration.getInstance().isAuthenticationEnabled() || workspaceMetaData.hasNoUsersConfigured() || workspaceMetaData.isWriteUser(getUser()));
+                    }
                 },
                 branch, version, model, false, false
         );
