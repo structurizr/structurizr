@@ -1,6 +1,7 @@
 package com.structurizr.server.web.workspace.authenticated;
 
 import com.structurizr.Workspace;
+import com.structurizr.configuration.Configuration;
 import com.structurizr.inspection.DefaultInspector;
 import com.structurizr.inspection.Inspector;
 import com.structurizr.inspection.Severity;
@@ -31,6 +32,10 @@ class InspectionsController extends AbstractWorkspaceController {
             @RequestParam(required = false) String version,
             ModelMap model
     ) {
+        if (Configuration.getInstance().getProfile() == com.structurizr.configuration.Profile.Local) {
+            enableLocalRefresh(model);
+        }
+
         return showAuthenticatedView(
                 Views.INSPECTIONS, workspaceId,
                 workspaceMetaData -> {

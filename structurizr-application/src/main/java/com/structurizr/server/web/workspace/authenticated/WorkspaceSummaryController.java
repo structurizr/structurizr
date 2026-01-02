@@ -21,6 +21,10 @@ class WorkspaceSummaryController extends AbstractWorkspaceController {
             @RequestParam(required = false) String version,
             ModelMap model
     ) {
+        if (Configuration.getInstance().getProfile() == com.structurizr.configuration.Profile.Local) {
+            enableLocalRefresh(model);
+        }
+
         return showAuthenticatedView(
                 Views.WORKSPACE_SUMMARY, workspaceId,
                 workspaceMetaData -> {

@@ -131,6 +131,11 @@ public class WorkspaceSummaryControllerTests extends ControllerTestsBase {
             public String getWorkspace(long workspaceId, String branch, String version) throws WorkspaceComponentException {
                 return "json";
             }
+
+            @Override
+            public long getLastModifiedDate() {
+                return 1234567890;
+            }
         });
 
         String view = controller.showAuthenticatedWorkspaceSummary(1, "", "", model);
@@ -139,6 +144,9 @@ public class WorkspaceSummaryControllerTests extends ControllerTestsBase {
         assertNull(model.getAttribute("workspaceAsJson"));
         assertEquals("/workspace/1", model.getAttribute("urlPrefix"));
         assertNull(model.getAttribute("versions"));
+
+        assertEquals(12345, model.getAttribute("autoRefreshInterval"));
+        assertEquals(1234567890L, model.getAttribute("autoRefreshLastModifiedDate"));
     }
 
 }
