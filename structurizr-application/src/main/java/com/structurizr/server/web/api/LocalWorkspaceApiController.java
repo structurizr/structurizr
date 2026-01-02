@@ -1,6 +1,7 @@
 package com.structurizr.server.web.api;
 
 import com.structurizr.server.component.workspace.WorkspaceBranch;
+import com.structurizr.server.component.workspace.WorkspaceVersion;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
@@ -14,17 +15,17 @@ import org.springframework.web.bind.annotation.*;
  *  - PUT /api/workspace/{id}
  */
 @RestController
-public class WorkspaceApiController extends AbstractWorkspaceApiController {
+@org.springframework.context.annotation.Profile("command-local")
+public class LocalWorkspaceApiController extends AbstractWorkspaceApiController {
 
-    protected static final Log log = LogFactory.getLog(WorkspaceApiController.class);
+    protected static final Log log = LogFactory.getLog(LocalWorkspaceApiController.class);
 
     @CrossOrigin
     @RequestMapping(value = "/api/workspace/{workspaceId}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     public String getWorkspace(@PathVariable("workspaceId") long workspaceId,
-                               @RequestParam(required = false) String version,
                                HttpServletRequest request, HttpServletResponse response) {
 
-        return get(workspaceId, WorkspaceBranch.MAIN_BRANCH, version, request, response);
+        return get(workspaceId, WorkspaceBranch.MAIN_BRANCH, WorkspaceVersion.LATEST_VERSION, request, response);
     }
 
     @CrossOrigin
