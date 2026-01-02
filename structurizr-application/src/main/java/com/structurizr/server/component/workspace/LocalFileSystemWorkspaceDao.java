@@ -58,7 +58,11 @@ abstract class LocalFileSystemWorkspaceDao extends AbstractFileSystemWorkspaceDa
         File jsonFile = new File(workspaceDirectory, filename + JSON_FILE_EXTENSION);
 
         if (jsonFile.exists() && jsonFile.lastModified() > lastModifiedDate) {
-            return loadWorkspaceFromJson(workspaceId, jsonFile);
+            try {
+                return loadWorkspaceFromJson(workspaceId, jsonFile);
+            } catch (Exception e) {
+                throw new WorkspaceComponentException(e);
+            }
         } else {
             if (dslFile.exists()) {
                 try {
@@ -67,7 +71,12 @@ abstract class LocalFileSystemWorkspaceDao extends AbstractFileSystemWorkspaceDa
                     throw new WorkspaceComponentException(e);
                 }
             } else if (jsonFile.exists()) {
-                Workspace workspace = loadWorkspaceFromJson(workspaceId, jsonFile);
+                Workspace workspace = null;
+                try {
+                    workspace = loadWorkspaceFromJson(workspaceId, jsonFile);
+                } catch (Exception e) {
+                    throw new WorkspaceComponentException(e);
+                }
 
                 // if the JSON file exists and contains DSL, extract this and save it
                 String embeddedDsl = DslUtils.getDsl(workspace);
@@ -82,23 +91,18 @@ abstract class LocalFileSystemWorkspaceDao extends AbstractFileSystemWorkspaceDa
         }
     }
 
-    private Workspace loadWorkspaceFromJson(long workspaceId, File jsonFile) {
+    private Workspace loadWorkspaceFromJson(long workspaceId, File jsonFile) throws Exception {
         Workspace workspace = null;
 
         if (jsonFile.exists()) {
-            try {
-                workspace = WorkspaceUtils.loadWorkspaceFromJson(jsonFile);
-                workspace.setId(workspaceId);
+            workspace = WorkspaceUtils.loadWorkspaceFromJson(jsonFile);
+            workspace.setId(workspaceId);
 
-                // validate workspace scope
-                WorkspaceScopeValidatorFactory.getValidator(workspace).validate(workspace);
+            // validate workspace scope
+            WorkspaceScopeValidatorFactory.getValidator(workspace).validate(workspace);
 
-                // run default inspections
-                new DefaultInspector(workspace);
-            } catch (Exception e) {
-                workspace = null;
-                log.error(e);
-            }
+            // run default inspections
+            new DefaultInspector(workspace);
         }
 
         return workspace;
@@ -123,10 +127,14 @@ abstract class LocalFileSystemWorkspaceDao extends AbstractFileSystemWorkspaceDa
             workspace.getViews().createDefaultViews();
         }
 
-        Workspace workspaceFromJson = loadWorkspaceFromJson(workspaceId, jsonFile);
-        if (workspaceFromJson != null) {
-            workspace.getViews().copyLayoutInformationFrom(workspaceFromJson.getViews());
-            workspace.getViews().getConfiguration().copyConfigurationFrom(workspaceFromJson.getViews().getConfiguration());
+        try {
+            Workspace workspaceFromJson = loadWorkspaceFromJson(workspaceId, jsonFile);
+            if (workspaceFromJson != null) {
+                workspace.getViews().copyLayoutInformationFrom(workspaceFromJson.getViews());
+                workspace.getViews().getConfiguration().copyConfigurationFrom(workspaceFromJson.getViews().getConfiguration());
+            }
+        } catch (Exception e) {
+            throw new WorkspaceComponentException(e);
         }
 
         workspace.setLastModifiedDate(DateUtils.removeMilliseconds(DateUtils.getNow()));

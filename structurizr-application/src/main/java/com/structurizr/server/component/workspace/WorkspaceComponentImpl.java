@@ -123,10 +123,9 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
         List<WorkspaceMetaData> filteredWorkspaces = new ArrayList<>();
 
         if (user == null) {
-            // unauthenticated request
+            // unauthenticated request - return public workspaces only
             for (WorkspaceMetaData workspace : workspaces) {
-                if (workspace.isPublicWorkspace() || workspace.hasNoUsersConfigured()) {
-                    // so anybody can see it
+                if (workspace.isPublicWorkspace()) {
                     workspace.setUrlPrefix("/share");
                     filteredWorkspaces.add(workspace);
                 }
@@ -134,7 +133,11 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
         } else {
             // authenticated request
             for (WorkspaceMetaData workspace : workspaces) {
-                if (workspace.isWriteUser(user)) {
+                if (!Configuration.getInstance().isAuthenticationEnabled()) {
+                    // the user has read-write access to the workspace
+                    workspace.setUrlPrefix("/workspace");
+                    filteredWorkspaces.add(workspace);
+                } else if (workspace.isWriteUser(user)) {
                     // the user has read-write access to the workspace
                     workspace.setUrlPrefix("/workspace");
                     filteredWorkspaces.add(workspace);
