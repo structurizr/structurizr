@@ -3,6 +3,8 @@ package com.structurizr.server.web.workspace.authenticated;
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Features;
 import com.structurizr.configuration.Profile;
+import com.structurizr.dsl.StructurizrDslParser;
+import com.structurizr.dsl.StructurizrDslParserException;
 import com.structurizr.server.component.workspace.WorkspaceBranch;
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
 import com.structurizr.server.domain.User;
@@ -27,7 +29,18 @@ abstract class AbstractWorkspaceController extends com.structurizr.server.web.wo
     }
 
     protected final String showAuthenticatedView(String view, long workspaceId, AuthenticatedViewFunction function, String branch, String version, ModelMap model, boolean showHeaderAndFooter, boolean editable) {
-        WorkspaceMetaData workspaceMetaData = workspaceComponent.getWorkspaceMetaData(workspaceId);
+        WorkspaceMetaData workspaceMetaData = null;
+
+        try {
+            workspaceMetaData = workspaceComponent.getWorkspaceMetaData(workspaceId);
+        } catch (WorkspaceComponentException e) {
+            if (Configuration.getInstance().getProfile() == Profile.Local && e.getCause() instanceof StructurizrDslParserException) {
+                return showError((StructurizrDslParserException)e.getCause(), model);
+            } else {
+                log.error(e);
+            }
+        }
+
         if (workspaceMetaData == null) {
             return show404Page(model);
         }

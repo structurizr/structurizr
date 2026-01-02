@@ -17,6 +17,10 @@ class SingleWorkspaceLocalFileSystemWorkspaceDao extends LocalFileSystemWorkspac
     SingleWorkspaceLocalFileSystemWorkspaceDao(File dataDirectory) {
         super(dataDirectory);
 
+        createWorkspaceWhenDirectoryIsEmpty();
+    }
+
+    private void createWorkspaceWhenDirectoryIsEmpty() {
         File dsl = new File(getDataDirectory(WORKSPACE_ID), filename + DSL_FILE_EXTENSION);
         File json = new File(getDataDirectory(WORKSPACE_ID), filename + JSON_FILE_EXTENSION);
 

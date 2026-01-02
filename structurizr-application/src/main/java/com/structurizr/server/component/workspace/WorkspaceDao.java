@@ -16,8 +16,6 @@ interface WorkspaceDao {
 
     void putWorkspaceMetaData(WorkspaceMetaData workspaceMetaData);
 
-    long createWorkspace(User user) throws WorkspaceComponentException;
-
     boolean deleteWorkspace(long workspaceId);
 
     String getWorkspace(long workspaceId, String branch, String version);

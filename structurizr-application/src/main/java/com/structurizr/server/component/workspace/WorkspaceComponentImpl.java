@@ -32,8 +32,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import static com.structurizr.configuration.StructurizrProperties.CACHE_IMPLEMENTATION;
-
 @Component
 class WorkspaceComponentImpl implements WorkspaceComponent {
 
@@ -66,11 +64,11 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
     }
 
     // constructor for testing
-    WorkspaceComponentImpl(WorkspaceDao workspaceDao, String encryptionPassphrase) {
+    WorkspaceComponentImpl(WorkspaceDao workspaceDao) {
         this.workspaceDao = workspaceDao;
-        this.encryptionPassphrase = encryptionPassphrase;
+        this.encryptionPassphrase = Configuration.getInstance().getProperty(StructurizrProperties.ENCRYPTION_PASSPHRASE);
         this.workspaceMetadataCache = new NoOpWorkspaceMetadataCache();
-        this.executorService = Executors.newSingleThreadExecutor();
+        initThreadPool();
     }
 
     private void initCache() {
@@ -103,11 +101,11 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
                     workspaces.add(workspace);
                 }
             } catch (InterruptedException | ExecutionException e) {
-                throw new WorkspaceComponentException("Error fetching workspaces", e);
+                log.warn("An error occurred while fetching workspace: " + e.getMessage());
             }
         }
 
-        workspaces.sort(Comparator.comparing(wmd -> wmd.getName().toLowerCase()));
+        workspaces.sort(Comparator.comparing(WorkspaceMetaData::getId));
 
         return workspaces;
     }
@@ -160,11 +158,12 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
     }
 
     @Override
-    public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+    public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) throws WorkspaceComponentException {
         WorkspaceMetaData wmd = workspaceMetadataCache.get(workspaceId);
 
         if (wmd == null) {
             wmd = workspaceDao.getWorkspaceMetaData(workspaceId);
+
             if (wmd != null) {
                 workspaceMetadataCache.put(wmd);
             }
@@ -239,9 +238,30 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
     @Override
     public long createWorkspace(User user) {
         try {
-            long workspaceId = workspaceDao.createWorkspace(user);
-            NumberFormat format = new DecimalFormat("0000");
+            long workspaceId;
 
+            List<Long> workspaceIds = workspaceDao.getWorkspaceIds();
+            if (workspaceIds.isEmpty()) {
+                workspaceId = 1;
+            } else {
+                workspaceId = workspaceIds.stream().reduce(0L, Long::max) + 1;
+            }
+
+            try {
+                // create and write the workspace metadata
+                WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(workspaceId);
+                if (user != null) {
+                    workspaceMetaData.setOwner(user.getUsername());
+                }
+                workspaceMetaData.setApiKey(UUID.randomUUID().toString());
+                workspaceMetaData.setApiSecret(UUID.randomUUID().toString());
+
+                putWorkspaceMetaData(workspaceMetaData);
+            } catch (Exception e) {
+                log.error(e);
+            }
+
+            NumberFormat format = new DecimalFormat("0000");
             Workspace workspace = new Workspace("Workspace " + format.format(workspaceId), "Description");
 
             if (Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_SCOPE_VALIDATION)) {
@@ -287,7 +307,7 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
                 workspaceMetaData = new WorkspaceMetaData(workspaceId);
             }
 
-            // todo
+            // todo: workspace event listener plugin
 //            if (Configuration.getInstance().getWorkspaceEventListener() != null) {
 //                WorkspaceEvent event = createWorkspaceEvent(workspaceMetaData, json);
 //                Configuration.getInstance().getWorkspaceEventListener().beforeSave(event);
@@ -478,10 +498,12 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
     public List<WorkspaceBranch> getWorkspaceBranches(long workspaceId) {
         List<WorkspaceBranch> branches = new ArrayList<>();
 
-        try {
-            return workspaceDao.getWorkspaceBranches(workspaceId);
-        } catch (Exception e) {
-            log.error(e);
+        if (Configuration.getInstance().getProfile() == Profile.Server) {
+            try {
+                return workspaceDao.getWorkspaceBranches(workspaceId);
+            } catch (Exception e) {
+                log.error(e);
+            }
         }
 
         return branches;
@@ -567,7 +589,7 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
         }
 
         filename = filename.toLowerCase();
-        return filename.endsWith(".jpg") || filename.endsWith(".jepg") || filename.endsWith(".png") || filename.endsWith(".gif");
+        return filename.endsWith(".jpg") || filename.endsWith(".jpeg") || filename.endsWith(".png") || filename.endsWith(".gif");
     }
 
     @Override

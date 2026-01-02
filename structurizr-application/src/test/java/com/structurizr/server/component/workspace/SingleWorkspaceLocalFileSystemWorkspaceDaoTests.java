@@ -4,32 +4,39 @@ import com.structurizr.Workspace;
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Profile;
 import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.web.AbstractTestsBase;
 import com.structurizr.util.FileUtils;
 import com.structurizr.util.StringUtils;
 import com.structurizr.util.WorkspaceUtils;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.util.Properties;
 
 import static com.structurizr.configuration.StructurizrProperties.DATA_DIRECTORY;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SingleWorkspaceLocalFileSystemWorkspaceDaoTests {
+public class SingleWorkspaceLocalFileSystemWorkspaceDaoTests extends AbstractTestsBase {
 
     private File dataDirectory;
     private SingleWorkspaceLocalFileSystemWorkspaceDao dao;
 
     @BeforeEach
-    public void setUp() {
-        dataDirectory = new File("./target/" + this.getClass().getSimpleName());
-        FileUtils.delete(dataDirectory);
+    void setUp() throws Exception {
+        dataDirectory = createTemporaryDirectory();
 
         Properties properties = new Properties();
         properties.setProperty(DATA_DIRECTORY, dataDirectory.getAbsolutePath());
 
         Configuration.init(Profile.Local, properties);
+    }
+
+    @AfterEach
+    void tearDown() {
+        deleteDirectory(dataDirectory);
     }
 
     @Test
@@ -72,7 +79,7 @@ public class SingleWorkspaceLocalFileSystemWorkspaceDaoTests {
     }
 
     @Test
-    void getWorkspaceMetaData_WhenDslFileExists() throws Exception{
+    void getWorkspaceMetaData_WhenDslFileExists() {
         String dsl = """
                 workspace "DSL" "Description" {
                 }""";

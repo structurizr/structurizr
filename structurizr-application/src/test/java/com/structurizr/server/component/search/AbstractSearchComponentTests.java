@@ -7,6 +7,7 @@ import com.structurizr.documentation.Section;
 import com.structurizr.model.Component;
 import com.structurizr.model.Container;
 import com.structurizr.model.SoftwareSystem;
+import com.structurizr.server.web.AbstractTestsBase;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -16,7 +17,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public abstract class AbstractSearchComponentTests {
+public abstract class AbstractSearchComponentTests extends AbstractTestsBase {
 
     protected abstract SearchComponent getSearchComponent();
 

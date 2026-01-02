@@ -5,10 +5,8 @@ import com.structurizr.configuration.Profile;
 import com.structurizr.configuration.StructurizrProperties;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.springframework.util.FileSystemUtils;
 
 import java.io.File;
-import java.nio.file.Files;
 import java.util.Properties;
 
 public class ApacheLuceneSearchComponentTests extends AbstractSearchComponentTests {
@@ -19,8 +17,7 @@ public class ApacheLuceneSearchComponentTests extends AbstractSearchComponentTes
 
     @BeforeEach
     public void setUp() throws Exception {
-        dataDirectory = Files.createTempDirectory(this.getClass().getSimpleName()).toFile();
-        dataDirectory.mkdirs();
+        dataDirectory = createTemporaryDirectory();
 
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.DATA_DIRECTORY, dataDirectory.getAbsolutePath());
@@ -33,7 +30,7 @@ public class ApacheLuceneSearchComponentTests extends AbstractSearchComponentTes
     @AfterEach
     public void tearDown() {
         searchComponent.stop();
-        FileSystemUtils.deleteRecursively(dataDirectory);
+        deleteDirectory(dataDirectory);
     }
 
     @Override

@@ -3,8 +3,8 @@
         <h1>Error</h1>
         <p>
         <c:choose>
-            <c:when test="${not empty customErrorMessage}">
-                ${customErrorMessage}
+            <c:when test="${not empty errorMessage}">
+                <c:out value="${errorMessage}" />
             </c:when>
             <c:otherwise>
                 Sorry, something went wrong.

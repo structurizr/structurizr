@@ -565,3 +565,7 @@
         <%@ include file="/WEB-INF/fragments/workspace/load-via-api.jspf" %>
     </c:otherwise>
 </c:choose>
+
+<c:if test="${structurizrConfiguration.profile eq 'Local'}">
+<%@ include file="/WEB-INF/fragments/workspace/auto-refresh.jspf" %>
+</c:if>

@@ -1,13 +1,15 @@
 package com.structurizr.server.component.workspace;
 
 import com.structurizr.Workspace;
-import com.structurizr.dsl.DslUtils;
-import com.structurizr.dsl.StructurizrDslParser;
-import com.structurizr.inspection.DefaultInspector;
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.StructurizrProperties;
+import com.structurizr.dsl.DslUtils;
+import com.structurizr.dsl.StructurizrDslParser;
+import com.structurizr.dsl.StructurizrDslParserException;
+import com.structurizr.inspection.DefaultInspector;
 import com.structurizr.server.domain.WorkspaceMetaData;
 import com.structurizr.util.*;
+import com.structurizr.validation.WorkspaceScopeValidationException;
 import com.structurizr.validation.WorkspaceScopeValidatorFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,7 +17,10 @@ import org.apache.commons.logging.LogFactory;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 abstract class LocalFileSystemWorkspaceDao extends AbstractFileSystemWorkspaceDao {
 
@@ -25,7 +30,6 @@ abstract class LocalFileSystemWorkspaceDao extends AbstractFileSystemWorkspaceDa
     private final String API_SECRET = new RandomGuidGenerator().generate();
 
     protected String filename;
-    private String error;
 
     private long lastModifiedDate = 0;
 
@@ -48,7 +52,7 @@ abstract class LocalFileSystemWorkspaceDao extends AbstractFileSystemWorkspaceDa
 
     protected abstract File getDataDirectory(long workspaceId);
 
-    private Workspace loadWorkspace(long workspaceId) {
+    private Workspace loadWorkspace(long workspaceId) throws WorkspaceComponentException {
         File workspaceDirectory = getDataDirectory(workspaceId);
         File dslFile = new File(workspaceDirectory, filename + DSL_FILE_EXTENSION);
         File jsonFile = new File(workspaceDirectory, filename + JSON_FILE_EXTENSION);
@@ -57,7 +61,11 @@ abstract class LocalFileSystemWorkspaceDao extends AbstractFileSystemWorkspaceDa
             return loadWorkspaceFromJson(workspaceId, jsonFile);
         } else {
             if (dslFile.exists()) {
-                return loadWorkspaceFromDsl(workspaceId, dslFile, jsonFile);
+                try {
+                    return loadWorkspaceFromDsl(workspaceId, dslFile, jsonFile);
+                } catch (StructurizrDslParserException | WorkspaceScopeValidationException e) {
+                    throw new WorkspaceComponentException(e);
+                }
             } else if (jsonFile.exists()) {
                 Workspace workspace = loadWorkspaceFromJson(workspaceId, jsonFile);
 
@@ -81,11 +89,14 @@ abstract class LocalFileSystemWorkspaceDao extends AbstractFileSystemWorkspaceDa
             try {
                 workspace = WorkspaceUtils.loadWorkspaceFromJson(jsonFile);
                 workspace.setId(workspaceId);
-                error = null;
+
+                // validate workspace scope
+                WorkspaceScopeValidatorFactory.getValidator(workspace).validate(workspace);
+
+                // run default inspections
+                new DefaultInspector(workspace);
             } catch (Exception e) {
                 workspace = null;
-                error = filename + JSON_FILE_EXTENSION + ": " + e.getMessage();
-                e.printStackTrace();
                 log.error(e);
             }
         }
@@ -93,46 +104,37 @@ abstract class LocalFileSystemWorkspaceDao extends AbstractFileSystemWorkspaceDa
         return workspace;
     }
 
-    private Workspace loadWorkspaceFromDsl(long workspaceId, File dslFile, File jsonFile) {
+    private Workspace loadWorkspaceFromDsl(long workspaceId, File dslFile, File jsonFile) throws StructurizrDslParserException, WorkspaceScopeValidationException {
         Workspace workspace;
 
+        StructurizrDslParser parser = new StructurizrDslParser();
+        Configuration.getInstance().configure(parser.getHttpClient());
+        parser.parse(dslFile);
+        workspace = parser.getWorkspace();
+        workspace.setId(workspaceId);
+
+        // validate workspace scope
+        WorkspaceScopeValidatorFactory.getValidator(workspace).validate(workspace);
+
+        // run default inspections
+        new DefaultInspector(workspace);
+
+        if (!workspace.getModel().isEmpty() && workspace.getViews().isEmpty()) {
+            workspace.getViews().createDefaultViews();
+        }
+
+        Workspace workspaceFromJson = loadWorkspaceFromJson(workspaceId, jsonFile);
+        if (workspaceFromJson != null) {
+            workspace.getViews().copyLayoutInformationFrom(workspaceFromJson.getViews());
+            workspace.getViews().getConfiguration().copyConfigurationFrom(workspaceFromJson.getViews().getConfiguration());
+        }
+
+        workspace.setLastModifiedDate(DateUtils.removeMilliseconds(DateUtils.getNow()));
+
         try {
-            StructurizrDslParser parser = new StructurizrDslParser();
-            Configuration.getInstance().configure(parser.getHttpClient());
-            parser.parse(dslFile);
-            workspace = parser.getWorkspace();
-            workspace.setId(workspaceId);
-
-            // validate workspace scope
-            WorkspaceScopeValidatorFactory.getValidator(workspace).validate(workspace);
-
-            // run default inspections
-            new DefaultInspector(workspace);
-            
-            if (!workspace.getModel().isEmpty() && workspace.getViews().isEmpty()) {
-                workspace.getViews().createDefaultViews();
-            }
-
-            Workspace workspaceFromJson = loadWorkspaceFromJson(workspaceId, jsonFile);
-            if (workspaceFromJson != null) {
-                workspace.getViews().copyLayoutInformationFrom(workspaceFromJson.getViews());
-                workspace.getViews().getConfiguration().copyConfigurationFrom(workspaceFromJson.getViews().getConfiguration());
-            }
-
-            workspace.setLastModifiedDate(DateUtils.removeMilliseconds(DateUtils.getNow()));
-
-            try {
-                putWorkspace(new WorkspaceMetaData(workspaceId), WorkspaceUtils.toJson(workspace, false), null);
-            } catch (Exception e) {
-                log.warn(e);
-            }
-
-            error = null;
+            putWorkspace(new WorkspaceMetaData(workspaceId), WorkspaceUtils.toJson(workspace, false), null);
         } catch (Exception e) {
-            workspace = null;
-            error = filename + DSL_FILE_EXTENSION + ": " + e.getMessage();
-            e.printStackTrace();
-            log.error(e);
+            log.warn(e);
         }
 
         return workspace;
@@ -142,8 +144,12 @@ abstract class LocalFileSystemWorkspaceDao extends AbstractFileSystemWorkspaceDa
     public String getWorkspace(long workspaceId, String branch, String version) {
         try {
             File jsonFile = new File(getDataDirectory(workspaceId), filename + JSON_FILE_EXTENSION);
-            return Files.readString(jsonFile.toPath());
-        } catch (Exception e) {
+            if (jsonFile.exists()) {
+                return Files.readString(jsonFile.toPath());
+            } else {
+                throw new RuntimeException("Workspace " + workspaceId + " does not exist");
+            }
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -158,7 +164,6 @@ abstract class LocalFileSystemWorkspaceDao extends AbstractFileSystemWorkspaceDa
             WorkspaceUtils.saveWorkspaceToJson(workspace, jsonFile);
         } catch (Exception e) {
             log.error(e);
-            e.printStackTrace();
             throw new WorkspaceComponentException(e.getMessage());
         }
     }
@@ -170,28 +175,22 @@ abstract class LocalFileSystemWorkspaceDao extends AbstractFileSystemWorkspaceDa
 
     @Override
     public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
-        Workspace workspace = loadWorkspace(workspaceId);
+        WorkspaceMetaData wmd = new WorkspaceMetaData(workspaceId);
+        wmd.setApiKey(API_KEY);
+        wmd.setApiSecret(API_SECRET);
 
+        Workspace workspace = loadWorkspace(workspaceId);
         if (workspace != null) {
-            WorkspaceMetaData wmd = new WorkspaceMetaData(workspace.getId());
             wmd.setName(workspace.getName());
             wmd.setDescription(workspace.getDescription());
-            wmd.setApiKey(API_KEY);
-            wmd.setApiSecret(API_SECRET);
-
-            return wmd;
         }
 
-        return null;
+        return wmd;
     }
 
     @Override
     public void putWorkspaceMetaData(WorkspaceMetaData workspaceMetaData) {
         // no-op
-    }
-
-    public String getError() {
-        return error;
     }
 
     private long findLatestLastModifiedDate(File directory) {
@@ -243,7 +242,6 @@ abstract class LocalFileSystemWorkspaceDao extends AbstractFileSystemWorkspaceDa
             try {
                 Files.createDirectories(path.toPath());
             } catch (IOException e) {
-                e.printStackTrace();
                 log.error(e);
             }
         }

@@ -2,6 +2,7 @@ package com.structurizr.server.web;
 
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Features;
+import com.structurizr.dsl.StructurizrDslParserException;
 import com.structurizr.server.component.workspace.WorkspaceBranch;
 import com.structurizr.server.component.workspace.WorkspaceVersion;
 import com.structurizr.server.domain.User;
@@ -125,6 +126,14 @@ public abstract class AbstractController {
         addCommonAttributes(model, "Error", true);
 
         return "500";
+    }
+
+    protected String showError(StructurizrDslParserException exception, ModelMap model) {
+        LogFactory.getLog(this.getClass()).error(exception);
+        model.addAttribute("errorMessage", exception.getMessage());
+        addCommonAttributes(model, "Error", true);
+
+        return "dsl-parse-error";
     }
 
     protected String showError(String view, ModelMap model) {

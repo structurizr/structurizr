@@ -2,23 +2,19 @@ package com.structurizr.server.component.workspace;
 
 import com.structurizr.server.domain.Image;
 import com.structurizr.server.domain.InputStreamAndContentLength;
-import com.structurizr.server.domain.User;
-import com.structurizr.server.domain.WorkspaceMetaData;
-import com.structurizr.util.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.*;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
-abstract class AbstractFileSystemWorkspaceDao extends AbstractWorkspaceDao {
+abstract class AbstractFileSystemWorkspaceDao implements WorkspaceDao {
 
     private static final Log log = LogFactory.getLog(WorkspaceDao.class);
 
@@ -28,45 +24,11 @@ abstract class AbstractFileSystemWorkspaceDao extends AbstractWorkspaceDao {
     protected static final String WORKSPACE_JSON_FILENAME = "workspace" + JSON_FILE_EXTENSION;
     protected static final String IMAGES_DIRECTORY_NAME = "images";
     protected static final String PNG_FILENAME_REGEX = ".*\\.png";
-    protected static final String BRANCHES_DIRECTORY_NAME = "branches";
 
     protected final File dataDirectory;
 
     AbstractFileSystemWorkspaceDao(File dataDirectory) {
         this.dataDirectory = dataDirectory;
-    }
-
-    @Override
-    public List<Long> getWorkspaceIds() {
-        File[] files = dataDirectory.listFiles();
-        List<Long> workspaceIds = new ArrayList<>();
-
-        if (files != null) {
-            for (File file : files) {
-                if (file != null && file.isDirectory() && file.getName().matches("\\d*")) {
-                    long id = Long.parseLong(file.getName());
-                    workspaceIds.add(id);
-                }
-            }
-        }
-
-        Collections.sort(workspaceIds);
-        return workspaceIds;
-    }
-
-    protected void deleteDirectory(File directory) {
-        File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    deleteDirectory(file);
-                } else {
-                    file.delete();
-                }
-            }
-        }
-
-        directory.delete();
     }
 
     @Override
@@ -127,44 +89,6 @@ abstract class AbstractFileSystemWorkspaceDao extends AbstractWorkspaceDao {
         return imagesDirectory.delete();
     }
 
-    protected File getPathToWorkspace(long workspaceId) {
-        return getPathToWorkspace(workspaceId, null, true);
-    }
-
-    protected File getPathToWorkspace(long workspaceId, String branch, boolean createIfNotExists) {
-        File path;
-
-        if (StringUtils.isNullOrEmpty(branch)) {
-            path = new File(dataDirectory, "" + workspaceId);
-        } else {
-            path = new File(dataDirectory, workspaceId + "/" + BRANCHES_DIRECTORY_NAME + "/" + branch);
-        }
-
-        if (!path.exists() && createIfNotExists) {
-            try {
-                Path directory = Files.createDirectories(path.toPath());
-                if (!directory.toFile().exists()) {
-                    log.error(path.getCanonicalFile().getAbsolutePath() + " could not be created.");
-                }
-            } catch (IOException e) {
-                log.error(e);
-            }
-        }
-
-        return path;
-    }
-
-    protected File getPathToWorkspaceImages(long workspaceId, String branch) {
-        File path = new File(getPathToWorkspace(workspaceId, branch, true), IMAGES_DIRECTORY_NAME);
-        if (!path.exists()) {
-            try {
-                Files.createDirectories(path.toPath());
-            } catch (IOException e) {
-                log.error(e);
-            }
-        }
-
-        return path;
-    }
+    protected abstract File getPathToWorkspaceImages(long workspaceId, String branch);
 
 }

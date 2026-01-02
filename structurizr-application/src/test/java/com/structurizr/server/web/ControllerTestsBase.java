@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
-public class ControllerTestsBase {
+public class ControllerTestsBase extends AbstractTestsBase {
 
     protected void configureAsLocal() {
         configureAsLocal(new Properties());
