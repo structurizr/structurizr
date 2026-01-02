@@ -23,6 +23,8 @@ class PlaygroundController extends AbstractController {
 
     private static final Log log = LogFactory.getLog(PlaygroundController.class);
 
+    private static final String JSON_EXTENSION = ".json";
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     String getPlayground(ModelMap model,
                          @RequestParam(required = false, defaultValue = "") String src,
@@ -39,7 +41,7 @@ class PlaygroundController extends AbstractController {
             if (!StringUtils.isNullOrEmpty(src) && (Url.isHttpsUrl(src) || Url.isHttpUrl(src))) {
                 model.addAttribute("loadFromLocalStorage", false);
 
-                if (src.endsWith(".json")) {
+                if (src.endsWith(JSON_EXTENSION)) {
                     json = Configuration.getInstance().createHttpClient().get(src).getContentAsString();
                     Workspace workspace = WorkspaceUtils.fromJson(json);
                     dsl = DslUtils.getDsl(workspace);
@@ -62,6 +64,13 @@ class PlaygroundController extends AbstractController {
                        @RequestParam(required = false, defaultValue = "") String view) throws Exception {
 
         model.addAttribute("method", "post");
+
+        if (dsl.startsWith("{")) {
+            // JSON has been provided rather than DSL ... parse this and extract the DSL
+            json = dsl;
+            Workspace workspace = WorkspaceUtils.fromJson(json);
+            dsl = DslUtils.getDsl(workspace);
+        }
 
         return show(model, dsl, json, view);
     }
