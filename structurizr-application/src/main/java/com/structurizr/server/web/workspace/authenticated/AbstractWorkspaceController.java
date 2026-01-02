@@ -26,7 +26,7 @@ abstract class AbstractWorkspaceController extends com.structurizr.server.web.wo
         return showAuthenticatedView(view, workspaceId, (workspaceMetaData1 -> {}), branch, version, model, showHeaderAndFooter, editable);
     }
 
-    protected final String showAuthenticatedView(String view, long workspaceId, AuthenticatedFunction function, String branch, String version, ModelMap model, boolean showHeaderAndFooter, boolean editable) {
+    protected final String showAuthenticatedView(String view, long workspaceId, AuthenticatedViewFunction function, String branch, String version, ModelMap model, boolean showHeaderAndFooter, boolean editable) {
         WorkspaceMetaData workspaceMetaData = workspaceComponent.getWorkspaceMetaData(workspaceId);
         if (workspaceMetaData == null) {
             return show404Page(model);
