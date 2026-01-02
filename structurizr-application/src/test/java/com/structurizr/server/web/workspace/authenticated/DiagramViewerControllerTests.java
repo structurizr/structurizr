@@ -171,7 +171,7 @@ public class DiagramViewerControllerTests extends ControllerTestsBase {
     }
 
     @Test
-    void showAuthenticatedDiagramViewer_ReturnsTheDiagramViewerPage_WhenRunningInLocalModeAndEditingDisabled() throws Exception {
+    void showAuthenticatedDiagramViewer_ReturnsTheDiagramViewerPage_WhenRunningInLocalModeWithEditingDisabled() throws Exception {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.EDITABLE_PROPERTY, "false");
         configureAsLocal(properties);
