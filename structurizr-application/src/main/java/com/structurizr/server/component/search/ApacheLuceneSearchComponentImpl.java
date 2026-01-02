@@ -1,6 +1,7 @@
 package com.structurizr.server.component.search;
 
 import com.structurizr.Workspace;
+import com.structurizr.configuration.Configuration;
 import com.structurizr.documentation.Decision;
 import com.structurizr.documentation.Documentation;
 import com.structurizr.documentation.Section;
@@ -51,8 +52,8 @@ class ApacheLuceneSearchComponentImpl extends AbstractSearchComponentImpl {
     private final File indexDirectory;
     private IndexWriter indexWriter;
 
-    ApacheLuceneSearchComponentImpl(File dataDirectory) {
-        this.indexDirectory = new File(dataDirectory, INDEX_DIRECTORY_NAME);
+    ApacheLuceneSearchComponentImpl() {
+        this.indexDirectory = new File(Configuration.getInstance().getWorkDirectory(), INDEX_DIRECTORY_NAME);
     }
 
     @Override

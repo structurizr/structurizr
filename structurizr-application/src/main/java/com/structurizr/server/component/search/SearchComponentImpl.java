@@ -19,13 +19,13 @@ class SearchComponentImpl implements SearchComponent {
 
     SearchComponentImpl() {
         if (Configuration.getInstance().getProfile() == Profile.Local) {
-            searchComponent = new ApacheLuceneSearchComponentImpl(Configuration.getInstance().getWorkDirectory());
+            searchComponent = new ApacheLuceneSearchComponentImpl();
         } else {
             String searchImplementation = Configuration.getInstance().getProperty(SEARCH_IMPLEMENTATION);
             if (StructurizrProperties.SEARCH_VARIANT_NONE.equalsIgnoreCase(searchImplementation)) {
                 searchComponent = new NoOpSearchComponentImpl();
             } else {
-                searchComponent = new ApacheLuceneSearchComponentImpl(Configuration.getInstance().getDataDirectory());
+                searchComponent = new ApacheLuceneSearchComponentImpl();
             }
         }
 
