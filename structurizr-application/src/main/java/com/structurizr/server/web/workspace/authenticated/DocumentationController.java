@@ -1,8 +1,6 @@
 package com.structurizr.server.web.workspace.authenticated;
 
 import com.structurizr.configuration.Configuration;
-import com.structurizr.configuration.Profile;
-import com.structurizr.server.domain.WorkspaceMetaData;
 import com.structurizr.server.web.Views;
 import com.structurizr.util.DocumentationScope;
 import org.springframework.stereotype.Controller;
@@ -14,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
-
-import static com.structurizr.configuration.StructurizrProperties.AUTO_REFRESH_INTERVAL_PROPERTY;
 
 @Controller
 public class DocumentationController extends AbstractWorkspaceController {
@@ -63,20 +59,14 @@ public class DocumentationController extends AbstractWorkspaceController {
             @PathVariable("component") String component,
             ModelMap model
     ) {
-        WorkspaceMetaData workspaceMetaData = workspaceComponent.getWorkspaceMetaData(workspaceId);
-        if (workspaceMetaData == null) {
-            return show404Page(model);
-        }
-
-        model.addAttribute("scope", Base64.getEncoder().encodeToString(DocumentationScope.format(softwareSystem, container, component).getBytes(StandardCharsets.UTF_8)));
         model.addAttribute("showHeader", true);
+        model.addAttribute("scope", Base64.getEncoder().encodeToString(DocumentationScope.format(softwareSystem, container, component).getBytes(StandardCharsets.UTF_8)));
 
-        if (Configuration.getInstance().getProfile() == Profile.Local) {
-            model.addAttribute("autoRefreshInterval", Integer.parseInt(Configuration.getInstance().getProperty(AUTO_REFRESH_INTERVAL_PROPERTY)));
-            model.addAttribute("autoRefreshLastModifiedDate", workspaceComponent.getLastModifiedDate());
+        if (Configuration.getInstance().getProfile() == com.structurizr.configuration.Profile.Local) {
+            enableLocalRefresh(model);
         }
 
-        return showAuthenticatedView(Views.DOCUMENTATION, workspaceMetaData, branch, version, model, false, false);
+        return showAuthenticatedView(Views.DOCUMENTATION, workspaceId, branch, version, model, false, false);
     }
 
 }

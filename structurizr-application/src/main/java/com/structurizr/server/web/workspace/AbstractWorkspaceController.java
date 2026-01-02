@@ -18,6 +18,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 
+import static com.structurizr.configuration.StructurizrProperties.AUTO_REFRESH_INTERVAL_PROPERTY;
+
 /**
  * Base class for all controllers underneath /share and /workspace (i.e. the workspace related controllers).
  */
@@ -72,6 +74,11 @@ public abstract class AbstractWorkspaceController extends AbstractController {
             log.error(e);
             return "500";
         }
+    }
+
+    protected final void enableLocalRefresh(ModelMap model) {
+        model.addAttribute("autoRefreshInterval", Integer.parseInt(Configuration.getInstance().getProperty(AUTO_REFRESH_INTERVAL_PROPERTY)));
+        model.addAttribute("autoRefreshLastModifiedDate", workspaceComponent.getLastModifiedDate());
     }
 
 }

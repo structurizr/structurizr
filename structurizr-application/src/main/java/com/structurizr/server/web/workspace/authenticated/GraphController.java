@@ -1,6 +1,5 @@
 package com.structurizr.server.web.workspace.authenticated;
 
-import com.structurizr.server.domain.WorkspaceMetaData;
 import com.structurizr.server.web.Views;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,14 +19,9 @@ class GraphController extends AbstractWorkspaceController {
             @RequestParam(required = false) String view,
             ModelMap model
     ) {
-        WorkspaceMetaData workspaceMetaData = workspaceComponent.getWorkspaceMetaData(workspaceId);
-        if (workspaceMetaData == null) {
-            return show404Page(model);
-        }
-
         model.addAttribute("view", view);
 
-        return showAuthenticatedView(Views.GRAPH, workspaceMetaData, branch, version, model, true, false);
+        return showAuthenticatedView(Views.GRAPH, workspaceId, branch, version, model, true, false);
     }
 
 }

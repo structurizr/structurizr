@@ -11,7 +11,7 @@ import org.springframework.ui.ModelMap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public class AuthenticatedDiagramViewerControllerTests extends ControllerTestsBase {
+public class DiagramViewerControllerTests extends ControllerTestsBase {
 
     private DiagramViewerController controller;
     private ModelMap model;
@@ -20,25 +20,10 @@ public class AuthenticatedDiagramViewerControllerTests extends ControllerTestsBa
     public void setUp() {
         controller = new DiagramViewerController();
         model = new ModelMap();
-
-        enableAuthentication();
     }
 
     @Test
-    void showAuthenticatedDiagramViewer_ReturnsThe404Page_WhenTheWorkspaceDoesNotExist() {
-        controller.setWorkspaceComponent(new MockWorkspaceComponent() {
-            @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
-                return null;
-            }
-        });
-
-        String view = controller.showAuthenticatedDiagramViewer(1, "main", "version", "perspective", model);
-        assertEquals("404", view);
-    }
-
-    @Test
-    void showAuthenticatedDiagramViewer_ReturnsTheDiagramViewerPage_WhenAuthenticationIsDisabled()  {
+    void showAuthenticatedDiagramViewer_ReturnsTheDiagramViewerPageWhenAuthenticationIsDisabled()  {
         disableAuthentication();
 
         final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
@@ -54,13 +39,12 @@ public class AuthenticatedDiagramViewerControllerTests extends ControllerTestsBa
             }
         });
 
-        setUser("user@example.com");
         String view = controller.showAuthenticatedDiagramViewer(1, "main", "version", "perspective", model);
         assertEquals("diagrams", view);
         assertSame(workspaceMetaData, model.getAttribute("workspace"));
         assertEquals("anNvbg==", model.getAttribute("workspaceAsJson"));
         assertEquals("/workspace/1", model.getAttribute("urlPrefix"));
-        assertEquals("/workspace/1/branch/main/images/", model.getAttribute("thumbnailUrl"));
+        assertEquals("/workspace/1/images/", model.getAttribute("thumbnailUrl"));
         assertEquals(true, model.getAttribute("includeEditButton"));
     }
 
@@ -87,7 +71,7 @@ public class AuthenticatedDiagramViewerControllerTests extends ControllerTestsBa
         assertSame(workspaceMetaData, model.getAttribute("workspace"));
         assertEquals("anNvbg==", model.getAttribute("workspaceAsJson"));
         assertEquals("/workspace/1", model.getAttribute("urlPrefix"));
-        assertEquals("/workspace/1/branch/main/images/", model.getAttribute("thumbnailUrl"));
+        assertEquals("/workspace/1/images/", model.getAttribute("thumbnailUrl"));
         assertEquals(true, model.getAttribute("includeEditButton"));
     }
 
@@ -116,7 +100,7 @@ public class AuthenticatedDiagramViewerControllerTests extends ControllerTestsBa
         assertSame(workspaceMetaData, model.getAttribute("workspace"));
         assertEquals("anNvbg==", model.getAttribute("workspaceAsJson"));
         assertEquals("/workspace/1", model.getAttribute("urlPrefix"));
-        assertEquals("/workspace/1/branch/main/images/", model.getAttribute("thumbnailUrl"));
+        assertEquals("/workspace/1/images/", model.getAttribute("thumbnailUrl"));
         assertEquals(true, model.getAttribute("includeEditButton"));
     }
 
@@ -145,7 +129,7 @@ public class AuthenticatedDiagramViewerControllerTests extends ControllerTestsBa
         assertSame(workspaceMetaData, model.getAttribute("workspace"));
         assertEquals("anNvbg==", model.getAttribute("workspaceAsJson"));
         assertEquals("/workspace/1", model.getAttribute("urlPrefix"));
-        assertEquals("/workspace/1/branch/main/images/", model.getAttribute("thumbnailUrl"));
+        assertEquals("/workspace/1/images/", model.getAttribute("thumbnailUrl"));
         assertEquals(false, model.getAttribute("includeEditButton"));
     }
 
@@ -171,13 +155,12 @@ public class AuthenticatedDiagramViewerControllerTests extends ControllerTestsBa
             }
         });
 
-        setUser("user@example.com");
         String view = controller.showAuthenticatedDiagramViewer(1, "main", "version", "perspective", model);
         assertEquals("diagrams", view);
         assertSame(workspaceMetaData, model.getAttribute("workspace"));
         assertEquals("anNvbg==", model.getAttribute("workspaceAsJson"));
         assertEquals("/workspace/1", model.getAttribute("urlPrefix"));
-        assertEquals("/workspace/1/branch/main/images/", model.getAttribute("thumbnailUrl"));
+        assertEquals("/workspace/1/images/", model.getAttribute("thumbnailUrl"));
         assertEquals(true, model.getAttribute("includeEditButton"));
 
         assertEquals(12345, model.getAttribute("autoRefreshInterval"));

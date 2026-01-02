@@ -20,14 +20,9 @@ class TreeController extends AbstractWorkspaceController {
             @RequestParam(required = false) String view,
             ModelMap model
     ) {
-        WorkspaceMetaData workspaceMetaData = workspaceComponent.getWorkspaceMetaData(workspaceId);
-        if (workspaceMetaData == null) {
-            return show404Page(model);
-        }
-
         model.addAttribute("view", view);
 
-        return showAuthenticatedView(Views.TREE, workspaceMetaData, branch, version, model, true, false);
+        return showAuthenticatedView(Views.TREE, workspaceId, branch, version, model, true, false);
     }
 
 }

@@ -5,7 +5,6 @@ import com.structurizr.inspection.DefaultInspector;
 import com.structurizr.inspection.Inspector;
 import com.structurizr.inspection.Severity;
 import com.structurizr.inspection.Violation;
-import com.structurizr.server.domain.WorkspaceMetaData;
 import com.structurizr.server.web.Views;
 import com.structurizr.util.WorkspaceUtils;
 import org.apache.commons.logging.Log;
@@ -26,44 +25,38 @@ class InspectionsController extends AbstractWorkspaceController {
     private static final Log log = LogFactory.getLog(InspectionsController.class);
 
     @RequestMapping(value = "/workspace/{workspaceId}/inspections", method = RequestMethod.GET)
-    public String showInspections(
+    public String showAuthenticatedInspections(
             @PathVariable("workspaceId") long workspaceId,
             @RequestParam(required = false) String branch,
             @RequestParam(required = false) String version,
             ModelMap model
     ) {
-        WorkspaceMetaData workspaceMetaData = workspaceComponent.getWorkspaceMetaData(workspaceId);
-        if (workspaceMetaData == null) {
-            return show404Page(model);
-        }
+        return showAuthenticatedView(
+                Views.INSPECTIONS, workspaceId,
+                workspaceMetaData -> {
+                    try {
+                        String json = workspaceComponent.getWorkspace(workspaceId, branch, version);
+                        Workspace workspace = WorkspaceUtils.fromJson(json);
+                        Inspector inspector = new DefaultInspector(workspace);
 
-        if (workspaceMetaData.isClientEncrypted()) {
-            return showError("workspace-is-client-side-encrypted", model);
-        }
+                        List<Violation> violations = inspector.getViolations();
+                        violations.sort(Comparator.comparing(Violation::getSeverity));
 
-        if (userCanAccessWorkspace(workspaceMetaData)) {
-            try {
-                String json = workspaceComponent.getWorkspace(workspaceMetaData.getId(), branch, version);
-                Workspace workspace = WorkspaceUtils.fromJson(json);
-                Inspector inspector = new DefaultInspector(workspace);
-                List<Violation> violations = inspector.getViolations();
-                violations.sort(Comparator.comparing(Violation::getSeverity));
-                model.addAttribute("violations", violations);
-                model.addAttribute("numberOfInspections", inspector.getNumberOfInspections());
-                model.addAttribute("numberOfViolations", violations.size());
-                model.addAttribute("numberOfErrors", violations.stream().filter(r -> r.getSeverity() == Severity.ERROR).count());
-                model.addAttribute("numberOfWarnings", violations.stream().filter(r -> r.getSeverity() == Severity.WARNING).count());
-                model.addAttribute("numberOfInfos", violations.stream().filter(r -> r.getSeverity() == Severity.INFO).count());
-                model.addAttribute("numberOfIgnores", violations.stream().filter(r -> r.getSeverity() == Severity.IGNORE).count());
+                        model.addAttribute("violations", violations);
+                        model.addAttribute("numberOfInspections", inspector.getNumberOfInspections());
+                        model.addAttribute("numberOfViolations", violations.size());
+                        model.addAttribute("numberOfErrors", (int)violations.stream().filter(r -> r.getSeverity() == Severity.ERROR).count());
+                        model.addAttribute("numberOfWarnings", (int)violations.stream().filter(r -> r.getSeverity() == Severity.WARNING).count());
+                        model.addAttribute("numberOfInfos", (int)violations.stream().filter(r -> r.getSeverity() == Severity.INFO).count());
+                        model.addAttribute("numberOfIgnores", (int)violations.stream().filter(r -> r.getSeverity() == Severity.IGNORE).count());
+                    } catch (Exception e) {
+                        log.error(e);
+                        throw new RuntimeException(e);
+                    }
+                },
+                branch, version, model, true, false
+        );
 
-                return showAuthenticatedView(Views.INSPECTIONS, workspaceMetaData, branch, version, model, true, false);
-            } catch (Exception e) {
-                log.error(e);
-                throw new RuntimeException(e);
-            }
-        }
-
-        return show404Page(model);
     }
 
 }

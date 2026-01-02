@@ -34,12 +34,12 @@ class ImageController extends AbstractImageController {
             return null;
         }
 
-        if (userCanAccessWorkspace(workspaceMetaData)) {
+        if (workspaceMetaData.hasAccess(getUser())) {
             return getImage(workspaceMetaData, WorkspaceBranch.NO_BRANCH, diagramKey, response);
+        } else {
+            response.setStatus(404);
+            return null;
         }
-
-        response.setStatus(404);
-        return null;
     }
 
     @ResponseBody
@@ -54,7 +54,7 @@ class ImageController extends AbstractImageController {
             return null;
         }
 
-        if (userCanAccessWorkspace(workspaceMetaData)) {
+        if (workspaceMetaData.hasAccess(getUser())) {
             return getImage(workspaceMetaData, branch, diagramKey, response);
         }
 
@@ -113,7 +113,7 @@ class ImageController extends AbstractImageController {
             throw new ApiException("404");
         }
 
-        if (userCanAccessWorkspace(workspaceMetaData)) {
+        if (workspaceMetaData.hasAccess(getUser())) {
             try {
                 String base64Image = imageAsBase64EncodedDataUri.split(",")[1];
                 byte[] decodedImage = Base64.getDecoder().decode(base64Image.getBytes(StandardCharsets.UTF_8));

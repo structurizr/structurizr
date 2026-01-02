@@ -150,11 +150,6 @@ public abstract class AbstractController {
         }
     }
 
-    protected boolean userCanAccessWorkspace(WorkspaceMetaData workspaceMetaData) {
-        User user = getUser();
-        return workspaceMetaData.isOpen() || workspaceMetaData.isWriteUser(user) || workspaceMetaData.isReadUser(user);
-    }
-
     protected final void addUrlSuffix(String branch, String version, ModelMap model) {
         if (!StringUtils.isNullOrEmpty(branch) && !StringUtils.isNullOrEmpty(version)) {
             WorkspaceBranch.validateBranchName(branch);

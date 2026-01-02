@@ -62,20 +62,14 @@ class DecisionsController extends AbstractWorkspaceController {
             @PathVariable("component") String component,
             ModelMap model
     ) {
-        WorkspaceMetaData workspaceMetaData = workspaceComponent.getWorkspaceMetaData(workspaceId);
-        if (workspaceMetaData == null) {
-            return show404Page(model);
-        }
-
-        model.addAttribute("scope", Base64.getEncoder().encodeToString(DocumentationScope.format(softwareSystem, container, component).getBytes(StandardCharsets.UTF_8)));
         model.addAttribute("showHeader", true);
+        model.addAttribute("scope", Base64.getEncoder().encodeToString(DocumentationScope.format(softwareSystem, container, component).getBytes(StandardCharsets.UTF_8)));
 
         if (Configuration.getInstance().getProfile() == com.structurizr.configuration.Profile.Local) {
-            model.addAttribute("autoRefreshInterval", Integer.parseInt(Configuration.getInstance().getProperty(AUTO_REFRESH_INTERVAL_PROPERTY)));
-            model.addAttribute("autoRefreshLastModifiedDate", workspaceComponent.getLastModifiedDate());
+            enableLocalRefresh(model);
         }
 
-        return showAuthenticatedView(Views.DECISIONS, workspaceMetaData, branch, version, model, false, false);
+        return showAuthenticatedView(Views.DECISIONS, workspaceId, branch, version, model, false, false);
     }
 
 }

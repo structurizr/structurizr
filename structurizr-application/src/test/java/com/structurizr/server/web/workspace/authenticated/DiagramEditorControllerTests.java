@@ -19,12 +19,12 @@ public class DiagramEditorControllerTests extends ControllerTestsBase {
     public void setUp() {
         controller = new DiagramEditorController();
         model = new ModelMap();
-
-        enableAuthentication();
     }
 
     @Test
-    public void showAuthenticatedDiagramEditor_ReturnsThe404Page_WhenTheWorkspaceDoesNotExist() {
+    void showAuthenticatedDiagramEditor_ReturnsThe404Page_WhenTheWorkspaceDoesNotExist() {
+        disableAuthentication();
+
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
             public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
@@ -38,7 +38,9 @@ public class DiagramEditorControllerTests extends ControllerTestsBase {
     }
 
     @Test
-    public void showAuthenticatedDiagramEditor_ReturnsThe404Page_WhenTheUserDoesNotHaveAccess() {
+    void showAuthenticatedDiagramEditor_ReturnsThe404Page_WhenTheUserDoesNotHaveAccess() {
+        enableAuthentication();
+
         final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
         workspaceMetaData.addWriteUser("user2@example.com");
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
@@ -54,7 +56,45 @@ public class DiagramEditorControllerTests extends ControllerTestsBase {
     }
 
     @Test
-    public void showAuthenticatedDiagramEditor_ReturnsTheDiagramEditorPage_WhenTheWorkspaceHasNoUsersConfigured()  {
+    void showAuthenticatedDiagramEditor_ReturnsTheDiagramEditorPage_WhenAuthenticationIsDisabled()  {
+        disableAuthentication();
+
+        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        controller.setWorkspaceComponent(new MockWorkspaceComponent() {
+            @Override
+            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+                return workspaceMetaData;
+            }
+
+            @Override
+            public String getWorkspace(long workspaceId, String branch, String version) throws WorkspaceComponentException {
+                return "json";
+            }
+
+            @Override
+            public boolean lockWorkspace(long workspaceId, String username, String agent) {
+                workspaceMetaData.addLock(username, agent);
+                return true;
+            }
+        });
+
+        setUser("1234567890"); // random user ID
+        String view = controller.showAuthenticatedDiagramEditor(1, "main", "version", model);
+        assertEquals("diagrams", view);
+        assertSame(workspaceMetaData, model.getAttribute("workspace"));
+        assertTrue(workspaceMetaData.isEditable());
+        assertNull(model.getAttribute("workspaceAsJson"));
+        assertEquals("/workspace/1", model.getAttribute("urlPrefix"));
+        assertEquals("/workspace/1/images/", model.getAttribute("thumbnailUrl"));
+        assertTrue(workspaceMetaData.isLocked());
+        assertEquals("1234567890", workspaceMetaData.getLockedUser());
+        assertTrue(workspaceMetaData.getLockedAgent().startsWith("structurizr/diagrams/"));
+    }
+
+    @Test
+    void showAuthenticatedDiagramEditor_ReturnsTheDiagramEditorPage_WhenTheWorkspaceHasNoUsersConfigured()  {
+        enableAuthentication();
+
         final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
@@ -81,16 +121,19 @@ public class DiagramEditorControllerTests extends ControllerTestsBase {
         assertTrue(workspaceMetaData.isEditable());
         assertNull(model.getAttribute("workspaceAsJson"));
         assertEquals("/workspace/1", model.getAttribute("urlPrefix"));
-        assertEquals("/workspace/1/branch/main/images/", model.getAttribute("thumbnailUrl"));
+        assertEquals("/workspace/1/images/", model.getAttribute("thumbnailUrl"));
         assertTrue(workspaceMetaData.isLocked());
         assertEquals("user@example.com", workspaceMetaData.getLockedUser());
         assertTrue(workspaceMetaData.getLockedAgent().startsWith("structurizr/diagrams/"));
     }
 
     @Test
-    public void showAuthenticatedDiagramEditor_ReturnsTheDiagramEditorPage_WhenTheUserHasWriteAccess()  {
+    void showAuthenticatedDiagramEditor_ReturnsTheDiagramEditorPage_WhenTheUserHasWriteAccess()  {
+        enableAuthentication();
+
         final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
         workspaceMetaData.addWriteUser("user1@example.com");
+
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
             public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
@@ -116,14 +159,16 @@ public class DiagramEditorControllerTests extends ControllerTestsBase {
         assertTrue(workspaceMetaData.isEditable());
         assertNull(model.getAttribute("workspaceAsJson"));
         assertEquals("/workspace/1", model.getAttribute("urlPrefix"));
-        assertEquals("/workspace/1/branch/main/images/", model.getAttribute("thumbnailUrl"));
+        assertEquals("/workspace/1/images/", model.getAttribute("thumbnailUrl"));
         assertTrue(workspaceMetaData.isLocked());
         assertEquals("user1@example.com", workspaceMetaData.getLockedUser());
         assertTrue(workspaceMetaData.getLockedAgent().startsWith("structurizr/diagrams/"));
     }
 
     @Test
-    public void showAuthenticatedDiagramEditor_ReturnsAnErrorPage_WhenTheUserHasReadAccess()  {
+    void showAuthenticatedDiagramEditor_ReturnsAnErrorPage_WhenTheUserHasReadAccess()  {
+        enableAuthentication();
+
         final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
         workspaceMetaData.addReadUser("user1@example.com");
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {

@@ -22,7 +22,26 @@ abstract class AbstractWorkspaceController extends com.structurizr.server.web.wo
 
     private static final String AGENT = "structurizr";
 
-    protected final String showAuthenticatedView(String view, WorkspaceMetaData workspaceMetaData, String branch, String version, ModelMap model, boolean showHeaderAndFooter, boolean editable) {
+    protected final String showAuthenticatedView(String view, long workspaceId, String branch, String version, ModelMap model, boolean showHeaderAndFooter, boolean editable) {
+        return showAuthenticatedView(view, workspaceId, (workspaceMetaData1 -> {}), branch, version, model, showHeaderAndFooter, editable);
+    }
+
+    protected final String showAuthenticatedView(String view, long workspaceId, AuthenticatedFunction function, String branch, String version, ModelMap model, boolean showHeaderAndFooter, boolean editable) {
+        WorkspaceMetaData workspaceMetaData = workspaceComponent.getWorkspaceMetaData(workspaceId);
+        if (workspaceMetaData == null) {
+            return show404Page(model);
+        }
+
+        if (WorkspaceBranch.isMainBranch(branch)) {
+            branch = "";
+        }
+
+        if (!StringUtils.isNullOrEmpty(branch) && !Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_BRANCHES)) {
+            return showError("workspace-branches-not-enabled", model);
+        } else {
+            workspaceMetaData.setBranch(branch);
+        }
+
         User user = getUser();
 //        if (Configuration.getInstance().getProfile() == Profile.Server) {
 //            boolean authenticationEnabled = Configuration.getInstance().isAuthenticationEnabled();
@@ -31,41 +50,45 @@ abstract class AbstractWorkspaceController extends com.structurizr.server.web.wo
 //            }
 //        }
 
-        if (workspaceMetaData != null) {
+        if (!workspaceMetaData.hasAccess(getUser())) {
+            return show404Page(model);
+        }
+
             String urlPrefix = "/workspace/" + workspaceMetaData.getId();
-            model.addAttribute(URL_PREFIX, urlPrefix);
-            if (!StringUtils.isNullOrEmpty(branch)) {
-                model.addAttribute("thumbnailUrl", urlPrefix + "/branch/" + branch + "/images/");
-            } else {
-                model.addAttribute("thumbnailUrl", urlPrefix + "/images/");
-            }
+        model.addAttribute(URL_PREFIX, urlPrefix);
+        if (!StringUtils.isNullOrEmpty(branch)) {
+            model.addAttribute("thumbnailUrl", urlPrefix + "/branch/" + branch + "/images/");
+        } else {
+            model.addAttribute("thumbnailUrl", urlPrefix + "/images/");
+        }
 
-            if (Configuration.getInstance().getProfile() == Profile.Server) {
-                if (workspaceMetaData.isOpen()) {
-                    model.addAttribute("sharingUrlPrefix", "/share/" + workspaceMetaData.getId());
-                } else if (workspaceMetaData.isShareable()) {
-                    model.addAttribute("sharingUrlPrefix", "/share/" + workspaceMetaData.getId() + "/" + workspaceMetaData.getSharingToken());
-                }
-            }
-
-            if (WorkspaceBranch.isMainBranch(branch)) {
-                branch = "";
-            }
-
-            if (!StringUtils.isNullOrEmpty(branch) && !Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_BRANCHES)) {
-                return showError("workspace-branches-not-enabled", model);
-            }
-
-            addUrlSuffix(branch, version, model);
-
-            if (workspaceMetaData.hasNoUsersConfigured() || workspaceMetaData.isWriteUser(user)) {
-                return showView(view, workspaceMetaData, branch, version, model, editable, showHeaderAndFooter);
-            } else if (workspaceMetaData.isReadUser(user)) {
-                return showView(view, workspaceMetaData, branch, version, model, false, showHeaderAndFooter);
+        if (Configuration.getInstance().getProfile() == Profile.Server) {
+            if (workspaceMetaData.isOpen()) {
+                model.addAttribute("sharingUrlPrefix", "/share/" + workspaceMetaData.getId());
+            } else if (workspaceMetaData.isShareable()) {
+                model.addAttribute("sharingUrlPrefix", "/share/" + workspaceMetaData.getId() + "/" + workspaceMetaData.getSharingToken());
             }
         }
 
-        return show404Page(model);
+        if (WorkspaceBranch.isMainBranch(branch)) {
+            branch = "";
+        }
+
+        if (!StringUtils.isNullOrEmpty(branch) && !Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_BRANCHES)) {
+            return showError("workspace-branches-not-enabled", model);
+        }
+
+        addUrlSuffix(branch, version, model);
+
+        function.run(workspaceMetaData);
+
+        if (!Configuration.getInstance().isAuthenticationEnabled() || workspaceMetaData.hasNoUsersConfigured() || workspaceMetaData.isWriteUser(user)) {
+            return showView(view, workspaceMetaData, branch, version, model, editable, showHeaderAndFooter);
+        } else if (workspaceMetaData.isReadUser(user)) {
+            return showView(view, workspaceMetaData, branch, version, model, false, showHeaderAndFooter);
+        } else {
+            return show404Page(model);
+        }
     }
 
     protected final String lockWorkspaceAndShowAuthenticatedView(String view, WorkspaceMetaData workspaceMetaData, String branch, String version, ModelMap model, boolean showHeaderAndFooter) {
@@ -100,9 +123,8 @@ abstract class AbstractWorkspaceController extends com.structurizr.server.web.wo
                 return showError("workspace-could-not-be-locked", model);
             }
         } else {
-            workspaceMetaData = workspaceComponent.getWorkspaceMetaData(workspaceMetaData.getId()); // refresh metadata
             model.addAttribute("userAgent", agent);
-            return showAuthenticatedView(view, workspaceMetaData, branch, version, model, showHeaderAndFooter, true);
+            return showAuthenticatedView(view, workspaceMetaData.getId(), branch, version, model, showHeaderAndFooter, true);
         }
     }
 

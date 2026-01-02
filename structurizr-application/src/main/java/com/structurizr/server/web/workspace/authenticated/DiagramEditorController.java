@@ -37,10 +37,9 @@ public class DiagramEditorController extends AbstractWorkspaceController {
         model.addAttribute("quickNavigationPath", "diagram-editor");
         model.addAttribute("paperSizes", PaperSize.getOrderedPaperSizes());
 
-        if (Configuration.getInstance().getProfile() == Profile.Local) {
+        if (Configuration.getInstance().getProfile() == com.structurizr.configuration.Profile.Local) {
             model.addAttribute("autoSaveInterval", Integer.parseInt(getInstance().getProperty(AUTO_SAVE_INTERVAL_PROPERTY)));
-            model.addAttribute("autoRefreshInterval", Integer.parseInt(Configuration.getInstance().getProperty(AUTO_REFRESH_INTERVAL_PROPERTY)));
-            model.addAttribute("autoRefreshLastModifiedDate", workspaceComponent.getLastModifiedDate());
+            enableLocalRefresh(model);
         }
 
         if (!workspaceMetaData.hasNoUsersConfigured() && !workspaceMetaData.isWriteUser(getUser())) {
