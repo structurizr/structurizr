@@ -360,14 +360,12 @@ public class Configuration {
     private void logAllProperties(Log log, Properties properties) {
         log.info("***********************************************************************************");
 
-        Set<String> propertiesToMask = Set.of(
-                ENCRYPTION_PASSPHRASE, API_KEY, AWS_S3_SECRET_ACCESS_KEY, AZURE_BLOB_STORAGE_ACCESS_KEY, ELASTICSEARCH_PASSWORD, REDIS_PASSWORD
-        );
+        String propertiesToMask = ".*encryption|.*key|.*password";
 
         Set<String> propertyNames = new TreeSet<>(properties.stringPropertyNames());
         for (String name : propertyNames) {
             String value = properties.getProperty(name);
-            if (propertiesToMask.contains(name)) {
+            if (name.toLowerCase().matches(propertiesToMask)) {
                 if (!StringUtils.isNullOrEmpty(value)) {
                     log.info(" - " + name + ": ********");
                 } else {
