@@ -146,7 +146,7 @@
         <script nonce="${scriptNonce}">
             $('#saveButton').click(function() { saveWorkspace(); });
             $('#exitButton').click(function() {
-                window.open('${urlPrefix}/diagrams#' + structurizr.diagram.getCurrentViewOrFilter().key);
+                window.location.href='${urlPrefix}/diagrams#' + structurizr.diagram.getCurrentViewOrFilter().key;
             });
         </script>
         </c:if>
