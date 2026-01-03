@@ -10,4 +10,4 @@ EXPOSE ${PORT}
 
 WORKDIR /usr/local/structurizr
 
-ENTRYPOINT ["java", "-jar", "/usr/local/structurizr.war"]
+ENTRYPOINT ["java", "-jar", "--enable-native-access=ALL-UNNAMED", "/usr/local/structurizr.war"]

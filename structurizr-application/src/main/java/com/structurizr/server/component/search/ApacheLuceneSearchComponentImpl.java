@@ -410,7 +410,9 @@ class ApacheLuceneSearchComponentImpl extends AbstractSearchComponentImpl {
 
             List<Document> documents = new ArrayList<>();
             for (ScoreDoc scoreDoc : topDocs.scoreDocs) {
-                documents.add(searcher.doc(scoreDoc.doc));
+                StoredFields storedFields = searcher.storedFields();
+                Document doc = storedFields.document(scoreDoc.doc);
+                documents.add(doc);
             }
 
             for (Document doc : documents) {
