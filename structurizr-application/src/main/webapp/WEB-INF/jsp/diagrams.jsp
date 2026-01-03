@@ -971,7 +971,7 @@
             }
         });
 
-        <c:if test="${structurizrConfiguration.profile == 'Server' && workspace.locked}">
+        <c:if test="${structurizrConfiguration.profile == 'Server' && workspace.editable && workspace.locked}">
         $(window).on("unload", function() {
             navigator.sendBeacon('/workspace/${workspace.id}/unlock?agent=${userAgent}');
         });
