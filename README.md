@@ -31,17 +31,17 @@ java -jar structurizr-application/target/structurizr-1.0.0.war
 
 ## Supported commands
 
-- ✅ playground: starts the [Structurizr playground](https://playground.structurizr.com)
-- ✅ local: starts a local Structurizr server for workspace viewing/authoring (the equivalent of Structurizr Lite)
-- ❌ server: starts a Structurizr server (the equivalent of the Structurizr on-premises installation - work in progress)
-- ✅ push: pushes a workspace to a Structurizr server
-- ✅ pull: pulls a workspace from a Structurizr server
-- ✅ lock: locks a workspace on a Structurizr server
-- ✅ unlock: unlocks a workspace on a Structurizr server
-- ✅ export: exports the views in a Structurizr workspace to various diagrams as code formats or a static HTML site
-- ✅ merge: merges the layout information into a workspace
-- ✅ validate: validates a workspace
-- ✅ inspect: runs the inspections on a workspace
-- ✅ list: lists the elements in a workspace
-- ✅ version: displays the version information of the tooling
-- ✅ help: displays a help message
+- playground: starts the [Structurizr playground](https://playground.structurizr.com)
+- local: starts a local Structurizr server for workspace viewing/authoring (the equivalent of Structurizr Lite)
+- server: starts a Structurizr server (the equivalent of the Structurizr on-premises installation)
+- push: pushes a workspace to a Structurizr server
+- pull: pulls a workspace from a Structurizr server
+- lock: locks a workspace on a Structurizr server
+- unlock: unlocks a workspace on a Structurizr server
+- export: exports the views in a Structurizr workspace to various diagrams as code formats or a static HTML site
+- merge: merges the layout information into a workspace
+- validate: validates a workspace
+- inspect: runs the inspections on a workspace
+- list: lists the elements in a workspace
+- version: displays the version information of the tooling
+- help: displays a help message
