@@ -82,14 +82,16 @@
                         <div>
                             <c:choose>
                                 <c:when test="${workspace.publicWorkspace}">
-                                    <form id="privateWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/private" method="post">
+                                    <form id="privateWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/visibility" method="post">
                                         <input type="hidden" name="workspaceId" value="${workspace.id}" />
+                                        <input type="hidden" name="action" value="private" />
                                         <button class="btn btn-default small" type="submit" name="action" value="private" title="Make workspace private"><img src="/static/bootstrap-icons/lock.svg" class="icon-btn" /> Make private</button>
                                     </form>
                                 </c:when>
                                 <c:otherwise>
-                                    <form id="publicWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/public" method="post">
+                                    <form id="publicWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/visibility" method="post">
                                         <input type="hidden" name="workspaceId" value="${workspace.id}" />
+                                        <input type="hidden" name="action" value="public" />
                                         <button class="btn btn-default small" type="submit" name="action" value="public" title="Make workspace public"><img src="/static/bootstrap-icons/unlock.svg" class="icon-btn" /> Make public</button>
                                     </form>
                                 </c:otherwise>
@@ -110,14 +112,16 @@
                         <div>
                             <c:choose>
                                 <c:when test="${not empty workspace.sharingToken}">
-                                    <form id="unshareWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/unshare" method="post">
+                                    <form id="unshareWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/visibility" method="post">
                                         <input type="hidden" name="workspaceId" value="${workspace.id}" />
+                                        <input type="hidden" name="action" value="unshare" />
                                         <button class="btn btn-default small" type="submit" name="action" value="unshare" title="Disable sharing link"><img src="/static/bootstrap-icons/link.svg" class="icon-btn" /> Disable sharing link</button>
                                     </form>
                                 </c:when>
                                 <c:otherwise>
-                                    <form id="shareWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/share" method="post">
+                                    <form id="shareWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/visibility" method="post">
                                         <input type="hidden" name="workspaceId" value="${workspace.id}" />
+                                        <input type="hidden" name="action" value="share" />
                                         <button class="btn btn-default small" type="submit" name="action" value="share" title="Enable sharing link"><img src="/static/bootstrap-icons/link.svg" class="icon-btn" /> Enable sharing link</button>
                                     </form>
                                 </c:otherwise>

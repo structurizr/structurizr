@@ -26,7 +26,10 @@ public class ControllerTestsBase extends AbstractTestsBase {
     }
 
     protected void enableAuthentication() {
-        Properties properties = new Properties();
+        enableAuthentication(new Properties());
+    }
+
+    protected void enableAuthentication(Properties properties) {
         properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
         Configuration.init(Profile.Server, properties);
         clearUser();
