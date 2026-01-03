@@ -2,154 +2,169 @@
 <%@ include file="/WEB-INF/fragments/progress-message.jspf" %>
 
 <div class="section">
-    <div class="container centered">
-        <h1><c:out value="${workspace.name}" escapeXml="true" /></h1>
-        <p>
-            <c:out value="${workspace.description}" escapeXml="true" />
-        </p>
-        <p class="smaller">
-            (<a href="/workspace/${workspaceId}">back to workspace summary</a>)
-        </p>
+    <div class="container">
+        <div class="centered">
+            <h1><c:out value="${workspace.name}" escapeXml="true" /></h1>
+            <p>
+                <c:out value="${workspace.description}" escapeXml="true" />
+            </p>
+            <p class="smaller">
+                (<a href="/workspace/${workspaceId}">back to workspace summary</a>)
+            </p>
+        </div>
 
         <br />
 
-        <div class="workspaceDetails centered">
-
-            <div class="row workspaceDetailSection">
-                <div class="col-6">
-                    <h4>Client-side encryption <span class="smaller">(<a href="/help/client-side-encryption" target="_blank">help</a>)</span></h4>
-
-                    <c:if test="${workspace.editable && not workspace.locked}">
-                        <c:choose>
-                            <c:when test="${workspace.clientEncrypted}">
-                                <button id="removeClientSideEncryptionButton" class="btn btn-default small"><img src="/static/bootstrap-icons/file-earmark.svg" class="icon-btn" /> Remove client-side encryption</button>
-                                <button id="addClientSideEncryptionButton" class="btn btn-default small"><img src="/static/bootstrap-icons/file-earmark-lock.svg" class="icon-btn" /> Change passphrase</button>
-                            </c:when>
-                            <c:otherwise>
-                                <button id="addClientSideEncryptionButton" class="btn btn-default small"><img src="/static/bootstrap-icons/file-earmark-lock.svg" class="icon-btn" /> Add client-side encryption</button>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:if>
-                </div>
-
-                <div class="col-6">
-                    <c:if test="${authenticationEnabled}">
-                    <h4>Role-based access</h4>
-
-                    <div class="small" style="margin-top: 10px">
-                        <button id="manageUsersButton" class="btn btn-default small"><img src="/static/bootstrap-icons/people.svg" class="icon-btn" /> Manage users</button>
-                    </div>
-                    </c:if>
-                </div>
+        <c:if test="${workspace.editable}">
+        <div class="row">
+            <div class="col-2">
+                <h4 style="margin-top: 0">Workspace API</h4>
+                <p>
+                    <a href="https://docs.structurizr.com/server/workspace-api" target="_blank">Documentation</a>
+                </p>
             </div>
-
-            <div class="row workspaceDetailSection">
-                <div class="col-6">
-                    <c:if test="${workspace.editable}">
-                        <a name="api"></a>
-                        <h4>API details <span class="smaller">(<a href="https://structurizr.com/help/web-api" target="_blank">help</a>)</span></h4>
-                        <p class="small">
-                            Workspace ID: <span id="workspace${workspace.id}Id" style="font-family: 'Courier New', Courier, monospace; cursor: pointer">${workspace.id}</span>
-                            <br />
-                            API URL: <span id="workspace${workspace.id}ApiUrl" style="font-family: 'Courier New', Courier, monospace; cursor: pointer"><span class="baseUrl"></span>/api</span>
-                            <br />
-                            API key:
-                            <span id="workspace${workspace.id}ApiKey" style="font-family: 'Courier New', Courier, monospace; cursor: pointer">${workspace.apiKey}</span>
-                            <br />
-                            API secret:
-                            <span id="workspace${workspace.id}ApiSecret" style="font-family: 'Courier New', Courier, monospace; cursor: pointer">${workspace.apiSecret}</span>
-                        </p>
-
-                        <p class="small">
-                            Structurizr CLI parameters <span class="smaller">(<a href="https://github.com/structurizr/cli/blob/master/docs/push.md" target="_blank">help</a>)</span>
-                            <br />
-                        <pre id="workspace${workspace.id}Cli" style="font-family: 'Courier New', Courier, monospace; cursor: pointer; text-align: left">-url <span class="baseUrl"></span>/api -id ${workspace.id} -key ${workspace.apiKey} -secret ${workspace.apiSecret}</pre>
-                        </p>
-                    </c:if>
-                </div>
-
-                <div class="col-6">
-                    <h4>Workspace visibility <span class="smaller">(<a href="https://structurizr.com/help/workspace-sharing" target="_blank">help</a>)</span></h4>
-
-                    <c:if test="${not empty workspace.writeUsers}">
-                    <c:if test="${workspace.publicWorkspace}">
-                        <div class="small" style="margin-bottom: 5px">
-                            <a href="/share/${workspace.id}" title="Sharing link">${structurizrConfiguration.webUrl}/share/${workspace.id}${urlSuffix}</a>
-                        </div>
-                    </c:if>
-
-                    <c:if test="${workspace.editable}">
-                        <div>
-                            <c:choose>
-                                <c:when test="${workspace.publicWorkspace}">
-                                    <form id="privateWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/visibility" method="post">
-                                        <input type="hidden" name="workspaceId" value="${workspace.id}" />
-                                        <input type="hidden" name="action" value="private" />
-                                        <button class="btn btn-default small" type="submit" name="action" value="private" title="Make workspace private"><img src="/static/bootstrap-icons/lock.svg" class="icon-btn" /> Make private</button>
-                                    </form>
-                                </c:when>
-                                <c:otherwise>
-                                    <form id="publicWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/visibility" method="post">
-                                        <input type="hidden" name="workspaceId" value="${workspace.id}" />
-                                        <input type="hidden" name="action" value="public" />
-                                        <button class="btn btn-default small" type="submit" name="action" value="public" title="Make workspace public"><img src="/static/bootstrap-icons/unlock.svg" class="icon-btn" /> Make public</button>
-                                    </form>
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
-                    </c:if>
-
+            <div class="col-10">
+                <p>
+                    Workspace ID: <span id="workspace${workspace.id}Id" style="font-family: 'Courier New', Courier, monospace; cursor: pointer">${workspace.id}</span>
                     <br />
-                    </c:if>
+                    API URL: <span id="workspace${workspace.id}ApiUrl" style="font-family: 'Courier New', Courier, monospace; cursor: pointer"><span class="baseUrl"></span>/api</span>
+                    <br />
+                    API key:
+                    <span id="workspace${workspace.id}ApiKey" style="font-family: 'Courier New', Courier, monospace; cursor: pointer">${workspace.apiKey}</span>
+                    <br />
+                    API secret:
+                    <span id="workspace${workspace.id}ApiSecret" style="font-family: 'Courier New', Courier, monospace; cursor: pointer">${workspace.apiSecret}</span>
+                </p>
 
-                    <c:if test="${workspace.shareable}">
-                        <div class="small" style="margin-bottom: 5px">
-                            <a href="/share/${workspace.id}/${workspace.sharingToken}" title="Sharing link">${structurizrConfiguration.webUrl}/share/${workspace.id}/${workspace.sharingTokenTruncated}${urlSuffix}</a>
-                        </div>
-                    </c:if>
-
-                    <c:if test="${workspace.editable}">
-                        <div>
-                            <c:choose>
-                                <c:when test="${not empty workspace.sharingToken}">
-                                    <form id="unshareWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/visibility" method="post">
-                                        <input type="hidden" name="workspaceId" value="${workspace.id}" />
-                                        <input type="hidden" name="action" value="unshare" />
-                                        <button class="btn btn-default small" type="submit" name="action" value="unshare" title="Disable sharing link"><img src="/static/bootstrap-icons/link.svg" class="icon-btn" /> Disable sharing link</button>
-                                    </form>
-                                </c:when>
-                                <c:otherwise>
-                                    <form id="shareWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/visibility" method="post">
-                                        <input type="hidden" name="workspaceId" value="${workspace.id}" />
-                                        <input type="hidden" name="action" value="share" />
-                                        <button class="btn btn-default small" type="submit" name="action" value="share" title="Enable sharing link"><img src="/static/bootstrap-icons/link.svg" class="icon-btn" /> Enable sharing link</button>
-                                    </form>
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
-                    </c:if>
-                </div>
-            </div>
-
-            <div class="row workspaceDetailSection">
-                <div class="col-12">
-                    <c:if test="${showAdminFeatures}">
-                        <h4>Delete workspace</h4>
-                        <p class="small">
-                            Click the button below to delete your workspace. This action cannot be undone, and your workspace data will be irretrievable - we recommend exporting your workspace as a backup.
-                        </p>
-                        <button id="exportWorkspaceButton" class="btn btn-default small" title="Export workspace as JSON"><img src="/static/bootstrap-icons/filetype-json.svg" class="icon-btn" /> Export workspace</button>
-                        <form id="deleteWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/delete" method="post">
-                            <input type="hidden" name="workspaceId" value="${workspace.id}" />
-                            <button class="btn btn-danger small" type="submit" name="action" value="remove" title="Delete workspace"><img src="/static/bootstrap-icons/folder-x.svg" class="icon-white icon-btn" /> Delete workspace</button>
-                        </form>
-                    </c:if>
-                </div>
+                <p>
+                    Structurizr parameters for <a href="https://docs.structurizr.com/push" target="_blank">push</a> and <a href="https://docs.structurizr.com/push" target="_blank">pull</a> via the web API</span>
+                    <br />
+                    <pre id="workspace${workspace.id}Cli" style="font-family: 'Courier New', Courier, monospace; cursor: pointer; text-align: left">-url <span class="baseUrl"></span>/api -id ${workspace.id} -key ${workspace.apiKey} -secret ${workspace.apiSecret}</pre>
+                </p>
             </div>
         </div>
+        <hr />
+        </c:if>
+
+        <c:if test="${showAdminFeatures}">
+        <c:if test="${structurizrConfiguration.authenticationEnabled}">
+        <div class="row">
+            <div class="col-2">
+                <h4 style="margin-top: 0">Workspace visibility</h4>
+            </div>
+            <div class="col-10">
+                <p>
+                    Private URL: <a href="/workspace/${workspace.id}" target="_blank">/workspace/${workspace.id}</a>
+                    <br />
+                    <c:choose>
+                    <c:when test="${workspace.shareable}">
+                    Sharing URL: <a href="/share/${workspace.id}/${workspace.sharingToken}" target="_blank">/share/${workspace.id}/${workspace.sharingToken}</a>
+                    </c:when>
+                    <c:otherwise>
+                    Sharing URL: -
+                    </c:otherwise>
+                    </c:choose>
+                    <br />
+                    <c:choose>
+                    <c:when test="${workspace.publicWorkspace}">
+                    Public URL: <a href="/share/${workspace.id}" target="_blank">/share/${workspace.id}</a>
+                    </c:when>
+                    <c:otherwise>
+                    Public URL: -
+                    </c:otherwise>
+                    </c:choose>
+                </p>
+
+                <c:choose>
+                    <c:when test="${workspace.publicWorkspace}">
+                        <form id="privateWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/visibility" method="post">
+                            <input type="hidden" name="workspaceId" value="${workspace.id}" />
+                            <input type="hidden" name="action" value="private" />
+                            <button class="btn btn-primary" type="submit" name="action" value="private" title="Make workspace private"><img src="/static/bootstrap-icons/lock.svg" class="icon-btn icon-white" /> Make private</button>
+                        </form>
+                    </c:when>
+                    <c:otherwise>
+                        <form id="publicWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/visibility" method="post">
+                            <input type="hidden" name="workspaceId" value="${workspace.id}" />
+                            <input type="hidden" name="action" value="public" />
+                            <button class="btn btn-danger" type="submit" name="action" value="public" title="Make workspace public"><img src="/static/bootstrap-icons/unlock.svg" class="icon-btn icon-white" /> Make public</button>
+                        </form>
+                    </c:otherwise>
+                </c:choose>
+
+                <c:if test="${workspace.shareable}">
+                    <div class="small" style="margin-bottom: 5px">
+                        <a href="/share/${workspace.id}/${workspace.sharingToken}" title="Sharing link">${structurizrConfiguration.webUrl}/share/${workspace.id}/${workspace.sharingTokenTruncated}${urlSuffix}</a>
+                    </div>
+                </c:if>
+
+                <c:choose>
+                    <c:when test="${not empty workspace.sharingToken}">
+                        <form id="unshareWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/visibility" method="post">
+                            <input type="hidden" name="workspaceId" value="${workspace.id}" />
+                            <input type="hidden" name="action" value="unshare" />
+                            <button class="btn btn-primary" type="submit" name="action" value="unshare" title="Disable sharing link"><img src="/static/bootstrap-icons/link.svg" class="icon-btn icon-white" /> Disable sharing link</button>
+                        </form>
+                    </c:when>
+                    <c:otherwise>
+                        <form id="shareWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/visibility" method="post">
+                            <input type="hidden" name="workspaceId" value="${workspace.id}" />
+                            <input type="hidden" name="action" value="share" />
+                            <button class="btn btn-warning" type="submit" name="action" value="share" title="Enable sharing link"><img src="/static/bootstrap-icons/link.svg" class="icon-btn" /> Enable sharing link</button>
+                        </form>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+        </div>
+        <hr />
+        </c:if>
+
+        <c:if test="${workspace.editable && not workspace.locked}">
+        <div class="row">
+            <div class="col-2">
+                <h4 style="margin-top: 0">Client-side encryption</h4>
+                <p>
+                    <a href="https://docs.structurizr.com/server/client-side-encryption" target="_blank">Documentation</a>
+                </p>
+            </div>
+            <div class="col-10">
+                <c:choose>
+                <c:when test="${workspace.clientEncrypted}">
+                    <p>
+                    Workspace is client-side encrypted.
+                    </p>
+                    <button id="removeClientSideEncryptionButton" class="btn btn-primary"><img src="/static/bootstrap-icons/file-earmark.svg" class="icon-btn icon-white" /> Remove client-side encryption</button>
+                    <button id="addClientSideEncryptionButton" class="btn btn-primary"><img src="/static/bootstrap-icons/file-earmark-lock.svg" class="icon-btn icon-white" /> Change passphrase</button>
+                </c:when>
+                <c:otherwise>
+                    <button id="addClientSideEncryptionButton" class="btn btn-primary"><img src="/static/bootstrap-icons/file-earmark-lock.svg" class="icon-btn icon-white" /> Add client-side encryption</button>
+                </c:otherwise>
+                </c:choose>
+            </div>
+        </div>
+        <hr />
+        </c:if>
+
+        <div class="row">
+            <div class="col-2">
+                <h4 style="margin-top: 0">Delete workspace</h4>
+            </div>
+            <div class="col-10">
+                <p>
+                    Click the button below to delete your workspace - this action cannot be undone, and your workspace data will be irretrievable.
+                </p>
+                <form id="deleteWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/delete" method="post">
+                    <input type="hidden" name="workspaceId" value="${workspace.id}" />
+                    <button class="btn btn-danger small" type="submit" name="action" value="remove" title="Delete workspace"><img src="/static/bootstrap-icons/folder-x.svg" class="icon-white icon-btn" /> Delete workspace</button>
+                </form>
+            </div>
+        </div>
+        <hr />
+
+        </c:if>
+
     </div>
 </div>
-
 
 <script nonce="${scriptNonce}">
 
@@ -169,7 +184,6 @@
     $('#unshareWorkspaceForm').on('submit', function() { return confirm('Are you sure you want to stop sharing this workspace with a link?'); });
 
 
-    $('#exportWorkspaceButton').click(function() { structurizr.util.exportWorkspace(structurizr.workspace.id, structurizr.workspace.getJson()); });
     $('#deleteWorkspaceForm').on('submit', function() { return deleteWorkspace(); });
 
     function workspaceLoaded() {

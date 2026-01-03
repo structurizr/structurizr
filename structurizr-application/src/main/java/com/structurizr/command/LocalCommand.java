@@ -1,6 +1,6 @@
 package com.structurizr.command;
 
-import com.structurizr.server.LocalServer;
+import com.structurizr.server.Local;
 
 public class LocalCommand extends AbstractCommand {
 
@@ -8,7 +8,7 @@ public class LocalCommand extends AbstractCommand {
     }
 
     public void run(String... args) throws Exception {
-        LocalServer.main(args);
+        Local.main(args);
     }
 
 }

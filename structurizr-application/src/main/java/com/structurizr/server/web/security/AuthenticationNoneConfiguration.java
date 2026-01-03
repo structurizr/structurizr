@@ -23,9 +23,8 @@ class AuthenticationNoneConfiguration {
                 );
 
         http
-                .headers((headers) ->
-                        headers
-                                .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
+                .headers(headers -> headers
+                        .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)
                 );
 
         return http.build();

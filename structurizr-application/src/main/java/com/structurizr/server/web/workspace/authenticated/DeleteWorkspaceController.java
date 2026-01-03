@@ -32,13 +32,12 @@ public class DeleteWorkspaceController extends AbstractWorkspaceController {
 
     @RequestMapping(value="/workspace/{workspaceId}/delete", method = RequestMethod.POST)
     String deleteWorkspace(@PathVariable("workspaceId")long workspaceId, ModelMap model) {
-        Configuration configuration = Configuration.getInstance();
         User user = getUser();
 
         try {
             WorkspaceMetaData workspace = workspaceComponent.getWorkspaceMetaData(workspaceId);
             if (workspace != null) {
-                if (configuration.getAdminUsersAndRoles().isEmpty() || user.isAdmin()) {
+                if (!Configuration.getInstance().isAuthenticationEnabled() || Configuration.getInstance().getAdminUsersAndRoles().isEmpty() || user.isAdmin()) {
                     if (workspaceComponent.deleteWorkspace(workspaceId)) {
                         try {
                             searchComponent.delete(workspaceId);

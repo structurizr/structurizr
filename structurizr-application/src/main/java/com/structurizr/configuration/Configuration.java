@@ -256,8 +256,6 @@ public class Configuration {
             setDefault(WORKSPACE_EVENT_LISTENER_PLUGIN, "");
             setDefault(DSL_EDITOR, FALSE); // backwards compatibility
 
-            setDefault(Features.UI_WORKSPACE_USERS, TRUE);
-            setDefault(Features.UI_WORKSPACE_SETTINGS, TRUE);
             setDefault(Features.UI_DSL_EDITOR, FALSE);
             setDefault(Features.WORKSPACE_ARCHIVING, FALSE);
             setDefault(Features.WORKSPACE_BRANCHES, FALSE);
@@ -281,8 +279,6 @@ public class Configuration {
     }
 
     private void configureFeatures() {
-        features.configure(Features.UI_WORKSPACE_USERS, Boolean.parseBoolean(getProperty(Features.UI_WORKSPACE_USERS)));
-        features.configure(Features.UI_WORKSPACE_SETTINGS, Boolean.parseBoolean(getProperty(Features.UI_WORKSPACE_SETTINGS)));
         features.configure(Features.UI_DSL_EDITOR, Boolean.parseBoolean(getProperty(Features.UI_DSL_EDITOR)));
         features.configure(Features.WORKSPACE_ARCHIVING, Boolean.parseBoolean(getProperty(Features.WORKSPACE_ARCHIVING)));
         features.configure(Features.WORKSPACE_BRANCHES, Boolean.parseBoolean(getProperty(Features.WORKSPACE_BRANCHES)));

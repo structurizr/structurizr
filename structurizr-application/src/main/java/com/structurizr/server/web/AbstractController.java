@@ -2,6 +2,7 @@ package com.structurizr.server.web;
 
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Features;
+import com.structurizr.configuration.Profile;
 import com.structurizr.dsl.StructurizrDslParserException;
 import com.structurizr.server.component.workspace.WorkspaceBranch;
 import com.structurizr.server.component.workspace.WorkspaceVersion;
@@ -11,6 +12,7 @@ import com.structurizr.server.web.security.SecurityUtils;
 import com.structurizr.util.RandomGuidGenerator;
 import com.structurizr.util.StringUtils;
 import com.structurizr.util.Version;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -44,6 +46,13 @@ public abstract class AbstractController {
     @ModelAttribute("structurizrConfiguration")
     public Configuration getConfiguration() {
         return Configuration.getInstance();
+    }
+
+    @ModelAttribute
+    protected void addXFrameOptionsHeader(HttpServletResponse response) {
+        if (Configuration.getInstance().getProfile() == Profile.Server) {
+            response.addHeader("X-Frame-Options", "sameorigin");
+        }
     }
 
     @ModelAttribute

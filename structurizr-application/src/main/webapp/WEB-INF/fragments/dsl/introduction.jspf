@@ -1,60 +1,24 @@
-<div class="modal fade" id="dslEditorIntroductionModal" tabindex="-1" role="dialog" aria-labelledby="dslEditorIntroductionModalLabel" aria-hidden="true">
+<div class="modal fade" id="dslEditorIntroductionModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h2 class="modal-title">DSL editor</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <p>
-                    This browser-based DSL editor provides some rudimentary syntax highlighting and the ability to use the DSL without installing any tooling,
-                    but <b>it does not provide access to the full feature set of the DSL</b>.
-                    We recommend using the DSL in conjunction with Structurizr Lite or the Structurizr CLI instead.
+                    This browser-based DSL editor provides some basic syntax highlighting and the ability to use the DSL without installing any tooling on your computer,
+                    but <b>it does not provide access to the full feature set of the DSL</b> (e.g. <code>!docs</code>, <code>!adrs</code>, <code>!script</code>, etc).
+                    The recommended workflow is:
+                </p>
+                <ul>
+                    <li>Author your workspace with a text editor and the <a href="https://docs.structurizr.com/local" target="_blank">local</a> workspace authoring tool.</li>
+                    <li>Store your DSL in source code control (e.g. git).</li>
+                    <li>Upload your workspace to the Structurizr server with the <a href="https://docs.structurizr.com/local" target="_blank">push</a> command.</li>
+                </ul>
+
+                <p>
                     See <a href="https://docs.structurizr.com/dsl" target="_blank">Structurizr DSL</a> for more details.
                 </p>
-
-                <div class="row">
-                    <div class="col-sm-4 centered small">
-                        <h3>Structurizr Lite</h3>
-                        <p class="centered">
-                            <span class="label label-success">Recommended</span>
-                        </p>
-                        <p>
-                            <a href="https://docs.structurizr.com/lite" target="_blank">Structurizr Lite</a> provides a way to quickly work with a single workspace.
-                            It's free to use, and allows you to view/edit diagrams, view documentation, and view architecture decision records defined in a DSL workspace.
-                        </p>
-                        <p>
-                            The auto-sync feature provides the ability to sync your local changes with a workspace stored on the Structurizr cloud service or an on-premises installation.
-                        </p>
-                    </div>
-
-                    <div class="col-sm-4 centered small">
-                        <h3>Structurizr CLI</h3>
-                        <p class="centered">
-                            <span class="label label-success">Recommended</span>
-                        </p>
-                        <p>
-                            The <a href="https://docs.structurizr.com/cli" target="_blank">Structurizr CLI</a> is a command line utility, designed to be used in conjunction with the Structurizr DSL.
-                            It provides the ability to push/pull workspaces to/from the Structurizr cloud service or an on-premises installation,
-                            in additional to exporting the views defined in a DSL file to other formats (PlantUML, Mermaid, WebSequenceDiagrams, and Ilograph).
-                        </p>
-                    </div>
-
-                    <div class="col-sm-4 centered small">
-                        <h3>DSL editor</h3>
-                        <p class="centered">
-                            <span class="label label-warning">Not recommended</span>
-                        </p>
-                        <p>
-                            If you'd rather not use Structurizr Lite or the Structurizr CLI, the Structurizr cloud service/on-premises installation provides a basic online DSL editor.
-                            The editor provides some rudimentary syntax highlighting and the ability to use the DSL without installing any tooling,
-                            but it does not provide access to the full feature set of the DSL - see <a href="https://docs.structurizr.com/dsl#comparison" target="_blank">comparison</a>.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

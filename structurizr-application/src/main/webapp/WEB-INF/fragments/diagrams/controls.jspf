@@ -136,7 +136,7 @@
             $('#undoButton').click(function() { structurizr.diagram.undo(); });
         </script>
 
-        <c:if test="${structurizrConfiguration.profile ne 'Playground'}">
+        <c:if test="${(structurizrConfiguration.profile eq 'Local') || (structurizrConfiguration.profile eq 'Server' && not embed)}">
         <div class="btn-group">
             <button id="saveButton" class="btn btn-default" title="Save workspace" disabled="disabled"><img src="/static/bootstrap-icons/folder-check.svg" class="icon-btn" /></button>
         </div>

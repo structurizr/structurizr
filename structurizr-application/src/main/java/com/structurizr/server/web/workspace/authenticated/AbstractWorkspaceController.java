@@ -76,7 +76,7 @@ abstract class AbstractWorkspaceController extends com.structurizr.server.web.wo
         }
 
         if (Configuration.getInstance().getProfile() == Profile.Server) {
-            if (workspaceMetaData.isOpen()) {
+            if (workspaceMetaData.isPublicWorkspace()) {
                 model.addAttribute("sharingUrlPrefix", "/share/" + workspaceMetaData.getId());
             } else if (workspaceMetaData.isShareable()) {
                 model.addAttribute("sharingUrlPrefix", "/share/" + workspaceMetaData.getId() + "/" + workspaceMetaData.getSharingToken());

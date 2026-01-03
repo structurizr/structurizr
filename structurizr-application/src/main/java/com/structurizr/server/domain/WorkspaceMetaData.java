@@ -120,10 +120,6 @@ public class WorkspaceMetaData {
         this.publicWorkspace = publicWorkspace;
     }
 
-    public boolean isOpen() {
-        return isPublicWorkspace();
-    }
-
     public void setUrlPrefix(String urlPrefix) {
         this.urlPrefix = urlPrefix;
     }

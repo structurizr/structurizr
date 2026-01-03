@@ -1,25 +1,32 @@
 package com.structurizr.server.web.workspace.authenticated;
 
+import com.structurizr.Workspace;
+import com.structurizr.dsl.DslUtils;
 import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.util.WorkspaceUtils;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-public class JsonController extends AbstractWorkspaceController {
+@Profile("command-server")
+public class DslController extends AbstractWorkspaceController {
 
-    @RequestMapping(value = "/workspace/{workspaceId}/json", method = RequestMethod.GET, produces = "text/plain")
+    @RequestMapping(value = "/workspace/{workspaceId}/dsl", method = RequestMethod.GET, produces = "text/plain")
     @ResponseBody
-    String showAuthenticatedJson(
+    public String showAuthenticatedDsl(
             @PathVariable("workspaceId") long workspaceId,
             @RequestParam(required = false) String branch,
             @RequestParam(required = false) String version,
             HttpServletResponse response
-    ) {
+    ) throws Exception {
 
         WorkspaceMetaData workspaceMetaData = workspaceComponent.getWorkspaceMetaData(workspaceId);
         if (workspaceMetaData != null && workspaceMetaData.hasAccess(getUser())) {
-            return workspaceComponent.getWorkspace(workspaceId, branch, version);
+            String workspaceAsJson = workspaceComponent.getWorkspace(workspaceId, branch, version);
+            Workspace workspace = WorkspaceUtils.fromJson(workspaceAsJson);
+            return DslUtils.getDsl(workspace);
         } else {
             response.setStatus(404);
             return null;

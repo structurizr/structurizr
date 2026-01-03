@@ -31,8 +31,8 @@
     <c:otherwise>
         <div id="diagramControls">
             <c:choose>
-                <c:when test="${embed eq true}">
-                    <div class="centered">
+                <c:when test="${workspace.editable || embed eq true}">
+                    <div class="centered" style="padding: 20px 10px 20px 10px">
                         <%@ include file="/WEB-INF/fragments/diagrams/controls.jspf" %>
                     </div>
                 </c:when>

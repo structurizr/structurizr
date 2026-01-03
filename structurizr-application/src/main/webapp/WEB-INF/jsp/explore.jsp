@@ -56,10 +56,10 @@
 
                     <c:choose>
                     <c:when test="${not empty param.version}">
-                    html += '  <a href="' + diagramUrl + '"><img src="/static/img/thumbnail-not-available.png" class="img-thumbnail" style="margin-bottom: 10px" /></a>';
+                    html += '  <img src="/static/img/thumbnail-not-available.png" class="img-thumbnail" style="margin-bottom: 10px" />';
                     </c:when>
                     <c:otherwise>
-                    html += '  <a href="' + diagramUrl + '"><img src="${thumbnailUrl}' + structurizr.util.escapeHtml(view.key) + '-thumbnail.png" class="img-thumbnail viewThumbnail" style="margin-bottom: 10px; max-height: ' + thumbnailSize + 'px" /></a>';
+                    html += '  <img src="${thumbnailUrl}' + structurizr.util.escapeHtml(view.key) + '-thumbnail.png" class="img-thumbnail viewThumbnail" style="margin-bottom: 10px; max-height: ' + thumbnailSize + 'px" />';
                     </c:otherwise>
                     </c:choose>
 

@@ -1,5 +1,5 @@
-<div class="modal fade" id="clientSideEncryptedWorkspacePassphraseModal" tabindex="-1" role="dialog" aria-labelledby="keyModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="clientSideEncryptedWorkspacePassphraseModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                <h2 class="modal-title">Client-side encrypted workspace</h2>
@@ -12,13 +12,16 @@
                 <div class="form-group">
                     <input id="passphrase" type="password" class="form-control" placeholder="Passphrase" required="true" />
                 </div>
+
+                <br />
+
                 <div class="checkbox">
                     <label>
                         <input id="storePassphraseInLocalStorage" type="checkbox" /> Save passphrase in browser local storage
                     </label>
                 </div>
 
-                <div id="decryptionAlert" class="alert alert-danger" role="alert" style="display:none">
+                <div id="decryptionAlert" class="alert alert-danger" role="alert" style="display:none; margin-top: 20px;">
                     The workspace could not be decrypted.
                 </div>
             </div>
@@ -53,7 +56,7 @@
         if (passphrase) {
             decryptWorkspace(workspace, passphrase, callback);
         } else {
-            modal.modal({ keyboard: false });
+            modal.modal('show', { keyboard: false });
         }
     }
 

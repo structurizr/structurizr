@@ -144,7 +144,7 @@ label {
     margin-right: auto;
 }
 .embedCode {
-    font-size: 11px;
+    font-size: 12px;
 }
 .codeSample {
     font-size: 11px;
@@ -187,12 +187,13 @@ a {
     background: #1168BD;
 }
 .label-branch {
-    background: #ffc107;
+    background: #438DD5;
     color: #ffffff;
     font-size: 12px;
 }
 .label-version {
     background: #85BBF0;
+    color: white;
     font-size: 12px;
 }
 

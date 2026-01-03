@@ -113,7 +113,7 @@
         $('#exportSelectedViewsButton').addClass('hidden');
         </c:if>
 
-        <c:if test="${embed ne true && fn:startsWith(urlPrefix, '/workspace') && (workspace.open || workspace.shareable) && not workspace.clientEncrypted && structurizrConfiguration.profile eq 'Server'}">
+        <c:if test="${embed ne true && fn:startsWith(urlPrefix, '/workspace') && (workspace.publicWorkspace || workspace.shareable) && not workspace.clientEncrypted && structurizrConfiguration.profile eq 'Server'}">
         $('#publishAllViewsButton').removeClass('hidden');
         </c:if>
     }

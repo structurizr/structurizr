@@ -11,7 +11,7 @@ import java.util.Properties;
 
 import static com.structurizr.configuration.StructurizrProperties.DATA_DIRECTORY;
 
-public class LocalServer extends AbstractServer {
+public class Local extends AbstractServer {
 
 	public static void main(String[] args) {
 		Properties properties = new Properties();
@@ -22,9 +22,9 @@ public class LocalServer extends AbstractServer {
 		}
 
 		Configuration.init(Profile.Local, properties);
-		Configuration.getInstance().banner(LocalServer.class);
+		Configuration.getInstance().banner(Local.class);
 
-		SpringApplication app = new SpringApplication(LocalServer.class);
+		SpringApplication app = new SpringApplication(Local.class);
 		app.setAdditionalProfiles("command-local");
 		app.run(args);
 	}

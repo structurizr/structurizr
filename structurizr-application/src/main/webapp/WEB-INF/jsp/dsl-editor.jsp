@@ -143,7 +143,7 @@
     $('#workspaceSummaryButton').click(function() { window.location.href='${urlPrefix}${urlSuffix}'; });
     $('#sourceButton').click(function() { sourceButtonClicked(); });
     $('#diagramsButton').click(function() { diagramsButtonClicked(); });
-    $('#helpButton').click(function() { window.open('https://structurizr.com/help/dsl'); });
+    $('#helpButton').click(function() { window.open('https://docs.structurizr.com/dsl'); });
     $('#saveButton').click(function() { saveWorkspace(); });
     $('#renderButton').click(function() { refresh(); });
 
@@ -353,7 +353,7 @@
         const jsonAsString = JSON.stringify(workspace);
 
         $.ajax({
-            url: '/workspace/${workspace.id}/dsl',
+            url: '/workspace/${workspace.id}/dsl-editor',
             type: "POST",
             contentType: 'application/json; charset=UTF-8',
             cache: false,

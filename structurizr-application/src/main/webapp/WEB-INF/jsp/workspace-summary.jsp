@@ -53,6 +53,7 @@
             </div>
             </c:if>
 
+            <c:if test="${structurizrConfiguration.authenticationEnabled}">
             <c:if test="${fn:startsWith(urlPrefix, '/workspace')}">
             <div class="navigationItem">
                 <a href="/workspace/${workspace.id}"><img src="/static/bootstrap-icons/lock.svg" class="icon-sm" /> Private link</a>
@@ -64,10 +65,11 @@
             </div>
             </c:if>
 
-            <c:if test="${workspace.open}">
+            <c:if test="${workspace.publicWorkspace}">
             <div class="navigationItem">
                 <a href="/share/${workspace.id}" target="_blank"><img src="/static/bootstrap-icons/unlock.svg" class="icon-sm" /> Public link</a>
             </div>
+            </c:if>
             </c:if>
 
             <div class="navigationItemSeparator"></div>
@@ -92,7 +94,7 @@
                 <a href="<c:out value="${urlPrefix}" />/inspections<c:out value="${urlSuffix}" escapeXml="false" />"><img src="/static/bootstrap-icons/clipboard-pulse.svg" class="icon-sm" /> Inspections</a>
 
                 <div id="inspectionSummary" class="hidden" style="margin-bottom: 5px">
-                    <a href="${urlPrefix}/inspections" target="_blank" title="Inspections">
+                    <a href="${urlPrefix}/inspections" title="Inspections">
                     <img src="/static/bootstrap-icons/exclamation-diamond.svg" class="icon-xs" /> <span id="inspectionsError"></span> |
                     <img src="/static/bootstrap-icons/exclamation-triangle.svg" class="icon-xs" /> <span id="inspectionsWarning"></span> |
                     <img src="/static/bootstrap-icons/info-circle.svg" class="icon-xs" /> <span id="inspectionsInfo"></span> |
@@ -103,31 +105,28 @@
             </c:if>
 
             <c:if test="${structurizrConfiguration.profile == 'Server'}">
-            <div id="themeLink" class="navigationItem hidden">
-                <a href="<c:out value="${urlPrefix}" />/theme<c:out value="${urlSuffix}" escapeXml="false" />" target="_blank"><img src="/static/bootstrap-icons/palette.svg" class="icon-sm" /> Theme</a>
-            </div>
-
             <div id="imagesLink" class="navigationItem hidden">
                 <a href="<c:out value="${urlPrefix}" />/images"><img src="/static/bootstrap-icons/filetype-png.svg" class="icon-sm" /> Published images</a>
             </div>
 
             <div class="navigationItemSeparator"></div>
 
-            <c:choose>
-            <c:when test="${structurizrConfiguration.profile == 'Server' && fn:startsWith(urlPrefix, '/workspace') && dslEditorEnabled}">
+            <c:if test="${fn:startsWith(urlPrefix, '/workspace') && dslEditorEnabled}">
             <div class="navigationItem dslEditorNavigation">
-                <a href="<c:out value="${urlPrefix}" />/dsl<c:out value="${urlSuffix}" escapeXml="false" />"><img src="/static/bootstrap-icons/code-slash.svg" class="icon-sm" /> DSL editor</a>
+                <a href="<c:out value="${urlPrefix}" />/dsl-editor<c:out value="${urlSuffix}" escapeXml="false" />"><img src="/static/bootstrap-icons/code-slash.svg" class="icon-sm" /> DSL editor</a>
             </div>
-            </c:when>
-            <c:otherwise>
+            </c:if>
+
             <div id="exportDslLinkNavItem" class="navigationItem">
-                <img src="/static/bootstrap-icons/filetype-txt.svg" class="icon-sm" /> <a href="${urlPrefix}/dsl" target="_blank">DSL</a>
+                <img src="/static/bootstrap-icons/filetype-txt.svg" class="icon-sm" /> <a href="${urlPrefix}/dsl${urlSuffix}" target="_blank">DSL</a>
             </div>
-            </c:otherwise>
-            </c:choose>
 
             <div class="navigationItem">
                 <img src="/static/bootstrap-icons/filetype-json.svg" class="icon-sm" /> <a href="${urlPrefix}/json${urlSuffix}" target="_blank">JSON</a>
+            </div>
+
+            <div id="themeLink" class="navigationItem hidden">
+                <a href="<c:out value="${urlPrefix}" />/theme<c:out value="${urlSuffix}" escapeXml="false" />" target="_blank"><img src="/static/bootstrap-icons/palette.svg" class="icon-sm" /> Theme</a>
             </div>
 
             <c:if test="${workspace.editable && not workspace.locked}">
@@ -225,10 +224,14 @@
                         <div class="col-4 centered">
                             <div style="padding: 10px; margin: 10px">
                                 <div style="margin-top: 5px; font-size: 20px">
-                                    <a href="<c:out value="${urlPrefix}" />/dsl"><img src="/static/bootstrap-icons/code-slash.svg" class="icon-lg"/> DSL editor</a>
+                                    <a href="<c:out value="${urlPrefix}" />/dsl-editor"><img src="/static/bootstrap-icons/code-slash.svg" class="icon-lg"/> DSL editor</a>
                                 </div>
                                 <div class="small">
                                     Open the online DSL editor, and create your workspace using the Structurizr DSL.
+                                    <c:if test="${not dslEditorEnabled}">
+                                    <br /><br />
+                                    (not available on this installation)
+                                    </c:if>
                                 </div>
                             </div>
                         </div>
@@ -245,10 +248,10 @@
                         <div class="col-4 centered">
                             <div style="padding: 10px; margin: 10px">
                                 <div style="margin-top: 5px; font-size: 20px">
-                                    <a href="<c:out value="${urlPrefix}" />/settings#api"><img src="/static/bootstrap-icons/gear.svg" class="icon-lg" /> Settings</a>
+                                    <a href="<c:out value="${urlPrefix}" />/settings"><img src="/static/bootstrap-icons/gear.svg" class="icon-lg" /> Settings</a>
                                 </div>
                                 <div class="small">
-                                    Use the workspace settings page to find your API key/secret, for uploading your workspace with the Structurizr CLI or code-based libraries.
+                                    Use the workspace settings page to find your API key/secret, for uploading your workspace with the Structurizr <code>push</code> command, the <a href="https://docs.structurizr.com/java" target="_blank">Structurizr Java library</a>, or other compatible tools.
                                 </div>
                             </div>
                         </div>

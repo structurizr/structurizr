@@ -53,8 +53,7 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
                 this.workspaceDao = new MultiWorkspaceLocalFileSystemWorkspaceDao(Configuration.getInstance().getDataDirectory());
             }
         } else {
-//            this.workspaceDao = new ServerFileSystemWorkspaceDao(Configuration.getInstance().getDataDirectory());
-            this.workspaceDao = null;
+            this.workspaceDao = new ServerFileSystemWorkspaceDao(Configuration.getInstance().getDataDirectory());
         }
 
         encryptionPassphrase = Configuration.getInstance().getProperty(StructurizrProperties.ENCRYPTION_PASSPHRASE);
