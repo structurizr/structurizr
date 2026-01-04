@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class EmbedFromParentController extends AbstractWorkspaceController {
+public class
+EmbedFromParentController extends AbstractWorkspaceController {
 
     @RequestMapping(value = "/embed", method = RequestMethod.GET)
     public String embedFromParent(@RequestParam(required = false, defaultValue = "0") long workspace,

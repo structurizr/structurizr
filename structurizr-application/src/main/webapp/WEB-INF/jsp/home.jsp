@@ -46,7 +46,7 @@
         <c:forEach var="workspace" items="${workspaces}" varStatus="status">
             <div class="workspaceSummary centered <c:if test="${not workspace.active}">inactive</c:if>">
                 <div>
-                    <a href="/workspace/${workspace.id}"><c:out value="${workspace.name}" escapeXml="true" /></a>
+                    <a href="${workspace.urlPrefix}/${workspace.id}"><c:out value="${workspace.name}" escapeXml="true" /></a>
                 </div>
 
                 <div style="margin-top: 10px; margin-bottom: 10px; font-size: 11px">
@@ -54,9 +54,9 @@
                 </div>
 
                 <div class="workspaceThumbnail">
-                    <a href="/workspace/${workspace.id}">
-                    <img src="/workspace/${workspace.id}/images/thumbnail.png" alt="Thumbnail" class="img-light img-fluid workspaceThumbnailImage" />
-                    <img src="/workspace/${workspace.id}/images/thumbnail-dark.png" alt="Thumbnail" class="img-dark img-fluid workspaceThumbnailImage" />
+                    <a href="${workspace.urlPrefix}/${workspace.id}">
+                    <img src="${workspace.urlPrefix}/${workspace.id}/images/thumbnail.png" alt="Thumbnail" class="img-light img-fluid workspaceThumbnailImage" />
+                    <img src="${workspace.urlPrefix}/${workspace.id}/images/thumbnail-dark.png" alt="Thumbnail" class="img-dark img-fluid workspaceThumbnailImage" />
                     </a>
                 </div>
             </div>
@@ -100,6 +100,6 @@
     });
 
     <c:forEach var="workspace" items="${workspaces}">
-    quickNavigation.addItem('${workspace.id} - <c:out value="${workspace.name}" escapeXml="true" />', '/workspace/${workspace.id}');
+    quickNavigation.addItem('${workspace.id} - <c:out value="${workspace.name}" escapeXml="true" />', '${workspace.urlPrefix}/${workspace.id}');
     </c:forEach>
 </script>

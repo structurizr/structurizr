@@ -15,6 +15,10 @@ public final class User {
     private Set<String> roles = new HashSet<>();
     private AuthenticationMethod authenticationMethod = AuthenticationMethod.LOCAL;
 
+    public User(String username) {
+        this(username, Set.of(), AuthenticationMethod.LOCAL);
+    }
+
     public User(String username, Set<String> roles, AuthenticationMethod authenticationMethod) {
         this.username = username;
 

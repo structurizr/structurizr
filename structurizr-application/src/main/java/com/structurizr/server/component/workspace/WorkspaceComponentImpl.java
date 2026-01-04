@@ -3,16 +3,15 @@ package com.structurizr.server.component.workspace;
 import com.structurizr.AbstractWorkspace;
 import com.structurizr.Workspace;
 import com.structurizr.configuration.*;
+import com.structurizr.configuration.Role;
 import com.structurizr.encryption.AesEncryptionStrategy;
 import com.structurizr.encryption.EncryptedWorkspace;
 import com.structurizr.encryption.EncryptionLocation;
 import com.structurizr.encryption.EncryptionStrategy;
 import com.structurizr.io.json.EncryptedJsonReader;
 import com.structurizr.io.json.EncryptedJsonWriter;
-import com.structurizr.server.domain.Image;
-import com.structurizr.server.domain.InputStreamAndContentLength;
+import com.structurizr.server.domain.*;
 import com.structurizr.server.domain.User;
-import com.structurizr.server.domain.WorkspaceMetaData;
 import com.structurizr.util.DateUtils;
 import com.structurizr.util.StringUtils;
 import com.structurizr.util.WorkspaceUtils;
@@ -121,37 +120,33 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
 
         List<WorkspaceMetaData> filteredWorkspaces = new ArrayList<>();
 
-        if (user == null) {
-            // unauthenticated request - return public workspaces only
+        if (!Configuration.getInstance().isAuthenticationEnabled()) {
+            // authentication disabled - all workspaces
             for (WorkspaceMetaData workspace : workspaces) {
-                if (workspace.isPublicWorkspace()) {
-                    workspace.setUrlPrefix("/share");
-                    filteredWorkspaces.add(workspace);
-                }
+                workspace.setUrlPrefix("/workspace");
+                filteredWorkspaces.add(workspace);
             }
         } else {
-            // authenticated request
-            for (WorkspaceMetaData workspace : workspaces) {
-                if (!Configuration.getInstance().isAuthenticationEnabled()) {
-                    // the user has read-write access to the workspace
-                    workspace.setUrlPrefix("/workspace");
-                    filteredWorkspaces.add(workspace);
-                } else if (workspace.isWriteUser(user)) {
-                    // the user has read-write access to the workspace
-                    workspace.setUrlPrefix("/workspace");
-                    filteredWorkspaces.add(workspace);
-                } else if (workspace.isReadUser(user)) {
-                    // the user has read-only access to the workspace
-                    workspace.setUrlPrefix("/workspace");
-                    filteredWorkspaces.add(workspace);
-                } else if (workspace.hasNoUsersConfigured()) {
-                    // the workspace has no users configured, so anybody can see it
-                    workspace.setUrlPrefix("/workspace");
-                    filteredWorkspaces.add(workspace);
-                } else if (workspace.isPublicWorkspace()) {
-                    // so anybody can see it
-                    workspace.setUrlPrefix("/share");
-                    filteredWorkspaces.add(workspace);
+            if (user == null || user.getAuthenticationMethod() == AuthenticationMethod.NONE) {
+                // unauthenticated/anonymous request - public workspaces only
+                for (WorkspaceMetaData workspace : workspaces) {
+                    if (workspace.isPublicWorkspace()) {
+                        workspace.setUrlPrefix("/share");
+                        filteredWorkspaces.add(workspace);
+                    }
+                }
+            } else {
+                // authenticated request
+                for (WorkspaceMetaData workspace : workspaces) {
+                    if (workspace.hasAccess(user)) {
+                        // user is configured to see the workspace
+                        workspace.setUrlPrefix("/workspace");
+                        filteredWorkspaces.add(workspace);
+                    } else if (workspace.isPublicWorkspace()) {
+                        // the workspace is public - anybody can see it
+                        workspace.setUrlPrefix("/share");
+                        filteredWorkspaces.add(workspace);
+                    }
                 }
             }
         }

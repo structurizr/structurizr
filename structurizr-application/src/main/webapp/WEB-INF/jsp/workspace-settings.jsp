@@ -77,40 +77,34 @@
 
                 <c:choose>
                     <c:when test="${workspace.publicWorkspace}">
-                        <form id="privateWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/visibility" method="post">
+                        <form id="privateWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/settings/visibility" method="post">
                             <input type="hidden" name="workspaceId" value="${workspace.id}" />
                             <input type="hidden" name="action" value="private" />
-                            <button class="btn btn-primary" type="submit" name="action" value="private" title="Make workspace private"><img src="/static/bootstrap-icons/lock.svg" class="icon-btn icon-white" /> Make private</button>
+                            <button class="btn btn-primary" type="submit" title="Make workspace private"><img src="/static/bootstrap-icons/lock.svg" class="icon-btn icon-white" /> Make private</button>
                         </form>
                     </c:when>
                     <c:otherwise>
-                        <form id="publicWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/visibility" method="post">
+                        <form id="publicWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/settings/visibility" method="post">
                             <input type="hidden" name="workspaceId" value="${workspace.id}" />
                             <input type="hidden" name="action" value="public" />
-                            <button class="btn btn-danger" type="submit" name="action" value="public" title="Make workspace public"><img src="/static/bootstrap-icons/unlock.svg" class="icon-btn icon-white" /> Make public</button>
+                            <button class="btn btn-danger" type="submit" title="Make workspace public"><img src="/static/bootstrap-icons/unlock.svg" class="icon-btn icon-white" /> Make public</button>
                         </form>
                     </c:otherwise>
                 </c:choose>
 
-                <c:if test="${workspace.shareable}">
-                    <div class="small" style="margin-bottom: 5px">
-                        <a href="/share/${workspace.id}/${workspace.sharingToken}" title="Sharing link">${structurizrConfiguration.webUrl}/share/${workspace.id}/${workspace.sharingTokenTruncated}${urlSuffix}</a>
-                    </div>
-                </c:if>
-
                 <c:choose>
                     <c:when test="${not empty workspace.sharingToken}">
-                        <form id="unshareWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/visibility" method="post">
+                        <form id="unshareWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/settings/visibility" method="post">
                             <input type="hidden" name="workspaceId" value="${workspace.id}" />
                             <input type="hidden" name="action" value="unshare" />
-                            <button class="btn btn-primary" type="submit" name="action" value="unshare" title="Disable sharing link"><img src="/static/bootstrap-icons/link.svg" class="icon-btn icon-white" /> Disable sharing link</button>
+                            <button class="btn btn-primary" type="submit" title="Disable sharing link"><img src="/static/bootstrap-icons/link.svg" class="icon-btn icon-white" /> Disable sharing link</button>
                         </form>
                     </c:when>
                     <c:otherwise>
-                        <form id="shareWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/visibility" method="post">
+                        <form id="shareWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/settings/visibility" method="post">
                             <input type="hidden" name="workspaceId" value="${workspace.id}" />
                             <input type="hidden" name="action" value="share" />
-                            <button class="btn btn-warning" type="submit" name="action" value="share" title="Enable sharing link"><img src="/static/bootstrap-icons/link.svg" class="icon-btn" /> Enable sharing link</button>
+                            <button class="btn btn-warning" type="submit" title="Enable sharing link"><img src="/static/bootstrap-icons/link.svg" class="icon-btn" /> Enable sharing link</button>
                         </form>
                     </c:otherwise>
                 </c:choose>

@@ -82,9 +82,6 @@ public abstract class AbstractController {
         model.addAttribute("authenticated", isAuthenticated());
         User user = getUser();
         model.addAttribute("user", user);
-        if (user != null) {
-            model.addAttribute("username", user.getUsername());
-        }
 
         model.addAttribute("authenticationEnabled", Configuration.getInstance().isAuthenticationEnabled());
         model.addAttribute("searchEnabled", Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_SEARCH));

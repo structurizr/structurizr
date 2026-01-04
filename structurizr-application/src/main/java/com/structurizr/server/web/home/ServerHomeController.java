@@ -22,7 +22,7 @@ final class ServerHomeController extends AbstractHomeController {
             @RequestParam(required = false, defaultValue = DEFAULT_PAGE_SIZE) int pageSize,
             ModelMap model) {
 
-        List<WorkspaceMetaData> workspaces = workspaceComponent.getWorkspaces();
+        List<WorkspaceMetaData> workspaces = workspaceComponent.getWorkspaces(getUser());
         sort = determineSort(sort);
         workspaces = sortAndPaginate(new ArrayList<>(workspaces), sort, pageNumber, pageSize, model);
 

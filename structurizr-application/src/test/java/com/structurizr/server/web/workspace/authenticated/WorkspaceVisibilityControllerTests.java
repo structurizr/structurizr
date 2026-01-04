@@ -77,7 +77,6 @@ public class WorkspaceVisibilityControllerTests extends ControllerTestsBase {
             }
         });
 
-        setUser("user2@example.com");
         String view = controller.changeVisibility(1, "public", model);
         assertEquals("redirect:/workspace/1/settings", view);
         assertFalse(workspaceMetaData.isPublicWorkspace());
@@ -116,6 +115,7 @@ public class WorkspaceVisibilityControllerTests extends ControllerTestsBase {
         setUser("user@example.com");
 
         final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        workspaceMetaData.addWriteUser("user@example.com");
         assertFalse(workspaceMetaData.isPublicWorkspace());
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
@@ -141,6 +141,7 @@ public class WorkspaceVisibilityControllerTests extends ControllerTestsBase {
         setUser("user@example.com");
 
         final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        workspaceMetaData.addWriteUser("user@example.com");
         workspaceMetaData.setPublicWorkspace(true);
         assertTrue(workspaceMetaData.isPublicWorkspace());
 
@@ -167,6 +168,7 @@ public class WorkspaceVisibilityControllerTests extends ControllerTestsBase {
         setUser("user@example.com");
 
         final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        workspaceMetaData.addWriteUser("user@example.com");
         assertFalse(workspaceMetaData.isShareable());
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
@@ -193,6 +195,7 @@ public class WorkspaceVisibilityControllerTests extends ControllerTestsBase {
         setUser("user@example.com");
 
         final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        workspaceMetaData.addWriteUser("user@example.com");
         workspaceMetaData.setSharingToken("token");
         assertTrue(workspaceMetaData.isShareable());
 
@@ -220,6 +223,7 @@ public class WorkspaceVisibilityControllerTests extends ControllerTestsBase {
         setUser("user@example.com");
 
         final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        workspaceMetaData.addWriteUser("user@example.com");
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override

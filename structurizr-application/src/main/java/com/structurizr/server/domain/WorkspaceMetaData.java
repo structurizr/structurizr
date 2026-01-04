@@ -118,6 +118,10 @@ public class WorkspaceMetaData {
 
     public void setPublicWorkspace(boolean publicWorkspace) {
         this.publicWorkspace = publicWorkspace;
+
+        if (publicWorkspace) {
+            setSharingToken("");
+        }
     }
 
     public void setUrlPrefix(String urlPrefix) {
@@ -134,6 +138,10 @@ public class WorkspaceMetaData {
 
     public void setSharingToken(String sharingToken) {
         this.sharingToken = sharingToken;
+
+        if (!StringUtils.isNullOrEmpty(sharingToken)) {
+            setPublicWorkspace(false);
+        }
     }
 
     public String getSharingTokenTruncated() {
@@ -253,7 +261,7 @@ public class WorkspaceMetaData {
     }
 
     public boolean hasAccess(User user) {
-        return !Configuration.getInstance().isAuthenticationEnabled() || hasNoUsersConfigured() || isWriteUser(user) || isReadUser(user);
+        return !Configuration.getInstance().isAuthenticationEnabled() || hasNoUsersConfigured() || user.isAdmin() || isWriteUser(user) || isReadUser(user);
     }
 
     public Set<String> getReadUsers() {

@@ -26,7 +26,7 @@ public class WorkspaceVisibilityController extends AbstractWorkspaceController {
     private static final String SHARE_ACTION = "share";
     private static final String UNSHARE_ACTION = "unshare";
 
-    @RequestMapping(value="/workspace/{workspaceId}/visibility", method = RequestMethod.POST)
+    @RequestMapping(value="/workspace/{workspaceId}/settings/visibility", method = RequestMethod.POST)
     public String changeVisibility(
             @PathVariable("workspaceId")long workspaceId,
             @RequestParam("action")String action,
@@ -40,7 +40,7 @@ public class WorkspaceVisibilityController extends AbstractWorkspaceController {
             WorkspaceMetaData workspace = workspaceComponent.getWorkspaceMetaData(workspaceId);
             if (workspace != null) {
                 User user = getUser();
-                if (!Configuration.getInstance().isAuthenticationEnabled() || Configuration.getInstance().getAdminUsersAndRoles().isEmpty() || user.isAdmin()) {
+                if ((Configuration.getInstance().getAdminUsersAndRoles().isEmpty() && workspace.isWriteUser(user)) || user.isAdmin()) {
                     switch (action.toLowerCase()) {
                         case PUBLIC_ACTION:
                             workspaceComponent.makeWorkspacePublic(workspaceId);

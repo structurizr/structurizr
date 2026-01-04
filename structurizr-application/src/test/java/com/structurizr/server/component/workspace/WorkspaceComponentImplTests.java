@@ -9,6 +9,7 @@ import com.structurizr.encryption.EncryptionStrategy;
 import com.structurizr.io.json.EncryptedJsonWriter;
 import com.structurizr.server.domain.AuthenticationMethod;
 import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.web.AbstractTestsBase;
 import com.structurizr.util.DateUtils;
 import com.structurizr.util.WorkspaceUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +21,7 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class WorkspaceComponentImplTests {
+public class WorkspaceComponentImplTests extends AbstractTestsBase {
 
     private WorkspaceComponentImpl workspaceComponent;
 
@@ -31,6 +32,8 @@ public class WorkspaceComponentImplTests {
 
     @Test
     void getWorkspaces_WhenThereAreNoWorkspaces() {
+        Configuration.init(Profile.Local, new Properties());
+
         workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
             @Override
             public List<Long> getWorkspaceIds() {
@@ -42,7 +45,73 @@ public class WorkspaceComponentImplTests {
     }
 
     @Test
-    void getWorkspaces_WhenUnauthenticated() {
+    void getWorkspacesForUser_WhenAuthenticationDisabled() {
+        Properties properties = new Properties();
+        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_NONE);
+        Configuration.init(Profile.Server, properties);
+
+        Map<Long, WorkspaceMetaData> workspaceMap = new HashMap<>();
+
+        WorkspaceMetaData workspace1 = new WorkspaceMetaData(1); // private workspace, read/write access
+        workspace1.addWriteUser("user1");
+        workspaceMap.put(workspace1.getId(), workspace1);
+
+        WorkspaceMetaData workspace2 = new WorkspaceMetaData(2); // private workspace, read-only access
+        workspace2.addWriteUser("user2");
+        workspace2.addReadUser("user1");
+        workspaceMap.put(workspace2.getId(), workspace2);
+
+        WorkspaceMetaData workspace3 = new WorkspaceMetaData(3); // no users defined
+        workspaceMap.put(workspace3.getId(), workspace3);
+
+        WorkspaceMetaData workspace4 = new WorkspaceMetaData(4); // private workspace, no access
+        workspace4.addWriteUser("user4");
+        workspaceMap.put(workspace4.getId(), workspace4);
+
+        WorkspaceMetaData workspace5 = new WorkspaceMetaData(5); // public workspace
+        workspace5.addWriteUser("user5");
+        workspace5.setPublicWorkspace(true);
+        workspaceMap.put(workspace5.getId(), workspace5);
+
+        WorkspaceComponentImpl workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+            @Override
+            public List<Long> getWorkspaceIds() {
+                return new ArrayList<>(workspaceMap.keySet());
+            }
+
+            @Override
+            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+                return workspaceMap.get(workspaceId);
+            }
+        });
+
+        com.structurizr.server.domain.User user = new com.structurizr.server.domain.User("user1", new HashSet<>(), AuthenticationMethod.LOCAL);
+        Collection<WorkspaceMetaData> workspaces = workspaceComponent.getWorkspaces(user);
+
+        assertEquals(5, workspaces.size());
+
+        assertTrue(workspaces.stream().anyMatch(w -> w.getId() == 1)); // private workspace, read/write access
+        assertEquals("/workspace", workspaces.stream().filter(w -> w.getId() == 1).findFirst().get().getUrlPrefix());
+
+        assertTrue(workspaces.stream().anyMatch(w -> w.getId() == 2)); // private workspace, read-only access
+        assertEquals("/workspace", workspaces.stream().filter(w -> w.getId() == 2).findFirst().get().getUrlPrefix());
+
+        assertTrue(workspaces.stream().anyMatch(w -> w.getId() == 3)); // no users defined
+        assertEquals("/workspace", workspaces.stream().filter(w -> w.getId() == 3).findFirst().get().getUrlPrefix());
+
+        assertTrue(workspaces.stream().anyMatch(w -> w.getId() == 4)); // private workspace, no access
+        assertEquals("/workspace", workspaces.stream().filter(w -> w.getId() == 4).findFirst().get().getUrlPrefix());
+
+        assertTrue(workspaces.stream().anyMatch(w -> w.getId() == 5)); // public workspace, no role-based access
+        assertEquals("/workspace", workspaces.stream().filter(w -> w.getId() == 5).findFirst().get().getUrlPrefix());
+    }
+
+    @Test
+    void getWorkspacesForUser_WhenAuthenticationEnabledAndUnauthenticated() {
+        Properties properties = new Properties();
+        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
+        Configuration.init(Profile.Server, properties);
+
         Map<Long, WorkspaceMetaData> workspaceMap = new HashMap<>();
 
         WorkspaceMetaData workspace1 = new WorkspaceMetaData(1); // private workspace
@@ -77,7 +146,7 @@ public class WorkspaceComponentImplTests {
     }
 
     @Test
-    void getWorkspaces_WhenAuthenticated() {
+    void getWorkspacesForUser_WhenAuthenticationEnabledAndAuthenticated() {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
         Configuration.init(Profile.Server, properties);
@@ -138,9 +207,10 @@ public class WorkspaceComponentImplTests {
     }
 
     @Test
-    void getWorkspaces_WhenAuthenticationDisabled() {
+    void getWorkspacesForUser_WhenAuthenticationEnabledAndTheUserIsAnAdmin() {
         Properties properties = new Properties();
-        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_NONE);
+        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
+        properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "admin@example.com");
         Configuration.init(Profile.Server, properties);
 
         Map<Long, WorkspaceMetaData> workspaceMap = new HashMap<>();
@@ -178,25 +248,14 @@ public class WorkspaceComponentImplTests {
             }
         });
 
-        com.structurizr.server.domain.User user = new com.structurizr.server.domain.User("user1", new HashSet<>(), AuthenticationMethod.LOCAL);
+        com.structurizr.server.domain.User user = new com.structurizr.server.domain.User("admin@example.com", new HashSet<>(), AuthenticationMethod.LOCAL);
         Collection<WorkspaceMetaData> workspaces = workspaceComponent.getWorkspaces(user);
 
+        // workspaces are visible
         assertEquals(5, workspaces.size());
-
-        assertTrue(workspaces.stream().anyMatch(w -> w.getId() == 1)); // private workspace, read/write access
-        assertEquals("/workspace", workspaces.stream().filter(w -> w.getId() == 1).findFirst().get().getUrlPrefix());
-
-        assertTrue(workspaces.stream().anyMatch(w -> w.getId() == 2)); // private workspace, read-only access
-        assertEquals("/workspace", workspaces.stream().filter(w -> w.getId() == 2).findFirst().get().getUrlPrefix());
-
-        assertTrue(workspaces.stream().anyMatch(w -> w.getId() == 3)); // no users defined
-        assertEquals("/workspace", workspaces.stream().filter(w -> w.getId() == 3).findFirst().get().getUrlPrefix());
-
-        assertTrue(workspaces.stream().anyMatch(w -> w.getId() == 4)); // private workspace, no access
-        assertEquals("/workspace", workspaces.stream().filter(w -> w.getId() == 4).findFirst().get().getUrlPrefix());
-
-        assertTrue(workspaces.stream().anyMatch(w -> w.getId() == 5)); // public workspace, no role-based access
-        assertEquals("/workspace", workspaces.stream().filter(w -> w.getId() == 5).findFirst().get().getUrlPrefix());
+        for (WorkspaceMetaData workspace : workspaces) {
+            assertEquals("/workspace", workspace.getUrlPrefix());
+        }
     }
 
     @Test
