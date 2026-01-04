@@ -373,7 +373,6 @@ public final class DeploymentView extends ModelView implements AnimatedView {
     }
 
     private void addAnimationStep(Element... elements) {
-
         Set<String> elementIdsInPreviousAnimationSteps = new HashSet<>();
         for (Animation animationStep : animations) {
             elementIdsInPreviousAnimationSteps.addAll(animationStep.getElements());
@@ -419,6 +418,12 @@ public final class DeploymentView extends ModelView implements AnimatedView {
         for (Element element : getModel().getElements()) {
             if (element instanceof DeploymentNode) {
                 DeploymentNode deploymentNode = (DeploymentNode) element;
+
+                if (e instanceof SoftwareSystemInstance) {
+                    if (deploymentNode.getSoftwareSystemInstances().contains(e)) {
+                        return deploymentNode;
+                    }
+                }
 
                 if (e instanceof ContainerInstance) {
                     if (deploymentNode.getContainerInstances().contains(e)) {

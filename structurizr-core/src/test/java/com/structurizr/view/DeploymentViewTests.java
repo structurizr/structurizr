@@ -352,6 +352,34 @@ public class DeploymentViewTests extends AbstractWorkspaceTestBase {
     }
 
     @Test
+    void addAnimationStep_AddsParentDeploymentNodesOfSoftwareSystem() {
+        SoftwareSystem a = model.addSoftwareSystem("A");
+        SoftwareSystem b = model.addSoftwareSystem("B");
+
+        DeploymentNode node1 = model.addDeploymentNode("Node 1");
+        DeploymentNode node2 = node1.addDeploymentNode("Node 2");
+        SoftwareSystemInstance aInstance = node2.add(a);
+        SoftwareSystemInstance bInstance = node2.add(b);
+
+        deploymentView = views.createDeploymentView("deployment", "Description");
+        deploymentView.add(aInstance);
+        deploymentView.add(bInstance);
+
+        deploymentView.addAnimation(aInstance);
+        deploymentView.addAnimation(bInstance);
+
+        Animation step1 = deploymentView.getAnimations().stream().filter(step -> step.getOrder() == 1).findFirst().get();
+        assertEquals(3, step1.getElements().size());
+        assertTrue(deploymentView.getElements().contains(new ElementView(node1)));
+        assertTrue(deploymentView.getElements().contains(new ElementView(node2)));
+        assertTrue(deploymentView.getElements().contains(new ElementView(aInstance)));
+
+        Animation step2 = deploymentView.getAnimations().stream().filter(step -> step.getOrder() == 2).findFirst().get();
+        assertEquals(1, step2.getElements().size());
+        assertTrue(deploymentView.getElements().contains(new ElementView(bInstance)));
+    }
+
+    @Test
     void remove_RemovesTheInfrastructureNode() {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "");
         Container container = softwareSystem.addContainer("Container", "Description", "Technology");
