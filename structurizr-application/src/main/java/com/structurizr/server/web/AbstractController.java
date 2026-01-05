@@ -72,7 +72,6 @@ public abstract class AbstractController {
         }
         model.addAttribute("version", new Version());
 
-        model.addAttribute("authenticated", isAuthenticated());
         User user = getUser();
         model.addAttribute("user", user);
 
@@ -125,19 +124,6 @@ public abstract class AbstractController {
 
     protected final User getUser() {
         return SecurityUtils.getUser();
-    }
-
-    protected final boolean isAuthenticated() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null) {
-            return false;
-        }
-
-        if (authentication instanceof AnonymousAuthenticationToken) {
-            return false;
-        } else {
-            return authentication.isAuthenticated();
-        }
     }
 
     protected final void addUrlSuffix(String branch, String version, ModelMap model) {

@@ -73,7 +73,7 @@
 
                 <c:if test="${authenticationEnabled}">
                 <c:choose>
-                    <c:when test="${authenticated eq true}">
+                    <c:when test="${user.authenticated}">
                         <span class="topNavigationItem" style="margin-right: 0">
                             <a href="/user/profile"><span class="label structurizrBackgroundLight" style="font-size: 18px"><img src="/static/bootstrap-icons/person.svg" class="icon-sm icon-white" /> ${user.username}</span></a>
                         </span>

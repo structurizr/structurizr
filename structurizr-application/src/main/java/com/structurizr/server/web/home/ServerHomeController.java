@@ -1,6 +1,7 @@
 package com.structurizr.server.web.home;
 
 import com.structurizr.configuration.Configuration;
+import com.structurizr.server.domain.User;
 import com.structurizr.server.domain.WorkspaceMetaData;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,14 +23,25 @@ final class ServerHomeController extends AbstractHomeController {
             @RequestParam(required = false, defaultValue = DEFAULT_PAGE_SIZE) int pageSize,
             ModelMap model) {
 
-        List<WorkspaceMetaData> workspaces = workspaceComponent.getWorkspaces(getUser());
+        User user = getUser();
+
+        List<WorkspaceMetaData> workspaces = workspaceComponent.getWorkspaces(user);
         sort = determineSort(sort);
         workspaces = sortAndPaginate(new ArrayList<>(workspaces), sort, pageNumber, pageSize, model);
 
         model.addAttribute("workspaces", workspaces);
         model.addAttribute("numberOfWorkspaces", workspaces.size());
 
-        model.addAttribute("userCanCreateWorkspace", !Configuration.getInstance().isAuthenticationEnabled() || Configuration.getInstance().getAdminUsersAndRoles().isEmpty() || getUser().isAdmin());
+        if (Configuration.getInstance().isAuthenticationEnabled()) {
+            if (user.isAuthenticated()) {
+                model.addAttribute("userCanCreateWorkspace", Configuration.getInstance().getAdminUsersAndRoles().isEmpty() || user.isAdmin());
+            } else {
+                model.addAttribute("userCanCreateWorkspace", false);
+            }
+        } else {
+            // authentication is disabled - anybody can create a workspace
+            model.addAttribute("userCanCreateWorkspace", true);
+        }
 
         model.addAttribute("sort", sort);
         addCommonAttributes(model, true);

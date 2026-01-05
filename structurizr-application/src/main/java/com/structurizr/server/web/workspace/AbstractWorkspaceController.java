@@ -65,8 +65,9 @@ public abstract class AbstractWorkspaceController extends AbstractController {
             model.addAttribute("showToolbar", true);
             model.addAttribute("embed", false);
 
-            if (isAuthenticated()) {
-                model.addAttribute("user", getUser());
+            User user = getUser();
+            if (user.isAuthenticated()) {
+                model.addAttribute("user", user);
             }
 
             return view;

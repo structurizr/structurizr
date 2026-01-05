@@ -1,6 +1,9 @@
 package com.structurizr.server.domain;
 
 import com.structurizr.configuration.Configuration;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,6 +27,10 @@ public final class User {
 
         setRoles(roles);
         setAuthenticationMethod(authenticationMethod);
+    }
+
+    public boolean isAuthenticated() {
+        return authenticationMethod != AuthenticationMethod.NONE;
     }
 
     public String getUsername() {
