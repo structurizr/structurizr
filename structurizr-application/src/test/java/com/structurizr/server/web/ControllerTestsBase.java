@@ -4,6 +4,7 @@ import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Profile;
 import com.structurizr.configuration.StructurizrProperties;
 import com.structurizr.server.domain.Role;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,7 +44,7 @@ public class ControllerTestsBase extends AbstractTestsBase {
     }
 
     protected void clearUser() {
-        SecurityContextHolder.getContext().setAuthentication(null);
+        SecurityContextHolder.getContext().setAuthentication(new AnonymousAuthenticationToken("anonymous", "anonymous", Set.of(new Role("role_anonymous"))));
     }
 
     protected void setUser(String username, String... roleNames) {

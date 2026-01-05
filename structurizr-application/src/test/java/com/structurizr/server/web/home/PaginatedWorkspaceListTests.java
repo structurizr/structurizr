@@ -1,6 +1,6 @@
-package com.structurizr.onpremises.web.home;
+package com.structurizr.server.web.home;
 
-import com.structurizr.onpremises.component.workspace.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetaData;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ public class PaginatedWorkspaceListTests {
     private PaginatedWorkspaceList list;
 
     @Test
-    public void numberOfWorkspacesIsLessThanPageSize() {
+    void numberOfWorkspacesIsLessThanPageSize() {
         WorkspaceMetaData wmd1 = new WorkspaceMetaData(1);
         WorkspaceMetaData wmd2 = new WorkspaceMetaData(2);
         WorkspaceMetaData wmd3 = new WorkspaceMetaData(3);
@@ -28,7 +28,7 @@ public class PaginatedWorkspaceListTests {
     }
 
     @Test
-    public void numberOfWorkspacesIsEqualToPageSize() {
+    void numberOfWorkspacesIsEqualToPageSize() {
         WorkspaceMetaData wmd1 = new WorkspaceMetaData(1);
         WorkspaceMetaData wmd2 = new WorkspaceMetaData(2);
         WorkspaceMetaData wmd3 = new WorkspaceMetaData(3);
@@ -43,7 +43,7 @@ public class PaginatedWorkspaceListTests {
     }
 
     @Test
-    public void numberOfWorkspacesIsGreaterThanPageSize() {
+    void numberOfWorkspacesIsGreaterThanPageSize() {
         WorkspaceMetaData wmd1 = new WorkspaceMetaData(1);
         WorkspaceMetaData wmd2 = new WorkspaceMetaData(2);
         WorkspaceMetaData wmd3 = new WorkspaceMetaData(3);
@@ -69,13 +69,13 @@ public class PaginatedWorkspaceListTests {
     }
 
     @Test
-    public void pageNumberLessThanOne() {
+    void pageNumberLessThanOne() {
         list = new PaginatedWorkspaceList(listOf(3), 0, 3);
         assertEquals(1, list.getPageNumber());
     }
 
     @Test
-    public void pageSizeLessThanOne() {
+    void pageSizeLessThanOne() {
         list = new PaginatedWorkspaceList(listOf(20), 1, 0);
         assertEquals(10, list.getPageSize()); // default page size
 
@@ -84,7 +84,7 @@ public class PaginatedWorkspaceListTests {
     }
 
     @Test
-    public void requestedPageNumberIsTooHigh() {
+    void requestedPageNumberIsTooHigh() {
         list = new PaginatedWorkspaceList(listOf(20), 3, 10);
         assertEquals(2, list.getPageNumber());
     }
