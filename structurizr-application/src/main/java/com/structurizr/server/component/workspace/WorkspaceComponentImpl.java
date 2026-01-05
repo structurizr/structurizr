@@ -75,6 +75,10 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
 
     private void initCache() {
         workspaceMetadataCache = WorkspaceMetadataCacheFactory.create();
+
+        if (workspaceMetadataCache == null) {
+            System.exit(1);
+        }
     }
 
     private void initThreadPool() {
