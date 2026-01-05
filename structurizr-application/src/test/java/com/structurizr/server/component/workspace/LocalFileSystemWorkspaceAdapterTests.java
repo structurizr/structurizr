@@ -14,10 +14,10 @@ import java.util.Properties;
 import static com.structurizr.configuration.StructurizrProperties.DATA_DIRECTORY;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class LocalFileSystemWorkspaceDaoTests extends AbstractTestsBase {
+public class LocalFileSystemWorkspaceAdapterTests extends AbstractTestsBase {
 
     private File dataDirectory;
-    private SingleWorkspaceLocalFileSystemWorkspaceDao dao;
+    private SingleWorkspaceLocalFileSystemWorkspaceAdapter adapter;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -36,13 +36,13 @@ public class LocalFileSystemWorkspaceDaoTests extends AbstractTestsBase {
 
     @Test
     void getWorkspace_WhenAWorkspaceJsonFileDoesNotExist() {
-        dao = new SingleWorkspaceLocalFileSystemWorkspaceDao(dataDirectory);
+        adapter = new SingleWorkspaceLocalFileSystemWorkspaceAdapter(dataDirectory);
         FileUtils.write(new File(dataDirectory, "workspace.dsl"), """
                 workspace {
                 }""");
 
         try {
-            dao.getWorkspace(1, "", "");
+            adapter.getWorkspace(1, "", "");
             fail();
         } catch (Exception e) {
             assertEquals("Workspace 1 does not exist", e.getMessage());
@@ -51,10 +51,10 @@ public class LocalFileSystemWorkspaceDaoTests extends AbstractTestsBase {
 
     @Test
     void getWorkspace_WhenAWorkspaceJsonFileDoesExist() {
-        dao = new SingleWorkspaceLocalFileSystemWorkspaceDao(dataDirectory);
+        adapter = new SingleWorkspaceLocalFileSystemWorkspaceAdapter(dataDirectory);
         FileUtils.write(new File(dataDirectory, "workspace.json"), "{}");
 
-        String json = dao.getWorkspace(1, "", "");
+        String json = adapter.getWorkspace(1, "", "");
         assertEquals("{}", json);
     }
 

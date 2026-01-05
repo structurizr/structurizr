@@ -33,9 +33,9 @@ import java.util.Set;
 /**
  * Implementation of a search component, using Apache Lucene.
  */
-class ApacheLuceneSearchComponentImpl extends AbstractSearchComponentImpl {
+class ApacheLuceneSearchAdapter extends AbstractSearchAdapter {
 
-    private static final Log log = LogFactory.getLog(ApacheLuceneSearchComponentImpl.class);
+    private static final Log log = LogFactory.getLog(ApacheLuceneSearchAdapter.class);
     private static final String INDEX_DIRECTORY_NAME = "index";
 
     private static final String URL_KEY = "url";
@@ -52,7 +52,7 @@ class ApacheLuceneSearchComponentImpl extends AbstractSearchComponentImpl {
     private final File indexDirectory;
     private IndexWriter indexWriter;
 
-    ApacheLuceneSearchComponentImpl() {
+    ApacheLuceneSearchAdapter() {
         this.indexDirectory = new File(Configuration.getInstance().getWorkDirectory(), INDEX_DIRECTORY_NAME);
     }
 

@@ -17,17 +17,17 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public abstract class AbstractSearchComponentTests extends AbstractTestsBase {
+public abstract class AbstractSearchAdapterTests extends AbstractTestsBase {
 
-    protected abstract SearchComponent getSearchComponent();
+    protected abstract SearchAdapter getSearchAdapter();
 
     @Test
-    public void index_AddsTheWorkspaceToTheSearchIndex() throws Exception {
+    public void index_AddsTheWorkspaceToTheSearchIndex() {
         Workspace workspace = new Workspace("Name", "Description");
         workspace.setId(12345);
-        getSearchComponent().index(workspace);
+        getSearchAdapter().index(workspace);
 
-        List<SearchResult> results = getSearchComponent().search("name", null, Collections.singleton(12345L));
+        List<SearchResult> results = getSearchAdapter().search("name", null, Collections.singleton(12345L));
         assertEquals(1, results.size());
 
         SearchResult result = results.get(0);
@@ -39,12 +39,12 @@ public abstract class AbstractSearchComponentTests extends AbstractTestsBase {
     }
 
     @Test
-    public void index_AddsTheWorkspaceToTheSearchIndex_WhenFieldsAreNull() throws Exception {
+    public void index_AddsTheWorkspaceToTheSearchIndex_WhenFieldsAreNull() {
         Workspace workspace = new Workspace("Name", null); // null description
         workspace.setId(12345);
-        getSearchComponent().index(workspace);
+        getSearchAdapter().index(workspace);
 
-        List<SearchResult> results = getSearchComponent().search("name", null, Collections.singleton(12345L));
+        List<SearchResult> results = getSearchAdapter().search("name", null, Collections.singleton(12345L));
         assertEquals(1, results.size());
 
         SearchResult result = results.get(0);
@@ -56,15 +56,15 @@ public abstract class AbstractSearchComponentTests extends AbstractTestsBase {
     }
 
     @Test
-    public void index_ReplacesTheWorkspaceInTheSearchIndexWhenItAlreadyExists() throws Exception {
+    public void index_ReplacesTheWorkspaceInTheSearchIndexWhenItAlreadyExists() {
         Workspace workspace = new Workspace("Name", "Old");
         workspace.setId(12345);
-        getSearchComponent().index(workspace);
+        getSearchAdapter().index(workspace);
 
         workspace.setDescription("New");
-        getSearchComponent().index(workspace);
+        getSearchAdapter().index(workspace);
 
-        List<SearchResult> results = getSearchComponent().search("new", null, Collections.singleton(12345L));
+        List<SearchResult> results = getSearchAdapter().search("new", null, Collections.singleton(12345L));
         assertEquals(1, results.size());
 
         SearchResult result = results.get(0);
@@ -76,9 +76,9 @@ public abstract class AbstractSearchComponentTests extends AbstractTestsBase {
     }
 
     @Test
-    public void test_search_ThrowsAnException_WhenNoWorkspaceIdsAreProvided() throws Exception {
+    public void test_search_ThrowsAnException_WhenNoWorkspaceIdsAreProvided() {
         try {
-            getSearchComponent().search("query", "type", Collections.emptySet());
+            getSearchAdapter().search("query", "type", Collections.emptySet());
             fail();
         } catch (IllegalArgumentException iae) {
             assertEquals("One or more workspace IDs must be provided.", iae.getMessage());
@@ -86,42 +86,42 @@ public abstract class AbstractSearchComponentTests extends AbstractTestsBase {
     }
 
     @Test
-    public void search_FiltersResultsByWorkspaceId() throws Exception {
+    public void search_FiltersResultsByWorkspaceId() {
         Workspace workspace = new Workspace("Name", "Description");
         workspace.setId(1);
-        getSearchComponent().index(workspace);
+        getSearchAdapter().index(workspace);
 
         workspace = new Workspace("Name", "Description");
         workspace.setId(11);
-        getSearchComponent().index(workspace);
+        getSearchAdapter().index(workspace);
 
-        List<SearchResult> results = getSearchComponent().search("name", null, Set.of(1L));
+        List<SearchResult> results = getSearchAdapter().search("name", null, Set.of(1L));
         assertEquals(1, results.size());
         assertEquals(1, results.get(0).getWorkspaceId());
 
-        results = getSearchComponent().search("name", null, Collections.singleton(11L));
+        results = getSearchAdapter().search("name", null, Collections.singleton(11L));
         assertEquals(1, results.size());
         assertEquals(11, results.get(0).getWorkspaceId());
     }
 
     @Test
-    public void search_FiltersResultsByType() throws Exception {
+    public void search_FiltersResultsByType() {
         Workspace workspace = new Workspace("Name", "Description");
         workspace.setId(1);
-        getSearchComponent().index(workspace);
+        getSearchAdapter().index(workspace);
 
-        List<SearchResult> results = getSearchComponent().search("name", null, Set.of(1L));
+        List<SearchResult> results = getSearchAdapter().search("name", null, Set.of(1L));
         assertEquals(1, results.size());
 
-        results = getSearchComponent().search("name", DocumentType.WORKSPACE, Set.of(1L));
+        results = getSearchAdapter().search("name", DocumentType.WORKSPACE, Set.of(1L));
         assertEquals(1, results.size());
 
-        results = getSearchComponent().search("name", DocumentType.DOCUMENTATION, Set.of(1L));
+        results = getSearchAdapter().search("name", DocumentType.DOCUMENTATION, Set.of(1L));
         assertEquals(0, results.size());
     }
 
     @Test
-    public void search_WorkspaceDocumentation() throws Exception {
+    public void search_WorkspaceDocumentation() {
         String content =
                 """
 ## Section 1
@@ -137,21 +137,21 @@ Bar
         workspace.setId(1);
         workspace.getDocumentation().addSection(new Section(Format.Markdown, content));
 
-        getSearchComponent().index(workspace);
+        getSearchAdapter().index(workspace);
 
-        List<SearchResult> results = getSearchComponent().search("foo", null, Set.of(1L));
+        List<SearchResult> results = getSearchAdapter().search("foo", null, Set.of(1L));
         assertEquals(1, results.size());
         assertEquals("W - Section 1", results.get(0).getName());
         assertEquals("/documentation#1", results.get(0).getUrl());
 
-        results = getSearchComponent().search("bar", null, Set.of(1L));
+        results = getSearchAdapter().search("bar", null, Set.of(1L));
         assertEquals(1, results.size());
         assertEquals("W - Section 2", results.get(0).getName());
         assertEquals("/documentation#2", results.get(0).getUrl());
     }
 
     @Test
-    public void search_SoftwareSystemDocumentation() throws Exception {
+    public void search_SoftwareSystemDocumentation() {
         String content =
                 """
 ## Section 1
@@ -168,21 +168,21 @@ Bar
         SoftwareSystem softwareSystem = workspace.getModel().addSoftwareSystem("A");
         softwareSystem.getDocumentation().addSection(new Section(Format.Markdown, content));
 
-        getSearchComponent().index(workspace);
+        getSearchAdapter().index(workspace);
 
-        List<SearchResult> results = getSearchComponent().search("foo", null, Set.of(1L));
+        List<SearchResult> results = getSearchAdapter().search("foo", null, Set.of(1L));
         assertEquals(1, results.size());
         assertEquals("A - Section 1", results.get(0).getName());
         assertEquals("/documentation/A#1", results.get(0).getUrl());
 
-        results = getSearchComponent().search("bar", null, Set.of(1L));
+        results = getSearchAdapter().search("bar", null, Set.of(1L));
         assertEquals(1, results.size());
         assertEquals("A - Section 2", results.get(0).getName());
         assertEquals("/documentation/A#2", results.get(0).getUrl());
     }
 
     @Test
-    public void search_ContainerDocumentation() throws Exception {
+    public void search_ContainerDocumentation() {
         String content =
                 """
 ## Section 1
@@ -200,21 +200,21 @@ Bar
         Container container = softwareSystem.addContainer("B");
         container.getDocumentation().addSection(new Section(Format.Markdown, content));
 
-        getSearchComponent().index(workspace);
+        getSearchAdapter().index(workspace);
 
-        List<SearchResult> results = getSearchComponent().search("foo", null, Set.of(1L));
+        List<SearchResult> results = getSearchAdapter().search("foo", null, Set.of(1L));
         assertEquals(1, results.size());
         assertEquals("B - Section 1", results.get(0).getName());
         assertEquals("/documentation/A/B#1", results.get(0).getUrl());
 
-        results = getSearchComponent().search("bar", null, Set.of(1L));
+        results = getSearchAdapter().search("bar", null, Set.of(1L));
         assertEquals(1, results.size());
         assertEquals("B - Section 2", results.get(0).getName());
         assertEquals("/documentation/A/B#2", results.get(0).getUrl());
     }
 
     @Test
-    public void search_ComponentDocumentation() throws Exception {
+    public void search_ComponentDocumentation() {
         String content =
                 """
 ## Section 1
@@ -233,21 +233,21 @@ Bar
         Component component = container.addComponent("C");
         component.getDocumentation().addSection(new Section(Format.Markdown, content));
 
-        getSearchComponent().index(workspace);
+        getSearchAdapter().index(workspace);
 
-        List<SearchResult> results = getSearchComponent().search("foo", null, Set.of(1L));
+        List<SearchResult> results = getSearchAdapter().search("foo", null, Set.of(1L));
         assertEquals(1, results.size());
         assertEquals("C - Section 1", results.get(0).getName());
         assertEquals("/documentation/A/B/C#1", results.get(0).getUrl());
 
-        results = getSearchComponent().search("bar", null, Set.of(1L));
+        results = getSearchAdapter().search("bar", null, Set.of(1L));
         assertEquals(1, results.size());
         assertEquals("C - Section 2", results.get(0).getName());
         assertEquals("/documentation/A/B/C#2", results.get(0).getUrl());
     }
 
     @Test
-    public void search_SoftwareSystemDecisions() throws Exception {
+    public void search_SoftwareSystemDecisions() {
         String content =
                 """
 ## Context
@@ -265,16 +265,16 @@ Foo
         decision.setContent(content);
         softwareSystem.getDocumentation().addDecision(decision);
 
-        getSearchComponent().index(workspace);
+        getSearchAdapter().index(workspace);
 
-        List<SearchResult> results = getSearchComponent().search("foo", null, Set.of(1L));
+        List<SearchResult> results = getSearchAdapter().search("foo", null, Set.of(1L));
         assertEquals(1, results.size());
         assertEquals("A - 1. Title", results.get(0).getName());
         assertEquals("/decisions/A#1", results.get(0).getUrl());
     }
 
     @Test
-    public void search_ContainerDecisions() throws Exception {
+    public void search_ContainerDecisions() {
         String content =
                 """
 ## Context
@@ -293,16 +293,16 @@ Foo
         decision.setContent(content);
         container.getDocumentation().addDecision(decision);
 
-        getSearchComponent().index(workspace);
+        getSearchAdapter().index(workspace);
 
-        List<SearchResult> results = getSearchComponent().search("foo", null, Set.of(1L));
+        List<SearchResult> results = getSearchAdapter().search("foo", null, Set.of(1L));
         assertEquals(1, results.size());
         assertEquals("B - 1. Title", results.get(0).getName());
         assertEquals("/decisions/A/B#1", results.get(0).getUrl());
     }
 
     @Test
-    public void search_ComponentDecisions() throws Exception {
+    public void search_ComponentDecisions() {
         String content =
                 """
 ## Context
@@ -322,9 +322,9 @@ Foo
         decision.setContent(content);
         component.getDocumentation().addDecision(decision);
 
-        getSearchComponent().index(workspace);
+        getSearchAdapter().index(workspace);
 
-        List<SearchResult> results = getSearchComponent().search("foo", null, Set.of(1L));
+        List<SearchResult> results = getSearchAdapter().search("foo", null, Set.of(1L));
         assertEquals(1, results.size());
         assertEquals("C - 1. Title", results.get(0).getName());
         assertEquals("/decisions/A/B/C#1", results.get(0).getUrl());

@@ -288,7 +288,7 @@ public class Configuration {
         features.configure(Features.DIAGRAM_ANONYMOUS_THUMBNAILS, Boolean.parseBoolean(getProperty(Features.DIAGRAM_ANONYMOUS_THUMBNAILS)));
 
         String search = getProperty(SEARCH_IMPLEMENTATION);
-        features.configure(Features.WORKSPACE_SEARCH, search.equals(SEARCH_VARIANT_LUCENE) || search.equals(SEARCH_VARIANT_ELASTICSEARCH));
+        features.configure(Features.WORKSPACE_SEARCH, !search.equals(SEARCH_VARIANT_NONE));
 
         // for backwards compatibility (older versions had structurizr.dslEditor=true)
         if (!isFeatureEnabled(Features.UI_DSL_EDITOR)) {

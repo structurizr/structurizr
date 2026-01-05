@@ -22,9 +22,9 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-abstract class LocalFileSystemWorkspaceDao extends AbstractFileSystemWorkspaceDao {
+abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspaceAdapter {
 
-    private static final Log log = LogFactory.getLog(LocalFileSystemWorkspaceDao.class);
+    private static final Log log = LogFactory.getLog(LocalFileSystemWorkspaceAdapter.class);
 
     private final String API_KEY = new RandomGuidGenerator().generate();
     private final String API_SECRET = new RandomGuidGenerator().generate();
@@ -33,7 +33,7 @@ abstract class LocalFileSystemWorkspaceDao extends AbstractFileSystemWorkspaceDa
 
     private long lastModifiedDate = 0;
 
-    LocalFileSystemWorkspaceDao(File dataDirectory) {
+    LocalFileSystemWorkspaceAdapter(File dataDirectory) {
         super(dataDirectory);
 
         this.filename = Configuration.getInstance().getProperty(StructurizrProperties.WORKSPACE_FILENAME);

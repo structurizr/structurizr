@@ -53,7 +53,7 @@ public class DeleteWorkspaceController extends AbstractWorkspaceController {
             log.error(e);
         }
 
-        return "redirect:/dashboard";
+        return "redirect:/";
     }
 
 }

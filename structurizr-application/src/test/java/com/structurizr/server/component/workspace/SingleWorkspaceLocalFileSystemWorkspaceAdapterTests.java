@@ -13,16 +13,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.nio.file.Files;
 import java.util.Properties;
 
 import static com.structurizr.configuration.StructurizrProperties.DATA_DIRECTORY;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SingleWorkspaceLocalFileSystemWorkspaceDaoTests extends AbstractTestsBase {
+public class SingleWorkspaceLocalFileSystemWorkspaceAdapterTests extends AbstractTestsBase {
 
     private File dataDirectory;
-    private SingleWorkspaceLocalFileSystemWorkspaceDao dao;
+    private SingleWorkspaceLocalFileSystemWorkspaceAdapter adapter;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -41,7 +40,7 @@ public class SingleWorkspaceLocalFileSystemWorkspaceDaoTests extends AbstractTes
 
     @Test
     void constructor_WhenTheDataDirectoryDoesNotExist() {
-        dao = new SingleWorkspaceLocalFileSystemWorkspaceDao(dataDirectory);
+        adapter = new SingleWorkspaceLocalFileSystemWorkspaceAdapter(dataDirectory);
 
         assertTrue(new File(dataDirectory, "workspace.dsl").exists());
         assertFalse(new File(dataDirectory, "workspace.json").exists());
@@ -50,7 +49,7 @@ public class SingleWorkspaceLocalFileSystemWorkspaceDaoTests extends AbstractTes
     @Test
     void constructor_WhenAWorkspaceJsonFileExists() {
         FileUtils.write(new File(dataDirectory, "workspace.json"), "{}");
-        dao = new SingleWorkspaceLocalFileSystemWorkspaceDao(dataDirectory);
+        adapter = new SingleWorkspaceLocalFileSystemWorkspaceAdapter(dataDirectory);
 
         assertTrue(new File(dataDirectory, "workspace.json").exists());
         assertFalse(new File(dataDirectory, "workspace.dsl").exists()); // this doesn't get created automatically
@@ -58,10 +57,10 @@ public class SingleWorkspaceLocalFileSystemWorkspaceDaoTests extends AbstractTes
 
     @Test
     void getWorkspaceIds() {
-        dao = new SingleWorkspaceLocalFileSystemWorkspaceDao(dataDirectory);
+        adapter = new SingleWorkspaceLocalFileSystemWorkspaceAdapter(dataDirectory);
 
-        assertEquals(1, dao.getWorkspaceIds().size());
-        assertEquals(1, dao.getWorkspaceIds().getFirst());
+        assertEquals(1, adapter.getWorkspaceIds().size());
+        assertEquals(1, adapter.getWorkspaceIds().getFirst());
     }
 
     @Test
@@ -69,9 +68,9 @@ public class SingleWorkspaceLocalFileSystemWorkspaceDaoTests extends AbstractTes
         Workspace workspace = new Workspace("JSON", "Description");
         WorkspaceUtils.saveWorkspaceToJson(workspace, new File(dataDirectory, "workspace.json"));
 
-        dao = new SingleWorkspaceLocalFileSystemWorkspaceDao(dataDirectory);
+        adapter = new SingleWorkspaceLocalFileSystemWorkspaceAdapter(dataDirectory);
 
-        WorkspaceMetaData wmd = dao.getWorkspaceMetaData(1);
+        WorkspaceMetaData wmd = adapter.getWorkspaceMetaData(1);
         assertEquals("JSON", wmd.getName());
         assertEquals("Description", wmd.getDescription());
         assertFalse(StringUtils.isNullOrEmpty(wmd.getApiKey()));
@@ -85,9 +84,9 @@ public class SingleWorkspaceLocalFileSystemWorkspaceDaoTests extends AbstractTes
                 }""";
         FileUtils.write(new File(dataDirectory, "workspace.dsl"), dsl);
 
-        dao = new SingleWorkspaceLocalFileSystemWorkspaceDao(dataDirectory);
+        adapter = new SingleWorkspaceLocalFileSystemWorkspaceAdapter(dataDirectory);
 
-        WorkspaceMetaData wmd = dao.getWorkspaceMetaData(1);
+        WorkspaceMetaData wmd = adapter.getWorkspaceMetaData(1);
         assertEquals("DSL", wmd.getName());
         assertEquals("Description", wmd.getDescription());
         assertFalse(StringUtils.isNullOrEmpty(wmd.getApiKey()));

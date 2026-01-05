@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-abstract class AbstractSearchComponentImpl implements SearchComponent {
+abstract class AbstractSearchAdapter implements SearchAdapter {
 
     protected static final String DOCUMENTATION_PATH = "/documentation";
     protected static final String DIAGRAMS_PATH = "/diagrams";

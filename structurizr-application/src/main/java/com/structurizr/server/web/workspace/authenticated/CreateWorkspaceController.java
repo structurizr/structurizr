@@ -33,7 +33,7 @@ public class CreateWorkspaceController extends AbstractWorkspaceController {
             log.error(e);
         }
 
-        return "redirect:/dashboard";
+        return "redirect:/";
     }
 
 }

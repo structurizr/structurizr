@@ -40,20 +40,15 @@ public class StructurizrProperties {
 
     public static final String DATA_STORAGE_IMPLEMENTATION = "structurizr.data";
     public static final String DATA_STORAGE_VARIANT_FILE = "file";
-    public static final String DATA_STORAGE_VARIANT_AMAZON_WEB_SERVICES_S3 = "aws-s3";
-    public static final String DATA_STORAGE_VARIANT_AZURE_BLOB_STORAGE = "azure-blob";
 
     public static final String SEARCH_IMPLEMENTATION = "structurizr.search";
     public static final String SEARCH_VARIANT_NONE = "none";
     public static final String SEARCH_VARIANT_LUCENE = "lucene";
-    public static final String SEARCH_VARIANT_ELASTICSEARCH = "elasticsearch";
 
     public static final String CACHE_IMPLEMENTATION = "structurizr.cache";
     public static final String CACHE_EXPIRY_IN_MINUTES = "structurizr.cache.expiry";
     public static final String DEFAULT_CACHE_EXPIRY_IN_MINUTES = "5";
     public static final String CACHE_VARIANT_NONE = "none";
-    public static final String CACHE_VARIANT_LOCAL = "local";
-    public static final String CACHE_VARIANT_REDIS = "redis";
 
     public static final String WORKSPACES_PROPERTY = "structurizr.workspaces";
     public static final String SINGLE_WORKSPACE = "1";

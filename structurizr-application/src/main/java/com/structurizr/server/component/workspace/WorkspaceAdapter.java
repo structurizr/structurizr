@@ -2,13 +2,12 @@ package com.structurizr.server.component.workspace;
 
 import com.structurizr.server.domain.Image;
 import com.structurizr.server.domain.InputStreamAndContentLength;
-import com.structurizr.server.domain.User;
 import com.structurizr.server.domain.WorkspaceMetaData;
 
 import java.io.File;
 import java.util.List;
 
-interface WorkspaceDao {
+interface WorkspaceAdapter {
 
     List<Long> getWorkspaceIds();
 

@@ -139,7 +139,7 @@
     var diagramsVisible = true;
     var unsavedChanges = false;
 
-    $('#dashboardButton').click(function() { window.location.href='/dashboard'; });
+    $('#dashboardButton').click(function() { window.location.href='/'; });
     $('#workspaceSummaryButton').click(function() { window.location.href='${urlPrefix}${urlSuffix}'; });
     $('#sourceButton').click(function() { sourceButtonClicked(); });
     $('#diagramsButton').click(function() { diagramsButtonClicked(); });

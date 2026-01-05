@@ -34,7 +34,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
     void getWorkspaces_WhenThereAreNoWorkspaces() {
         Configuration.init(Profile.Local, new Properties());
 
-        workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public List<Long> getWorkspaceIds() {
                 return new ArrayList<>();
@@ -73,7 +73,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
         workspace5.setPublicWorkspace(true);
         workspaceMap.put(workspace5.getId(), workspace5);
 
-        WorkspaceComponentImpl workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        WorkspaceComponentImpl workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public List<Long> getWorkspaceIds() {
                 return new ArrayList<>(workspaceMap.keySet());
@@ -123,7 +123,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
         workspace2.setPublicWorkspace(true);
         workspaceMap.put(workspace2.getId(), workspace2);
 
-        WorkspaceComponentImpl workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        WorkspaceComponentImpl workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public List<Long> getWorkspaceIds() {
                 return new ArrayList<>(workspaceMap.keySet());
@@ -174,7 +174,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
         workspace5.setPublicWorkspace(true);
         workspaceMap.put(workspace5.getId(), workspace5);
 
-        WorkspaceComponentImpl workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        WorkspaceComponentImpl workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public List<Long> getWorkspaceIds() {
                 return new ArrayList<>(workspaceMap.keySet());
@@ -236,7 +236,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
         workspace5.setPublicWorkspace(true);
         workspaceMap.put(workspace5.getId(), workspace5);
 
-        WorkspaceComponentImpl workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        WorkspaceComponentImpl workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public List<Long> getWorkspaceIds() {
                 return new ArrayList<>(workspaceMap.keySet());
@@ -260,7 +260,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
 
     @Test
     void getWorkspace_WhenThereAreWorkspaces() {
-        workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public List<Long> getWorkspaceIds() {
                 return List.of(1L, 2L);
@@ -280,7 +280,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
 
     @Test
     void getWorkspaces_WhenThereAreArchivedWorkspaces() {
-        workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public List<Long> getWorkspaceIds() {
                 return List.of(1L, 2L);
@@ -304,7 +304,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
 
     @Test
     void getWorkspaceMetaData_WhenTheWorkspaceDoesNotExist() {
-        workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao());
+        workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter());
         assertNull(workspaceComponent.getWorkspaceMetaData(1));
     }
 
@@ -312,7 +312,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
     void getWorkspaceMetaData_WhenTheWorkspaceExists() {
         WorkspaceMetaData wmd = new WorkspaceMetaData(1);
 
-        workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
                 return wmd;
@@ -327,7 +327,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
         WorkspaceMetaData wmd = new WorkspaceMetaData(1);
         wmd.setArchived(true);
 
-        workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
                 return wmd;
@@ -339,7 +339,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
 
     @Test
     void putWorkspaceMetaData_ThrowsAnException_WhenPassedNull() {
-        workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao());
+        workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter());
 
         try {
             workspaceComponent.putWorkspaceMetaData(null);
@@ -353,7 +353,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
     void putWorkspaceMetaData() {
         List<WorkspaceMetaData> workspaces = new ArrayList<>();
 
-        workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public void putWorkspaceMetaData(WorkspaceMetaData workspaceMetaData) {
                 workspaces.add(workspaceMetaData);
@@ -367,7 +367,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
 
     @Test
     void getWorkspace_WhenTheWorkspaceDoesNotExist() {
-        workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao());
+        workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter());
 
         try {
             workspaceComponent.getWorkspace(1, null, null);
@@ -379,7 +379,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
 
     @Test
     void getWorkspace_WhenTheBranchNameIsInvalid() {
-        workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao());
+        workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter());
 
         try {
             workspaceComponent.getWorkspace(1, "!branch", null);
@@ -391,7 +391,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
 
     @Test
     public void getWorkspace_WhenServerSideEncryptionIsNotEnabled() {
-        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public String getWorkspace(long workspaceId, String branch, String version) {
                 return "json";
@@ -408,7 +408,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
         properties.setProperty(StructurizrProperties.ENCRYPTION_PASSPHRASE, "password");
         Configuration.init(Profile.Server, properties);
 
-        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public String getWorkspace(long workspaceId, String branch, String version) {
                 String json = "";
@@ -449,7 +449,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
             encryptedJsonWriter.write(encryptedWorkspace, stringWriter);
             final String json = stringWriter.toString();
 
-            WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+            WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
                 @Override
                 public String getWorkspace(long workspaceId, String branch, String version) {
                     return json;
@@ -472,7 +472,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
         String expectedJson = """
                 {"configuration":{},"description":"Description","documentation":{},"id":1,"lastModifiedDate":"%s","model":{},"name":"Name","views":{"configuration":{"branding":{},"styles":{},"terminology":{}}}}""";
 
-        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public void putWorkspaceMetaData(WorkspaceMetaData wmd) {
                 workspaceMetaData.setLastModifiedDate(wmd.getLastModifiedDate());
@@ -506,7 +506,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
         final StringBuffer jsonBuffer = new StringBuffer();
         final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
 
-        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public void putWorkspaceMetaData(WorkspaceMetaData wmd) {
                 workspaceMetaData.setLastModifiedDate(wmd.getLastModifiedDate());
@@ -545,7 +545,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
         final StringBuffer jsonBuffer = new StringBuffer();
         final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
 
-        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public void putWorkspaceMetaData(WorkspaceMetaData wmd) {
                 workspaceMetaData.setLastModifiedDate(wmd.getLastModifiedDate());
@@ -581,7 +581,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
         final WorkspaceMetaData wmd = new WorkspaceMetaData(1);
         wmd.setPublicWorkspace(false);
 
-        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public void putWorkspaceMetaData(WorkspaceMetaData workspaceMetaData) {
                 wmd.setPublicWorkspace(workspaceMetaData.isPublicWorkspace());
@@ -602,7 +602,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
         final WorkspaceMetaData wmd = new WorkspaceMetaData(1);
         wmd.setPublicWorkspace(false);
 
-        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public void putWorkspaceMetaData(WorkspaceMetaData workspaceMetaData) {
                 wmd.setPublicWorkspace(workspaceMetaData.isPublicWorkspace());
@@ -627,7 +627,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
         final Set<String> readUsers = new HashSet<>();
         Set<String> writeUsers = new HashSet<>();
 
-        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public void putWorkspaceMetaData(WorkspaceMetaData workspaceMetaData) {
                 readUsers.addAll(workspaceMetaData.getReadUsers());
@@ -656,7 +656,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
         final Set<String> readUsers = new HashSet<>();
         Set<String> writeUsers = new HashSet<>();
 
-        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public void putWorkspaceMetaData(WorkspaceMetaData workspaceMetaData) {
                 readUsers.addAll(workspaceMetaData.getReadUsers());
@@ -692,7 +692,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
         final WorkspaceMetaData wmd = new WorkspaceMetaData(1);
         wmd.setPublicWorkspace(false);
 
-        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao());
+        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter());
         try {
             Configuration.getInstance().setFeatureEnabled(Features.WORKSPACE_SCOPE_VALIDATION);
             workspaceComponent.putWorkspace(1, "", json);
@@ -713,7 +713,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
         final WorkspaceMetaData wmd = new WorkspaceMetaData(1);
         wmd.setPublicWorkspace(false);
 
-        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao());
+        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter());
         try {
             workspaceComponent.putWorkspace(1, "", json);
             fail();
@@ -724,7 +724,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
 
     @Test
     void putImage_ThrowsException_WhenPuttingAFileThatIsNotAnImage() {
-        workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao());
+        workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter());
 
         try {
             workspaceComponent.putImage(1, "", "xss.js", new File("xss.js"));
@@ -739,7 +739,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
         final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
         final StringBuffer jsonBuffer = new StringBuffer();
 
-        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public void putWorkspaceMetaData(WorkspaceMetaData wmd) {
                 workspaceMetaData.setLastModifiedDate(wmd.getLastModifiedDate());
@@ -760,7 +760,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
 
     @Test
     void deleteWorkspace() {
-        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public boolean deleteWorkspace(long workspaceId) {
                 return true;
@@ -776,7 +776,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
 
         Configuration.getInstance().setFeatureEnabled(Features.WORKSPACE_ARCHIVING);
 
-        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
                 return workspaceMetaData;
@@ -796,7 +796,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
     public void shareWorkspace() {
         final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
 
-        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
                 WorkspaceMetaData wmd = new WorkspaceMetaData(workspaceId);
@@ -819,7 +819,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
     void unshareWorkspace() {
         final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
 
-        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
                 WorkspaceMetaData wmd = new WorkspaceMetaData(workspaceId);
@@ -842,7 +842,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
     void lockWorkspace_LocksTheWorkspace_WhenItIsAlreadyLockedByTheSameUser() {
         final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
 
-        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
                 WorkspaceMetaData wmd = new WorkspaceMetaData(1);
@@ -877,7 +877,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
         workspaceMetaData.setLockedAgent("agent");
         workspaceMetaData.setLockedDate(new Date());
 
-        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
                 return workspaceMetaData;
@@ -907,7 +907,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
         workspaceMetaData.setLockedAgent("agent");
         workspaceMetaData.setLockedDate(DateUtils.getXMinutesAgo(10));
 
-        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
                 return workspaceMetaData;
@@ -937,7 +937,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
         workspaceMetaData.setLockedAgent("agent");
         workspaceMetaData.setLockedDate(DateUtils.getXMinutesAgo(10));
 
-        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceDao() {
+        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
             public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
                 return workspaceMetaData;

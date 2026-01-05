@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * A search component implementation that does nothing.
+ * A search adapter implementation that does nothing.
  */
-class NoOpSearchComponentImpl implements SearchComponent {
+class NoOpSearchAdapter implements SearchAdapter {
 
-    NoOpSearchComponentImpl() {
+    NoOpSearchAdapter() {
     }
 
     @Override

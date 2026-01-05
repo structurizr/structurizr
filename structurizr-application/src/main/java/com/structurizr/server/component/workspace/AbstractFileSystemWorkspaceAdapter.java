@@ -14,9 +14,9 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-abstract class AbstractFileSystemWorkspaceDao implements WorkspaceDao {
+abstract class AbstractFileSystemWorkspaceAdapter implements WorkspaceAdapter {
 
-    private static final Log log = LogFactory.getLog(WorkspaceDao.class);
+    private static final Log log = LogFactory.getLog(WorkspaceAdapter.class);
 
     protected static final String DSL_FILE_EXTENSION = ".dsl";
     protected static final String JSON_FILE_EXTENSION = ".json";
@@ -27,7 +27,7 @@ abstract class AbstractFileSystemWorkspaceDao implements WorkspaceDao {
 
     protected final File dataDirectory;
 
-    AbstractFileSystemWorkspaceDao(File dataDirectory) {
+    AbstractFileSystemWorkspaceAdapter(File dataDirectory) {
         this.dataDirectory = dataDirectory;
     }
 

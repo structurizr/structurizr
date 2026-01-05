@@ -38,7 +38,7 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
     private static final String ENCRYPTION_STRATEGY_STRING = "encryptionStrategy";
     private static final String CIPHERTEXT_STRING = "ciphertext";
 
-    private final WorkspaceDao workspaceDao;
+    private final WorkspaceAdapter workspaceAdapter;
     private final String encryptionPassphrase;
 
     private WorkspaceMetadataCache workspaceMetadataCache;
@@ -47,12 +47,12 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
     WorkspaceComponentImpl() {
         if (Configuration.getInstance().getProfile() == Profile.Local) {
             if (Configuration.getInstance().isSingleWorkspace()) {
-                this.workspaceDao = new SingleWorkspaceLocalFileSystemWorkspaceDao(Configuration.getInstance().getDataDirectory());
+                workspaceAdapter = new SingleWorkspaceLocalFileSystemWorkspaceAdapter(Configuration.getInstance().getDataDirectory());
             } else {
-                this.workspaceDao = new MultiWorkspaceLocalFileSystemWorkspaceDao(Configuration.getInstance().getDataDirectory());
+                workspaceAdapter = new MultiWorkspaceLocalFileSystemWorkspaceAdapter(Configuration.getInstance().getDataDirectory());
             }
         } else {
-            this.workspaceDao = new ServerFileSystemWorkspaceDao(Configuration.getInstance().getDataDirectory());
+            workspaceAdapter = WorkspaceAdapterFactory.create();
         }
 
         encryptionPassphrase = Configuration.getInstance().getProperty(StructurizrProperties.ENCRYPTION_PASSPHRASE);
@@ -62,15 +62,15 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
     }
 
     // constructor for testing
-    WorkspaceComponentImpl(WorkspaceDao workspaceDao) {
-        this.workspaceDao = workspaceDao;
-        this.encryptionPassphrase = Configuration.getInstance().getProperty(StructurizrProperties.ENCRYPTION_PASSPHRASE);
-        this.workspaceMetadataCache = new NoOpWorkspaceMetadataCache();
+    WorkspaceComponentImpl(WorkspaceAdapter workspaceAdapter) {
+        this.workspaceAdapter = workspaceAdapter;
+        encryptionPassphrase = Configuration.getInstance().getProperty(StructurizrProperties.ENCRYPTION_PASSPHRASE);
+        workspaceMetadataCache = new NoOpWorkspaceMetadataCache();
         initThreadPool();
     }
 
     private void initCache() {
-        this.workspaceMetadataCache = new NoOpWorkspaceMetadataCache();
+        workspaceMetadataCache = WorkspaceMetadataCacheFactory.create();
     }
 
     private void initThreadPool() {
@@ -86,7 +86,7 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
     @Override
     public List<WorkspaceMetaData> getWorkspaces() {
         List<WorkspaceMetaData> workspaces = new ArrayList<>();
-        Collection<Long> workspaceIds = workspaceDao.getWorkspaceIds();
+        Collection<Long> workspaceIds = workspaceAdapter.getWorkspaceIds();
 
         List<Future<WorkspaceMetaData>> futures = workspaceIds.stream()
                 .map(workspaceId -> executorService.submit(() -> getWorkspaceMetaData(workspaceId)))
@@ -159,7 +159,7 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
         WorkspaceMetaData wmd = workspaceMetadataCache.get(workspaceId);
 
         if (wmd == null) {
-            wmd = workspaceDao.getWorkspaceMetaData(workspaceId);
+            wmd = workspaceAdapter.getWorkspaceMetaData(workspaceId);
 
             if (wmd != null) {
                 workspaceMetadataCache.put(wmd);
@@ -179,19 +179,19 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
             throw new IllegalArgumentException("Workspace metadata cannot be null");
         }
 
-        workspaceDao.putWorkspaceMetaData(workspaceMetaData);
+        workspaceAdapter.putWorkspaceMetaData(workspaceMetaData);
         workspaceMetadataCache.put(workspaceMetaData);
     }
 
     @Override
     public String getWorkspace(long workspaceId, String branch, String version) {
         WorkspaceBranch.validateBranchName(branch);
-        String json = workspaceDao.getWorkspace(workspaceId, branch, version);
+        String json = workspaceAdapter.getWorkspace(workspaceId, branch, version);
 
         if (json == null) {
             if (!StringUtils.isNullOrEmpty(branch)) {
                 // branch likely doesn't exist, so return the main branch instead
-                json = workspaceDao.getWorkspace(workspaceId, WorkspaceBranch.NO_BRANCH, WorkspaceVersion.LATEST_VERSION);
+                json = workspaceAdapter.getWorkspace(workspaceId, WorkspaceBranch.NO_BRANCH, WorkspaceVersion.LATEST_VERSION);
             }
         }
 
@@ -237,7 +237,7 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
         try {
             long workspaceId;
 
-            List<Long> workspaceIds = workspaceDao.getWorkspaceIds();
+            List<Long> workspaceIds = workspaceAdapter.getWorkspaceIds();
             if (workspaceIds.isEmpty()) {
                 workspaceId = 1;
             } else {
@@ -286,7 +286,7 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
             return true;
         } else {
             log.debug("Deleting workspace with ID " + workspaceId);
-            return workspaceDao.deleteWorkspace(workspaceId);
+            return workspaceAdapter.deleteWorkspace(workspaceId);
         }
     }
 
@@ -382,8 +382,7 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
                 throw new WorkspaceComponentException("The workspace could not be saved because the workspace was locked by " + workspaceMetaData.getLockedUser() + " at " + sdf.format(workspaceMetaData.getLockedDate()) + ".");
             }
 
-            // use the DAO to write the workspace
-            workspaceDao.putWorkspace(workspaceMetaData, jsonToBeStored, branch);
+            workspaceAdapter.putWorkspace(workspaceMetaData, jsonToBeStored, branch);
 
             if (StringUtils.isNullOrEmpty(branch)) {
                 // only store workspace metadata for the main branch
@@ -481,7 +480,7 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
             WorkspaceBranch.validateBranchName(branch);
 
             int maxVersions = Integer.parseInt(Configuration.getInstance().getProperty(StructurizrProperties.MAX_WORKSPACE_VERSIONS));
-            versions = workspaceDao.getWorkspaceVersions(workspaceId, branch, maxVersions);
+            versions = workspaceAdapter.getWorkspaceVersions(workspaceId, branch, maxVersions);
             versions.sort((v1, v2) -> v2.getLastModifiedDate().compareTo(v1.getLastModifiedDate()));
 
             if (versions.size() > maxVersions) {
@@ -497,7 +496,7 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
 
         if (Configuration.getInstance().getProfile() == Profile.Server) {
             try {
-                return workspaceDao.getWorkspaceBranches(workspaceId);
+                return workspaceAdapter.getWorkspaceBranches(workspaceId);
             } catch (Exception e) {
                 log.error(e);
             }
@@ -508,7 +507,7 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
 
     @Override
     public boolean deleteBranch(long workspaceId, String branch) {
-        return workspaceDao.deleteBranch(workspaceId, branch);
+        return workspaceAdapter.deleteBranch(workspaceId, branch);
     }
 
     @Override
@@ -574,7 +573,7 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
     @Override
     public boolean putImage(long workspaceId, String branch, String filename, File file) {
         if (isImage(filename)) {
-            return workspaceDao.putImage(workspaceId, branch, filename, file);
+            return workspaceAdapter.putImage(workspaceId, branch, filename, file);
         } else {
             throw new WorkspaceComponentException(filename + " is not an image");
         }
@@ -591,22 +590,22 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
 
     @Override
     public InputStreamAndContentLength getImage(long workspaceId, String branch, String filename) {
-        return workspaceDao.getImage(workspaceId, branch, filename);
+        return workspaceAdapter.getImage(workspaceId, branch, filename);
     }
 
     @Override
     public List<Image> getImages(long workspaceId) {
-        return workspaceDao.getImages(workspaceId);
+        return workspaceAdapter.getImages(workspaceId);
     }
 
     @Override
     public boolean deleteImages(long workspaceId) {
-        return workspaceDao.deleteImages(workspaceId);
+        return workspaceAdapter.deleteImages(workspaceId);
     }
 
     @Override
     public long getLastModifiedDate() {
-        return workspaceDao.getLastModifiedDate();
+        return workspaceAdapter.getLastModifiedDate();
     }
 
 }

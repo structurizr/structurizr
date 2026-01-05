@@ -7,7 +7,7 @@ import com.structurizr.server.domain.WorkspaceMetaData;
 import java.io.File;
 import java.util.List;
 
-class MockWorkspaceDao implements WorkspaceDao {
+class MockWorkspaceAdapter implements WorkspaceAdapter {
 
     @Override
     public List<Long> getWorkspaceIds() {

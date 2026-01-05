@@ -15,10 +15,10 @@ import java.util.Properties;
 import static com.structurizr.configuration.StructurizrProperties.DATA_DIRECTORY;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MultiWorkspaceLocalFileSystemWorkspaceDaoTests extends AbstractTestsBase {
+public class MultiWorkspaceLocalFileSystemWorkspaceAdapterTests extends AbstractTestsBase {
 
     private File dataDirectory;
-    private MultiWorkspaceLocalFileSystemWorkspaceDao dao;
+    private MultiWorkspaceLocalFileSystemWorkspaceAdapter adapter;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -45,9 +45,9 @@ public class MultiWorkspaceLocalFileSystemWorkspaceDaoTests extends AbstractTest
         FileUtils.write(new File(dataDirectory, "7"), "text");
         FileUtils.write(new File(dataDirectory, "08"), "text");
 
-        dao = new MultiWorkspaceLocalFileSystemWorkspaceDao(dataDirectory);
+        adapter = new MultiWorkspaceLocalFileSystemWorkspaceAdapter(dataDirectory);
 
-        List<Long> workspaceIds = dao.getWorkspaceIds();
+        List<Long> workspaceIds = adapter.getWorkspaceIds();
         assertEquals(5, workspaceIds.size());
         assertEquals(1L, workspaceIds.get(0));
         assertEquals(2L, workspaceIds.get(1));
@@ -67,11 +67,11 @@ public class MultiWorkspaceLocalFileSystemWorkspaceDaoTests extends AbstractTest
         File workspace3Directory = new File(dataDirectory, "3");
         workspace3Directory.mkdir();
 
-        dao = new MultiWorkspaceLocalFileSystemWorkspaceDao(dataDirectory);
+        adapter = new MultiWorkspaceLocalFileSystemWorkspaceAdapter(dataDirectory);
 
-        assertEquals(workspace1Directory.getAbsolutePath(), dao.getDataDirectory(1).getAbsolutePath());
-        assertEquals(workspace2Directory.getAbsolutePath(), dao.getDataDirectory(2).getAbsolutePath());
-        assertEquals(workspace3Directory.getAbsolutePath(), dao.getDataDirectory(3).getAbsolutePath());
+        assertEquals(workspace1Directory.getAbsolutePath(), adapter.getDataDirectory(1).getAbsolutePath());
+        assertEquals(workspace2Directory.getAbsolutePath(), adapter.getDataDirectory(2).getAbsolutePath());
+        assertEquals(workspace3Directory.getAbsolutePath(), adapter.getDataDirectory(3).getAbsolutePath());
     }
 
     @Test
@@ -88,11 +88,11 @@ public class MultiWorkspaceLocalFileSystemWorkspaceDaoTests extends AbstractTest
         File workspace3Directory = new File(dataDirectory, "003-software-system-c");
         workspace3Directory.mkdir();
 
-        dao = new MultiWorkspaceLocalFileSystemWorkspaceDao(dataDirectory);
+        adapter = new MultiWorkspaceLocalFileSystemWorkspaceAdapter(dataDirectory);
 
-        assertEquals(workspace1Directory.getAbsolutePath(), dao.getDataDirectory(1).getAbsolutePath());
-        assertEquals(workspace2Directory.getAbsolutePath(), dao.getDataDirectory(2).getAbsolutePath());
-        assertEquals(workspace3Directory.getAbsolutePath(), dao.getDataDirectory(3).getAbsolutePath());
+        assertEquals(workspace1Directory.getAbsolutePath(), adapter.getDataDirectory(1).getAbsolutePath());
+        assertEquals(workspace2Directory.getAbsolutePath(), adapter.getDataDirectory(2).getAbsolutePath());
+        assertEquals(workspace3Directory.getAbsolutePath(), adapter.getDataDirectory(3).getAbsolutePath());
     }
 
 }

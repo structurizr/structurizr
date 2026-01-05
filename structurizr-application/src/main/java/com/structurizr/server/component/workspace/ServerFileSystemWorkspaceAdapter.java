@@ -1,5 +1,6 @@
 package com.structurizr.server.component.workspace;
 
+import com.structurizr.configuration.Configuration;
 import com.structurizr.server.domain.WorkspaceMetaData;
 import com.structurizr.util.StringUtils;
 import org.apache.commons.logging.Log;
@@ -17,11 +18,11 @@ import java.util.*;
 import static com.structurizr.util.DateUtils.UTC_TIME_ZONE;
 
 /**
- * A workspace DAO implementation that uses the local file system.
+ * A workspace adapter implementation that uses the local file system.
  */
-class ServerFileSystemWorkspaceDao extends AbstractFileSystemWorkspaceDao {
+class ServerFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspaceAdapter {
 
-    private static final Log log = LogFactory.getLog(ServerFileSystemWorkspaceDao.class);
+    private static final Log log = LogFactory.getLog(ServerFileSystemWorkspaceAdapter.class);
 
     private static final String BRANCHES_DIRECTORY_NAME = "branches";
     private static final String WORKSPACE_VERSION_JSON_FILENAME = "workspace-%s.json";
@@ -29,8 +30,8 @@ class ServerFileSystemWorkspaceDao extends AbstractFileSystemWorkspaceDao {
     private static final String VERSION_TIMESTAMP_FORMAT = "yyyyMMddHHmmssSSS";
     private static final String WORKSPACE_VERSION_JSON_FILENAME_REGEX = "workspace-\\d{17}\\.json";
 
-    ServerFileSystemWorkspaceDao(File dataDirectory) {
-        super(dataDirectory);
+    ServerFileSystemWorkspaceAdapter() {
+        super(Configuration.getInstance().getDataDirectory());
     }
 
     @Override

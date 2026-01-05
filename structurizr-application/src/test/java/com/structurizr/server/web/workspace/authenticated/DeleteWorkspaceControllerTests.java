@@ -42,7 +42,7 @@ public class DeleteWorkspaceControllerTests extends ControllerTestsBase {
     }
 
     @Test
-    void deleteWorkspace_RedirectsToTheDashboard_WhenAuthenticationIsEnabledAndTheUserIsNotAnAdmin() {
+    void deleteWorkspace_RedirectsToTheHomePage_WhenAuthenticationIsEnabledAndTheUserIsNotAnAdmin() {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "admin@example.com");
         enableAuthentication(properties);
@@ -62,7 +62,7 @@ public class DeleteWorkspaceControllerTests extends ControllerTestsBase {
         });
 
         String view = controller.deleteWorkspace(1, model);
-        assertEquals("redirect:/dashboard", view);
+        assertEquals("redirect:/", view);
     }
 
     @Test
@@ -92,7 +92,7 @@ public class DeleteWorkspaceControllerTests extends ControllerTestsBase {
         });
 
         String view = controller.deleteWorkspace(1, model);
-        assertEquals("redirect:/dashboard", view);
+        assertEquals("redirect:/", view);
         assertEquals("1 2", buf.toString());
     }
 
@@ -123,7 +123,7 @@ public class DeleteWorkspaceControllerTests extends ControllerTestsBase {
         });
 
         String view = controller.deleteWorkspace(1, model);
-        assertEquals("redirect:/dashboard", view);
+        assertEquals("redirect:/", view);
         assertEquals("1 2", buf.toString());
     }
 
@@ -156,7 +156,7 @@ public class DeleteWorkspaceControllerTests extends ControllerTestsBase {
         });
 
         String view = controller.deleteWorkspace(1, model);
-        assertEquals("redirect:/dashboard", view);
+        assertEquals("redirect:/", view);
         assertEquals("1 2", buf.toString());
     }
 

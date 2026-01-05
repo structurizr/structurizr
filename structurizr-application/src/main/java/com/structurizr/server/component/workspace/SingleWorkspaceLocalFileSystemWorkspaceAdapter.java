@@ -8,13 +8,13 @@ import org.apache.commons.logging.LogFactory;
 import java.io.File;
 import java.util.List;
 
-class SingleWorkspaceLocalFileSystemWorkspaceDao extends LocalFileSystemWorkspaceDao {
+class SingleWorkspaceLocalFileSystemWorkspaceAdapter extends LocalFileSystemWorkspaceAdapter {
 
-    private static final Log log = LogFactory.getLog(SingleWorkspaceLocalFileSystemWorkspaceDao.class);
+    private static final Log log = LogFactory.getLog(SingleWorkspaceLocalFileSystemWorkspaceAdapter.class);
 
     private static final long WORKSPACE_ID = 1;
 
-    SingleWorkspaceLocalFileSystemWorkspaceDao(File dataDirectory) {
+    SingleWorkspaceLocalFileSystemWorkspaceAdapter(File dataDirectory) {
         super(dataDirectory);
 
         createWorkspaceWhenDirectoryIsEmpty();

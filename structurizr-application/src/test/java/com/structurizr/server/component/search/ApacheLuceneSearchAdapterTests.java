@@ -9,11 +9,11 @@ import org.junit.jupiter.api.BeforeEach;
 import java.io.File;
 import java.util.Properties;
 
-public class ApacheLuceneSearchComponentTests extends AbstractSearchComponentTests {
+public class ApacheLuceneSearchAdapterTests extends AbstractSearchAdapterTests {
 
     private static File dataDirectory;
 
-    private ApacheLuceneSearchComponentImpl searchComponent;
+    private ApacheLuceneSearchAdapter searchAdapter;
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -23,18 +23,19 @@ public class ApacheLuceneSearchComponentTests extends AbstractSearchComponentTes
         properties.setProperty(StructurizrProperties.DATA_DIRECTORY, dataDirectory.getAbsolutePath());
         Configuration.init(Profile.Local, properties);
 
-        searchComponent = new ApacheLuceneSearchComponentImpl();
-        searchComponent.start();
+        searchAdapter = new ApacheLuceneSearchAdapter();
+        searchAdapter.start();
     }
 
     @AfterEach
     public void tearDown() {
-        searchComponent.stop();
+        searchAdapter.stop();
         deleteDirectory(dataDirectory);
     }
 
     @Override
-    protected SearchComponent getSearchComponent() {
-        return searchComponent;
+    protected SearchAdapter getSearchAdapter() {
+        return searchAdapter;
     }
+
 }
