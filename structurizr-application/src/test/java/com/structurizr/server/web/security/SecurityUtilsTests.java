@@ -23,7 +23,7 @@ public class SecurityUtilsTests {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         User user = SecurityUtils.getUser();
-        assertTrue(user.getUsername().matches("[a-z0-9]{8}"));
+        assertTrue(user.getUsername().matches("[0-9]*"));
         assertEquals(0, user.getRoles().size());
         assertEquals(AuthenticationMethod.NONE, user.getAuthenticationMethod());
         assertFalse(user.isAuthenticated());

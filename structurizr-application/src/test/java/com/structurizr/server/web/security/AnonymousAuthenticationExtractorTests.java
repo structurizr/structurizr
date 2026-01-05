@@ -23,10 +23,14 @@ public class AnonymousAuthenticationExtractorTests {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         User user = new AnonymousAuthenticationExtractor().extract(authentication);
-        assertTrue(user.getUsername().matches("[a-z0-9]{8}"));
+        String username = user.getUsername();
+        assertTrue(username.matches("[0-9]*"));
         assertEquals(0, user.getRoles().size());
         assertEquals(AuthenticationMethod.NONE, user.getAuthenticationMethod());
         assertFalse(user.isAuthenticated());
+
+        // check the username matches again
+        assertEquals(username, new AnonymousAuthenticationExtractor().extract(authentication).getUsername());
     }
 
 }

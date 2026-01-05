@@ -122,7 +122,7 @@ public class DslEditorControllerTests extends ControllerTestsBase {
         assertEquals("/workspace/1", model.getAttribute("urlPrefix"));
         assertEquals("/workspace/1/images/", model.getAttribute("thumbnailUrl"));
         assertTrue(workspaceMetaData.isLocked());
-        assertTrue(workspaceMetaData.getLockedUser().matches("[0-9a-z]{8}")); // random username
+        assertTrue(workspaceMetaData.getLockedUser().matches("[0-9]*"));
         assertTrue(workspaceMetaData.getLockedAgent().startsWith("structurizr/dsl-editor/"));
     }
 
