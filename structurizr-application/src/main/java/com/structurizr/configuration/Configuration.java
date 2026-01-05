@@ -360,7 +360,7 @@ public class Configuration {
     private void logAllProperties(Log log, Properties properties) {
         log.info("***********************************************************************************");
 
-        String propertiesToMask = ".*encryption|.*key|.*password";
+        String propertiesToMask = ".*encryption|.*key|.*password|.*license";
 
         Set<String> propertyNames = new TreeSet<>(properties.stringPropertyNames());
         for (String name : propertyNames) {
