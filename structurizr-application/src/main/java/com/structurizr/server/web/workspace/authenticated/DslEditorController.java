@@ -50,20 +50,22 @@ public class DslEditorController extends AbstractWorkspaceController {
             return showError("workspace-is-client-side-encrypted", model);
         }
 
+        if (Configuration.getInstance().isAuthenticationEnabled()) {
+            if (workspaceMetaData.hasUsersConfigured() && !workspaceMetaData.isWriteUser(getUser())) {
+                if (workspaceMetaData.isReadUser(getUser())) {
+                    return showError("workspace-is-readonly", model);
+                } else {
+                    return show404Page(model);
+                }
+            }
+        }
+
         model.addAttribute("publishThumbnails", StringUtils.isNullOrEmpty(branch) && StringUtils.isNullOrEmpty(version));
         model.addAttribute("quickNavigationPath", "diagram-editor");
         try {
             model.addAttribute("dslVersion", Class.forName(StructurizrDslParser.class.getCanonicalName()).getPackage().getImplementationVersion());
         } catch (ClassNotFoundException e) {
             // ignore
-        }
-
-        if (!workspaceMetaData.hasNoUsersConfigured() && !workspaceMetaData.isWriteUser(getUser())) {
-            if (workspaceMetaData.isReadUser(getUser())) {
-                return showError("workspace-is-readonly", model);
-            } else {
-                return show404Page(model);
-            }
         }
 
         return lockWorkspaceAndShowAuthenticatedView(Views.DSL_EDITOR, workspaceMetaData, branch, version, model, false);
