@@ -7,12 +7,10 @@ import com.structurizr.dsl.StructurizrDslParserException;
 import com.structurizr.server.component.workspace.WorkspaceBranch;
 import com.structurizr.server.component.workspace.WorkspaceVersion;
 import com.structurizr.server.domain.User;
-import com.structurizr.server.domain.WorkspaceMetaData;
 import com.structurizr.server.web.security.SecurityUtils;
 import com.structurizr.util.RandomGuidGenerator;
 import com.structurizr.util.StringUtils;
 import com.structurizr.util.Version;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,10 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import java.io.File;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.Base64;
 import java.util.TimeZone;
 
@@ -40,8 +35,6 @@ public abstract class AbstractController {
     private static final String URL_SUFFIX = "urlSuffix";
 
     private static final Log log = LogFactory.getLog(AbstractController.class);
-    private static final String STRUCTURIZR_CSS_FILENAME = "structurizr.css";
-    private static final String STRUCTURIZR_JS_FILENAME = "structurizr.js";
 
     @ModelAttribute("structurizrConfiguration")
     public Configuration getConfiguration() {
@@ -86,24 +79,6 @@ public abstract class AbstractController {
         model.addAttribute("authenticationEnabled", Configuration.getInstance().isAuthenticationEnabled());
         model.addAttribute("searchEnabled", Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_SEARCH));
         model.addAttribute("dslEditorEnabled", Configuration.getInstance().isFeatureEnabled(Features.UI_DSL_EDITOR));
-
-        File cssFile = new File(Configuration.getInstance().getDataDirectory(), STRUCTURIZR_CSS_FILENAME);
-        if (cssFile.exists()) {
-            try {
-                model.addAttribute("css", Files.readString(cssFile.toPath()));
-            } catch (IOException ioe) {
-                log.warn(ioe);
-            }
-        }
-
-        File jsFile = new File(Configuration.getInstance().getDataDirectory(), STRUCTURIZR_JS_FILENAME);
-        if (jsFile.exists()) {
-            try {
-                model.addAttribute("js", Files.readString(jsFile.toPath()));
-            } catch (IOException ioe) {
-                log.warn(ioe);
-            }
-        }
 
         if (StringUtils.isNullOrEmpty(pageTitle)) {
             model.addAttribute("pageTitle", "Structurizr");

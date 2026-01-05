@@ -21,6 +21,10 @@ class SearchComponentImpl implements SearchComponent {
             searchAdapter = SearchAdapterFactory.create();
         }
 
+        if (searchAdapter == null) {
+            System.exit(1);
+        }
+
         searchAdapter.start();
     }
 

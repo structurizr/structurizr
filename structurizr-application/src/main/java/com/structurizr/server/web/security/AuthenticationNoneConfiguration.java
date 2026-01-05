@@ -27,6 +27,8 @@ class AuthenticationNoneConfiguration {
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)
                 );
 
+        SecurityUtils.setAuthenticationConfigured(true);
+
         return http.build();
     }
 

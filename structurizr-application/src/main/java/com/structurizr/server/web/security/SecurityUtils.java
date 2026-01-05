@@ -31,6 +31,16 @@ public final class SecurityUtils {
     private static final String SAML_ATTRIBUTE_USERNAME = "structurizr.saml.attribute.username";
     private static final String SAML_ATTRIBUTE_ROLE = "structurizr.saml.attribute.role";
 
+    private static boolean authenticationConfigured = false;
+
+    public static void setAuthenticationConfigured(boolean b) {
+        authenticationConfigured = b;
+    }
+
+    public static boolean isAuthenticationConfigured() {
+        return authenticationConfigured;
+    }
+
     public static User getUser() {
         return getUser(SecurityContextHolder.getContext().getAuthentication());
     }

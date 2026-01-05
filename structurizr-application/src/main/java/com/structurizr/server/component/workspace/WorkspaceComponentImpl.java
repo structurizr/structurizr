@@ -34,7 +34,7 @@ import java.util.concurrent.Future;
 @Component
 class WorkspaceComponentImpl implements WorkspaceComponent {
 
-    private static final Log log = LogFactory.getLog(WorkspaceComponentImpl.class);
+    private static final Log log = LogFactory.getLog(WorkspaceComponent.class);
     private static final String ENCRYPTION_STRATEGY_STRING = "encryptionStrategy";
     private static final String CIPHERTEXT_STRING = "ciphertext";
 
@@ -53,6 +53,10 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
             }
         } else {
             workspaceAdapter = WorkspaceAdapterFactory.create();
+        }
+
+        if (workspaceAdapter == null) {
+            System.exit(1);
         }
 
         encryptionPassphrase = Configuration.getInstance().getProperty(StructurizrProperties.ENCRYPTION_PASSPHRASE);
