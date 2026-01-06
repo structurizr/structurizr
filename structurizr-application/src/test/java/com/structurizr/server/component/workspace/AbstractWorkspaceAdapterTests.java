@@ -72,12 +72,20 @@ abstract class AbstractWorkspaceAdapterTests extends AbstractTestsBase {
     void branches() {
         WorkspaceAdapter workspaceAdapter = getWorkspaceAdapter();
 
+        WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
+        workspaceMetaData.setName("Name");
+        workspaceMetaData.setDescription("Description");
+        workspaceMetaData.setApiKey("key");
+        workspaceMetaData.setApiSecret("secret");
+
+        workspaceAdapter.putWorkspaceMetadata(workspaceMetaData);
+
         List<WorkspaceBranch> branches = workspaceAdapter.getWorkspaceBranches(1);
         assertEquals(0, branches.size());
 
-        workspaceAdapter.putWorkspace(new WorkspaceMetadata(1), "json", "");
-        workspaceAdapter.putWorkspace(new WorkspaceMetadata(1), "json-branch1", "branch1");
-        workspaceAdapter.putWorkspace(new WorkspaceMetadata(1), "json-branch2", "branch2");
+        workspaceAdapter.putWorkspace(workspaceMetaData, "json", "");
+        workspaceAdapter.putWorkspace(workspaceMetaData, "json-branch1", "branch1");
+        workspaceAdapter.putWorkspace(workspaceMetaData, "json-branch2", "branch2");
 
         branches = workspaceAdapter.getWorkspaceBranches(1);
         assertEquals(2, branches.size());
@@ -105,10 +113,17 @@ abstract class AbstractWorkspaceAdapterTests extends AbstractTestsBase {
     void versions() {
         WorkspaceAdapter workspaceAdapter = getWorkspaceAdapter();
 
+        WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
+        workspaceMetaData.setName("Name");
+        workspaceMetaData.setDescription("Description");
+        workspaceMetaData.setApiKey("key");
+        workspaceMetaData.setApiSecret("secret");
+
+        workspaceAdapter.putWorkspaceMetadata(workspaceMetaData);
+
         List<WorkspaceVersion> versions = workspaceAdapter.getWorkspaceVersions(1, "", 10);
         assertEquals(0, versions.size());
 
-        WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.setLastModifiedDate(DateUtils.getEndOfDay(2026, 1, 1));
         workspaceAdapter.putWorkspace(workspaceMetaData, "json-1", "");
 
