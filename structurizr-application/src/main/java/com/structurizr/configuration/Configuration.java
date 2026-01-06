@@ -153,10 +153,6 @@ public class Configuration {
         return webUrl + "/api";
     }
 
-    public String getThemesUrl() {
-        return webUrl + "/static/themes/";
-    }
-
     public boolean isSafeMode() {
         return false;
     }
