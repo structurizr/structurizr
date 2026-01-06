@@ -79,9 +79,9 @@ structurizr.ui.applyBranding = function() {
     }
 }
 
-structurizr.ui.loadThemes = function(localPrebuiltThemesUrl, callback) {
+structurizr.ui.loadThemes = function(callback) {
     structurizr.workspace.views.configuration.themes.forEach(function(theme) {
-        structurizr.ui.loadTheme(localPrebuiltThemesUrl, theme);
+        structurizr.ui.loadTheme(theme);
     });
 
     setTimeout(function() {
@@ -99,13 +99,7 @@ structurizr.ui.waitForThemesToLoad = function(callback) {
     }
 }
 
-structurizr.ui.loadTheme = function(localPrebuiltThemesUrl, url) {
-    // use local versions of the prebuilt themes if configured
-    const prebuiltThemesUrl = 'https://static.structurizr.com/themes/';
-    if (url.indexOf(prebuiltThemesUrl) === 0) {
-        url = localPrebuiltThemesUrl + url.substring(prebuiltThemesUrl.length);
-    }
-
+structurizr.ui.loadTheme = function( url) {
     $.get(url, undefined, function(data) {
         try {
             const theme = JSON.parse(data);

@@ -219,7 +219,7 @@
             views = structurizr.workspace.getViews();
         }
 
-        structurizr.ui.loadThemes('${structurizrConfiguration.themesUrl}', function() {
+        structurizr.ui.loadThemes(function() {
             init();
         });
     }

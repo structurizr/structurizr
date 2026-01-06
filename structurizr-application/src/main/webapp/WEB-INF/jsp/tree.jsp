@@ -59,7 +59,7 @@
     };
 
     function workspaceLoaded() {
-        structurizr.ui.loadThemes('${structurizrConfiguration.themesUrl}', function() {
+        structurizr.ui.loadThemes(function() {
             init();
         });
     }
