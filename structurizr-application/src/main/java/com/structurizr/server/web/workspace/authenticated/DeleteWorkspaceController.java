@@ -5,7 +5,7 @@ import com.structurizr.server.component.search.SearchComponentException;
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
 import com.structurizr.configuration.Configuration;
 import com.structurizr.server.domain.User;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.workspace.AbstractWorkspaceController;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -35,7 +35,7 @@ public class DeleteWorkspaceController extends AbstractWorkspaceController {
         User user = getUser();
 
         try {
-            WorkspaceMetaData workspace = workspaceComponent.getWorkspaceMetaData(workspaceId);
+            WorkspaceMetadata workspace = workspaceComponent.getWorkspaceMetadata(workspaceId);
             if (workspace != null) {
                 if (!Configuration.getInstance().isAuthenticationEnabled() || Configuration.getInstance().getAdminUsersAndRoles().isEmpty() || user.isAdmin()) {
                     if (workspaceComponent.deleteWorkspace(workspaceId)) {

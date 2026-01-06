@@ -2,7 +2,7 @@ package com.structurizr.server.web.workspace.authenticated;
 
 import com.structurizr.configuration.StructurizrProperties;
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.ControllerTestsBase;
 import com.structurizr.server.web.MockWorkspaceComponent;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +30,7 @@ public class WorkspaceVisibilityControllerTests extends ControllerTestsBase {
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return null;
             }
         });
@@ -45,7 +45,7 @@ public class WorkspaceVisibilityControllerTests extends ControllerTestsBase {
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return null;
             }
         });
@@ -61,13 +61,13 @@ public class WorkspaceVisibilityControllerTests extends ControllerTestsBase {
         enableAuthentication(properties);
         setUser("user@example.com");
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addWriteUser("user@example.com");
         assertFalse(workspaceMetaData.isPublicWorkspace());
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -89,12 +89,12 @@ public class WorkspaceVisibilityControllerTests extends ControllerTestsBase {
         enableAuthentication(properties);
         setUser("admin@example.com");
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         assertFalse(workspaceMetaData.isPublicWorkspace());
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -114,13 +114,13 @@ public class WorkspaceVisibilityControllerTests extends ControllerTestsBase {
         enableAuthentication();
         setUser("user@example.com");
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addWriteUser("user@example.com");
         assertFalse(workspaceMetaData.isPublicWorkspace());
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -140,14 +140,14 @@ public class WorkspaceVisibilityControllerTests extends ControllerTestsBase {
         enableAuthentication();
         setUser("user@example.com");
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addWriteUser("user@example.com");
         workspaceMetaData.setPublicWorkspace(true);
         assertTrue(workspaceMetaData.isPublicWorkspace());
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -167,13 +167,13 @@ public class WorkspaceVisibilityControllerTests extends ControllerTestsBase {
         enableAuthentication();
         setUser("user@example.com");
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addWriteUser("user@example.com");
         assertFalse(workspaceMetaData.isShareable());
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -194,14 +194,14 @@ public class WorkspaceVisibilityControllerTests extends ControllerTestsBase {
         enableAuthentication();
         setUser("user@example.com");
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addWriteUser("user@example.com");
         workspaceMetaData.setSharingToken("token");
         assertTrue(workspaceMetaData.isShareable());
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -222,12 +222,12 @@ public class WorkspaceVisibilityControllerTests extends ControllerTestsBase {
         enableAuthentication();
         setUser("user@example.com");
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addWriteUser("user@example.com");
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
         });

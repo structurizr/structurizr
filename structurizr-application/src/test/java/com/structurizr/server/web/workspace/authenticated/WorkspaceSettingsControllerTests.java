@@ -2,7 +2,7 @@ package com.structurizr.server.web.workspace.authenticated;
 
 import com.structurizr.configuration.StructurizrProperties;
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.ControllerTestsBase;
 import com.structurizr.server.web.MockWorkspaceComponent;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,10 +29,10 @@ public class WorkspaceSettingsControllerTests extends ControllerTestsBase {
         enableAuthentication();
         setUser("user@example.com");
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -58,10 +58,10 @@ public class WorkspaceSettingsControllerTests extends ControllerTestsBase {
         enableAuthentication(properties);
         setUser("admin@example.com");
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -87,10 +87,10 @@ public class WorkspaceSettingsControllerTests extends ControllerTestsBase {
         enableAuthentication(properties);
         setUser("user@example.com");
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -113,10 +113,10 @@ public class WorkspaceSettingsControllerTests extends ControllerTestsBase {
     void showAuthenticatedWorkspaceSettings_ReturnsTheWorkspaceSettingsPage_WhenAuthenticationIsDisabled()  {
         disableAuthentication();
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 

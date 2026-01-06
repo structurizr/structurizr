@@ -1,6 +1,6 @@
 package com.structurizr.server.web.workspace.authenticated;
 
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +17,8 @@ public class JsonController extends AbstractWorkspaceController {
             HttpServletResponse response
     ) {
 
-        WorkspaceMetaData workspaceMetaData = workspaceComponent.getWorkspaceMetaData(workspaceId);
-        if (workspaceMetaData != null && workspaceMetaData.hasAccess(getUser())) {
+        WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
+        if (workspaceMetadata != null && workspaceMetadata.hasAccess(getUser())) {
             return workspaceComponent.getWorkspace(workspaceId, branch, version);
         } else {
             response.setStatus(404);

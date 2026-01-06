@@ -13,7 +13,7 @@ import com.structurizr.server.component.search.SearchComponent;
 import com.structurizr.server.component.workspace.WorkspaceBranch;
 import com.structurizr.server.component.workspace.WorkspaceComponent;
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.AbstractController;
 import com.structurizr.util.Md5Digest;
 import com.structurizr.util.StringUtils;
@@ -169,8 +169,8 @@ public class AbstractWorkspaceApiController extends AbstractController {
                 throw new HttpUnauthorizedException("Authorization header must be provided");
             }
 
-            WorkspaceMetaData workspaceMetaData = workspaceComponent.getWorkspaceMetaData(workspaceId);
-            String apiKey = workspaceMetaData.getApiKey();
+            WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
+            String apiKey = workspaceMetadata.getApiKey();
 
             HmacAuthorizationHeader hmacAuthorizationHeader = HmacAuthorizationHeader.parse(authorizationHeaderAsString);
             String apiKeyFromAuthorizationHeader = hmacAuthorizationHeader.getApiKey();
@@ -211,7 +211,7 @@ public class AbstractWorkspaceApiController extends AbstractController {
                 contentMd5InRequest = "d41d8cd98f00b204e9800998ecf8427e"; // this is the MD5 hash of an empty string
             }
 
-            String apiSecret = workspaceMetaData.getApiSecret();
+            String apiSecret = workspaceMetadata.getApiSecret();
             HashBasedMessageAuthenticationCode code = new HashBasedMessageAuthenticationCode(apiSecret);
             String hmacInRequest = hmacAuthorizationHeader.getHmac();
             HmacContent hmacContent = new HmacContent(httpMethod, path, contentMd5InRequest, contentType, nonce);

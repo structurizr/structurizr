@@ -3,7 +3,7 @@ package com.structurizr.server.web.workspace.authenticated;
 import com.structurizr.Workspace;
 import com.structurizr.dsl.DslUtils;
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.ControllerTestsBase;
 import com.structurizr.server.web.MockHttpServletResponse;
 import com.structurizr.server.web.MockWorkspaceComponent;
@@ -31,7 +31,7 @@ public class DslControllerTests extends ControllerTestsBase {
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return null;
             }
         });
@@ -45,11 +45,11 @@ public class DslControllerTests extends ControllerTestsBase {
     void showAuthenticatedDsl_ReturnsTheDsl_WhenAuthenticationIsDisabled() throws Exception {
         disableAuthentication();
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -75,12 +75,12 @@ public class DslControllerTests extends ControllerTestsBase {
         enableAuthentication();
         setUser("user1@example.com");
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addReadUser("user1@example.com");
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -106,12 +106,12 @@ public class DslControllerTests extends ControllerTestsBase {
         enableAuthentication();
         setUser("user2@example.com");
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addReadUser("user1@example.com");
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
         });

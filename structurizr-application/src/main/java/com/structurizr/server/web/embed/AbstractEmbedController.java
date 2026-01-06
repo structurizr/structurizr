@@ -1,6 +1,6 @@
 package com.structurizr.server.web.embed;
 
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.Views;
 import com.structurizr.server.web.workspace.AbstractWorkspaceController;
 import com.structurizr.util.HtmlUtils;
@@ -17,7 +17,7 @@ abstract class AbstractEmbedController extends AbstractWorkspaceController {
     }
 
     protected final String showEmbed(
-            WorkspaceMetaData workspaceMetaData,
+            WorkspaceMetadata workspaceMetadata,
             String diagramIdentifier,
             boolean diagramSelector,
             String iframe,
@@ -36,10 +36,10 @@ abstract class AbstractEmbedController extends AbstractWorkspaceController {
 
         addCommonAttributes(model, "", false);
 
-        workspaceMetaData.setEditable(false);
-        model.addAttribute("workspace", workspaceMetaData);
+        workspaceMetadata.setEditable(false);
+        model.addAttribute("workspace", workspaceMetadata);
 
-        String json = workspaceComponent.getWorkspace(workspaceMetaData.getId(), null, null);
+        String json = workspaceComponent.getWorkspace(workspaceMetadata.getId(), null, null);
         model.addAttribute("workspaceAsJson", JsonUtils.base64(json));
         model.addAttribute("showToolbar", diagramSelector);
         model.addAttribute("showDiagramSelector", diagramSelector);

@@ -3,7 +3,7 @@ package com.structurizr.server.web.workspace.authenticated;
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Features;
 import com.structurizr.server.component.workspace.WorkspaceBranch;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.api.ApiException;
 import com.structurizr.server.web.api.ApiResponse;
 import com.structurizr.server.web.workspace.AbstractImageController;
@@ -28,14 +28,14 @@ class ImageController extends AbstractImageController {
     public Resource getAuthenticatedImage(@PathVariable("workspaceId") long workspaceId,
                                           @PathVariable("diagramKey") String diagramKey,
                                           HttpServletResponse response) {
-        WorkspaceMetaData workspaceMetaData = workspaceComponent.getWorkspaceMetaData(workspaceId);
-        if (workspaceMetaData == null) {
+        WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
+        if (workspaceMetadata == null) {
             response.setStatus(404);
             return null;
         }
 
-        if (workspaceMetaData.hasAccess(getUser())) {
-            return getImage(workspaceMetaData, WorkspaceBranch.NO_BRANCH, diagramKey, response);
+        if (workspaceMetadata.hasAccess(getUser())) {
+            return getImage(workspaceMetadata, WorkspaceBranch.NO_BRANCH, diagramKey, response);
         } else {
             response.setStatus(404);
             return null;
@@ -48,14 +48,14 @@ class ImageController extends AbstractImageController {
                                           @PathVariable("branch") String branch,
                                           @PathVariable("diagramKey") String diagramKey,
                                           HttpServletResponse response) {
-        WorkspaceMetaData workspaceMetaData = workspaceComponent.getWorkspaceMetaData(workspaceId);
-        if (workspaceMetaData == null) {
+        WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
+        if (workspaceMetadata == null) {
             response.setStatus(404);
             return null;
         }
 
-        if (workspaceMetaData.hasAccess(getUser())) {
-            return getImage(workspaceMetaData, branch, diagramKey, response);
+        if (workspaceMetadata.hasAccess(getUser())) {
+            return getImage(workspaceMetadata, branch, diagramKey, response);
         }
 
         response.setStatus(404);
@@ -108,12 +108,12 @@ class ImageController extends AbstractImageController {
     private ApiResponse storeImage(long workspaceId, String branch, String filename, String imageAsBase64EncodedDataUri, String ipAddress) {
         WorkspaceBranch.validateBranchName(branch);
 
-        WorkspaceMetaData workspaceMetaData = workspaceComponent.getWorkspaceMetaData(workspaceId);
-        if (workspaceMetaData == null) {
+        WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
+        if (workspaceMetadata == null) {
             throw new ApiException("404");
         }
 
-        if (workspaceMetaData.hasAccess(getUser())) {
+        if (workspaceMetadata.hasAccess(getUser())) {
             try {
                 String base64Image = imageAsBase64EncodedDataUri.split(",")[1];
                 byte[] decodedImage = Base64.getDecoder().decode(base64Image.getBytes(StandardCharsets.UTF_8));

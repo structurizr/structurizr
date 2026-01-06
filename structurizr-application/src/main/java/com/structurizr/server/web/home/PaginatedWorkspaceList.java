@@ -1,6 +1,6 @@
 package com.structurizr.server.web.home;
 
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 
 import java.util.List;
 final
@@ -8,13 +8,13 @@ class PaginatedWorkspaceList {
 
     static final int DEFAULT_PAGE_SIZE = 10;
 
-    private final List<WorkspaceMetaData> workspaces;
+    private final List<WorkspaceMetadata> workspaces;
     private final int pageNumber;
     private final int pageSize;
     private int start;
     private int end;
 
-    PaginatedWorkspaceList(List<WorkspaceMetaData> workspaces, int pageNumber, int pageSize) {
+    PaginatedWorkspaceList(List<WorkspaceMetadata> workspaces, int pageNumber, int pageSize) {
         this.workspaces = workspaces;
 
         if (pageSize < 1) {
@@ -48,7 +48,7 @@ class PaginatedWorkspaceList {
         return end < workspaces.size();
     }
 
-    List<WorkspaceMetaData> getWorkspaces() {
+    List<WorkspaceMetadata> getWorkspaces() {
         return workspaces.subList(start, end);
     }
 

@@ -1,7 +1,7 @@
 package com.structurizr.server.web.embed;
 
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.ControllerTestsBase;
 import com.structurizr.server.web.MockWorkspaceComponent;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +27,7 @@ public class EmbedControllerTests extends ControllerTestsBase {
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return null;
             }
         });
@@ -42,8 +42,8 @@ public class EmbedControllerTests extends ControllerTestsBase {
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
-                WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
                 workspaceMetaData.setPublicWorkspace(false);
 
                 return workspaceMetaData;
@@ -60,8 +60,8 @@ public class EmbedControllerTests extends ControllerTestsBase {
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
-                WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
                 workspaceMetaData.setPublicWorkspace(true);
 
                 return workspaceMetaData;
@@ -85,8 +85,8 @@ public class EmbedControllerTests extends ControllerTestsBase {
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
-                return new WorkspaceMetaData(1);
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                return new WorkspaceMetadata(1);
             }
 
             @Override

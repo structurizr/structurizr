@@ -7,7 +7,7 @@ import com.structurizr.dsl.DslUtils;
 import com.structurizr.dsl.StructurizrDslParser;
 import com.structurizr.dsl.StructurizrDslParserException;
 import com.structurizr.inspection.DefaultInspector;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.util.*;
 import com.structurizr.validation.WorkspaceScopeValidationException;
 import com.structurizr.validation.WorkspaceScopeValidatorFactory;
@@ -140,7 +140,7 @@ abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspa
         workspace.setLastModifiedDate(DateUtils.removeMilliseconds(DateUtils.getNow()));
 
         try {
-            putWorkspace(new WorkspaceMetaData(workspaceId), WorkspaceUtils.toJson(workspace, false), null);
+            putWorkspace(new WorkspaceMetadata(workspaceId), WorkspaceUtils.toJson(workspace, false), null);
         } catch (Exception e) {
             log.warn(e);
         }
@@ -163,9 +163,9 @@ abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspa
     }
 
     @Override
-    public void putWorkspace(WorkspaceMetaData workspaceMetaData, String json, String branch) {
+    public void putWorkspace(WorkspaceMetadata workspaceMetadata, String json, String branch) {
         try {
-            File jsonFile = new File(getDataDirectory(workspaceMetaData.getId()), filename + JSON_FILE_EXTENSION);
+            File jsonFile = new File(getDataDirectory(workspaceMetadata.getId()), filename + JSON_FILE_EXTENSION);
 
             Workspace workspace = WorkspaceUtils.fromJson(json);
             workspace.setLastModifiedDate(DateUtils.removeMilliseconds(DateUtils.getNow()));
@@ -182,8 +182,8 @@ abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspa
     }
 
     @Override
-    public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
-        WorkspaceMetaData wmd = new WorkspaceMetaData(workspaceId);
+    public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+        WorkspaceMetadata wmd = new WorkspaceMetadata(workspaceId);
         wmd.setApiKey(API_KEY);
         wmd.setApiSecret(API_SECRET);
 
@@ -197,7 +197,7 @@ abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspa
     }
 
     @Override
-    public void putWorkspaceMetaData(WorkspaceMetaData workspaceMetaData) {
+    public void putWorkspaceMetadata(WorkspaceMetadata workspaceMetadata) {
         // no-op
     }
 

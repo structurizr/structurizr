@@ -2,7 +2,7 @@ package com.structurizr.server.component.workspace;
 
 import com.structurizr.server.domain.Image;
 import com.structurizr.server.domain.InputStreamAndContentLength;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 
 import java.io.File;
 import java.util.List;
@@ -15,12 +15,12 @@ class MockWorkspaceAdapter implements WorkspaceAdapter {
     }
 
     @Override
-    public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+    public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
         return null;
     }
 
     @Override
-    public void putWorkspaceMetaData(WorkspaceMetaData workspaceMetaData) {
+    public void putWorkspaceMetadata(WorkspaceMetadata workspaceMetaData) {
 
     }
 
@@ -35,7 +35,7 @@ class MockWorkspaceAdapter implements WorkspaceAdapter {
     }
 
     @Override
-    public void putWorkspace(WorkspaceMetaData workspaceMetaData, String json, String branch) {
+    public void putWorkspace(WorkspaceMetadata workspaceMetaData, String json, String branch) {
 
     }
 

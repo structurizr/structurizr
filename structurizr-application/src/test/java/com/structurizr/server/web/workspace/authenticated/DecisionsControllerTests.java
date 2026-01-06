@@ -1,7 +1,7 @@
 package com.structurizr.server.web.workspace.authenticated;
 
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.ControllerTestsBase;
 import com.structurizr.server.web.MockWorkspaceComponent;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,11 +28,11 @@ public class DecisionsControllerTests extends ControllerTestsBase {
     void showAuthenticatedDecisions_ReturnsTheDecisionsPageForSoftwareSystem()  {
         disableAuthentication();
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -55,11 +55,11 @@ public class DecisionsControllerTests extends ControllerTestsBase {
     void showAuthenticatedDecisions_ReturnsTheDecisionsPageForContainer()  {
         disableAuthentication();
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -82,11 +82,11 @@ public class DecisionsControllerTests extends ControllerTestsBase {
     void showAuthenticatedDecisions_ReturnsTheDecisionsPageForComponent()  {
         disableAuthentication();
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -109,11 +109,11 @@ public class DecisionsControllerTests extends ControllerTestsBase {
     void showAuthenticatedDecisions_ReturnsTheDecisionsPageForComponent_WhenRunningInLocalMode() throws Exception  {
         configureAsLocal();
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 

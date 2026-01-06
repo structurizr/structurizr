@@ -27,7 +27,7 @@ class WorkspaceSummaryController extends AbstractWorkspaceController {
 
         return showAuthenticatedView(
                 Views.WORKSPACE_SUMMARY, workspaceId,
-                workspaceMetaData -> {
+                workspaceMetadata -> {
                     if (Configuration.getInstance().getProfile() == Profile.Server) {
                         if (Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_BRANCHES)) {
                             model.addAttribute("branchesEnabled", true);
@@ -35,7 +35,7 @@ class WorkspaceSummaryController extends AbstractWorkspaceController {
                             model.addAttribute("branches", workspaceComponent.getWorkspaceBranches(workspaceId));
                         }
 
-                        model.addAttribute("versions", workspaceComponent.getWorkspaceVersions(workspaceId, workspaceMetaData.getBranch()));
+                        model.addAttribute("versions", workspaceComponent.getWorkspaceVersions(workspaceId, workspaceMetadata.getBranch()));
                     }
                 },
                 branch, version, model, true, true

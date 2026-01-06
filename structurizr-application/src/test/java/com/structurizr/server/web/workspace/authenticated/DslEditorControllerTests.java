@@ -3,7 +3,7 @@ package com.structurizr.server.web.workspace.authenticated;
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Features;
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.ControllerTestsBase;
 import com.structurizr.server.web.MockWorkspaceComponent;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,7 +42,7 @@ public class DslEditorControllerTests extends ControllerTestsBase {
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return null;
             }
         });
@@ -57,11 +57,11 @@ public class DslEditorControllerTests extends ControllerTestsBase {
         Configuration.getInstance().setFeatureEnabled(Features.UI_DSL_EDITOR);
         setUser("user@example.com");
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.setClientSideEncrypted(true);
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
         });
@@ -76,11 +76,11 @@ public class DslEditorControllerTests extends ControllerTestsBase {
         Configuration.getInstance().setFeatureEnabled(Features.UI_DSL_EDITOR);
         setUser("user@example.com");
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addWriteUser("user2@example.com");
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
         });
@@ -95,10 +95,10 @@ public class DslEditorControllerTests extends ControllerTestsBase {
         disableAuthentication();
         Configuration.getInstance().setFeatureEnabled(Features.UI_DSL_EDITOR);
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -132,10 +132,10 @@ public class DslEditorControllerTests extends ControllerTestsBase {
         Configuration.getInstance().setFeatureEnabled(Features.UI_DSL_EDITOR);
         setUser("user@example.com");
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -169,11 +169,11 @@ public class DslEditorControllerTests extends ControllerTestsBase {
         Configuration.getInstance().setFeatureEnabled(Features.UI_DSL_EDITOR);
         setUser("user@example.com");
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addWriteUser("user1@example.com");
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -208,11 +208,11 @@ public class DslEditorControllerTests extends ControllerTestsBase {
         Configuration.getInstance().setFeatureEnabled(Features.UI_DSL_EDITOR);
         setUser("user@example.com");
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addReadUser("user1@example.com");
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 

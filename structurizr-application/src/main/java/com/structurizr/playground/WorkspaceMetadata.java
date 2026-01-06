@@ -2,7 +2,7 @@ package com.structurizr.playground;
 
 import java.util.Date;
 
-public class WorkspaceMetaData {
+public class WorkspaceMetadata {
 
     private final Date lastModifiedDate = new Date();
 

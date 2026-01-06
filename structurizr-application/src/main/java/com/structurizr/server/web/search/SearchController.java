@@ -5,7 +5,7 @@ import com.structurizr.server.component.search.SearchComponent;
 import com.structurizr.server.component.search.SearchComponentException;
 import com.structurizr.server.component.search.SearchResult;
 import com.structurizr.configuration.Configuration;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.workspace.AbstractWorkspaceController;
 import com.structurizr.util.HtmlUtils;
 import com.structurizr.util.StringUtils;
@@ -51,7 +51,7 @@ final class SearchController extends AbstractWorkspaceController {
             category = category.toLowerCase();
         }
 
-        List<WorkspaceMetaData> workspaces;
+        List<WorkspaceMetadata> workspaces;
 
         if (Configuration.getInstance().getProfile() == Profile.Local) {
             workspaces = workspaceComponent.getWorkspaces();
@@ -60,10 +60,10 @@ final class SearchController extends AbstractWorkspaceController {
         }
 
         if (!workspaces.isEmpty()) {
-            Map<Long, WorkspaceMetaData> workspacesById = new HashMap<>();
+            Map<Long, WorkspaceMetadata> workspacesById = new HashMap<>();
 
             if (workspaceId == null) {
-                for (WorkspaceMetaData workspace : workspaces) {
+                for (WorkspaceMetadata workspace : workspaces) {
                     workspacesById.put(workspace.getId(), workspace);
                 }
             } else {

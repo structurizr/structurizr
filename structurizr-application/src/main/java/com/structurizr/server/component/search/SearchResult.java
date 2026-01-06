@@ -1,11 +1,11 @@
 package com.structurizr.server.component.search;
 
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 
 public final class SearchResult {
 
     private final long workspaceId;
-    private WorkspaceMetaData workspace;
+    private WorkspaceMetadata workspace;
     private final String url;
     private final String name;
     private final String description;
@@ -27,11 +27,11 @@ public final class SearchResult {
         return workspaceId;
     }
 
-    public WorkspaceMetaData getWorkspace() {
+    public WorkspaceMetadata getWorkspace() {
         return workspace;
     }
 
-    public void setWorkspace(WorkspaceMetaData workspace) {
+    public void setWorkspace(WorkspaceMetadata workspace) {
         this.workspace = workspace;
     }
 

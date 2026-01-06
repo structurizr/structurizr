@@ -2,7 +2,7 @@ package com.structurizr.server.web.workspace.authenticated;
 
 import com.structurizr.Workspace;
 import com.structurizr.dsl.DslUtils;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.util.WorkspaceUtils;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Profile;
@@ -22,8 +22,8 @@ public class DslController extends AbstractWorkspaceController {
             HttpServletResponse response
     ) throws Exception {
 
-        WorkspaceMetaData workspaceMetaData = workspaceComponent.getWorkspaceMetaData(workspaceId);
-        if (workspaceMetaData != null && workspaceMetaData.hasAccess(getUser())) {
+        WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
+        if (workspaceMetadata != null && workspaceMetadata.hasAccess(getUser())) {
             String workspaceAsJson = workspaceComponent.getWorkspace(workspaceId, branch, version);
             Workspace workspace = WorkspaceUtils.fromJson(workspaceAsJson);
             return DslUtils.getDsl(workspace);

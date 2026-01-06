@@ -4,7 +4,7 @@ import com.structurizr.configuration.Profile;
 import com.structurizr.configuration.Configuration;
 import com.structurizr.dsl.StructurizrDslParserException;
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.Views;
 import com.structurizr.util.StringUtils;
 import com.structurizr.view.PaperSize;
@@ -37,17 +37,17 @@ public class DiagramEditorController extends AbstractWorkspaceController {
             enableLocalRefresh(model);
         }
 
-        WorkspaceMetaData workspaceMetaData = null;
+        WorkspaceMetadata workspaceMetadata = null;
 
         try {
-            workspaceMetaData = workspaceComponent.getWorkspaceMetaData(workspaceId);
+            workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
         } catch (WorkspaceComponentException e) {
             if (Configuration.getInstance().getProfile() == Profile.Local && e.getCause() instanceof StructurizrDslParserException) {
                 return showError((StructurizrDslParserException)e.getCause(), model);
             }
         }
 
-        if (workspaceMetaData == null) {
+        if (workspaceMetadata == null) {
             return show404Page(model);
         }
 
@@ -56,15 +56,15 @@ public class DiagramEditorController extends AbstractWorkspaceController {
         model.addAttribute("quickNavigationPath", "diagram-editor");
         model.addAttribute("paperSizes", PaperSize.getOrderedPaperSizes());
 
-        if (!workspaceMetaData.hasNoUsersConfigured() && !workspaceMetaData.isWriteUser(getUser())) {
-            if (workspaceMetaData.isReadUser(getUser())) {
+        if (!workspaceMetadata.hasNoUsersConfigured() && !workspaceMetadata.isWriteUser(getUser())) {
+            if (workspaceMetadata.isReadUser(getUser())) {
                 return showError("workspace-is-readonly", model);
             } else {
                 return show404Page(model);
             }
         }
 
-        return lockWorkspaceAndShowAuthenticatedView(Views.DIAGRAMS, workspaceMetaData, branch, version, model, false);
+        return lockWorkspaceAndShowAuthenticatedView(Views.DIAGRAMS, workspaceMetadata, branch, version, model, false);
     }
 
 }

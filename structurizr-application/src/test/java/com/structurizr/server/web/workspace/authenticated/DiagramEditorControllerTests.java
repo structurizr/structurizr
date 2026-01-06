@@ -2,7 +2,7 @@ package com.structurizr.server.web.workspace.authenticated;
 
 import com.structurizr.configuration.StructurizrProperties;
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.ControllerTestsBase;
 import com.structurizr.server.web.MockWorkspaceComponent;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +30,7 @@ public class DiagramEditorControllerTests extends ControllerTestsBase {
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return null;
             }
         });
@@ -44,11 +44,11 @@ public class DiagramEditorControllerTests extends ControllerTestsBase {
     void showAuthenticatedDiagramEditor_ReturnsThe404Page_WhenTheUserDoesNotHaveAccess() {
         enableAuthentication();
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addWriteUser("user2@example.com");
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
         });
@@ -64,11 +64,11 @@ public class DiagramEditorControllerTests extends ControllerTestsBase {
         properties.setProperty(StructurizrProperties.EDITABLE_PROPERTY, "false");
         configureAsLocal(properties);
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
         });
@@ -81,10 +81,10 @@ public class DiagramEditorControllerTests extends ControllerTestsBase {
     void showAuthenticatedDiagramEditor_ReturnsTheDiagramEditorPage_WhenAuthenticationIsDisabled()  {
         disableAuthentication();
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -117,10 +117,10 @@ public class DiagramEditorControllerTests extends ControllerTestsBase {
     void showAuthenticatedDiagramEditor_ReturnsTheDiagramEditorPage_WhenTheWorkspaceHasNoUsersConfigured()  {
         enableAuthentication();
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -153,12 +153,12 @@ public class DiagramEditorControllerTests extends ControllerTestsBase {
     void showAuthenticatedDiagramEditor_ReturnsTheDiagramEditorPage_WhenTheUserHasWriteAccess()  {
         enableAuthentication();
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addWriteUser("user1@example.com");
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -191,11 +191,11 @@ public class DiagramEditorControllerTests extends ControllerTestsBase {
     void showAuthenticatedDiagramEditor_ReturnsAnErrorPage_WhenTheUserHasReadAccess()  {
         enableAuthentication();
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addReadUser("user1@example.com");
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 

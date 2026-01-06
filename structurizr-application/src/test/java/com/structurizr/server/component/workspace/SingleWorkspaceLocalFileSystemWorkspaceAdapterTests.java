@@ -3,7 +3,7 @@ package com.structurizr.server.component.workspace;
 import com.structurizr.Workspace;
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Profile;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.AbstractTestsBase;
 import com.structurizr.util.FileUtils;
 import com.structurizr.util.StringUtils;
@@ -64,13 +64,13 @@ public class SingleWorkspaceLocalFileSystemWorkspaceAdapterTests extends Abstrac
     }
 
     @Test
-    void getWorkspaceMetaData_WhenJsonFileExists() throws Exception{
+    void getWorkspaceMetadata_WhenJsonFileExists() throws Exception{
         Workspace workspace = new Workspace("JSON", "Description");
         WorkspaceUtils.saveWorkspaceToJson(workspace, new File(dataDirectory, "workspace.json"));
 
         adapter = new SingleWorkspaceLocalFileSystemWorkspaceAdapter(dataDirectory);
 
-        WorkspaceMetaData wmd = adapter.getWorkspaceMetaData(1);
+        WorkspaceMetadata wmd = adapter.getWorkspaceMetadata(1);
         assertEquals("JSON", wmd.getName());
         assertEquals("Description", wmd.getDescription());
         assertFalse(StringUtils.isNullOrEmpty(wmd.getApiKey()));
@@ -78,7 +78,7 @@ public class SingleWorkspaceLocalFileSystemWorkspaceAdapterTests extends Abstrac
     }
 
     @Test
-    void getWorkspaceMetaData_WhenDslFileExists() {
+    void getWorkspaceMetadata_WhenDslFileExists() {
         String dsl = """
                 workspace "DSL" "Description" {
                 }""";
@@ -86,7 +86,7 @@ public class SingleWorkspaceLocalFileSystemWorkspaceAdapterTests extends Abstrac
 
         adapter = new SingleWorkspaceLocalFileSystemWorkspaceAdapter(dataDirectory);
 
-        WorkspaceMetaData wmd = adapter.getWorkspaceMetaData(1);
+        WorkspaceMetadata wmd = adapter.getWorkspaceMetadata(1);
         assertEquals("DSL", wmd.getName());
         assertEquals("Description", wmd.getDescription());
         assertFalse(StringUtils.isNullOrEmpty(wmd.getApiKey()));

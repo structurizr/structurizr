@@ -2,7 +2,7 @@ package com.structurizr.server.web.api;
 
 import com.structurizr.server.component.workspace.WorkspaceBranch;
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
@@ -71,8 +71,8 @@ public class ServerWorkspaceApiController extends AbstractWorkspaceApiController
                 if (workspaceComponent.lockWorkspace(workspaceId, user, agent)) {
                     return new ApiResponse("OK");
                 } else {
-                    WorkspaceMetaData workspaceMetaData = workspaceComponent.getWorkspaceMetaData(workspaceId);
-                    return new ApiResponse(false, "The workspace is already locked by " + workspaceMetaData.getLockedUser() + " using " + workspaceMetaData.getLockedAgent() + ".");
+                    WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
+                    return new ApiResponse(false, "The workspace is already locked by " + workspaceMetadata.getLockedUser() + " using " + workspaceMetadata.getLockedAgent() + ".");
                 }
             } else {
                 throw new ApiException("Workspace ID must be greater than 1");

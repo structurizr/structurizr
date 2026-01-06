@@ -3,7 +3,7 @@ package com.structurizr.server.web.workspace.authenticated;
 import com.structurizr.configuration.Configuration;
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
 import com.structurizr.server.domain.User;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.workspace.AbstractWorkspaceController;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -37,7 +37,7 @@ public class WorkspaceVisibilityController extends AbstractWorkspaceController {
         }
 
         try {
-            WorkspaceMetaData workspace = workspaceComponent.getWorkspaceMetaData(workspaceId);
+            WorkspaceMetadata workspace = workspaceComponent.getWorkspaceMetadata(workspaceId);
             if (workspace != null) {
                 User user = getUser();
                 if ((Configuration.getInstance().getAdminUsersAndRoles().isEmpty() && workspace.isWriteUser(user)) || user.isAdmin()) {

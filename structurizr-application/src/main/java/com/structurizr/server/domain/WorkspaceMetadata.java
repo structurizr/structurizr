@@ -10,7 +10,7 @@ import java.util.LinkedHashSet;
 import java.util.Properties;
 import java.util.Set;
 
-public class WorkspaceMetaData {
+public class WorkspaceMetadata {
 
     public static final int LOCK_TIMEOUT_IN_MINUTES = 2;
 
@@ -64,7 +64,7 @@ public class WorkspaceMetaData {
     private final Set<String> readUsers = new LinkedHashSet<>();
     private final Set<String> writeUsers = new LinkedHashSet<>();
 
-    public WorkspaceMetaData(long id) {
+    public WorkspaceMetadata(long id) {
         this.id = id;
     }
 
@@ -351,8 +351,8 @@ public class WorkspaceMetaData {
         this.lockedDate = null;
     }
 
-    public static WorkspaceMetaData fromProperties(long workspaceId, Properties properties) {
-        WorkspaceMetaData workspace = new WorkspaceMetaData(workspaceId);
+    public static WorkspaceMetadata fromProperties(long workspaceId, Properties properties) {
+        WorkspaceMetadata workspace = new WorkspaceMetadata(workspaceId);
         workspace.setName(properties.getProperty(NAME_PROPERTY));
         workspace.setDescription(properties.getProperty(DESCRIPTION_PROPERTY));
         workspace.setVersion(properties.getProperty(VERSION_PROPERTY));

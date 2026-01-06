@@ -2,7 +2,7 @@ package com.structurizr.server.web.workspace.authenticated;
 
 import com.structurizr.Workspace;
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.ControllerTestsBase;
 import com.structurizr.server.web.MockWorkspaceComponent;
 import com.structurizr.util.WorkspaceUtils;
@@ -28,14 +28,14 @@ public class InspectionsControllerTests extends ControllerTestsBase {
     void showAuthenticatedInspections() throws Exception {
         disableAuthentication();
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         Workspace workspace = new Workspace("Name", "Description");
         workspace.getModel().addSoftwareSystem("Software System");
         String json = WorkspaceUtils.toJson(workspace, false);
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -63,14 +63,14 @@ public class InspectionsControllerTests extends ControllerTestsBase {
     void showAuthenticatedInspections_WhenRunningInLocalMode() throws Exception {
         configureAsLocal();
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         Workspace workspace = new Workspace("Name", "Description");
         workspace.getModel().addSoftwareSystem("Software System");
         String json = WorkspaceUtils.toJson(workspace, false);
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 

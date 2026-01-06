@@ -1,6 +1,5 @@
 package com.structurizr.server.web.workspace.authenticated;
 
-import com.structurizr.server.domain.WorkspaceMetaData;
 import com.structurizr.server.web.Views;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

@@ -5,7 +5,7 @@ import com.structurizr.api.HashBasedMessageAuthenticationCode;
 import com.structurizr.api.HmacContent;
 import com.structurizr.api.HttpHeaders;
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.MockHttpServletRequest;
 import com.structurizr.server.web.MockHttpServletResponse;
 import com.structurizr.server.web.MockWorkspaceComponent;
@@ -59,8 +59,8 @@ public class ServerWorkspaceApiControllerTests {
 
             controller.setWorkspaceComponent(new MockWorkspaceComponent() {
                 @Override
-                public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
-                    WorkspaceMetaData wmd = new WorkspaceMetaData(1);
+                public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                    WorkspaceMetadata wmd = new WorkspaceMetadata(1);
                     wmd.setApiKey("key");
                     wmd.setApiSecret("secret");
 
@@ -84,8 +84,8 @@ public class ServerWorkspaceApiControllerTests {
 
             controller.setWorkspaceComponent(new MockWorkspaceComponent() {
                 @Override
-                public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
-                    WorkspaceMetaData wmd = new WorkspaceMetaData(1);
+                public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                    WorkspaceMetadata wmd = new WorkspaceMetadata(1);
                     wmd.setApiKey("key");
                     wmd.setApiSecret("secret");
 
@@ -108,8 +108,8 @@ public class ServerWorkspaceApiControllerTests {
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
-                WorkspaceMetaData wmd = new WorkspaceMetaData(1);
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                WorkspaceMetadata wmd = new WorkspaceMetadata(1);
                 wmd.setApiKey("key");
                 wmd.setApiSecret("secret");
 
@@ -140,8 +140,8 @@ public class ServerWorkspaceApiControllerTests {
     void putWorkspace_ReturnsAnApiError_WhenNoNonceHeaderIsSpecified() {
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
-                WorkspaceMetaData wmd = new WorkspaceMetaData(1);
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                WorkspaceMetadata wmd = new WorkspaceMetadata(1);
                 wmd.setApiKey("key");
                 wmd.setApiSecret("secret");
 
@@ -163,8 +163,8 @@ public class ServerWorkspaceApiControllerTests {
     void putWorkspace_ReturnsAnApiError_WhenNoContentMd5HeaderIsSpecified() {
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
-                WorkspaceMetaData wmd = new WorkspaceMetaData(1);
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                WorkspaceMetadata wmd = new WorkspaceMetadata(1);
                 wmd.setApiKey("key");
                 wmd.setApiSecret("secret");
 
@@ -186,8 +186,8 @@ public class ServerWorkspaceApiControllerTests {
     void putWorkspace_ReturnsAnApiError_WhenTheContentMd5HeaderDoesNotMatchTheHashOfTheContent() {
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
-                WorkspaceMetaData wmd = new WorkspaceMetaData(1);
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                WorkspaceMetadata wmd = new WorkspaceMetadata(1);
                 wmd.setApiKey("key");
                 wmd.setApiSecret("secret");
 
@@ -210,8 +210,8 @@ public class ServerWorkspaceApiControllerTests {
     void putWorkspace_PutsTheWorkspace_WhenTheAuthorizationHeaderIsCorrectlySpecified() throws Exception {
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
-                WorkspaceMetaData wmd = new WorkspaceMetaData(1);
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                WorkspaceMetadata wmd = new WorkspaceMetadata(1);
                 wmd.setApiKey("key");
                 wmd.setApiSecret("secret");
 
@@ -231,13 +231,13 @@ public class ServerWorkspaceApiControllerTests {
 
     @Test
     void lockWorkspace_LocksTheWorkspace_WhenTheWorkspaceIsUnlocked() throws Exception {
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.setApiKey("key");
         workspaceMetaData.setApiSecret("secret");
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -268,7 +268,7 @@ public class ServerWorkspaceApiControllerTests {
 
     @Test
     void lockWorkspace_DoesNotLockTheWorkspace_WhenTheWorkspaceIsLocked() throws Exception {
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.setApiKey("key");
         workspaceMetaData.setApiSecret("secret");
         workspaceMetaData.setLockedUser("user1@example.com");
@@ -276,7 +276,7 @@ public class ServerWorkspaceApiControllerTests {
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -300,7 +300,7 @@ public class ServerWorkspaceApiControllerTests {
 
     @Test
     void unlockWorkspace_UnlocksTheWorkspace_WhenTheWorkspaceIsLocked() throws Exception {
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.setApiKey("key");
         workspaceMetaData.setApiSecret("secret");
         workspaceMetaData.setLockedUser("user1@example.com");
@@ -308,7 +308,7 @@ public class ServerWorkspaceApiControllerTests {
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 

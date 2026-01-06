@@ -92,17 +92,17 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
     }
 
     @Override
-    public List<WorkspaceMetaData> getWorkspaces() {
-        List<WorkspaceMetaData> workspaces = new ArrayList<>();
+    public List<WorkspaceMetadata> getWorkspaces() {
+        List<WorkspaceMetadata> workspaces = new ArrayList<>();
         Collection<Long> workspaceIds = workspaceAdapter.getWorkspaceIds();
 
-        List<Future<WorkspaceMetaData>> futures = workspaceIds.stream()
-                .map(workspaceId -> executorService.submit(() -> getWorkspaceMetaData(workspaceId)))
+        List<Future<WorkspaceMetadata>> futures = workspaceIds.stream()
+                .map(workspaceId -> executorService.submit(() -> getWorkspaceMetadata(workspaceId)))
                 .toList();
 
-        for (Future<WorkspaceMetaData> future : futures) {
+        for (Future<WorkspaceMetadata> future : futures) {
             try {
-                WorkspaceMetaData workspace = future.get();
+                WorkspaceMetadata workspace = future.get();
                 if (workspace != null) {
                     workspaces.add(workspace);
                 }
@@ -111,14 +111,14 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
             }
         }
 
-        workspaces.sort(Comparator.comparing(WorkspaceMetaData::getId));
+        workspaces.sort(Comparator.comparing(WorkspaceMetadata::getId));
 
         return workspaces;
     }
 
     @Override
-    public List<WorkspaceMetaData> getWorkspaces(User user) {
-        Collection<WorkspaceMetaData> workspaces = new ArrayList<>();
+    public List<WorkspaceMetadata> getWorkspaces(User user) {
+        Collection<WorkspaceMetadata> workspaces = new ArrayList<>();
 
         try {
             workspaces = getWorkspaces();
@@ -126,18 +126,18 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
             log.error(e);
         }
 
-        List<WorkspaceMetaData> filteredWorkspaces = new ArrayList<>();
+        List<WorkspaceMetadata> filteredWorkspaces = new ArrayList<>();
 
         if (!Configuration.getInstance().isAuthenticationEnabled()) {
             // authentication disabled - all workspaces
-            for (WorkspaceMetaData workspace : workspaces) {
+            for (WorkspaceMetadata workspace : workspaces) {
                 workspace.setUrlPrefix("/workspace");
                 filteredWorkspaces.add(workspace);
             }
         } else {
             if (user == null || user.getAuthenticationMethod() == AuthenticationMethod.NONE) {
                 // unauthenticated/anonymous request - public workspaces only
-                for (WorkspaceMetaData workspace : workspaces) {
+                for (WorkspaceMetadata workspace : workspaces) {
                     if (workspace.isPublicWorkspace()) {
                         workspace.setUrlPrefix("/share");
                         filteredWorkspaces.add(workspace);
@@ -145,7 +145,7 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
                 }
             } else {
                 // authenticated request
-                for (WorkspaceMetaData workspace : workspaces) {
+                for (WorkspaceMetadata workspace : workspaces) {
                     if (workspace.hasAccess(user)) {
                         // user is configured to see the workspace
                         workspace.setUrlPrefix("/workspace");
@@ -163,11 +163,11 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
     }
 
     @Override
-    public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) throws WorkspaceComponentException {
-        WorkspaceMetaData wmd = workspaceMetadataCache.get(workspaceId);
+    public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) throws WorkspaceComponentException {
+        WorkspaceMetadata wmd = workspaceMetadataCache.get(workspaceId);
 
         if (wmd == null) {
-            wmd = workspaceAdapter.getWorkspaceMetaData(workspaceId);
+            wmd = workspaceAdapter.getWorkspaceMetadata(workspaceId);
 
             if (wmd != null) {
                 workspaceMetadataCache.put(wmd);
@@ -182,13 +182,13 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
     }
 
     @Override
-    public void putWorkspaceMetaData(WorkspaceMetaData workspaceMetaData) {
-        if (workspaceMetaData == null) {
+    public void putWorkspaceMetadata(WorkspaceMetadata workspaceMetadata) {
+        if (workspaceMetadata == null) {
             throw new IllegalArgumentException("Workspace metadata cannot be null");
         }
 
-        workspaceAdapter.putWorkspaceMetaData(workspaceMetaData);
-        workspaceMetadataCache.put(workspaceMetaData);
+        workspaceAdapter.putWorkspaceMetadata(workspaceMetadata);
+        workspaceMetadataCache.put(workspaceMetadata);
     }
 
     @Override
@@ -254,14 +254,14 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
 
             try {
                 // create and write the workspace metadata
-                WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(workspaceId);
+                WorkspaceMetadata workspaceMetadata = new WorkspaceMetadata(workspaceId);
                 if (user != null) {
-                    workspaceMetaData.setOwner(user.getUsername());
+                    workspaceMetadata.setOwner(user.getUsername());
                 }
-                workspaceMetaData.setApiKey(UUID.randomUUID().toString());
-                workspaceMetaData.setApiSecret(UUID.randomUUID().toString());
+                workspaceMetadata.setApiKey(UUID.randomUUID().toString());
+                workspaceMetadata.setApiSecret(UUID.randomUUID().toString());
 
-                putWorkspaceMetaData(workspaceMetaData);
+                putWorkspaceMetadata(workspaceMetadata);
             } catch (Exception e) {
                 log.error(e);
             }
@@ -287,9 +287,9 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
     public boolean deleteWorkspace(long workspaceId) {
         if (Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_ARCHIVING)) {
             log.debug("Archiving workspace with ID " + workspaceId);
-            WorkspaceMetaData workspaceMetaData = getWorkspaceMetaData(workspaceId);
-            workspaceMetaData.setArchived(true);
-            putWorkspaceMetaData(workspaceMetaData);
+            WorkspaceMetadata workspaceMetadata = getWorkspaceMetadata(workspaceId);
+            workspaceMetadata.setArchived(true);
+            putWorkspaceMetadata(workspaceMetadata);
 
             return true;
         } else {
@@ -307,14 +307,14 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
             String jsonToBeStored;
             WorkspaceConfiguration configuration;
 
-            WorkspaceMetaData workspaceMetaData = getWorkspaceMetaData(workspaceId);
-            if (workspaceMetaData == null) {
-                workspaceMetaData = new WorkspaceMetaData(workspaceId);
+            WorkspaceMetadata workspaceMetadata = getWorkspaceMetadata(workspaceId);
+            if (workspaceMetadata == null) {
+                workspaceMetadata = new WorkspaceMetadata(workspaceId);
             }
 
             // todo: workspace event listener plugin
 //            if (Configuration.getInstance().getWorkspaceEventListener() != null) {
-//                WorkspaceEvent event = createWorkspaceEvent(workspaceMetaData, json);
+//                WorkspaceEvent event = createWorkspaceEvent(workspaceMetadata, json);
 //                Configuration.getInstance().getWorkspaceEventListener().beforeSave(event);
 //                json = event.getJson();
 //            }
@@ -333,16 +333,16 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
                 encryptedWorkspace.getConfiguration().setScope(configuration.getScope());
 
                 // copy the last modified details from the workspace
-                workspaceMetaData.setLastModifiedDate(encryptedWorkspace.getLastModifiedDate());
-                workspaceMetaData.setLastModifiedAgent(encryptedWorkspace.getLastModifiedAgent());
-                workspaceMetaData.setLastModifiedUser(encryptedWorkspace.getLastModifiedUser());
+                workspaceMetadata.setLastModifiedDate(encryptedWorkspace.getLastModifiedDate());
+                workspaceMetadata.setLastModifiedAgent(encryptedWorkspace.getLastModifiedAgent());
+                workspaceMetadata.setLastModifiedUser(encryptedWorkspace.getLastModifiedUser());
 
                 // write it back as an encrypted workspace JSON
                 EncryptedJsonWriter encryptedJsonWriter = new EncryptedJsonWriter(false);
                 StringWriter stringWriter = new StringWriter();
                 encryptedJsonWriter.write(encryptedWorkspace, stringWriter);
 
-                workspaceMetaData.setClientSideEncrypted(true);
+                workspaceMetadata.setClientSideEncrypted(true);
                 workspaceToBeStored = encryptedWorkspace;
                 jsonToBeStored = stringWriter.toString();
             } else {
@@ -359,11 +359,11 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
                 workspace.getConfiguration().setScope(configuration.getScope());
 
                 // copy the last modified details from the workspace
-                workspaceMetaData.setLastModifiedDate(workspace.getLastModifiedDate());
-                workspaceMetaData.setLastModifiedAgent(workspace.getLastModifiedAgent());
-                workspaceMetaData.setLastModifiedUser(workspace.getLastModifiedUser());
+                workspaceMetadata.setLastModifiedDate(workspace.getLastModifiedDate());
+                workspaceMetadata.setLastModifiedAgent(workspace.getLastModifiedAgent());
+                workspaceMetadata.setLastModifiedUser(workspace.getLastModifiedUser());
 
-                workspaceMetaData.setClientSideEncrypted(false);
+                workspaceMetadata.setClientSideEncrypted(false);
                 workspaceToBeStored = workspace;
 
                 if (!StringUtils.isNullOrEmpty(encryptionPassphrase)) {
@@ -382,43 +382,43 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
                 }
             }
 
-            workspaceMetaData.setSize(jsonToBeStored.length());
+            workspaceMetadata.setSize(jsonToBeStored.length());
 
             // check the workspace lock
-            if (workspaceMetaData.isLocked() && !workspaceMetaData.isLockedBy(workspaceToBeStored.getLastModifiedUser(), workspaceToBeStored.getLastModifiedAgent())) {
+            if (workspaceMetadata.isLocked() && !workspaceMetadata.isLockedBy(workspaceToBeStored.getLastModifiedUser(), workspaceToBeStored.getLastModifiedAgent())) {
                 SimpleDateFormat sdf = new SimpleDateFormat(DateUtils.USER_FRIENDLY_DATE_FORMAT);
-                throw new WorkspaceComponentException("The workspace could not be saved because the workspace was locked by " + workspaceMetaData.getLockedUser() + " at " + sdf.format(workspaceMetaData.getLockedDate()) + ".");
+                throw new WorkspaceComponentException("The workspace could not be saved because the workspace was locked by " + workspaceMetadata.getLockedUser() + " at " + sdf.format(workspaceMetadata.getLockedDate()) + ".");
             }
 
-            workspaceAdapter.putWorkspace(workspaceMetaData, jsonToBeStored, branch);
+            workspaceAdapter.putWorkspace(workspaceMetadata, jsonToBeStored, branch);
 
             if (StringUtils.isNullOrEmpty(branch)) {
                 // only store workspace metadata for the main branch
                 try {
-                    workspaceMetaData.setName(workspaceToBeStored.getName());
-                    workspaceMetaData.setDescription(workspaceToBeStored.getDescription());
+                    workspaceMetadata.setName(workspaceToBeStored.getName());
+                    workspaceMetadata.setDescription(workspaceToBeStored.getDescription());
 
                     // configure users
                     if (configuration != null) {
                         if (configuration.getVisibility() != null) {
-                            workspaceMetaData.setPublicWorkspace(configuration.getVisibility() == Visibility.Public);
+                            workspaceMetadata.setPublicWorkspace(configuration.getVisibility() == Visibility.Public);
                         }
 
                         if (!configuration.getUsers().isEmpty()) {
-                            workspaceMetaData.clearWriteUsers();
-                            workspaceMetaData.clearReadUsers();
+                            workspaceMetadata.clearWriteUsers();
+                            workspaceMetadata.clearReadUsers();
 
                             for (com.structurizr.configuration.User user : configuration.getUsers()) {
                                 if (user.getRole() == Role.ReadWrite) {
-                                    workspaceMetaData.addWriteUser(user.getUsername());
+                                    workspaceMetadata.addWriteUser(user.getUsername());
                                 } else {
-                                    workspaceMetaData.addReadUser(user.getUsername());
+                                    workspaceMetadata.addReadUser(user.getUsername());
                                 }
                             }
                         }
                     }
 
-                    putWorkspaceMetaData(workspaceMetaData);
+                    putWorkspaceMetadata(workspaceMetadata);
                 } catch (Exception e) {
                     log.error(e);
                 }
@@ -431,14 +431,14 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
         }
     }
 
-//    private WorkspaceEvent createWorkspaceEvent(WorkspaceMetaData workspaceMetaData, String workspaceAsJson) {
+//    private WorkspaceEvent createWorkspaceEvent(WorkspaceMetaData workspaceMetadata, String workspaceAsJson) {
 //        return new WorkspaceEvent() {
 //
 //            private String json = workspaceAsJson;
 //
 //            @Override
 //            public WorkspaceProperties getWorkspaceProperties() {
-//                return workspaceMetaData.toWorkspaceProperties();
+//                return workspaceMetadata.toWorkspaceProperties();
 //            }
 //
 //            @Override
@@ -452,30 +452,30 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
 //            }
 //        };
 //
-//            public WorkspaceProperties(WorkspaceMetaData workspaceMetaData) {
-//            this.id = workspaceMetaData.getId();
-//            this.name = workspaceMetaData.getName();
-//            this.description = workspaceMetaData.getDescription();
+//            public WorkspaceProperties(WorkspaceMetaData workspaceMetadata) {
+//            this.id = workspaceMetadata.getId();
+//            this.name = workspaceMetadata.getName();
+//            this.description = workspaceMetadata.getDescription();
 //
 //            this.users = new LinkedHashSet<>();
-//            for (String user : workspaceMetaData.getReadUsers()) {
+//            for (String user : workspaceMetadata.getReadUsers()) {
 //                users.add(new com.structurizr.configuration.User(user, Role.ReadOnly));
 //            }
-//            for (String user : workspaceMetaData.getWriteUsers()) {
+//            for (String user : workspaceMetadata.getWriteUsers()) {
 //                users.add(new com.structurizr.configuration.User(user, Role.ReadWrite));
 //            }
 //
-//            if (workspaceMetaData.isPublicWorkspace()) {
+//            if (workspaceMetadata.isPublicWorkspace()) {
 //                this.visibility = Visibility.Public;
 //            } else {
 //                this.visibility = Visibility.Private;
 //            }
 //
-//            this.lastModifiedDate = workspaceMetaData.getLastModifiedDate();
+//            this.lastModifiedDate = workspaceMetadata.getLastModifiedDate();
 //        }
 //
-//        this.workspaceId = workspaceMetaData.getId();
-//        this.workspaceProperties = new WorkspaceProperties(workspaceMetaData);
+//        this.workspaceId = workspaceMetadata.getId();
+//        this.workspaceProperties = new WorkspaceProperties(workspaceMetadata);
 //        this.json = json;
 //
  //    }
@@ -520,12 +520,12 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
 
     @Override
     public boolean lockWorkspace(long workspaceId, String username, String agent) {
-        WorkspaceMetaData workspaceMetaData = getWorkspaceMetaData(workspaceId);
-        if (!workspaceMetaData.isLocked() || workspaceMetaData.isLockedBy(username, agent)) {
-            workspaceMetaData.addLock(username, agent);
+        WorkspaceMetadata workspaceMetadata = getWorkspaceMetadata(workspaceId);
+        if (!workspaceMetadata.isLocked() || workspaceMetadata.isLockedBy(username, agent)) {
+            workspaceMetadata.addLock(username, agent);
 
             try {
-                putWorkspaceMetaData(workspaceMetaData);
+                putWorkspaceMetadata(workspaceMetadata);
                 return true;
             } catch (WorkspaceComponentException e) {
                 log.error(e);
@@ -537,11 +537,11 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
 
     @Override
     public boolean unlockWorkspace(long workspaceId) {
-        WorkspaceMetaData workspaceMetaData = getWorkspaceMetaData(workspaceId);
-        workspaceMetaData.clearLock();
+        WorkspaceMetadata workspaceMetadata = getWorkspaceMetadata(workspaceId);
+        workspaceMetadata.clearLock();
 
         try {
-            putWorkspaceMetaData(workspaceMetaData);
+            putWorkspaceMetadata(workspaceMetadata);
             return true;
         } catch (WorkspaceComponentException e) {
             log.error(e);
@@ -552,30 +552,30 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
 
     @Override
     public void makeWorkspacePublic(long workspaceId) {
-        WorkspaceMetaData workspace = getWorkspaceMetaData(workspaceId);
+        WorkspaceMetadata workspace = getWorkspaceMetadata(workspaceId);
         workspace.setPublicWorkspace(true);
-        putWorkspaceMetaData(workspace);
+        putWorkspaceMetadata(workspace);
     }
 
     @Override
     public void makeWorkspacePrivate(long workspaceId) {
-        WorkspaceMetaData workspace = getWorkspaceMetaData(workspaceId);
+        WorkspaceMetadata workspace = getWorkspaceMetadata(workspaceId);
         workspace.setPublicWorkspace(false);
-        putWorkspaceMetaData(workspace);
+        putWorkspaceMetadata(workspace);
     }
 
     @Override
     public void shareWorkspace(long workspaceId) {
-        WorkspaceMetaData workspace = getWorkspaceMetaData(workspaceId);
+        WorkspaceMetadata workspace = getWorkspaceMetadata(workspaceId);
         workspace.setSharingToken(UUID.randomUUID().toString());
-        putWorkspaceMetaData(workspace);
+        putWorkspaceMetadata(workspace);
     }
 
     @Override
     public void unshareWorkspace(long workspaceId) {
-        WorkspaceMetaData workspace = getWorkspaceMetaData(workspaceId);
+        WorkspaceMetadata workspace = getWorkspaceMetadata(workspaceId);
         workspace.setSharingToken("");
-        putWorkspaceMetaData(workspace);
+        putWorkspaceMetadata(workspace);
     }
 
     @Override

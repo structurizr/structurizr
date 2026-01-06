@@ -1,6 +1,6 @@
 package com.structurizr.server.component.workspace;
 
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 
 /**
  * Workspace metadata cache implementation that does nothing.
@@ -8,12 +8,12 @@ import com.structurizr.server.domain.WorkspaceMetaData;
 class NoOpWorkspaceMetadataCache implements WorkspaceMetadataCache {
 
     @Override
-    public WorkspaceMetaData get(long workspaceId) {
+    public WorkspaceMetadata get(long workspaceId) {
         return null;
     }
 
     @Override
-    public void put(WorkspaceMetaData workspaceMetaData) {
+    public void put(WorkspaceMetadata workspaceMetadata) {
     }
 
     @Override

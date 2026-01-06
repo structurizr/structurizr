@@ -2,7 +2,7 @@ package com.structurizr.server.web.home;
 
 import com.structurizr.configuration.Configuration;
 import com.structurizr.server.domain.User;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +25,7 @@ final class ServerHomeController extends AbstractHomeController {
 
         User user = getUser();
 
-        List<WorkspaceMetaData> workspaces = workspaceComponent.getWorkspaces(user);
+        List<WorkspaceMetadata> workspaces = workspaceComponent.getWorkspaces(user);
         sort = determineSort(sort);
         workspaces = sortAndPaginate(new ArrayList<>(workspaces), sort, pageNumber, pageSize, model);
 

@@ -2,11 +2,10 @@ package com.structurizr.server.component.workspace;
 
 import com.structurizr.server.domain.InputStreamAndContentLength;
 import com.structurizr.server.domain.User;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.domain.Image;
 
 import java.io.File;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -14,13 +13,13 @@ import java.util.List;
  */
 public interface WorkspaceComponent {
 
-    List<WorkspaceMetaData> getWorkspaces();
+    List<WorkspaceMetadata> getWorkspaces();
 
-    List<WorkspaceMetaData> getWorkspaces(User user);
+    List<WorkspaceMetadata> getWorkspaces(User user);
 
-    WorkspaceMetaData getWorkspaceMetaData(long workspaceId) throws WorkspaceComponentException;
+    WorkspaceMetadata getWorkspaceMetadata(long workspaceId) throws WorkspaceComponentException;
 
-    void putWorkspaceMetaData(WorkspaceMetaData workspaceMetaData);
+    void putWorkspaceMetadata(WorkspaceMetadata workspaceMetadata);
 
     String getWorkspace(long workspaceId, String branch, String version);
 

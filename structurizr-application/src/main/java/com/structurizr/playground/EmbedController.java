@@ -23,7 +23,7 @@ class EmbedController extends AbstractController {
         perspective = HtmlUtils.filterHtml(perspective);
         iframe = HtmlUtils.filterHtml(iframe);
 
-        model.addAttribute("workspace", new WorkspaceMetaData());
+        model.addAttribute("workspace", new WorkspaceMetadata());
         model.addAttribute("loadWorkspaceFromParent", true);
         model.addAttribute("embed", true);
         model.addAttribute("iframe", iframe);

@@ -1,7 +1,7 @@
 package com.structurizr.server.web.home;
 
 import com.structurizr.server.component.workspace.WorkspaceComponent;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.AbstractController;
 import com.structurizr.util.HtmlUtils;
 import com.structurizr.util.StringUtils;
@@ -26,7 +26,7 @@ class AbstractHomeController extends AbstractController {
         this.workspaceComponent = workspaceComponent;
     }
 
-    protected List<WorkspaceMetaData> sortAndPaginate(List<WorkspaceMetaData> workspaces, String sort, int pageNumber, int pageSize, ModelMap model) {
+    protected List<WorkspaceMetadata> sortAndPaginate(List<WorkspaceMetadata> workspaces, String sort, int pageNumber, int pageSize, ModelMap model) {
         if (SORT_DATE.equals(sort)) {
             workspaces.sort((wmd1, wmd2) -> wmd2.getLastModifiedDate().compareTo(wmd1.getLastModifiedDate()));
         } else {

@@ -36,11 +36,11 @@ class DiagramViewerController extends AbstractWorkspaceController {
 
         return showAuthenticatedView(
                 Views.DIAGRAMS, workspaceId,
-                workspaceMetaData -> {
+                workspaceMetadata -> {
                     if (Configuration.getInstance().getProfile() == Profile.Local) {
                         model.addAttribute("includeEditButton", "true".equalsIgnoreCase(Configuration.getInstance().getProperty(StructurizrProperties.EDITABLE_PROPERTY)));
                     } else {
-                        model.addAttribute("includeEditButton", !Configuration.getInstance().isAuthenticationEnabled() || workspaceMetaData.hasNoUsersConfigured() || workspaceMetaData.isWriteUser(getUser()));
+                        model.addAttribute("includeEditButton", !Configuration.getInstance().isAuthenticationEnabled() || workspaceMetadata.hasNoUsersConfigured() || workspaceMetadata.isWriteUser(getUser()));
                     }
                 },
                 branch, version, model, false, false

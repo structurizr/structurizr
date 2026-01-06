@@ -96,7 +96,7 @@ class PlaygroundController extends AbstractController {
         model.addAttribute("dslVersion", Class.forName(StructurizrDslParser.class.getCanonicalName()).getPackage().getImplementationVersion());
         model.addAttribute("workspaceAsDsl", dsl);
         model.addAttribute("view", view);
-        model.addAttribute("workspace", new WorkspaceMetaData());
+        model.addAttribute("workspace", new WorkspaceMetadata());
 
         if (workspace != null) {
             workspace.setLastModifiedDate(new Date());

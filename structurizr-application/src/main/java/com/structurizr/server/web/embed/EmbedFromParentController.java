@@ -1,6 +1,6 @@
 package com.structurizr.server.web.embed;
 
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.Views;
 import com.structurizr.server.web.workspace.AbstractWorkspaceController;
 import com.structurizr.util.HtmlUtils;
@@ -35,11 +35,11 @@ EmbedFromParentController extends AbstractWorkspaceController {
         iframe = HtmlUtils.filterHtml(iframe);
         urlPrefix = HtmlUtils.filterHtml(urlPrefix);
 
-        WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(workspace);
-        workspaceMetaData.setName("Embedded workspace");
-        workspaceMetaData.setEditable(editable);
+        WorkspaceMetadata workspaceMetadata = new WorkspaceMetadata(workspace);
+        workspaceMetadata.setName("Embedded workspace");
+        workspaceMetadata.setEditable(editable);
 
-        model.addAttribute("workspace", workspaceMetaData);
+        model.addAttribute("workspace", workspaceMetadata);
         model.addAttribute("loadWorkspaceFromParent", true);
         model.addAttribute("embed", true);
         model.addAttribute("iframe", iframe);
@@ -70,7 +70,7 @@ EmbedFromParentController extends AbstractWorkspaceController {
                 model.addAttribute("publishThumbnails", false);
             }
 
-            if (workspaceMetaData.isEditable()) {
+            if (workspaceMetadata.isEditable()) {
                 model.addAttribute("paperSizes", PaperSize.getOrderedPaperSizes());
             }
 

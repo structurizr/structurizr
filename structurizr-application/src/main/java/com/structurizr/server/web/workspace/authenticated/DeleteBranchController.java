@@ -4,7 +4,7 @@ import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Features;
 import com.structurizr.server.component.workspace.WorkspaceBranch;
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.workspace.AbstractWorkspaceController;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -35,9 +35,9 @@ public class DeleteBranchController extends AbstractWorkspaceController {
         }
 
         try {
-            WorkspaceMetaData workspaceMetaData = workspaceComponent.getWorkspaceMetaData(workspaceId);
-            if (workspaceMetaData != null) {
-                if (!Configuration.getInstance().isAuthenticationEnabled() || workspaceMetaData.hasNoUsersConfigured() || workspaceMetaData.isWriteUser(getUser())) {
+            WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
+            if (workspaceMetadata != null) {
+                if (!Configuration.getInstance().isAuthenticationEnabled() || workspaceMetadata.hasNoUsersConfigured() || workspaceMetadata.isWriteUser(getUser())) {
                     workspaceComponent.deleteBranch(workspaceId, branch);
                     return "redirect:/workspace/" + workspaceId;
                 }

@@ -2,7 +2,7 @@ package com.structurizr.server.web.home;
 
 import com.structurizr.configuration.StructurizrProperties;
 import com.structurizr.server.domain.User;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.ControllerTestsBase;
 import com.structurizr.server.web.MockWorkspaceComponent;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,11 +32,11 @@ public class ServerHomeControllerTests extends ControllerTestsBase {
     void showHomePage_WhenAuthenticationIsDisabled() {
         disableAuthentication();
 
-        WorkspaceMetaData workspace1 = new WorkspaceMetaData(1);
+        WorkspaceMetadata workspace1 = new WorkspaceMetadata(1);
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public List<WorkspaceMetaData> getWorkspaces(User user) {
+            public List<WorkspaceMetadata> getWorkspaces(User user) {
                 return List.of(workspace1);
             }
         });
@@ -55,11 +55,11 @@ public class ServerHomeControllerTests extends ControllerTestsBase {
         enableAuthentication();
         setUser("user@example.com");
 
-        WorkspaceMetaData workspace1 = new WorkspaceMetaData(1);
+        WorkspaceMetadata workspace1 = new WorkspaceMetadata(1);
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public List<WorkspaceMetaData> getWorkspaces(User user) {
+            public List<WorkspaceMetadata> getWorkspaces(User user) {
                 return List.of(workspace1);
             }
         });
@@ -79,11 +79,11 @@ public class ServerHomeControllerTests extends ControllerTestsBase {
         enableAuthentication(properties);
         setUser("user@example.com");
 
-        WorkspaceMetaData workspace1 = new WorkspaceMetaData(1);
+        WorkspaceMetadata workspace1 = new WorkspaceMetadata(1);
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public List<WorkspaceMetaData> getWorkspaces(User user) {
+            public List<WorkspaceMetadata> getWorkspaces(User user) {
                 return List.of(workspace1);
             }
         });
@@ -103,11 +103,11 @@ public class ServerHomeControllerTests extends ControllerTestsBase {
         enableAuthentication(properties);
         setUser("admin@example.com");
 
-        WorkspaceMetaData workspace1 = new WorkspaceMetaData(1);
+        WorkspaceMetadata workspace1 = new WorkspaceMetadata(1);
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public List<WorkspaceMetaData> getWorkspaces(User user) {
+            public List<WorkspaceMetadata> getWorkspaces(User user) {
                 return List.of(workspace1);
             }
         });
@@ -124,11 +124,11 @@ public class ServerHomeControllerTests extends ControllerTestsBase {
     void showAuthenticatedDashboard_WhenAuthenticationIsEnabledAndTheUserIsNotAuthenticated() {
         enableAuthentication();
 
-        WorkspaceMetaData workspace1 = new WorkspaceMetaData(1);
+        WorkspaceMetadata workspace1 = new WorkspaceMetadata(1);
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public List<WorkspaceMetaData> getWorkspaces(User user) {
+            public List<WorkspaceMetadata> getWorkspaces(User user) {
                 return List.of(workspace1);
             }
         });

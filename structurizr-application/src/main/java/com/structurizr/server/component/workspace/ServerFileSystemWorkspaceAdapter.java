@@ -1,7 +1,7 @@
 package com.structurizr.server.component.workspace;
 
 import com.structurizr.configuration.Configuration;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.util.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -80,8 +80,8 @@ class ServerFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspaceAdapte
     }
 
     @Override
-    public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
-        WorkspaceMetaData workspace = new WorkspaceMetaData(workspaceId);
+    public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+        WorkspaceMetadata workspace = new WorkspaceMetadata(workspaceId);
 
         File workspacePropertiesFile = new File(getPathToWorkspace(workspaceId), WORKSPACE_PROPERTIES_FILENAME);
         if (workspacePropertiesFile.exists()) {
@@ -91,7 +91,7 @@ class ServerFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspaceAdapte
                 properties.load(fileReader);
                 fileReader.close();
 
-                workspace = WorkspaceMetaData.fromProperties(workspaceId, properties);
+                workspace = WorkspaceMetadata.fromProperties(workspaceId, properties);
             } catch (Exception e) {
                 log.error(e);
             }
@@ -103,12 +103,12 @@ class ServerFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspaceAdapte
     }
 
     @Override
-    public void putWorkspaceMetaData(WorkspaceMetaData workspaceMetaData) {
+    public void putWorkspaceMetadata(WorkspaceMetadata workspaceMetadata) {
         try {
-            File path = getPathToWorkspace(workspaceMetaData.getId());
+            File path = getPathToWorkspace(workspaceMetadata.getId());
             File workspacePropertiesFile = new File(path, WORKSPACE_PROPERTIES_FILENAME);
 
-            Properties properties = workspaceMetaData.toProperties();
+            Properties properties = workspaceMetadata.toProperties();
 
             FileWriter fileWriter = new FileWriter(workspacePropertiesFile);
             properties.store(fileWriter, null);
@@ -142,10 +142,10 @@ class ServerFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspaceAdapte
     }
 
     @Override
-    public void putWorkspace(WorkspaceMetaData workspaceMetaData, String json, String branch) {
+    public void putWorkspace(WorkspaceMetadata workspaceMetadata, String json, String branch) {
         try {
             // write the latest version to workspace.json
-            File path = getPathToWorkspace(workspaceMetaData.getId(), branch, true);
+            File path = getPathToWorkspace(workspaceMetadata.getId(), branch, true);
             File file = new File(path, WORKSPACE_JSON_FILENAME);
             Files.writeString(file.toPath(), json);
 
@@ -153,7 +153,7 @@ class ServerFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspaceAdapte
                 // and write a versioned workspace.json file too
                 SimpleDateFormat sdf = new SimpleDateFormat(VERSION_TIMESTAMP_FORMAT);
                 sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-                Files.writeString(new File(path, "workspace-" + sdf.format(workspaceMetaData.getLastModifiedDate()) + ".json").toPath(), json);
+                Files.writeString(new File(path, "workspace-" + sdf.format(workspaceMetadata.getLastModifiedDate()) + ".json").toPath(), json);
             } catch (Exception e) {
                 log.error(e);
             }

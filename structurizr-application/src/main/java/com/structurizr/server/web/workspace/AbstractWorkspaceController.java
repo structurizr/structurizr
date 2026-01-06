@@ -2,17 +2,12 @@ package com.structurizr.server.web.workspace;
 
 import com.structurizr.configuration.Profile;
 import com.structurizr.server.component.search.SearchComponent;
-import com.structurizr.server.component.workspace.WorkspaceBranch;
 import com.structurizr.server.component.workspace.WorkspaceComponent;
-import com.structurizr.server.component.workspace.WorkspaceComponentException;
 import com.structurizr.configuration.Configuration;
-import com.structurizr.configuration.Features;
 import com.structurizr.server.domain.User;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.AbstractController;
-import com.structurizr.util.HtmlUtils;
 import com.structurizr.util.JsonUtils;
-import com.structurizr.util.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,28 +35,28 @@ public abstract class AbstractWorkspaceController extends AbstractController {
         this.searchComponent = searchComponent;
     }
 
-    protected final String showView(String view, WorkspaceMetaData workspaceMetaData, String branch, String version, ModelMap model, boolean editable, boolean showHeaderAndFooter) {
+    protected final String showView(String view, WorkspaceMetadata workspaceMetadata, String branch, String version, ModelMap model, boolean editable, boolean showHeaderAndFooter) {
         try {
             if (editable) {
-                workspaceMetaData.setEditable(true);
+                workspaceMetadata.setEditable(true);
 
                 if (Configuration.getInstance().getProfile() == Profile.Server) {
-                    if (workspaceMetaData.isPublicWorkspace() || workspaceMetaData.hasNoUsersConfigured()) {
-                        model.addAttribute("sharingUrlPrefix", "/share/" + workspaceMetaData.getId());
+                    if (workspaceMetadata.isPublicWorkspace() || workspaceMetadata.hasNoUsersConfigured()) {
+                        model.addAttribute("sharingUrlPrefix", "/share/" + workspaceMetadata.getId());
                     }
                 }
             } else {
-                workspaceMetaData.setEditable(false);
-                String json = workspaceComponent.getWorkspace(workspaceMetaData.getId(), branch, version);
+                workspaceMetadata.setEditable(false);
+                String json = workspaceComponent.getWorkspace(workspaceMetadata.getId(), branch, version);
                 json = json.replaceAll("[\\n\\r\\f]", "");
                 model.addAttribute("workspaceAsJson", JsonUtils.base64(json));
             }
 
-            addCommonAttributes(model, workspaceMetaData.getName(), showHeaderAndFooter);
+            addCommonAttributes(model, workspaceMetadata.getName(), showHeaderAndFooter);
 
-            workspaceMetaData.setBranch(branch);
-            workspaceMetaData.setInternalVersion(version);
-            model.addAttribute("workspace", workspaceMetaData);
+            workspaceMetadata.setBranch(branch);
+            workspaceMetadata.setInternalVersion(version);
+            model.addAttribute("workspace", workspaceMetadata);
             model.addAttribute("showToolbar", true);
             model.addAttribute("embed", false);
 

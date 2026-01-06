@@ -1,18 +1,6 @@
 package com.structurizr.server.web.workspace.images;
 
-import com.structurizr.server.domain.Image;
-import com.structurizr.server.domain.WorkspaceMetaData;
 import com.structurizr.server.web.ControllerTestsBase;
-import com.structurizr.server.web.MockWorkspaceComponent;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.ui.ModelMap;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class ImagesControllerTests extends ControllerTestsBase {
 

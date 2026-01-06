@@ -1,7 +1,6 @@
 package com.structurizr.server.web.workspace.authenticated;
 
 import com.structurizr.configuration.Configuration;
-import com.structurizr.server.domain.WorkspaceMetaData;
 import com.structurizr.server.web.Views;
 import com.structurizr.util.DocumentationScope;
 import org.springframework.stereotype.Controller;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
-
-import static com.structurizr.configuration.StructurizrProperties.AUTO_REFRESH_INTERVAL_PROPERTY;
 
 @Controller(value = "AnonymousDecisionsController")
 class DecisionsController extends AbstractWorkspaceController {

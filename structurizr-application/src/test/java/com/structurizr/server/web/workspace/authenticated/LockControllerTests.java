@@ -1,7 +1,7 @@
 package com.structurizr.server.web.workspace.authenticated;
 
 import com.structurizr.server.component.workspace.WorkspaceLockResponse;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.ControllerTestsBase;
 import com.structurizr.server.web.MockWorkspaceComponent;
 import com.structurizr.util.DateUtils;
@@ -29,7 +29,7 @@ public class LockControllerTests extends ControllerTestsBase {
     void lockWorkspace_ReturnsAFailureResponse_WhenTheWorkspaceDoesNotExist() {
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return null;
             }
         });
@@ -42,11 +42,11 @@ public class LockControllerTests extends ControllerTestsBase {
 
     @Test
     void lockWorkspace_LocksTheWorkspace_WhenTheWorkspaceIsNotLocked() {
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -68,12 +68,12 @@ public class LockControllerTests extends ControllerTestsBase {
 
     @Test
     void lockWorkspace_ReturnsAFailureResponse_WhenTheWorkspaceIsAlreadyLockedByAnotherAgent() {
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addLock("user1@example.com", "agent1");
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -95,12 +95,12 @@ public class LockControllerTests extends ControllerTestsBase {
 
     @Test
     void lockWorkspace_ReturnsAFailureResponse_WhenTheWorkspaceIsAlreadyLockedBySomebodyElse() {
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addLock("user1@example.com", "agent");
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -124,7 +124,7 @@ public class LockControllerTests extends ControllerTestsBase {
     void unlockWorkspace_ReturnsThe404Page_WhenTheWorkspaceDoesNotExist() {
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return null;
             }
         });
@@ -136,12 +136,12 @@ public class LockControllerTests extends ControllerTestsBase {
 
     @Test
     void unlockWorkspace_ReturnsThe404Page_WhenTheUserDoesNotHaveAccess() {
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addWriteUser("user2@example.com");
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
         });
@@ -153,12 +153,12 @@ public class LockControllerTests extends ControllerTestsBase {
 
     @Test
     void unlockWorkspace_UnlocksTheWorkspace_WhenTheWorkspaceHasNoUsersConfigured()  {
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addLock("user@example.com", "agent");
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -177,13 +177,13 @@ public class LockControllerTests extends ControllerTestsBase {
 
     @Test
     void unlockWorkspace_UnlocksTheWorkspace_WhenTheUserHasWriteAccess()  {
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addWriteUser("user@example.com");
         workspaceMetaData.addLock("user@example.com", "agent");
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -202,12 +202,12 @@ public class LockControllerTests extends ControllerTestsBase {
 
     @Test
     void unlockWorkspace_ReturnsThe404Page_WhenTheUserHasReadAccess()  {
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addReadUser("user@example.com");
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
         });

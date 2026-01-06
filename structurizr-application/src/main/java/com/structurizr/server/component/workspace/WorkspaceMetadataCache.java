@@ -1,12 +1,12 @@
 package com.structurizr.server.component.workspace;
 
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 
 interface WorkspaceMetadataCache {
 
-    WorkspaceMetaData get(long workspaceId);
+    WorkspaceMetadata get(long workspaceId);
 
-    void put(WorkspaceMetaData workspaceMetaData);
+    void put(WorkspaceMetadata workspaceMetadata);
 
     void stop();
 

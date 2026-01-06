@@ -2,7 +2,7 @@ package com.structurizr.server.component.workspace;
 
 import com.structurizr.server.domain.Image;
 import com.structurizr.server.domain.InputStreamAndContentLength;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 
 import java.io.File;
 import java.util.List;
@@ -11,15 +11,15 @@ interface WorkspaceAdapter {
 
     List<Long> getWorkspaceIds();
 
-    WorkspaceMetaData getWorkspaceMetaData(long workspaceId);
+    WorkspaceMetadata getWorkspaceMetadata(long workspaceId);
 
-    void putWorkspaceMetaData(WorkspaceMetaData workspaceMetaData);
+    void putWorkspaceMetadata(WorkspaceMetadata workspaceMetadata);
 
     boolean deleteWorkspace(long workspaceId);
 
     String getWorkspace(long workspaceId, String branch, String version);
 
-    void putWorkspace(WorkspaceMetaData workspaceMetaData, String json, String branch);
+    void putWorkspace(WorkspaceMetadata workspaceMetadata, String json, String branch);
 
     List<WorkspaceVersion> getWorkspaceVersions(long workspaceId, String branch, int maxVersions);
 

@@ -1,7 +1,7 @@
 package com.structurizr.server.web.workspace.authenticated;
 
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.AbstractControllerTests;
 import com.structurizr.server.web.MockWorkspaceComponent;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,11 +24,11 @@ public class AbstractWorkspaceControllerTests extends AbstractControllerTests {
 
     @Test
     void showAuthenticatedView_ReturnsThe404Page_WhenTheWorkspaceDoesNotExist() {
-        final WorkspaceMetaData workspaceMetaData = null;
+        final WorkspaceMetadata workspaceMetaData = null;
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return null;
             }
         });
@@ -42,12 +42,12 @@ public class AbstractWorkspaceControllerTests extends AbstractControllerTests {
     void showAuthenticatedView_ReturnsThe404Page_WhenAuthenticationIsEnabledAndTheUserDoesNotHaveAccess() {
         enableAuthentication();
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addWriteUser("user1@example.com");
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -66,12 +66,12 @@ public class AbstractWorkspaceControllerTests extends AbstractControllerTests {
     void showAuthenticatedView_ReturnsTheView_WhenAuthenticationIsEnabledAndTheUserHasWriteAccess() {
         enableAuthentication();
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addWriteUser("user1@example.com");
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -95,12 +95,12 @@ public class AbstractWorkspaceControllerTests extends AbstractControllerTests {
     void showAuthenticatedView_ReturnsTheView_WhenAuthenticationIsEnabledAndTheUserHasReadAccess() {
         enableAuthentication();
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addReadUser("user1@example.com");
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 
@@ -124,11 +124,11 @@ public class AbstractWorkspaceControllerTests extends AbstractControllerTests {
     void showAuthenticatedView_ReturnsTheView_WhenAuthenticationIsDisabled() {
         disableAuthentication();
 
-        final WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return workspaceMetaData;
             }
 

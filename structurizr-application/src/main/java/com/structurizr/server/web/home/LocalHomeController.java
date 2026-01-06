@@ -1,7 +1,7 @@
 package com.structurizr.server.web.home;
 
 import com.structurizr.configuration.Configuration;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +25,7 @@ final class LocalHomeController extends AbstractHomeController {
         if (Configuration.getInstance().isSingleWorkspace()) {
             return "redirect:/workspace/1";
         } else {
-            List<WorkspaceMetaData> workspaces = workspaceComponent.getWorkspaces();
+            List<WorkspaceMetadata> workspaces = workspaceComponent.getWorkspaces();
             sort = determineSort(sort);
             workspaces = sortAndPaginate(new ArrayList<>(workspaces), sort, pageNumber, pageSize, model);
 

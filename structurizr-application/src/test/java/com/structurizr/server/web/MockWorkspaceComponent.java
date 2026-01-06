@@ -6,7 +6,7 @@ import com.structurizr.server.component.workspace.WorkspaceVersion;
 import com.structurizr.server.domain.Image;
 import com.structurizr.server.domain.InputStreamAndContentLength;
 import com.structurizr.server.domain.User;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 
 import java.io.File;
 import java.util.List;
@@ -14,22 +14,22 @@ import java.util.List;
 public abstract class MockWorkspaceComponent implements WorkspaceComponent {
 
     @Override
-    public List<WorkspaceMetaData> getWorkspaces() {
+    public List<WorkspaceMetadata> getWorkspaces() {
         return null;
     }
 
     @Override
-    public List<WorkspaceMetaData> getWorkspaces(User user) {
+    public List<WorkspaceMetadata> getWorkspaces(User user) {
         return null;
     }
 
     @Override
-    public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+    public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
         return null;
     }
 
     @Override
-    public void putWorkspaceMetaData(WorkspaceMetaData workspaceMetaData) {
+    public void putWorkspaceMetadata(WorkspaceMetadata workspaceMetaData) {
 
     }
 

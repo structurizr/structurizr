@@ -3,7 +3,7 @@ package com.structurizr.server.web.workspace.authenticated;
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
 import com.structurizr.server.component.workspace.WorkspaceLockResponse;
 import com.structurizr.server.domain.User;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.util.DateUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -26,14 +26,14 @@ public class LockController extends AbstractWorkspaceController {
             @PathVariable("workspaceId") long workspaceId,
             @RequestParam(required = true) String agent
     ) {
-        WorkspaceMetaData workspaceMetaData = workspaceComponent.getWorkspaceMetaData(workspaceId);
-        if (workspaceMetaData == null) {
+        WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
+        if (workspaceMetadata == null) {
             return new WorkspaceLockResponse(false, false);
         }
 
         User user = getUser();
 
-        if (!workspaceMetaData.isLocked() || workspaceMetaData.isLockedBy(user.getUsername(), agent)) {
+        if (!workspaceMetadata.isLocked() || workspaceMetadata.isLockedBy(user.getUsername(), agent)) {
             try {
                 if (workspaceComponent.lockWorkspace(workspaceId, user.getUsername(), agent)) {
                     return new WorkspaceLockResponse(true, true);
@@ -44,15 +44,15 @@ public class LockController extends AbstractWorkspaceController {
         }
 
         // not locked - refresh the metadata and try to figure out why
-        workspaceMetaData = workspaceComponent.getWorkspaceMetaData(workspaceId);
-        if (workspaceMetaData.isLocked() && !workspaceMetaData.isLockedBy(user.getUsername(), agent)) {
+        workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
+        if (workspaceMetadata.isLocked() && !workspaceMetadata.isLockedBy(user.getUsername(), agent)) {
             // locked by somebody else
             SimpleDateFormat sdf = new SimpleDateFormat(DateUtils.USER_FRIENDLY_DATE_FORMAT);
 
-            return new WorkspaceLockResponse(false, true, "The workspace could not be locked; it was locked by " + workspaceMetaData.getLockedUser() + " using " + workspaceMetaData.getLockedAgent() + " at " + sdf.format(workspaceMetaData.getLockedDate()) + ".");
+            return new WorkspaceLockResponse(false, true, "The workspace could not be locked; it was locked by " + workspaceMetadata.getLockedUser() + " using " + workspaceMetadata.getLockedAgent() + " at " + sdf.format(workspaceMetadata.getLockedDate()) + ".");
         } else {
             // other problem
-            return new WorkspaceLockResponse(false, workspaceMetaData.isLocked(), "The workspace could not be locked - please save your workspace and refresh the page.");
+            return new WorkspaceLockResponse(false, workspaceMetadata.isLocked(), "The workspace could not be locked - please save your workspace and refresh the page.");
         }
     }
 
@@ -62,30 +62,30 @@ public class LockController extends AbstractWorkspaceController {
             @PathVariable("workspaceId") long workspaceId,
             @RequestParam(required = true) String agent
     ) {
-        WorkspaceMetaData workspaceMetaData = workspaceComponent.getWorkspaceMetaData(workspaceId);
-        if (workspaceMetaData == null) {
+        WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
+        if (workspaceMetadata == null) {
             return new WorkspaceLockResponse(false, false);
         }
 
         User user = getUser();
 
-        if (workspaceMetaData.isLockedBy(user.getUsername(), agent)) {
+        if (workspaceMetadata.isLockedBy(user.getUsername(), agent)) {
             workspaceComponent.unlockWorkspace(workspaceId);
             return new WorkspaceLockResponse(true, false);
         }
 
-        return new WorkspaceLockResponse(false, workspaceMetaData.isLocked());
+        return new WorkspaceLockResponse(false, workspaceMetadata.isLocked());
     }
 
     @RequestMapping(value = "/workspace/{workspaceId}/unlock", method = RequestMethod.GET)
     String unlockWorkspace(@PathVariable("workspaceId") long workspaceId, ModelMap model) {
-        WorkspaceMetaData workspaceMetaData = workspaceComponent.getWorkspaceMetaData(workspaceId);
-        if (workspaceMetaData == null) {
+        WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
+        if (workspaceMetadata == null) {
             return show404Page(model);
         }
 
         User user = getUser();
-        if (workspaceMetaData.hasNoUsersConfigured() || workspaceMetaData.isWriteUser(user)) {
+        if (workspaceMetadata.hasNoUsersConfigured() || workspaceMetadata.isWriteUser(user)) {
             try {
                 workspaceComponent.unlockWorkspace(workspaceId);
             } catch (WorkspaceComponentException e) {

@@ -1,7 +1,7 @@
 package com.structurizr.server.web.workspace;
 
 import com.structurizr.server.domain.InputStreamAndContentLength;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.util.HtmlUtils;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
@@ -13,11 +13,11 @@ public abstract class AbstractImageController extends AbstractWorkspaceControlle
 
     private static final Log log = LogFactory.getLog(AbstractImageController.class);
 
-    protected Resource getImage(WorkspaceMetaData workspaceMetaData, String branch, String filename, HttpServletResponse response) {
+    protected Resource getImage(WorkspaceMetadata workspaceMetadata, String branch, String filename, HttpServletResponse response) {
         filename = HtmlUtils.filterHtml(filename);
 
         try {
-            InputStreamAndContentLength inputStreamAndContentLength = workspaceComponent.getImage(workspaceMetaData.getId(), branch, filename + ".png");
+            InputStreamAndContentLength inputStreamAndContentLength = workspaceComponent.getImage(workspaceMetadata.getId(), branch, filename + ".png");
             if (inputStreamAndContentLength != null) {
                 response.setStatus(200);
                 return new InputStreamResource(inputStreamAndContentLength.getInputStream()) {
@@ -32,9 +32,9 @@ public abstract class AbstractImageController extends AbstractWorkspaceControlle
             }
         } catch (Exception e) {
             if (filename.endsWith("thumbnail")) {
-                log.warn("Error while trying to get image " + filename + ".png from workspace with ID " + workspaceMetaData.getId());
+                log.warn("Error while trying to get image " + filename + ".png from workspace with ID " + workspaceMetadata.getId());
             } else {
-                log.error("Error while trying to get image " + filename + ".png from workspace with ID " + workspaceMetaData.getId(), e);
+                log.error("Error while trying to get image " + filename + ".png from workspace with ID " + workspaceMetadata.getId(), e);
             }
 
             response.setStatus(404);

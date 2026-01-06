@@ -38,7 +38,7 @@ class InspectionsController extends AbstractWorkspaceController {
 
         return showAuthenticatedView(
                 Views.INSPECTIONS, workspaceId,
-                workspaceMetaData -> {
+                workspaceMetadata -> {
                     try {
                         String json = workspaceComponent.getWorkspace(workspaceId, branch, version);
                         Workspace workspace = WorkspaceUtils.fromJson(json);

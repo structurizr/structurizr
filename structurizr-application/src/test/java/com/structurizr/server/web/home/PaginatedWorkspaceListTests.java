@@ -1,6 +1,6 @@
 package com.structurizr.server.web.home;
 
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -14,9 +14,9 @@ public class PaginatedWorkspaceListTests {
 
     @Test
     void numberOfWorkspacesIsLessThanPageSize() {
-        WorkspaceMetaData wmd1 = new WorkspaceMetaData(1);
-        WorkspaceMetaData wmd2 = new WorkspaceMetaData(2);
-        WorkspaceMetaData wmd3 = new WorkspaceMetaData(3);
+        WorkspaceMetadata wmd1 = new WorkspaceMetadata(1);
+        WorkspaceMetadata wmd2 = new WorkspaceMetadata(2);
+        WorkspaceMetadata wmd3 = new WorkspaceMetadata(3);
 
         list = new PaginatedWorkspaceList(List.of(wmd1, wmd2, wmd3), 1, 5);
         assertEquals(3, list.getPageSize()); // page size has been modified
@@ -29,9 +29,9 @@ public class PaginatedWorkspaceListTests {
 
     @Test
     void numberOfWorkspacesIsEqualToPageSize() {
-        WorkspaceMetaData wmd1 = new WorkspaceMetaData(1);
-        WorkspaceMetaData wmd2 = new WorkspaceMetaData(2);
-        WorkspaceMetaData wmd3 = new WorkspaceMetaData(3);
+        WorkspaceMetadata wmd1 = new WorkspaceMetadata(1);
+        WorkspaceMetadata wmd2 = new WorkspaceMetadata(2);
+        WorkspaceMetadata wmd3 = new WorkspaceMetadata(3);
 
         list = new PaginatedWorkspaceList(List.of(wmd1, wmd2, wmd3), 1, 3);
         assertEquals(3, list.getPageSize());
@@ -44,9 +44,9 @@ public class PaginatedWorkspaceListTests {
 
     @Test
     void numberOfWorkspacesIsGreaterThanPageSize() {
-        WorkspaceMetaData wmd1 = new WorkspaceMetaData(1);
-        WorkspaceMetaData wmd2 = new WorkspaceMetaData(2);
-        WorkspaceMetaData wmd3 = new WorkspaceMetaData(3);
+        WorkspaceMetadata wmd1 = new WorkspaceMetadata(1);
+        WorkspaceMetadata wmd2 = new WorkspaceMetadata(2);
+        WorkspaceMetadata wmd3 = new WorkspaceMetadata(3);
 
         list = new PaginatedWorkspaceList(List.of(wmd1, wmd2, wmd3), 1, 2);
         assertEquals(2, list.getPageSize());
@@ -89,10 +89,10 @@ public class PaginatedWorkspaceListTests {
         assertEquals(2, list.getPageNumber());
     }
 
-    private List<WorkspaceMetaData> listOf(int size) {
-        List<WorkspaceMetaData> list = new ArrayList<>();
+    private List<WorkspaceMetadata> listOf(int size) {
+        List<WorkspaceMetadata> list = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            list.add(new WorkspaceMetaData(i));
+            list.add(new WorkspaceMetadata(i));
         }
 
         return list;

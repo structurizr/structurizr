@@ -2,7 +2,7 @@ package com.structurizr.server.web.workspace.authenticated;
 
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Features;
-import com.structurizr.server.domain.WorkspaceMetaData;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.ControllerTestsBase;
 import com.structurizr.server.web.MockWorkspaceComponent;
 import org.junit.jupiter.api.BeforeEach;
@@ -54,7 +54,7 @@ public class DeleteBranchControllerTests extends ControllerTestsBase {
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return null;
             }
         });
@@ -71,8 +71,8 @@ public class DeleteBranchControllerTests extends ControllerTestsBase {
         final StringBuilder buf = new StringBuilder();
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
-                return new WorkspaceMetaData(1);
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                return new WorkspaceMetadata(1);
             }
 
             @Override
@@ -96,8 +96,8 @@ public class DeleteBranchControllerTests extends ControllerTestsBase {
         final StringBuilder buf = new StringBuilder();
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
-                return new WorkspaceMetaData(1);
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                return new WorkspaceMetadata(1);
             }
 
             @Override
@@ -121,8 +121,8 @@ public class DeleteBranchControllerTests extends ControllerTestsBase {
         final StringBuilder buf = new StringBuilder();
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
-                WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
                 workspaceMetaData.addWriteUser("user@example.com");
 
                 return workspaceMetaData;
@@ -149,8 +149,8 @@ public class DeleteBranchControllerTests extends ControllerTestsBase {
         final StringBuilder buf = new StringBuilder();
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
-                WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
                 workspaceMetaData.addReadUser("user@example.com");
 
                 return workspaceMetaData;
@@ -177,8 +177,8 @@ public class DeleteBranchControllerTests extends ControllerTestsBase {
         final StringBuilder buf = new StringBuilder();
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
-            public WorkspaceMetaData getWorkspaceMetaData(long workspaceId) {
-                WorkspaceMetaData workspaceMetaData = new WorkspaceMetaData(1);
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
                 workspaceMetaData.addReadUser("user1@example.com");
 
                 return workspaceMetaData;
