@@ -27,8 +27,8 @@ class ServerFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspaceAdapte
     private static final String BRANCHES_DIRECTORY_NAME = "branches";
     private static final String WORKSPACE_VERSION_JSON_FILENAME = "workspace-%s.json";
     private static final String WORKSPACE_PROPERTIES_FILENAME = "workspace.properties";
-    private static final String VERSION_TIMESTAMP_FORMAT = "yyyyMMddHHmmssSSS";
-    private static final String WORKSPACE_VERSION_JSON_FILENAME_REGEX = "workspace-\\d{17}\\.json";
+    static final String VERSION_TIMESTAMP_FORMAT = "yyyyMMddHHmmssSSS";
+    static final String WORKSPACE_VERSION_JSON_FILENAME_REGEX = "workspace-\\d{17}\\.json";
 
     ServerFileSystemWorkspaceAdapter() {
         super(Configuration.getInstance().getDataDirectory());
@@ -203,7 +203,7 @@ class ServerFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspaceAdapte
         return !workspaceDirectory.exists();
     }
 
-    // todo
+    // todo: add this to a schedule
     public void removeOldWorkspaceVersions(int maxWorkspaceVersions) {
         try {
             Collection<Long> workspaceIds = getWorkspaceIds();
@@ -238,7 +238,7 @@ class ServerFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspaceAdapte
                 File[] files = branchesDirectory.listFiles((dir, name) -> WorkspaceBranch.isValidBranchName(name));
 
                 if (files != null) {
-                    Arrays.sort(files, (f1, f2) -> f2.getName().compareTo(f1.getName()));
+                    Arrays.sort(files, Comparator.comparing(File::getName));
 
                     for (File file : files) {
                         branches.add(new WorkspaceBranch(file.getName()));

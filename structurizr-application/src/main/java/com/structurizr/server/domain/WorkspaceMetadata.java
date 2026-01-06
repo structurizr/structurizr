@@ -47,7 +47,7 @@ public class WorkspaceMetadata {
     private String urlPrefix = "/workspace";
     private boolean archived = false;
 
-    private Date lastModifiedDate;
+    private Date lastModifiedDate = new Date();
     private String lastModifiedUser;
     private String lastModifiedAgent;
 

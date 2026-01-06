@@ -17,7 +17,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public abstract class AbstractSearchAdapterTests extends AbstractTestsBase {
+abstract class AbstractSearchAdapterTests extends AbstractTestsBase {
 
     protected abstract SearchAdapter getSearchAdapter();
 
