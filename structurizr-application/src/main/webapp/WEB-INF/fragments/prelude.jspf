@@ -27,7 +27,6 @@
     <link href="<c:url value="/static/css/structurizr-embed.css" />" rel="stylesheet" media="screen" />
     </c:if>
     <link href="<c:url value="/static/css/structurizr-print.css" />" rel="stylesheet" media="print" />
-    <link href="/static/css/open-sans.css" rel="stylesheet" />
 
     <script src="/static/js/jquery-3.7.1.min.js"></script>
     <script src="/static/js/bootstrap-5.3.7.min.js"></script>

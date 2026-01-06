@@ -81,7 +81,6 @@ public class ThemeUtilsTests {
         workspace.getViews().getConfiguration().getStyles().addElementStyle(Tags.ELEMENT).background("#ff0000");
         workspace.getViews().getConfiguration().getStyles().addRelationshipStyle(Tags.RELATIONSHIP).color("#ff0000");
         workspace.getViews().getConfiguration().getBranding().setLogo("https://structurizr.com/static/img/structurizr-logo.png");
-        workspace.getViews().getConfiguration().getBranding().setFont(new Font("Open Sans", "https://fonts.googleapis.com/css?family=Open+Sans:400,700"));
         assertEquals("{\n" +
                 "  \"name\" : \"Name\",\n" +
                 "  \"description\" : \"Description\",\n" +
@@ -93,11 +92,7 @@ public class ThemeUtilsTests {
                 "    \"tag\" : \"Relationship\",\n" +
                 "    \"color\" : \"#ff0000\"\n" +
                 "  } ],\n" +
-                "  \"logo\" : \"https://structurizr.com/static/img/structurizr-logo.png\",\n" +
-                "  \"font\" : {\n" +
-                "    \"name\" : \"Open Sans\",\n" +
-                "    \"url\" : \"https://fonts.googleapis.com/css?family=Open+Sans:400,700\"\n" +
-                "  }\n" +
+                "  \"logo\" : \"https://structurizr.com/static/img/structurizr-logo.png\"\n" +
                 "}", ThemeUtils.toJson(workspace));
     }
 

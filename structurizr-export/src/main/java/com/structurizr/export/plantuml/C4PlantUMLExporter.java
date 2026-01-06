@@ -90,13 +90,6 @@ public class C4PlantUMLExporter extends AbstractPlantUMLExporter {
             writer.writeLine("BackgroundColor: " + Styles.DEFAULT_BACKGROUND_LIGHT);
             writer.writeLine("FontColor: " + Styles.DEFAULT_COLOR_LIGHT);
         }
-        Font font = view.getViewSet().getConfiguration().getBranding().getFont();
-        if (font != null) {
-            String fontName = font.getName();
-            if (!StringUtils.isNullOrEmpty(fontName)) {
-                writer.writeLine("FontName: " + fontName);
-            }
-        }
         writer.outdent();
         writer.writeLine("}");
         writer.outdent();

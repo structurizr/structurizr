@@ -2,8 +2,10 @@
 
 ## v6.0.0 (unreleased)
 
+- structurizr-core: Removes font configuration via branding object.
 - structurizr-core: Removes Graphviz as an automatic layout implementation option.
 - structurizr-core: Fixes https://github.com/structurizr/structurizr/issues/5 (Deployment view animations don't include parent deployment nodes of software system instances).
+- structurizr-dsl: Removes font configuration via `branding` keyword.
 
 ## v5.0.3 (21st November 2025)
 

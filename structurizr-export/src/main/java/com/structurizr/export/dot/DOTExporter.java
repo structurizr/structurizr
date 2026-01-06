@@ -40,10 +40,6 @@ public class DOTExporter extends AbstractDiagramExporter {
         }
 
         String fontName = DEFAULT_FONT;
-        Font font = view.getViewSet().getConfiguration().getBranding().getFont();
-        if (font != null) {
-            fontName = font.getName();
-        }
 
         RankDirection rankDirection = RankDirection.TopBottom;
 

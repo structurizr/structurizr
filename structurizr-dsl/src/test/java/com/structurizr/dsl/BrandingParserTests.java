@@ -128,46 +128,4 @@ class BrandingParserTests extends AbstractTests {
         assertEquals("https://structurizr.com/logo.png", workspace.getViews().getConfiguration().getBranding().getLogo());
     }
 
-    @Test
-    void test_parseFont_ThrowsAnException_WhenThereAreTooManyTokens() {
-        BrandingDslContext context = new BrandingDslContext(null);
-
-        try {
-            parser.parseFont(context, tokens("font", "name", "url", "extra"));
-            fail();
-        } catch (Exception e) {
-            assertEquals("Too many tokens, expected: font <name> [url]", e.getMessage());
-        }
-    }
-
-    @Test
-    void test_parseFont_ThrowsAnException_WhenNoNameIsSpecified() {
-        BrandingDslContext context = new BrandingDslContext(null);
-
-        try {
-            parser.parseFont(context, tokens("font"));
-            fail();
-        } catch (Exception e) {
-            assertEquals("Expected: font <name> [url]", e.getMessage());
-        }
-    }
-
-    @Test
-    void test_parseFont_SetsTheFontName() {
-        BrandingDslContext context = new BrandingDslContext(null);
-        context.setWorkspace(workspace);
-
-        parser.parseFont(context, tokens("font", "Times New Roman"));
-        assertEquals("Times New Roman", workspace.getViews().getConfiguration().getBranding().getFont().getName());
-    }
-
-    @Test
-    void test_parseFont_SetsTheFontUrl() {
-        BrandingDslContext context = new BrandingDslContext(null);
-        context.setWorkspace(workspace);
-
-        parser.parseFont(context, tokens("font", "Open Sans", "https://fonts.googleapis.com/css2?family=Open+Sans"));
-        assertEquals("https://fonts.googleapis.com/css2?family=Open+Sans", workspace.getViews().getConfiguration().getBranding().getFont().getUrl());
-    }
-
 }

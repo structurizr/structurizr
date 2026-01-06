@@ -4,13 +4,11 @@ import com.structurizr.util.ImageUtils;
 import com.structurizr.util.StringUtils;
 
 /**
- * A wrapper for the font, logo and color scheme associated with a corporate branding.
+ * A wrapper for the logo associated with a corporate branding.
  */
 public final class Branding {
 
     private String logo;
-
-    private Font font;
 
     Branding() {
     }
@@ -31,19 +29,6 @@ public final class Branding {
             ImageUtils.validateImage(logo);
             this.logo = logo.trim();
         }
-    }
-
-    public Font getFont() {
-        return font;
-    }
-
-    /**
-     * Sets the font to use.
-     *
-     * @param font  a Font object
-     */
-    public void setFont(Font font) {
-        this.font = font;
     }
 
 }

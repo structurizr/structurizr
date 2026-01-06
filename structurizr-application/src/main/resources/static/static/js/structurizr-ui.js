@@ -1,5 +1,4 @@
-structurizr.ui.DEFAULT_FONT_NAME = 'Open Sans, Helvetica, Arial';
-structurizr.ui.DEFAULT_FONT_URL = undefined;
+structurizr.ui.DEFAULT_FONT_NAME = 'Tahoma, Verdana, Helvetica, Arial';
 
 structurizr.ui.RENDERING_MODE_COOKIE_NAME = 'structurizr.renderingMode';
 structurizr.ui.RENDERING_MODE_SYSTEM = '';
@@ -27,25 +26,10 @@ structurizr.ui.getBranding = function() {
         if (theme.logo !== undefined) {
             branding.logo = theme.logo;
         }
-
-        if (theme.font !== undefined) {
-            branding.font = theme.font;
-        }
     })
 
     if (structurizr.workspace.views.configuration.branding.logo !== undefined) {
         branding.logo = structurizr.workspace.views.configuration.branding.logo;
-    }
-
-    if (structurizr.workspace.views.configuration.branding.font !== undefined) {
-        branding.font = structurizr.workspace.views.configuration.branding.font;
-    }
-
-    if (branding.font === undefined) {
-        branding.font = {
-            name: structurizr.ui.DEFAULT_FONT_NAME,
-            url: structurizr.ui.DEFAULT_FONT_URL
-        }
     }
 
     return branding;
@@ -53,25 +37,6 @@ structurizr.ui.getBranding = function() {
 
 structurizr.ui.applyBranding = function() {
     var branding = structurizr.ui.getBranding();
-    if (branding.font.url) {
-        const head = document.head;
-        const link = document.createElement('link');
-
-        link.type = 'text/css';
-        link.rel = 'stylesheet';
-        link.href = branding.font.url;
-
-        head.appendChild(link);
-    }
-
-    var fontNames = '';
-    branding.font.name.split(',').forEach(function(fontName) {
-        fontNames += '"' + structurizr.util.escapeHtml(fontName.trim()) + '", ';
-    });
-
-    const brandingStyles = $('#brandingStyles');
-    brandingStyles.append('#documentationPanel { font-family: ' + fontNames.substr(0, fontNames.length-2) + ' }');
-
     if (branding.logo) {
         const brandingLogo = $('.brandingLogo');
         brandingLogo.attr('src', branding.logo);

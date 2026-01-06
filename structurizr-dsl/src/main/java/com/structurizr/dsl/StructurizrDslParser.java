@@ -841,9 +841,6 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     } else if (BRANDING_LOGO_TOKEN.equalsIgnoreCase(firstToken) && inContext(BrandingDslContext.class)) {
                         new BrandingParser().parseLogo(getContext(BrandingDslContext.class), tokens);
 
-                    } else if (BRANDING_FONT_TOKEN.equalsIgnoreCase(firstToken) && inContext(BrandingDslContext.class)) {
-                        new BrandingParser().parseFont(getContext(BrandingDslContext.class), tokens);
-
                     } else if (STYLES_TOKEN.equalsIgnoreCase(firstToken) && inContext(ViewsDslContext.class)) {
                         startContext(new StylesDslContext());
 

@@ -1576,40 +1576,40 @@ public class C4PlantUMLDiagramExporterTests extends AbstractExporterTests {
                 @enduml""", diagram.getDefinition());
     }
 
-    @Test
-    public void testFont() {
-        Workspace workspace = new Workspace("Name", "Description");
-        workspace.getModel().addPerson("User");
-        SystemLandscapeView view = workspace.getViews().createSystemLandscapeView("key", "Description");
-        view.addAllElements();
-        workspace.getViews().getConfiguration().getBranding().setFont(new Font("Courier"));
-
-        Diagram diagram = new C4PlantUMLExporter().export(view);
-        assertEquals("""
-                @startuml
-                title <size:24>System Landscape View</size>\\n<size:24>Description</size>
-                
-                set separator none
-                top to bottom direction
-                
-                <style>
-                  root {
-                    BackgroundColor: #ffffff
-                    FontColor: #444444
-                    FontName: Courier
-                  }
-                </style>
-                
-                !include <C4/C4>
-                !include <C4/C4_Context>
-                
-                Person(User, "User", $descr="", $tags="", $link="")
-                
-                SHOW_LEGEND(true)
-                hide stereotypes
-                @enduml""", diagram.getDefinition());
-
-    }
+    // todo: set font on export
+//    @Test
+//    public void testFont() {
+//        Workspace workspace = new Workspace("Name", "Description");
+//        workspace.getModel().addPerson("User");
+//        SystemLandscapeView view = workspace.getViews().createSystemLandscapeView("key", "Description");
+//        view.addAllElements();
+//
+//        Diagram diagram = new C4PlantUMLExporter().export(view);
+//        assertEquals("""
+//                @startuml
+//                title <size:24>System Landscape View</size>\\n<size:24>Description</size>
+//
+//                set separator none
+//                top to bottom direction
+//
+//                <style>
+//                  root {
+//                    BackgroundColor: #ffffff
+//                    FontColor: #444444
+//                    FontName: Courier
+//                  }
+//                </style>
+//
+//                !include <C4/C4>
+//                !include <C4/C4_Context>
+//
+//                Person(User, "User", $descr="", $tags="", $link="")
+//
+//                SHOW_LEGEND(true)
+//                hide stereotypes
+//                @enduml""", diagram.getDefinition());
+//
+//    }
 
     @Test
     public void stdlib_false() {

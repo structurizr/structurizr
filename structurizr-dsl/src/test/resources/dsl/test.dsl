@@ -404,7 +404,6 @@ workspace "Name" "Description" {
 
         branding {
             logo logo.png
-            font "Example" https://example/com/font
         }
 
         terminology {

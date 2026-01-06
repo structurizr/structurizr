@@ -14,13 +14,12 @@
     <script type="text/javascript" src="./js/structurizr-diagram.js"></script>
     <script type="text/javascript" src="./workspace.js"></script>
 
-    <link href="./css/open-sans.css" rel="stylesheet" />
     <link href="./css/bootstrap-5.3.7.min.css" rel="stylesheet" media="screen" />
     <link href="./css/structurizr-static.css" rel="stylesheet" media="screen" />
     <link href="./css/structurizr.css" rel="stylesheet" media="screen" />
 </head>
 <body>
-    <span style="font-family: Arial, sans-serif; opacity: 0;"></span>
+    <span style="font-family: Tahoma, Verdana, Arial, sans-serif; opacity: 0;"></span>
     <div id="diagram">
         <div class="modal fade" id="introductionModal" tabindex="-1">
             <div class="modal-dialog modal-xl">
@@ -122,7 +121,6 @@
     const INTRODUCTION_MODAL_COOKIE_NAME = 'structurizr.static.introductionModal';
 
     structurizr.workspace = new structurizr.Workspace(JSON.parse(decodeBase64(jsonAsString)));
-    structurizr.ui.applyBranding();
     structurizr.ui.loadThemes(function() {
         init();
     });

@@ -151,11 +151,6 @@ public class ExportCommand extends AbstractCommand {
                 writeStaticFile("css/fonts/katex/" + resource.getFilename(), outputDir);
             }
 
-            resources = resolver.getResources("classpath*:/static/static/css/fonts/open-sans/*") ;
-            for (Resource resource: resources){
-                writeStaticFile("css/fonts/open-sans/" + resource.getFilename(), outputDir);
-            }
-
             resources = resolver.getResources("classpath*:/static/static/img/*") ;
             for (Resource resource: resources){
                 writeStaticFile("img/" + resource.getFilename(), outputDir);

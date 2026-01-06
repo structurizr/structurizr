@@ -82,7 +82,6 @@
 
 <script nonce="${scriptNonce}">
     const requestedScope = structurizr.util.atob('<c:out value="${scope}" />');
-    structurizr.ui.DEFAULT_FONT_URL = 'https://fonts.googleapis.com/css?family=Open+Sans:400,700';
 
     $('#graphButton').click(function() { openGraphModal(); });
 

@@ -67,13 +67,6 @@ public class StructurizrPlantUMLExporter extends AbstractPlantUMLExporter {
         writer.writeLine();
 
         String fontName = null;
-        Font font = view.getViewSet().getConfiguration().getBranding().getFont();
-        if (font != null) {
-            fontName = font.getName();
-            if (!StringUtils.isNullOrEmpty(fontName)) {
-                writer.writeLine("FontName: " + fontName);
-            }
-        }
         if (colorScheme == ColorScheme.Dark) {
             plantUMLStyles.add(new PlantUMLRootStyle(
                     Styles.DEFAULT_BACKGROUND_DARK,

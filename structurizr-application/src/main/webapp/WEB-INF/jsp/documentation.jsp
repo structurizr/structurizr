@@ -97,7 +97,6 @@
 
 <script nonce="${scriptNonce}">
     const requestedScope = structurizr.util.atob('<c:out value="${scope}" />');
-    structurizr.ui.DEFAULT_FONT_URL = 'https://fonts.googleapis.com/css?family=Open+Sans:400,700';
 
     const documentationNavigation = $('#documentationNavigation');
     const documentationNavigationDropDown = $('#documentationNavigationDropDown');
@@ -681,18 +680,6 @@
                 });
 
                 documentationContentDiv.innerHTML = document.getElementById("documentationContent").innerHTML;
-
-                const branding = structurizr.ui.getBranding();
-                if (branding.font.url) {
-                    const head = exportWindow.document.head;
-                    const link = exportWindow.document.createElement('link');
-
-                    link.type = 'text/css';
-                    link.rel = 'stylesheet';
-                    link.href = branding.font.url;
-
-                    head.appendChild(link);
-                }
 
                 if (callback) {
                     callback(exportWindow.document.documentElement.outerHTML);

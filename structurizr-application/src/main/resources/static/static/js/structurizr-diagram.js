@@ -1,7 +1,7 @@
 structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCallback) {
 
     const self = this;
-    const font = structurizr.ui.getBranding().font;
+    const font = { name: structurizr.ui.DEFAULT_FONT_NAME };
     const gridSize = 5;
     const nameFontSizeDifferenceRatio = 1.4;
     const metadataFontSizeDifferenceRatio = 0.7;
@@ -5024,13 +5024,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         var svgMarkup = getSvgOfCurrentDiagram();
         svgMarkup = svgMarkup.substring(svgMarkup.indexOf(">") +1 );
 
-        var font = '';
-        const branding = structurizr.ui.getBranding();
-        if (branding.font.url) {
-            font = '<defs><style>@import url(' + branding.font.url + ');</style></defs>';
-        }
-
-        svgMarkup = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 ' + diagramWidth + ' ' + diagramHeight + '" style="background: ' + canvasColor + '">' + font + svgMarkup;
+        svgMarkup = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 ' + diagramWidth + ' ' + diagramHeight + '" style="background: ' + canvasColor + '">' + svgMarkup;
 
         // remove some cursor definitions (leave the pointer and zoom-in cursors)
         svgMarkup = svgMarkup.replace(/cursor: move !important/g, '');
@@ -5056,17 +5050,11 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
     this.exportCurrentDiagramKeyToSVG = function() {
         var svgMarkup = diagramKey;
 
-        var font = '';
-        const branding = structurizr.ui.getBranding();
-        if (branding.font.url) {
-            font = '<defs><style>@import url(' + branding.font.url + ');</style></defs>';
-        }
-
         var diagramKeyWidth = svgMarkup.match(/width="(\d*)"/)[1];
         var diagramKeyHeight = svgMarkup.match(/height="(\d*)"/)[1];
 
         svgMarkup = svgMarkup.substring(svgMarkup.indexOf(">") +1 );
-        svgMarkup = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 ' + diagramKeyWidth + ' ' + diagramKeyHeight + '" style="background: ' + canvasColor + '">' + font + svgMarkup;
+        svgMarkup = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 ' + diagramKeyWidth + ' ' + diagramKeyHeight + '" style="background: ' + canvasColor + '">' + svgMarkup;
 
         return svgMarkup;
     };
