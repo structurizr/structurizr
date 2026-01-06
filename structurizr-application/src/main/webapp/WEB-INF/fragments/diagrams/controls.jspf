@@ -145,7 +145,14 @@
         <script nonce="${scriptNonce}">
             $('#saveButton').click(function() { saveWorkspace(); });
             $('#exitButton').click(function() {
+                <c:choose>
+                <c:when test="${not empty workspace.branch}">
+                window.location.href='${urlPrefix}/diagrams?branch=${workspace.branch}#' + structurizr.diagram.getCurrentViewOrFilter().key;
+                </c:when>
+                <c:otherwise>
                 window.location.href='${urlPrefix}/diagrams#' + structurizr.diagram.getCurrentViewOrFilter().key;
+                </c:otherwise>
+                </c:choose>
             });
         </script>
         </c:if>
