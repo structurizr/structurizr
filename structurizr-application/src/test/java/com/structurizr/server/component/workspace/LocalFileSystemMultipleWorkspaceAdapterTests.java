@@ -15,10 +15,10 @@ import java.util.Properties;
 import static com.structurizr.configuration.StructurizrProperties.DATA_DIRECTORY;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MultiWorkspaceLocalFileSystemWorkspaceAdapterTests extends AbstractTestsBase {
+public class LocalFileSystemMultipleWorkspaceAdapterTests extends AbstractTestsBase {
 
     private File dataDirectory;
-    private MultiWorkspaceLocalFileSystemWorkspaceAdapter adapter;
+    private LocalFileSystemMultipleWorkspaceAdapter adapter;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -45,7 +45,7 @@ public class MultiWorkspaceLocalFileSystemWorkspaceAdapterTests extends Abstract
         FileUtils.write(new File(dataDirectory, "7"), "text");
         FileUtils.write(new File(dataDirectory, "08"), "text");
 
-        adapter = new MultiWorkspaceLocalFileSystemWorkspaceAdapter(dataDirectory);
+        adapter = new LocalFileSystemMultipleWorkspaceAdapter(dataDirectory);
 
         List<Long> workspaceIds = adapter.getWorkspaceIds();
         assertEquals(5, workspaceIds.size());
@@ -67,7 +67,7 @@ public class MultiWorkspaceLocalFileSystemWorkspaceAdapterTests extends Abstract
         File workspace3Directory = new File(dataDirectory, "3");
         workspace3Directory.mkdir();
 
-        adapter = new MultiWorkspaceLocalFileSystemWorkspaceAdapter(dataDirectory);
+        adapter = new LocalFileSystemMultipleWorkspaceAdapter(dataDirectory);
 
         assertEquals(workspace1Directory.getAbsolutePath(), adapter.getDataDirectory(1).getAbsolutePath());
         assertEquals(workspace2Directory.getAbsolutePath(), adapter.getDataDirectory(2).getAbsolutePath());
@@ -88,7 +88,7 @@ public class MultiWorkspaceLocalFileSystemWorkspaceAdapterTests extends Abstract
         File workspace3Directory = new File(dataDirectory, "003-software-system-c");
         workspace3Directory.mkdir();
 
-        adapter = new MultiWorkspaceLocalFileSystemWorkspaceAdapter(dataDirectory);
+        adapter = new LocalFileSystemMultipleWorkspaceAdapter(dataDirectory);
 
         assertEquals(workspace1Directory.getAbsolutePath(), adapter.getDataDirectory(1).getAbsolutePath());
         assertEquals(workspace2Directory.getAbsolutePath(), adapter.getDataDirectory(2).getAbsolutePath());

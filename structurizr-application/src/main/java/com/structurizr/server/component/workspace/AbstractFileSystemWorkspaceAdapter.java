@@ -14,16 +14,9 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-abstract class AbstractFileSystemWorkspaceAdapter implements WorkspaceAdapter {
+abstract class AbstractFileSystemWorkspaceAdapter extends AbstractWorkspaceAdapter {
 
     private static final Log log = LogFactory.getLog(WorkspaceAdapter.class);
-
-    protected static final String DSL_FILE_EXTENSION = ".dsl";
-    protected static final String JSON_FILE_EXTENSION = ".json";
-
-    protected static final String WORKSPACE_JSON_FILENAME = "workspace" + JSON_FILE_EXTENSION;
-    protected static final String IMAGES_DIRECTORY_NAME = "images";
-    protected static final String PNG_FILENAME_REGEX = ".*\\.png";
 
     protected final File dataDirectory;
 

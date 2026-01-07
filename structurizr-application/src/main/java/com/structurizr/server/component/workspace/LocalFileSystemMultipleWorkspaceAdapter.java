@@ -7,9 +7,9 @@ import java.util.List;
 
 import static com.structurizr.server.component.workspace.WorkspaceDirectory.parseWorkspaceId;
 
-class MultiWorkspaceLocalFileSystemWorkspaceAdapter extends LocalFileSystemWorkspaceAdapter {
+class LocalFileSystemMultipleWorkspaceAdapter extends LocalFileSystemWorkspaceAdapter {
 
-    MultiWorkspaceLocalFileSystemWorkspaceAdapter(File dataDirectory) {
+    LocalFileSystemMultipleWorkspaceAdapter(File dataDirectory) {
         super(dataDirectory);
     }
 

@@ -24,12 +24,6 @@ class ServerFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspaceAdapte
 
     private static final Log log = LogFactory.getLog(ServerFileSystemWorkspaceAdapter.class);
 
-    private static final String BRANCHES_DIRECTORY_NAME = "branches";
-    private static final String WORKSPACE_VERSION_JSON_FILENAME = "workspace-%s.json";
-    private static final String WORKSPACE_PROPERTIES_FILENAME = "workspace.properties";
-    static final String VERSION_TIMESTAMP_FORMAT = "yyyyMMddHHmmssSSS";
-    static final String WORKSPACE_VERSION_JSON_FILENAME_REGEX = "workspace-\\d{17}\\.json";
-
     ServerFileSystemWorkspaceAdapter() {
         super(Configuration.getInstance().getDataDirectory());
     }

@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class LocalFileSystemWorkspaceAdapterTests extends AbstractTestsBase {
 
     private File dataDirectory;
-    private SingleWorkspaceLocalFileSystemWorkspaceAdapter adapter;
+    private LocalFileSystemSingleWorkspaceAdapter adapter;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -36,7 +36,7 @@ public class LocalFileSystemWorkspaceAdapterTests extends AbstractTestsBase {
 
     @Test
     void getWorkspace_WhenAWorkspaceJsonFileDoesNotExist() {
-        adapter = new SingleWorkspaceLocalFileSystemWorkspaceAdapter(dataDirectory);
+        adapter = new LocalFileSystemSingleWorkspaceAdapter(dataDirectory);
         FileUtils.write(new File(dataDirectory, "workspace.dsl"), """
                 workspace {
                 }""");
@@ -51,7 +51,7 @@ public class LocalFileSystemWorkspaceAdapterTests extends AbstractTestsBase {
 
     @Test
     void getWorkspace_WhenAWorkspaceJsonFileDoesExist() {
-        adapter = new SingleWorkspaceLocalFileSystemWorkspaceAdapter(dataDirectory);
+        adapter = new LocalFileSystemSingleWorkspaceAdapter(dataDirectory);
         FileUtils.write(new File(dataDirectory, "workspace.json"), "{}");
 
         String json = adapter.getWorkspace(1, "", "");

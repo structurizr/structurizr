@@ -7,8 +7,6 @@ public class StructurizrProperties {
 
     public static final String EDITABLE_PROPERTY = "structurizr.editable";
 
-    public static final String WORKSPACE_FILENAME = "structurizr.workspace.filename";
-
     public static final String WORKSPACE_THREADS = "structurizr.workspace.threads";
 
     public static final String WORKSPACE_EVENT_LISTENER_PLUGIN = "structurizr.plugin.workspaceeventlistener";
@@ -32,7 +30,6 @@ public class StructurizrProperties {
     public static final String SESSION_VARIANT_REDIS = "redis";
 
     public static final String DEFAULT_DATA_DIRECTORY_PATH = "/usr/local/structurizr";
-    public static final String DEFAULT_FILENAME = "workspace";
     public static final String DEFAULT_MAX_WORKSPACE_VERSIONS = "30";
     public static final String DEFAULT_NUMBER_OF_THREADS = "10";
 

@@ -239,7 +239,6 @@ public class Configuration {
 
         if (profile == Profile.Local) {
             setDefault(EDITABLE_PROPERTY, TRUE);
-            setDefault(WORKSPACE_FILENAME, DEFAULT_FILENAME);
             setDefault(WORKSPACES_PROPERTY, SINGLE_WORKSPACE);
             setDefault(AUTO_SAVE_INTERVAL_PROPERTY, DEFAULT_AUTO_SAVE_INTERVAL_IN_MILLISECONDS);
             setDefault(AUTO_REFRESH_INTERVAL_PROPERTY, DEFAULT_AUTO_REFRESH_INTERVAL_IN_MILLISECONDS);

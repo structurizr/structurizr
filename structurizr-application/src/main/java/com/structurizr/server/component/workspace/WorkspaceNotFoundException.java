@@ -4,13 +4,19 @@ import java.io.File;
 
 public class WorkspaceNotFoundException extends RuntimeException {
 
-    WorkspaceNotFoundException(File directory, String filename) {
+    WorkspaceNotFoundException(File directory) {
         super(
                 directory.exists()
                 ?
-                String.format("No %s.dsl or %s.json file was found in %s.", filename, filename, directory.getAbsolutePath())
+                String.format("No %s or %s file was found in %s.",
+                        AbstractWorkspaceAdapter.WORKSPACE_DSL_FILENAME,
+                        AbstractWorkspaceAdapter.WORKSPACE_JSON_FILENAME,
+                        directory.getAbsolutePath()
+                )
                 :
-                String.format("The workspace directory %s does not exist.", directory.getAbsolutePath())
+                String.format("The workspace directory %s does not exist.",
+                        directory.getAbsolutePath()
+                )
         );
     }
 

@@ -29,14 +29,11 @@ abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspa
     private final String API_KEY = new RandomGuidGenerator().generate();
     private final String API_SECRET = new RandomGuidGenerator().generate();
 
-    protected String filename;
-
     private long lastModifiedDate = 0;
 
     LocalFileSystemWorkspaceAdapter(File dataDirectory) {
         super(dataDirectory);
 
-        this.filename = Configuration.getInstance().getProperty(StructurizrProperties.WORKSPACE_FILENAME);
         this.lastModifiedDate = findLatestLastModifiedDate(dataDirectory);
 
         TimerTask task = new TimerTask() {
@@ -54,8 +51,8 @@ abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspa
 
     private Workspace loadWorkspace(long workspaceId) throws WorkspaceComponentException {
         File workspaceDirectory = getDataDirectory(workspaceId);
-        File dslFile = new File(workspaceDirectory, filename + DSL_FILE_EXTENSION);
-        File jsonFile = new File(workspaceDirectory, filename + JSON_FILE_EXTENSION);
+        File dslFile = new File(workspaceDirectory, WORKSPACE_DSL_FILENAME);
+        File jsonFile = new File(workspaceDirectory, WORKSPACE_JSON_FILENAME);
 
         if (jsonFile.exists() && jsonFile.lastModified() > lastModifiedDate) {
             try {
@@ -86,7 +83,7 @@ abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspa
 
                 return workspace;
             } else {
-                throw new WorkspaceNotFoundException(workspaceDirectory, filename);
+                throw new WorkspaceNotFoundException(workspaceDirectory);
             }
         }
     }
@@ -151,7 +148,7 @@ abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspa
     @Override
     public String getWorkspace(long workspaceId, String branch, String version) {
         try {
-            File jsonFile = new File(getDataDirectory(workspaceId), filename + JSON_FILE_EXTENSION);
+            File jsonFile = new File(getDataDirectory(workspaceId), WORKSPACE_JSON_FILENAME);
             if (jsonFile.exists()) {
                 return Files.readString(jsonFile.toPath());
             } else {
@@ -165,7 +162,7 @@ abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspa
     @Override
     public void putWorkspace(WorkspaceMetadata workspaceMetadata, String json, String branch) {
         try {
-            File jsonFile = new File(getDataDirectory(workspaceMetadata.getId()), filename + JSON_FILE_EXTENSION);
+            File jsonFile = new File(getDataDirectory(workspaceMetadata.getId()), WORKSPACE_JSON_FILENAME);
 
             Workspace workspace = WorkspaceUtils.fromJson(json);
             workspace.setLastModifiedDate(DateUtils.removeMilliseconds(DateUtils.getNow()));
@@ -204,16 +201,13 @@ abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspa
     private long findLatestLastModifiedDate(File directory) {
         long timestamp = 0;
 
-        String dslFilename = filename + DSL_FILE_EXTENSION;
-        String jsonFilename = filename + JSON_FILE_EXTENSION;
-
         File[] files = directory.listFiles();
         if (files != null) {
             for (File file : files) {
                 if (file.getName().startsWith(".") || file.getName().equals(StructurizrProperties.CONFIGURATION_FILE_NAME)) {
                     // ignore
                 } else if (file.isFile()) {
-                    if (file.getName().equals(jsonFilename) && new File(file.getParentFile(), dslFilename).exists()) {
+                    if (file.getName().equals(WORKSPACE_JSON_FILENAME) && new File(file.getParentFile(), WORKSPACE_DSL_FILENAME).exists()) {
                         // ignore JSON file updates if the DSL is being used as the authoring method
                         // e.g. ignore workspace.json if workspace.dsl exists in the same directory
                     } else {

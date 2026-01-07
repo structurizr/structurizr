@@ -18,10 +18,10 @@ import java.util.Properties;
 import static com.structurizr.configuration.StructurizrProperties.DATA_DIRECTORY;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SingleWorkspaceLocalFileSystemWorkspaceAdapterTests extends AbstractTestsBase {
+public class LocalFileSystemSingleWorkspaceAdapterTests extends AbstractTestsBase {
 
     private File dataDirectory;
-    private SingleWorkspaceLocalFileSystemWorkspaceAdapter adapter;
+    private LocalFileSystemSingleWorkspaceAdapter adapter;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -40,7 +40,7 @@ public class SingleWorkspaceLocalFileSystemWorkspaceAdapterTests extends Abstrac
 
     @Test
     void constructor_WhenTheDataDirectoryDoesNotExist() {
-        adapter = new SingleWorkspaceLocalFileSystemWorkspaceAdapter(dataDirectory);
+        adapter = new LocalFileSystemSingleWorkspaceAdapter(dataDirectory);
 
         assertTrue(new File(dataDirectory, "workspace.dsl").exists());
         assertFalse(new File(dataDirectory, "workspace.json").exists());
@@ -49,7 +49,7 @@ public class SingleWorkspaceLocalFileSystemWorkspaceAdapterTests extends Abstrac
     @Test
     void constructor_WhenAWorkspaceJsonFileExists() {
         FileUtils.write(new File(dataDirectory, "workspace.json"), "{}");
-        adapter = new SingleWorkspaceLocalFileSystemWorkspaceAdapter(dataDirectory);
+        adapter = new LocalFileSystemSingleWorkspaceAdapter(dataDirectory);
 
         assertTrue(new File(dataDirectory, "workspace.json").exists());
         assertFalse(new File(dataDirectory, "workspace.dsl").exists()); // this doesn't get created automatically
@@ -57,7 +57,7 @@ public class SingleWorkspaceLocalFileSystemWorkspaceAdapterTests extends Abstrac
 
     @Test
     void getWorkspaceIds() {
-        adapter = new SingleWorkspaceLocalFileSystemWorkspaceAdapter(dataDirectory);
+        adapter = new LocalFileSystemSingleWorkspaceAdapter(dataDirectory);
 
         assertEquals(1, adapter.getWorkspaceIds().size());
         assertEquals(1, adapter.getWorkspaceIds().getFirst());
@@ -68,7 +68,7 @@ public class SingleWorkspaceLocalFileSystemWorkspaceAdapterTests extends Abstrac
         Workspace workspace = new Workspace("JSON", "Description");
         WorkspaceUtils.saveWorkspaceToJson(workspace, new File(dataDirectory, "workspace.json"));
 
-        adapter = new SingleWorkspaceLocalFileSystemWorkspaceAdapter(dataDirectory);
+        adapter = new LocalFileSystemSingleWorkspaceAdapter(dataDirectory);
 
         WorkspaceMetadata wmd = adapter.getWorkspaceMetadata(1);
         assertEquals("JSON", wmd.getName());
@@ -84,7 +84,7 @@ public class SingleWorkspaceLocalFileSystemWorkspaceAdapterTests extends Abstrac
                 }""";
         FileUtils.write(new File(dataDirectory, "workspace.dsl"), dsl);
 
-        adapter = new SingleWorkspaceLocalFileSystemWorkspaceAdapter(dataDirectory);
+        adapter = new LocalFileSystemSingleWorkspaceAdapter(dataDirectory);
 
         WorkspaceMetadata wmd = adapter.getWorkspaceMetadata(1);
         assertEquals("DSL", wmd.getName());
