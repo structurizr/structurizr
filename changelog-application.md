@@ -10,4 +10,6 @@
 - local: Removes support for Lite's auto-sync.
 - server: Authentication is disabled by default.
 - server: Adds API endpoints to get branches and delete a branch (https://github.com/structurizr/structurizr/issues/8).
+- branches: Adds a branches command to list workspace branches (https://github.com/structurizr/structurizr/issues/7).
+- delete: Adds a delete command to delete a workspace branch (https://github.com/structurizr/structurizr/issues/7).
 - playground: Adds a new [playground server](https://playground.structurizr.com).

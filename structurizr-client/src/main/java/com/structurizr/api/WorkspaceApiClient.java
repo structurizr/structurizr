@@ -1,5 +1,6 @@
 package com.structurizr.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.structurizr.Workspace;
 import com.structurizr.encryption.EncryptedWorkspace;
 import com.structurizr.encryption.EncryptionLocation;
@@ -23,7 +24,6 @@ import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.Header;
 import org.apache.hc.core5.http.HttpStatus;
-import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
 
@@ -469,6 +469,82 @@ public class WorkspaceApiClient extends AbstractApiClient {
 
                 return username + (!StringUtils.isNullOrEmpty(hostname) ? "@" + hostname : "");
             }
+        }
+    }
+
+    /**
+     * Gets the list of branches for the workspace with the given ID.
+     *
+     * @param   workspaceId     the ID of your workspace
+     * @return                  an array of branch names (String)
+     * @throws StructurizrClientException   if there are problems related to the network, authorization, etc
+     */
+    public String[] getBranches(long workspaceId) throws StructurizrClientException {
+        if (workspaceId <= 0) {
+            throw new IllegalArgumentException("The workspace ID must be a positive integer.");
+        }
+
+        try (CloseableHttpClient httpClient = HttpClients.createSystem()) {
+            HttpUriRequestBase httpRequest;
+
+            httpRequest = new HttpGet(url + WORKSPACE_PATH + "/" + workspaceId + "/branch");
+
+            addHeaders(httpRequest, "", "");
+            debugRequest(httpRequest, null);
+
+            try (CloseableHttpResponse response = httpClient.execute(httpRequest)) {
+                String json = EntityUtils.toString(response.getEntity());
+                debugResponse(response, json);
+
+                if (response.getCode() == HttpStatus.SC_OK) {
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    return objectMapper.readValue(json, String[].class);
+                } else {
+                    ApiResponse apiResponse = ApiResponse.parse(json);
+                    throw new StructurizrClientException(apiResponse.getMessage());
+                }
+            }
+        } catch (Exception e) {
+            log.error(e);
+            throw new StructurizrClientException(e);
+        }
+    }
+
+    /**
+     * Deletes a given branch for the workspace with the given ID.
+     *
+     * @param   workspaceId     the ID of your workspace
+     * @return                  true if the branch was deleted, false otherwise
+     * @throws StructurizrClientException   if there are problems related to the network, authorization, etc
+     */
+    public boolean deleteBranch(long workspaceId, String branch) throws StructurizrClientException {
+        if (workspaceId <= 0) {
+            throw new IllegalArgumentException("The workspace ID must be a positive integer.");
+        }
+
+        try (CloseableHttpClient httpClient = HttpClients.createSystem()) {
+            HttpUriRequestBase httpRequest;
+
+            httpRequest = new HttpDelete(url + WORKSPACE_PATH + "/" + workspaceId + "/branch/" + branch);
+
+            addHeaders(httpRequest, "", "");
+            debugRequest(httpRequest, null);
+
+            try (CloseableHttpResponse response = httpClient.execute(httpRequest)) {
+                String json = EntityUtils.toString(response.getEntity());
+                debugResponse(response, json);
+
+                if (response.getCode() == HttpStatus.SC_OK) {
+                    ApiResponse apiResponse = ApiResponse.parse(json);
+                    return apiResponse.isSuccess();
+                } else {
+                    ApiResponse apiResponse = ApiResponse.parse(json);
+                    throw new StructurizrClientException(apiResponse.getMessage());
+                }
+            }
+        } catch (Exception e) {
+            log.error(e);
+            throw new StructurizrClientException(e);
         }
     }
 

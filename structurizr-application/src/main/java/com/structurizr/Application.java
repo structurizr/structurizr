@@ -12,10 +12,14 @@ public class Application {
 	private static final String PLAYGROUND_COMMAND = "playground";
 	private static final String LOCAL_COMMAND = "local";
 	private static final String SERVER_COMMAND = "server";
+
 	private static final String PUSH_COMMAND = "push";
 	private static final String PULL_COMMAND = "pull";
 	private static final String LOCK_COMMAND = "lock";
 	private static final String UNLOCK_COMMAND = "unlock";
+	private static final String BRANCHES_COMMAND = "branches";
+	private static final String DELETE_COMMAND = "delete";
+
 	private static final String EXPORT_COMMAND = "export";
 	private static final String MERGE_COMMAND = "merge";
 	private static final String VALIDATE_COMMAND = "validate";
@@ -30,10 +34,14 @@ public class Application {
 		COMMANDS.put(PLAYGROUND_COMMAND, new PlaygroundCommand());
 		COMMANDS.put(LOCAL_COMMAND, new LocalCommand());
 		COMMANDS.put(SERVER_COMMAND, new ServerCommand());
+
 		COMMANDS.put(PUSH_COMMAND, new PushCommand());
 		COMMANDS.put(PULL_COMMAND, new PullCommand());
 		COMMANDS.put(LOCK_COMMAND, new LockCommand());
 		COMMANDS.put(UNLOCK_COMMAND, new UnlockCommand());
+		COMMANDS.put(BRANCHES_COMMAND, new BranchesCommand());
+		COMMANDS.put(DELETE_COMMAND, new DeleteCommand());
+
 		COMMANDS.put(EXPORT_COMMAND, new ExportCommand());
 		COMMANDS.put(MERGE_COMMAND, new MergeCommand());
 		COMMANDS.put(VALIDATE_COMMAND, new ValidateCommand());
