@@ -23,11 +23,9 @@ public class StructurizrProperties {
     public static final String AUTHENTICATION_IMPLEMENTATION = "structurizr.authentication";
     public static final String AUTHENTICATION_VARIANT_NONE = "none";
     public static final String AUTHENTICATION_VARIANT_FILE = "file";
-    public static final String AUTHENTICATION_VARIANT_SAML = "saml";
 
     public static final String SESSION_IMPLEMENTATION = "structurizr.session";
     public static final String SESSION_VARIANT_LOCAL = "local";
-    public static final String SESSION_VARIANT_REDIS = "redis";
 
     public static final String DEFAULT_DATA_DIRECTORY_PATH = "/usr/local/structurizr";
     public static final String DEFAULT_MAX_WORKSPACE_VERSIONS = "30";
