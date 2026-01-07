@@ -28,6 +28,7 @@ final class WorkspaceMetadataCacheFactory {
                 return clazz.getDeclaredConstructor().newInstance();
             }
         } catch (Exception e) {
+            e.printStackTrace();
             log.fatal(e);
         }
 
