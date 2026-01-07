@@ -3,6 +3,7 @@ package com.structurizr.dsl;
 import com.structurizr.util.FeatureNotEnabledException;
 import com.structurizr.util.Url;
 import com.structurizr.view.ThemeUtils;
+import com.structurizr.view.Themes;
 
 import java.io.File;
 
@@ -14,13 +15,13 @@ final class ThemeParser extends AbstractParser {
     private final static int FIRST_THEME_INDEX = 1;
 
     void parseTheme(DslContext context, File dslFile, Tokens tokens) {
-        // theme <default|url|file>
+        // theme <name|url|file>
         if (tokens.hasMoreThan(FIRST_THEME_INDEX)) {
-            throw new RuntimeException("Too many tokens, expected: theme <url|file>");
+            throw new RuntimeException("Too many tokens, expected: theme <name|url|file>");
         }
 
         if (!tokens.includes(FIRST_THEME_INDEX)) {
-            throw new RuntimeException("Expected: theme <url|file>");
+            throw new RuntimeException("Expected: theme <name|url|file>");
         }
 
         addTheme(context, dslFile, tokens.get(FIRST_THEME_INDEX));
@@ -42,7 +43,9 @@ final class ThemeParser extends AbstractParser {
             theme = DEFAULT_THEME_URL;
         }
 
-        if (Url.isUrl(theme)) {
+        if (Themes.isBuiltIn(theme)) {
+            context.getWorkspace().getViews().getConfiguration().addTheme(theme);
+        } else if (Url.isUrl(theme)) {
             // this adds the theme to the list of theme URLs in the workspace
             context.getWorkspace().getViews().getConfiguration().addTheme(theme);
         } else {

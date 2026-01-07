@@ -4,6 +4,7 @@ import com.structurizr.Workspace;
 import com.structurizr.dsl.StructurizrDslParser;
 import com.structurizr.http.HttpClient;
 import com.structurizr.inspection.DefaultInspector;
+import com.structurizr.util.BuiltInThemes;
 import com.structurizr.util.WorkspaceUtils;
 import com.structurizr.validation.WorkspaceScopeValidatorFactory;
 import org.apache.commons.logging.Log;
@@ -35,13 +36,6 @@ public abstract class AbstractCommand {
     String getAgent() {
         return "structurizr/" + getClass().getPackage().getImplementationVersion();
 
-    }
-
-    protected void addDefaultViewsAndStyles(Workspace workspace) {
-        if (workspace.getViews().isEmpty()) {
-            log.info(" - no views defined; creating default views");
-            workspace.getViews().createDefaultViews();
-        }
     }
 
     protected Workspace loadWorkspace(String workspacePathAsString) throws Exception {
@@ -97,6 +91,15 @@ public abstract class AbstractCommand {
 
         // run default inspections
         new DefaultInspector(workspace);
+
+        // inline built-in theme icons
+        BuiltInThemes.inlineIcons(workspace);
+
+        // add default views if no views are explicitly defined
+        if (!workspace.getModel().isEmpty() && workspace.getViews().isEmpty()) {
+            log.info(" - no views defined; creating default views");
+            workspace.getViews().createDefaultViews();
+        }
 
         return workspace;
     }

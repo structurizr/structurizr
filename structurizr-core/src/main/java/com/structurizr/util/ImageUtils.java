@@ -117,7 +117,7 @@ public class ImageUtils {
     }
 
     /**
-     * Converts an PNG to a data URI.
+     * Converts a PNG to a data URI.
      *
      * @param png       the PNG as a byte array
      * @return          a data URI

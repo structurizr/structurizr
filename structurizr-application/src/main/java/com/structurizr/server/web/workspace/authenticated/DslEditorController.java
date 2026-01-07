@@ -11,6 +11,7 @@ import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Features;
 import com.structurizr.server.domain.User;
 import com.structurizr.server.web.Views;
+import com.structurizr.util.BuiltInThemes;
 import com.structurizr.util.DslTemplate;
 import com.structurizr.util.StringUtils;
 import com.structurizr.util.WorkspaceUtils;
@@ -125,16 +126,19 @@ public class DslEditorController extends AbstractWorkspaceController {
         Workspace workspace = parser.getWorkspace();
         DslUtils.setDsl(workspace, dsl);
 
-        // add default views if no views are explicitly defined
-        if (!workspace.getModel().isEmpty() && workspace.getViews().isEmpty()) {
-            workspace.getViews().createDefaultViews();
-        }
-
         // validate workspace scope
         WorkspaceValidationUtils.validateWorkspaceScope(workspace);
 
         // run default inspections
         new DefaultInspector(workspace);
+
+        // inline built-in theme icons
+        BuiltInThemes.inlineIcons(workspace);
+
+        // add default views if no views are explicitly defined
+        if (!workspace.getModel().isEmpty() && workspace.getViews().isEmpty()) {
+            workspace.getViews().createDefaultViews();
+        }
 
         return workspace;
     }

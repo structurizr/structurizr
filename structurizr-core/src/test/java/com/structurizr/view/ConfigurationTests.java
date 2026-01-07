@@ -68,4 +68,20 @@ public class ConfigurationTests extends AbstractWorkspaceTestBase {
         assertEquals(0, configuration.getThemes().length);
     }
 
+    @Test
+    void addTheme_WithACloudServiceTheme() {
+        Configuration configuration = new Configuration();
+        configuration.addTheme("https://static.structurizr.com/themes/amazon-web-services-2023.01.31/theme.json");
+        assertEquals(1, configuration.getThemes().length);
+        assertEquals("https://static.structurizr.com/themes/amazon-web-services-2023.01.31/theme.json", configuration.getThemes()[0]);
+    }
+
+    @Test
+    void addTheme_WithDefaultTheme() {
+        Configuration configuration = new Configuration();
+        configuration.addTheme("https://static.structurizr.com/themes/default/theme.json");
+        assertEquals(1, configuration.getThemes().length);
+        assertEquals("https://static.structurizr.com/themes/default/theme.json", configuration.getThemes()[0]);
+    }
+
 }

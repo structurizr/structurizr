@@ -16,7 +16,7 @@ class ThemeParserTests extends AbstractTests {
             parser.parseTheme(context(), null, tokens("theme", "url", "extra"));
             fail();
         } catch (Exception e) {
-            assertEquals("Too many tokens, expected: theme <url|file>", e.getMessage());
+            assertEquals("Too many tokens, expected: theme <name|url|file>", e.getMessage());
         }
     }
 
@@ -26,7 +26,7 @@ class ThemeParserTests extends AbstractTests {
             parser.parseTheme(context(), null, tokens("theme"));
             fail();
         } catch (Exception e) {
-            assertEquals("Expected: theme <url|file>", e.getMessage());
+            assertEquals("Expected: theme <name|url|file>", e.getMessage());
         }
     }
 
@@ -40,10 +40,18 @@ class ThemeParserTests extends AbstractTests {
 
     @Test
     void test_parseTheme_AddsTheTheme_WhenTheDefaultThemeIsSpecified() {
-        parser.parseTheme(context(), null, tokens("theme", "default"));
+        parser.parseTheme(context(), null, tokens("themes", "default"));
 
         assertEquals(1, workspace.getViews().getConfiguration().getThemes().length);
         assertEquals("https://static.structurizr.com/themes/default/theme.json", workspace.getViews().getConfiguration().getThemes()[0]);
+    }
+
+    @Test
+    void test_parseTheme_AddsTheTheme_WhenBuiltInThemeIsSpecified() {
+        parser.parseTheme(context(), null, tokens("theme", "amazon-web-services-2023.01.31"));
+
+        assertEquals(1, workspace.getViews().getConfiguration().getThemes().length);
+        assertEquals("amazon-web-services-2023.01.31", workspace.getViews().getConfiguration().getThemes()[0]);
     }
 
     @Test
@@ -80,6 +88,14 @@ class ThemeParserTests extends AbstractTests {
 
         assertEquals(1, workspace.getViews().getConfiguration().getThemes().length);
         assertEquals("https://static.structurizr.com/themes/default/theme.json", workspace.getViews().getConfiguration().getThemes()[0]);
+    }
+
+    @Test
+    void test_parseThemes_AddsTheTheme_WhenBuiltInThemeIsSpecified() {
+        parser.parseThemes(context(), null, tokens("themes", "amazon-web-services-2023.01.31"));
+
+        assertEquals(1, workspace.getViews().getConfiguration().getThemes().length);
+        assertEquals("amazon-web-services-2023.01.31", workspace.getViews().getConfiguration().getThemes()[0]);
     }
 
     @Test

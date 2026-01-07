@@ -46,7 +46,17 @@ structurizr.ui.applyBranding = function() {
 
 structurizr.ui.loadThemes = function(callback) {
     structurizr.workspace.views.configuration.themes.forEach(function(theme) {
-        structurizr.ui.loadTheme(theme);
+        if (theme.indexOf('http') === 0) {
+            structurizr.ui.loadTheme(theme);
+        } else {
+            structurizr.ui.themes.push(
+                {
+                    elements: [],
+                    relationships: [],
+                    logo: undefined
+                }
+            );
+        }
     });
 
     setTimeout(function() {
@@ -97,8 +107,7 @@ structurizr.ui.loadTheme = function( url) {
                 {
                     elements: theme.elements.sort(structurizr.util.sortStyles),
                     relationships: theme.relationships.sort(structurizr.util.sortStyles),
-                    logo: theme.logo,
-                    font: theme.font
+                    logo: theme.logo
                 }
             );
         } catch (e) {

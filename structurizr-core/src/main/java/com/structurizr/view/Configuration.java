@@ -3,7 +3,10 @@ package com.structurizr.view;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.structurizr.PropertyHolder;
+import com.structurizr.util.StringUtils;
 import com.structurizr.util.Url;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.util.*;
 
@@ -12,9 +15,15 @@ import java.util.*;
  */
 public final class Configuration implements PropertyHolder {
 
+    private static final Log log = LogFactory.getLog(Configuration.class);
+
+    private static final String STRUCTURIZR_CLOUD_SERVICE_THEMES_URL = "https://static.structurizr.com/themes/";
+    private static final String THEME_JSON = "/theme.json";
+    private static final String ICON_JSON = "/icons.json";
+
     private Branding branding = new Branding();
-    private Styles styles = new Styles();
-    private List<String> themes = new ArrayList<>();
+    private final Styles styles = new Styles();
+    private final List<String> themes = new ArrayList<>();
     private Terminology terminology = new Terminology();
 
     private MetadataSymbols metadataSymbols;
@@ -69,16 +78,41 @@ public final class Configuration implements PropertyHolder {
     /**
      * Adds a theme.
      *
-     * @param url       the URL of the theme to be added
+     * @param theme       the name of URL of the theme to be added
      */
-    public void addTheme(String url) {
-        if (url != null && url.trim().length() > 0) {
-            if (Url.isUrl(url)) {
-                if (!themes.contains(url)) {
-                    themes.add(url.trim());
-                }
+    public void addTheme(String theme) {
+        if (!StringUtils.isNullOrEmpty(theme)) {
+            theme = theme.trim();
+
+            if (Themes.isBuiltIn(theme)) {
+                themes.add(theme);
             } else {
-                throw new IllegalArgumentException(url + " is not a valid URL.");
+                if (Url.isUrl(theme)) {
+                    if (theme.startsWith(STRUCTURIZR_CLOUD_SERVICE_THEMES_URL)) {
+                        String originalTheme = theme;
+                        theme = originalTheme.replace(STRUCTURIZR_CLOUD_SERVICE_THEMES_URL, "");
+                        theme = theme.replace(THEME_JSON, "");
+                        theme = theme.replace(ICON_JSON, "");
+
+                        if ("default".equals(theme)) {
+                            log.warn("""
+                            The "default" theme is deprecated and will be removed on 30 September 2026
+                            """);
+                            theme = originalTheme;
+                        } else {
+                            log.warn(String.format("""
+                                    The Structurizr cloud service will reach its End of Life (EOL) on 30 September 2026 - please change "%s" to "%s"
+                                    """, originalTheme, theme));
+                            theme = originalTheme;
+                        }
+                    }
+
+                    if (!themes.contains(theme)) {
+                        themes.add(theme);
+                    }
+                } else {
+                    throw new IllegalArgumentException(theme + " is not a valid URL.");
+                }
             }
         }
     }

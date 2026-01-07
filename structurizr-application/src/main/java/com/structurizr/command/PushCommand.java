@@ -3,6 +3,7 @@ package com.structurizr.command;
 import com.structurizr.Workspace;
 import com.structurizr.api.WorkspaceApiClient;
 import com.structurizr.encryption.AesEncryptionStrategy;
+import com.structurizr.util.BuiltInThemes;
 import com.structurizr.util.StringUtils;
 import org.apache.commons.cli.*;
 import org.apache.commons.logging.Log;
@@ -135,8 +136,6 @@ public class PushCommand extends AbstractCommand {
 
         log.info(" - merge layout from remote: " + mergeFromRemote);
         client.setMergeFromRemote(mergeFromRemote);
-
-        addDefaultViewsAndStyles(workspace);
 
         if (archive) {
             client.setWorkspaceArchiveLocation(archivePath);

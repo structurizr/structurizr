@@ -7,14 +7,13 @@ import com.structurizr.util.StringUtils;
 import java.util.Collection;
 import java.util.LinkedList;
 
-final class Theme {
+public final class Theme {
 
     private String name;
     private String description;
     private Collection<ElementStyle> elements = new LinkedList<>();
     private Collection<RelationshipStyle> relationships = new LinkedList<>();
     private String logo;
-    private Font font;
 
     Theme() {
     }
@@ -48,7 +47,7 @@ final class Theme {
     }
 
     @JsonGetter
-    Collection<ElementStyle> getElements() {
+    public Collection<ElementStyle> getElements() {
         return elements;
     }
 
@@ -57,7 +56,7 @@ final class Theme {
     }
 
     @JsonGetter
-    Collection<RelationshipStyle> getRelationships() {
+    public Collection<RelationshipStyle> getRelationships() {
         return relationships;
     }
 
@@ -81,19 +80,6 @@ final class Theme {
             ImageUtils.validateImage(logo);
             this.logo = logo.trim();
         }
-    }
-
-    public Font getFont() {
-        return font;
-    }
-
-    /**
-     * Sets the font to use.
-     *
-     * @param font  a Font object
-     */
-    public void setFont(Font font) {
-        this.font = font;
     }
 
 }
