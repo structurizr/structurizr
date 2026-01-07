@@ -1,9 +1,13 @@
 package com.structurizr.server.component.workspace;
 
+import com.structurizr.Workspace;
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Profile;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.AbstractTestsBase;
 import com.structurizr.util.FileUtils;
+import com.structurizr.util.StringUtils;
+import com.structurizr.util.WorkspaceUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,12 +17,12 @@ import java.util.List;
 import java.util.Properties;
 
 import static com.structurizr.configuration.StructurizrProperties.DATA_DIRECTORY;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class LocalFileSystemMultipleWorkspaceAdapterTests extends AbstractTestsBase {
+class LocalFileSystemMultipleWorkspaceAdapterTests extends AbstractWorkspaceAdapterTests {
 
     private File dataDirectory;
-    private LocalFileSystemMultipleWorkspaceAdapter adapter;
+    private LocalFileSystemMultipleWorkspaceAdapter workspaceAdapter;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -28,6 +32,8 @@ public class LocalFileSystemMultipleWorkspaceAdapterTests extends AbstractTestsB
         properties.setProperty(DATA_DIRECTORY, dataDirectory.getAbsolutePath());
 
         Configuration.init(Profile.Local, properties);
+
+        workspaceAdapter = new LocalFileSystemMultipleWorkspaceAdapter();
     }
 
     @AfterEach
@@ -45,9 +51,7 @@ public class LocalFileSystemMultipleWorkspaceAdapterTests extends AbstractTestsB
         FileUtils.write(new File(dataDirectory, "7"), "text");
         FileUtils.write(new File(dataDirectory, "08"), "text");
 
-        adapter = new LocalFileSystemMultipleWorkspaceAdapter(dataDirectory);
-
-        List<Long> workspaceIds = adapter.getWorkspaceIds();
+        List<Long> workspaceIds = workspaceAdapter.getWorkspaceIds();
         assertEquals(5, workspaceIds.size());
         assertEquals(1L, workspaceIds.get(0));
         assertEquals(2L, workspaceIds.get(1));
@@ -67,11 +71,9 @@ public class LocalFileSystemMultipleWorkspaceAdapterTests extends AbstractTestsB
         File workspace3Directory = new File(dataDirectory, "3");
         workspace3Directory.mkdir();
 
-        adapter = new LocalFileSystemMultipleWorkspaceAdapter(dataDirectory);
-
-        assertEquals(workspace1Directory.getAbsolutePath(), adapter.getDataDirectory(1).getAbsolutePath());
-        assertEquals(workspace2Directory.getAbsolutePath(), adapter.getDataDirectory(2).getAbsolutePath());
-        assertEquals(workspace3Directory.getAbsolutePath(), adapter.getDataDirectory(3).getAbsolutePath());
+        assertEquals(workspace1Directory.getAbsolutePath(), workspaceAdapter.getDataDirectory(1).getAbsolutePath());
+        assertEquals(workspace2Directory.getAbsolutePath(), workspaceAdapter.getDataDirectory(2).getAbsolutePath());
+        assertEquals(workspace3Directory.getAbsolutePath(), workspaceAdapter.getDataDirectory(3).getAbsolutePath());
     }
 
     @Test
@@ -88,11 +90,52 @@ public class LocalFileSystemMultipleWorkspaceAdapterTests extends AbstractTestsB
         File workspace3Directory = new File(dataDirectory, "003-software-system-c");
         workspace3Directory.mkdir();
 
-        adapter = new LocalFileSystemMultipleWorkspaceAdapter(dataDirectory);
+        assertEquals(workspace1Directory.getAbsolutePath(), workspaceAdapter.getDataDirectory(1).getAbsolutePath());
+        assertEquals(workspace2Directory.getAbsolutePath(), workspaceAdapter.getDataDirectory(2).getAbsolutePath());
+        assertEquals(workspace3Directory.getAbsolutePath(), workspaceAdapter.getDataDirectory(3).getAbsolutePath());
+    }
 
-        assertEquals(workspace1Directory.getAbsolutePath(), adapter.getDataDirectory(1).getAbsolutePath());
-        assertEquals(workspace2Directory.getAbsolutePath(), adapter.getDataDirectory(2).getAbsolutePath());
-        assertEquals(workspace3Directory.getAbsolutePath(), adapter.getDataDirectory(3).getAbsolutePath());
+    @Test
+    @Override
+    void workspaceMetadata() {
+        try {
+            Workspace workspace = new Workspace("JSON", "Description");
+            File workspaceDirectory = workspaceAdapter.getDataDirectory(1);
+            workspaceDirectory.mkdirs();
+
+            WorkspaceUtils.saveWorkspaceToJson(workspace, new File(workspaceDirectory, "workspace.json"));
+
+            workspaceAdapter = new LocalFileSystemMultipleWorkspaceAdapter();
+
+            WorkspaceMetadata wmd = workspaceAdapter.getWorkspaceMetadata(1);
+            assertEquals("JSON", wmd.getName());
+            assertEquals("Description", wmd.getDescription());
+            assertFalse(StringUtils.isNullOrEmpty(wmd.getApiKey()));
+            assertFalse(StringUtils.isNullOrEmpty(wmd.getApiSecret()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
+
+    @Override
+    void branches() {
+        // not supported
+    }
+
+    @Override
+    void versions() {
+        // not supported
+    }
+
+    @Override
+    void deleteWorkspace() {
+        super.deleteWorkspace();
+    }
+
+    @Override
+    protected WorkspaceAdapter getWorkspaceAdapter() {
+        return workspaceAdapter;
     }
 
 }

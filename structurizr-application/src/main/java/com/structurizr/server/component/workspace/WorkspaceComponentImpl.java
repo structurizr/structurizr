@@ -47,9 +47,9 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
     WorkspaceComponentImpl() {
         if (Configuration.getInstance().getProfile() == Profile.Local) {
             if (Configuration.getInstance().isSingleWorkspace()) {
-                workspaceAdapter = new LocalFileSystemSingleWorkspaceAdapter(Configuration.getInstance().getDataDirectory());
+                workspaceAdapter = new LocalFileSystemSingleWorkspaceAdapter();
             } else {
-                workspaceAdapter = new LocalFileSystemMultipleWorkspaceAdapter(Configuration.getInstance().getDataDirectory());
+                workspaceAdapter = new LocalFileSystemMultipleWorkspaceAdapter();
             }
         } else {
             workspaceAdapter = WorkspaceAdapterFactory.create();

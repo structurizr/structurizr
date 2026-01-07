@@ -1,5 +1,6 @@
 package com.structurizr.server.component.workspace;
 
+import com.structurizr.configuration.Configuration;
 import com.structurizr.util.DslTemplate;
 import com.structurizr.util.FileUtils;
 import org.apache.commons.logging.Log;
@@ -14,8 +15,8 @@ class LocalFileSystemSingleWorkspaceAdapter extends LocalFileSystemWorkspaceAdap
 
     private static final long WORKSPACE_ID = 1;
 
-    LocalFileSystemSingleWorkspaceAdapter(File dataDirectory) {
-        super(dataDirectory);
+    LocalFileSystemSingleWorkspaceAdapter() {
+        super(Configuration.getInstance().getDataDirectory());
 
         createWorkspaceWhenDirectoryIsEmpty();
     }

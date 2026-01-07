@@ -33,7 +33,7 @@ class ServerFileSystemWorkspaceAdapterTests extends AbstractWorkspaceAdapterTest
     }
 
     @Test
-    public void test_removeOldWorkspaceVersions() throws Exception {
+    void test_removeOldWorkspaceVersions() throws Exception {
         File workspaceDirectory = new File(dataDirectory, "123");
         workspaceDirectory.mkdirs();
 

@@ -162,11 +162,11 @@ abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspa
     @Override
     public void putWorkspace(WorkspaceMetadata workspaceMetadata, String json, String branch) {
         try {
-            File jsonFile = new File(getDataDirectory(workspaceMetadata.getId()), WORKSPACE_JSON_FILENAME);
+            File workspaceDirectory = getDataDirectory(workspaceMetadata.getId());
+            workspaceDirectory.mkdirs();
 
-            Workspace workspace = WorkspaceUtils.fromJson(json);
-            workspace.setLastModifiedDate(DateUtils.removeMilliseconds(DateUtils.getNow()));
-            WorkspaceUtils.saveWorkspaceToJson(workspace, jsonFile);
+            File file = new File(workspaceDirectory, WORKSPACE_JSON_FILENAME);
+            Files.writeString(file.toPath(), json);
         } catch (Exception e) {
             log.error(e);
             throw new WorkspaceComponentException(e.getMessage());

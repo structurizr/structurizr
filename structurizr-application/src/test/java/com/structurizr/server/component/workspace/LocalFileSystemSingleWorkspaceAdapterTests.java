@@ -4,7 +4,6 @@ import com.structurizr.Workspace;
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Profile;
 import com.structurizr.server.domain.WorkspaceMetadata;
-import com.structurizr.server.web.AbstractTestsBase;
 import com.structurizr.util.FileUtils;
 import com.structurizr.util.StringUtils;
 import com.structurizr.util.WorkspaceUtils;
@@ -18,10 +17,10 @@ import java.util.Properties;
 import static com.structurizr.configuration.StructurizrProperties.DATA_DIRECTORY;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class LocalFileSystemSingleWorkspaceAdapterTests extends AbstractTestsBase {
+class LocalFileSystemSingleWorkspaceAdapterTests extends AbstractWorkspaceAdapterTests {
 
     private File dataDirectory;
-    private LocalFileSystemSingleWorkspaceAdapter adapter;
+    private LocalFileSystemSingleWorkspaceAdapter workspaceAdapter;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -31,6 +30,8 @@ public class LocalFileSystemSingleWorkspaceAdapterTests extends AbstractTestsBas
         properties.setProperty(DATA_DIRECTORY, dataDirectory.getAbsolutePath());
 
         Configuration.init(Profile.Local, properties);
+
+        workspaceAdapter = new LocalFileSystemSingleWorkspaceAdapter();
     }
 
     @AfterEach
@@ -40,7 +41,7 @@ public class LocalFileSystemSingleWorkspaceAdapterTests extends AbstractTestsBas
 
     @Test
     void constructor_WhenTheDataDirectoryDoesNotExist() {
-        adapter = new LocalFileSystemSingleWorkspaceAdapter(dataDirectory);
+        workspaceAdapter = new LocalFileSystemSingleWorkspaceAdapter();
 
         assertTrue(new File(dataDirectory, "workspace.dsl").exists());
         assertFalse(new File(dataDirectory, "workspace.json").exists());
@@ -48,19 +49,22 @@ public class LocalFileSystemSingleWorkspaceAdapterTests extends AbstractTestsBas
 
     @Test
     void constructor_WhenAWorkspaceJsonFileExists() {
+        deleteDirectory(dataDirectory);
+        dataDirectory.mkdirs();
         FileUtils.write(new File(dataDirectory, "workspace.json"), "{}");
-        adapter = new LocalFileSystemSingleWorkspaceAdapter(dataDirectory);
+        workspaceAdapter = new LocalFileSystemSingleWorkspaceAdapter();
 
         assertTrue(new File(dataDirectory, "workspace.json").exists());
         assertFalse(new File(dataDirectory, "workspace.dsl").exists()); // this doesn't get created automatically
     }
 
     @Test
+    @Override
     void getWorkspaceIds() {
-        adapter = new LocalFileSystemSingleWorkspaceAdapter(dataDirectory);
+        workspaceAdapter = new LocalFileSystemSingleWorkspaceAdapter();
 
-        assertEquals(1, adapter.getWorkspaceIds().size());
-        assertEquals(1, adapter.getWorkspaceIds().getFirst());
+        assertEquals(1, workspaceAdapter.getWorkspaceIds().size());
+        assertEquals(1, workspaceAdapter.getWorkspaceIds().getFirst());
     }
 
     @Test
@@ -68,9 +72,9 @@ public class LocalFileSystemSingleWorkspaceAdapterTests extends AbstractTestsBas
         Workspace workspace = new Workspace("JSON", "Description");
         WorkspaceUtils.saveWorkspaceToJson(workspace, new File(dataDirectory, "workspace.json"));
 
-        adapter = new LocalFileSystemSingleWorkspaceAdapter(dataDirectory);
+        workspaceAdapter = new LocalFileSystemSingleWorkspaceAdapter();
 
-        WorkspaceMetadata wmd = adapter.getWorkspaceMetadata(1);
+        WorkspaceMetadata wmd = workspaceAdapter.getWorkspaceMetadata(1);
         assertEquals("JSON", wmd.getName());
         assertEquals("Description", wmd.getDescription());
         assertFalse(StringUtils.isNullOrEmpty(wmd.getApiKey()));
@@ -84,13 +88,40 @@ public class LocalFileSystemSingleWorkspaceAdapterTests extends AbstractTestsBas
                 }""";
         FileUtils.write(new File(dataDirectory, "workspace.dsl"), dsl);
 
-        adapter = new LocalFileSystemSingleWorkspaceAdapter(dataDirectory);
+        workspaceAdapter = new LocalFileSystemSingleWorkspaceAdapter();
 
-        WorkspaceMetadata wmd = adapter.getWorkspaceMetadata(1);
+        WorkspaceMetadata wmd = workspaceAdapter.getWorkspaceMetadata(1);
         assertEquals("DSL", wmd.getName());
         assertEquals("Description", wmd.getDescription());
         assertFalse(StringUtils.isNullOrEmpty(wmd.getApiKey()));
         assertFalse(StringUtils.isNullOrEmpty(wmd.getApiSecret()));
+    }
+
+    @Override
+    void workspaceMetadata() {
+        // see:
+        //  - getWorkspaceMetadata_WhenJsonFileExists()
+        //  - getWorkspaceMetadata_WhenDslFileExists()
+    }
+
+    @Override
+    void branches() {
+        // not supported
+    }
+
+    @Override
+    void versions() {
+        // not supported
+    }
+
+    @Override
+    void deleteWorkspace() {
+        super.deleteWorkspace();
+    }
+
+    @Override
+    protected WorkspaceAdapter getWorkspaceAdapter() {
+        return workspaceAdapter;
     }
 
 }

@@ -1,5 +1,7 @@
 package com.structurizr.server.component.workspace;
 
+import com.structurizr.configuration.Configuration;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,8 +11,8 @@ import static com.structurizr.server.component.workspace.WorkspaceDirectory.pars
 
 class LocalFileSystemMultipleWorkspaceAdapter extends LocalFileSystemWorkspaceAdapter {
 
-    LocalFileSystemMultipleWorkspaceAdapter(File dataDirectory) {
-        super(dataDirectory);
+    LocalFileSystemMultipleWorkspaceAdapter() {
+        super(Configuration.getInstance().getDataDirectory());
     }
 
     @Override
