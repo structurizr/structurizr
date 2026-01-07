@@ -199,7 +199,7 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
         if (json == null) {
             if (!StringUtils.isNullOrEmpty(branch)) {
                 // branch likely doesn't exist
-                throw new WorkspaceComponentException("Branch \"" + branch + "\" does not exist for workspace " + workspaceId);
+                throw new WorkspaceBranchNotFoundException(workspaceId, branch);
             }
         }
 
