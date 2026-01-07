@@ -2,6 +2,7 @@ package com.structurizr.server;
 
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Profile;
+import com.structurizr.configuration.StructurizrProperties;
 import org.springframework.boot.SpringApplication;
 
 import java.io.File;
@@ -24,7 +25,10 @@ public class Server extends AbstractServer {
 		Configuration.getInstance().banner(Server.class);
 
 		SpringApplication app = new SpringApplication(Server.class);
-		app.setAdditionalProfiles("command-server", "authentication-" + Configuration.getInstance().getProperty(AUTHENTICATION_IMPLEMENTATION));
+		app.setAdditionalProfiles(
+				"command-server",
+				"authentication-" + Configuration.getInstance().getProperty(AUTHENTICATION_IMPLEMENTATION),
+				"session-" + Configuration.getInstance().getProperty(StructurizrProperties.SESSION_IMPLEMENTATION));
 		app.run(args);
 	}
 

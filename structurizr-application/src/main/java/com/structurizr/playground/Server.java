@@ -13,6 +13,7 @@ import org.apache.tomcat.util.descriptor.web.JspPropertyGroupDescriptorImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.session.SessionAutoConfiguration;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
@@ -30,7 +31,7 @@ import java.util.Properties;
 
 import static com.structurizr.configuration.StructurizrProperties.DATA_DIRECTORY;
 
-@EnableAutoConfiguration
+@EnableAutoConfiguration(exclude = { SessionAutoConfiguration.class })
 @ComponentScan(basePackages = "com.structurizr.playground")
 @SpringBootConfiguration
 public class Server extends SpringBootServletInitializer {
