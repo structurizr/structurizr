@@ -130,7 +130,12 @@ class LocalFileSystemMultipleWorkspaceAdapterTests extends AbstractWorkspaceAdap
 
     @Override
     void deleteWorkspace() {
-        super.deleteWorkspace();
+        // not supported
+    }
+
+    @Override
+    void image_Branch() throws Exception {
+        // no supported
     }
 
     @Override

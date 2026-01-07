@@ -1,10 +1,13 @@
 package com.structurizr.server.component.workspace;
 
+import com.structurizr.server.domain.InputStreamAndContentLength;
 import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.AbstractTestsBase;
 import com.structurizr.util.DateUtils;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.nio.file.Files;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -193,5 +196,47 @@ abstract class AbstractWorkspaceAdapterTests extends AbstractTestsBase {
         assertNull(workspaceAdapter.getWorkspaceMetadata(1));
         assertNotNull(workspaceAdapter.getWorkspaceMetadata(2));
     }
-    
+
+    @Test
+    void image() throws Exception {
+        File tempDirectory = createTemporaryDirectory();
+        File image = new File(tempDirectory, "image.png");
+        Files.copy(
+                new File("src/main/resources/static/static/img/structurizr-logo.png").toPath(),
+                image.toPath()
+        );
+        assertTrue(image.exists());
+
+        boolean result = getWorkspaceAdapter().putImage(1, "", "image.png", image);
+        assertTrue(result);
+
+        InputStreamAndContentLength isacl = getWorkspaceAdapter().getImage(1, "", "image.png");
+        assertEquals(9262, isacl.getContentLength());
+
+        // try a branch version
+        isacl = getWorkspaceAdapter().getImage(1, "branch", "image.png");
+        assertNull(isacl);
+    }
+
+    @Test
+    void image_Branch() throws Exception {
+        File tempDirectory = createTemporaryDirectory();
+        File image = new File(tempDirectory, "image.png");
+        Files.copy(
+                new File("src/main/resources/static/static/img/structurizr-logo.png").toPath(),
+                image.toPath()
+        );
+        assertTrue(image.exists());
+
+        boolean result = getWorkspaceAdapter().putImage(1, "branch", "image.png", image);
+        assertTrue(result);
+
+        InputStreamAndContentLength isacl = getWorkspaceAdapter().getImage(1, "branch", "image.png");
+        assertEquals(9262, isacl.getContentLength());
+
+        // try the main branch version
+        isacl = getWorkspaceAdapter().getImage(1, "", "image.png");
+        assertNull(isacl);
+    }
+
 }

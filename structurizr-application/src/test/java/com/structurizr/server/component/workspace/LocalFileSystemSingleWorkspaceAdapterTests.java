@@ -116,7 +116,12 @@ class LocalFileSystemSingleWorkspaceAdapterTests extends AbstractWorkspaceAdapte
 
     @Override
     void deleteWorkspace() {
-        super.deleteWorkspace();
+        // no supported
+    }
+
+    @Override
+    void image_Branch() throws Exception {
+        // no supported
     }
 
     @Override

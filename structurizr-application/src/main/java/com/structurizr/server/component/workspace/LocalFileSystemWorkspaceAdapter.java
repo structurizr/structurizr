@@ -7,6 +7,7 @@ import com.structurizr.dsl.DslUtils;
 import com.structurizr.dsl.StructurizrDslParser;
 import com.structurizr.dsl.StructurizrDslParserException;
 import com.structurizr.inspection.DefaultInspector;
+import com.structurizr.server.domain.InputStreamAndContentLength;
 import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.util.*;
 import com.structurizr.validation.WorkspaceScopeValidationException;
@@ -239,6 +240,24 @@ abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspa
     @Override
     public boolean deleteBranch(long workspaceId, String branch) {
         return false;
+    }
+
+    @Override
+    public boolean putImage(long workspaceId, String branch, String filename, File file) {
+        if (StringUtils.isNullOrEmpty(branch)) {
+            return super.putImage(workspaceId, branch, filename, file);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public InputStreamAndContentLength getImage(long workspaceId, String branch, String filename) {
+        if (StringUtils.isNullOrEmpty(branch)) {
+            return super.getImage(workspaceId, branch, filename);
+        } else {
+            return null;
+        }
     }
 
     @Override
