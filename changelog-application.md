@@ -7,6 +7,7 @@
 - local+server: Removes font configuration.
 - local: Diagrams are now editable after clicking the "edit" button on the diagram viewer.
 - local: Removes support for Lite's `STRUCTURIZR_WORKSPACE_PATH` and `STRUCTURIZR_WORKSPACE_FILENAME` (use multi-workspace mode instead).
+- local: Removes support for Lite's auto-sync.
 - server: Authentication is disabled by default.
 - server: Adds API endpoints to get branches and delete a branch (https://github.com/structurizr/structurizr/issues/8).
 - playground: Adds a new [playground server](https://playground.structurizr.com).
