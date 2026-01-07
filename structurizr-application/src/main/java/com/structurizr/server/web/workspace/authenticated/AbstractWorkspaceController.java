@@ -14,6 +14,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.ui.ModelMap;
 
+import java.util.List;
+
 /**
  * Base class for all controllers underneath /workspace.
  */
@@ -46,6 +48,17 @@ abstract class AbstractWorkspaceController extends com.structurizr.server.web.wo
 
         if (WorkspaceBranch.isMainBranch(branch)) {
             branch = "";
+        } else {
+            // check branch exists
+            WorkspaceBranch.validateBranchName(branch);
+
+            final String requestedBranch = branch;
+            List<WorkspaceBranch> branches = workspaceComponent.getWorkspaceBranches(workspaceId);
+
+            if (branches.stream().noneMatch(b -> b.getName().equals(requestedBranch))) {
+                model.addAttribute("errorMessage", "Branch \"" + requestedBranch + "\" does not exist");
+                return show500Page(model);
+            }
         }
 
         if (!StringUtils.isNullOrEmpty(branch) && !Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_BRANCHES)) {

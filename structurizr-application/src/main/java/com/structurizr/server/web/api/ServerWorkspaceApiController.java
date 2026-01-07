@@ -115,7 +115,7 @@ public class ServerWorkspaceApiController extends AbstractWorkspaceApiController
                 authoriseRequest(workspaceId, "DELETE", getPath(request, workspaceId, null) + "/branch/" + branch, null, request, response);
 
                 if (WorkspaceBranch.isMainBranch(branch)) {
-                    return new ApiResponse(false, "The main branch cannot be deleted");
+                    throw new ApiException("The main branch cannot be deleted");
                 }
 
                 List<WorkspaceBranch> branches = workspaceComponent.getWorkspaceBranches(workspaceId);

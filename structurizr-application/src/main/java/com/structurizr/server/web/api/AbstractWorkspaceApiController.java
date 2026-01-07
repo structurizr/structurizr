@@ -79,7 +79,7 @@ public class AbstractWorkspaceApiController extends AbstractController {
             }
         } catch (WorkspaceComponentException e) {
             log.error(e);
-            throw new ApiException("Something went wrong.");
+            throw new ApiException(e.getMessage());
         }
     }
 

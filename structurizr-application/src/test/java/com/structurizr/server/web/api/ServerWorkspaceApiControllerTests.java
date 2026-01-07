@@ -567,7 +567,7 @@ public class ServerWorkspaceApiControllerTests {
     }
 
     @Test
-    void deleteBranch_ReturnsTrue_WhenTheAuthorizationHeaderIsCorrectlySpecifiedButTheMainBranchIsSpecified() throws Exception {
+    void deleteBranch_ThrowsAnException_WhenTheAuthorizationHeaderIsCorrectlySpecifiedButTheMainBranchIsSpecified() throws Exception {
         Configuration.init(Profile.Server, new Properties());
         Configuration.getInstance().setFeatureEnabled(Features.WORKSPACE_BRANCHES);
 
@@ -598,18 +598,24 @@ public class ServerWorkspaceApiControllerTests {
         request.addHeader("Authorization", "key:" + Base64.getEncoder().encodeToString(generatedHmac.getBytes()));
         request.addHeader("Nonce", "1234567890");
 
-        ApiResponse apiResponse = controller.deleteBranch(1, "", request, response);
-        assertFalse(apiResponse.isSuccess());
-        assertEquals("The main branch cannot be deleted", apiResponse.getMessage());
+        try {
+            controller.deleteBranch(1, "", request, response);
+            fail();
+        } catch (Exception e) {
+            assertEquals("The main branch cannot be deleted", e.getMessage());
+        }
 
         // 2. "main" as the branch
         hmacContent = new HmacContent("DELETE", "/api/workspace/1/branch/main", new Md5Digest().generate(""), "", "1234567890");
         generatedHmac = code.generate(hmacContent.toString());
         request.addHeader("Authorization", "key:" + Base64.getEncoder().encodeToString(generatedHmac.getBytes()));
 
-        apiResponse = controller.deleteBranch(1, "main", request, response);
-        assertFalse(apiResponse.isSuccess());
-        assertEquals("The main branch cannot be deleted", apiResponse.getMessage());
+        try {
+            controller.deleteBranch(1, "main", request, response);
+            fail();
+        } catch (Exception e) {
+            assertEquals("The main branch cannot be deleted", e.getMessage());
+        }
     }
 
     @Test

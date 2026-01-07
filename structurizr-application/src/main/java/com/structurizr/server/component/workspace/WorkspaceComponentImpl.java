@@ -198,8 +198,8 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
 
         if (json == null) {
             if (!StringUtils.isNullOrEmpty(branch)) {
-                // branch likely doesn't exist, so return the main branch instead
-                json = workspaceAdapter.getWorkspace(workspaceId, WorkspaceBranch.NO_BRANCH, WorkspaceVersion.LATEST_VERSION);
+                // branch likely doesn't exist
+                throw new WorkspaceComponentException("Branch \"" + branch + "\" does not exist for workspace " + workspaceId);
             }
         }
 
