@@ -9,6 +9,10 @@ public class ApiResponse {
         this(true, message);
     }
 
+    public ApiResponse(boolean success) {
+        this.success = success;
+    }
+
     public ApiResponse(boolean success, String message) {
         this.success = success;
         this.message = message;

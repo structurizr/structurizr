@@ -1,11 +1,20 @@
 package com.structurizr.server.web.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.structurizr.configuration.Configuration;
+import com.structurizr.configuration.Features;
 import com.structurizr.server.component.workspace.WorkspaceBranch;
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
 import com.structurizr.server.domain.WorkspaceMetadata;
+import com.structurizr.util.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * An implementation of the Structurizr workspace API.
@@ -57,6 +66,74 @@ public class ServerWorkspaceApiController extends AbstractWorkspaceApiController
                                                   HttpServletRequest request,
                                                   HttpServletResponse response) {
         return put(workspaceId, branch, json, request, response);
+    }
+
+    @RequestMapping(value = "/api/workspace/{workspaceId}/branch", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+    public String getBranches(@PathVariable("workspaceId") long workspaceId,
+                              HttpServletRequest request, HttpServletResponse response) {
+        try {
+            if (!Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_BRANCHES)) {
+                throw new ApiException("Workspace branches are not enabled for this installation");
+            }
+
+            if (workspaceId > 0) {
+                authoriseRequest(workspaceId, "GET", getPath(request, workspaceId, null) + "/branch", null, request, response);
+
+                List<WorkspaceBranch> branches = workspaceComponent.getWorkspaceBranches(workspaceId);
+
+                branches = new ArrayList<>(branches);
+                branches.sort(Comparator.comparing(WorkspaceBranch::getName));
+                String[] array = branches.stream().map(WorkspaceBranch::getName).toArray(String[]::new);
+
+                try {
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    return objectMapper.writeValueAsString(array);
+                } catch (JsonProcessingException e) {
+                    log.error(e);
+                    throw new ApiException("Could not get workspace branches");
+                }
+            } else {
+                throw new ApiException("Workspace ID must be greater than 1");
+            }
+        } catch (WorkspaceComponentException e) {
+            log.error(e);
+            throw new ApiException("Could not get workspace branches");
+        }
+    }
+
+    @RequestMapping(value = "/api/workspace/{workspaceId}/branch/{branch}", method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
+    public @ResponseBody ApiResponse deleteBranch(@PathVariable("workspaceId") long workspaceId,
+                               @PathVariable("branch") String branch,
+                              HttpServletRequest request, HttpServletResponse response) {
+
+        try {
+            if (!Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_BRANCHES)) {
+                throw new ApiException("Workspace branches are not enabled for this installation");
+            }
+
+            if (workspaceId > 0) {
+                authoriseRequest(workspaceId, "DELETE", getPath(request, workspaceId, null) + "/branch/" + branch, null, request, response);
+
+                if (WorkspaceBranch.isMainBranch(branch)) {
+                    return new ApiResponse(false, "The main branch cannot be deleted");
+                }
+
+                List<WorkspaceBranch> branches = workspaceComponent.getWorkspaceBranches(workspaceId);
+
+                if (branches.stream().anyMatch(b -> b.getName().equals(branch))) {
+                    boolean success = workspaceComponent.deleteBranch(workspaceId, branch);
+                    return new ApiResponse(success);
+                } else {
+                    return new ApiResponse(false, "Workspace branch \"" + branch + "\" does not exist");
+                }
+            } else {
+                throw new ApiException("Workspace ID must be greater than 1");
+            }
+        } catch (WorkspaceComponentException e) {
+            log.error(e);
+        }
+
+        throw new ApiException("Could not delete workspace branch");
     }
 
     @RequestMapping(value = "/api/workspace/{workspaceId}/lock", method = RequestMethod.PUT, produces = "application/json; charset=UTF-8")
