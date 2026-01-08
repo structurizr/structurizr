@@ -573,24 +573,55 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
 
     @Test
     void test_putWorkspace_UpdatesTheVisibility_WhenTheVisibilityIsSpecified() throws Exception {
+        Properties properties = new Properties();
+        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
+        Configuration.init(Profile.Server, properties);
+
         Workspace workspace = new Workspace("Name", "Description");
         workspace.getConfiguration().setVisibility(Visibility.Public);
 
         String json = WorkspaceUtils.toJson(workspace, false);
 
-        final WorkspaceMetadata wmd = new WorkspaceMetadata(1);
-        wmd.setPublicWorkspace(false);
+        final WorkspaceMetadata workspaceMetadata = new WorkspaceMetadata(1);
+        workspaceMetadata.setPublicWorkspace(false);
 
         WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
-            public void putWorkspaceMetadata(WorkspaceMetadata workspaceMetaData) {
-                wmd.setPublicWorkspace(workspaceMetaData.isPublicWorkspace());
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                return workspaceMetadata;
             }
         });
 
         workspaceComponent.putWorkspace(1, "", json);
 
-        assertTrue(wmd.isPublicWorkspace());
+        assertTrue(workspaceMetadata.isPublicWorkspace());
+    }
+
+    @Test
+    void test_putWorkspace_DoesNotUpdateTheVisibility_WhenAuthenticationIsEnabledAndAdminUsersAreDefined() throws Exception {
+        Properties properties = new Properties();
+        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
+        properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "admin@example.com");
+        Configuration.init(Profile.Server, properties);
+
+        Workspace workspace = new Workspace("Name", "Description");
+        workspace.getConfiguration().setVisibility(Visibility.Public);
+
+        String json = WorkspaceUtils.toJson(workspace, false);
+
+        final WorkspaceMetadata workspaceMetadata = new WorkspaceMetadata(1);
+        workspaceMetadata.setPublicWorkspace(false);
+
+        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
+            @Override
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                return workspaceMetadata;
+            }
+        });
+
+        workspaceComponent.putWorkspace(1, "", json);
+
+        assertFalse(workspaceMetadata.isPublicWorkspace());
     }
 
     @Test
@@ -616,72 +647,95 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
 
     @Test
     void test_putWorkspace_UpdatesTheRoleBasedSecurity_WhenUsersAreDefined() throws Exception {
+        Properties properties = new Properties();
+        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
+        Configuration.init(Profile.Server, properties);
+
         Workspace workspace = new Workspace("Name", "Description");
         workspace.getConfiguration().addUser("user1@example.com", Role.ReadWrite);
         workspace.getConfiguration().addUser("user2@example.com", Role.ReadWrite);
         workspace.getConfiguration().addUser("user3@example.com", Role.ReadOnly);
         workspace.getConfiguration().addUser("user4@example.com", Role.ReadOnly);
-
         String json = WorkspaceUtils.toJson(workspace, false);
 
-        final Set<String> readUsers = new HashSet<>();
-        Set<String> writeUsers = new HashSet<>();
+        WorkspaceMetadata workspaceMetadata = new WorkspaceMetadata(1);
+        workspaceMetadata.addWriteUser("write@example.com");
+        workspaceMetadata.addReadUser("read@example.com");
 
         WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
-            public void putWorkspaceMetadata(WorkspaceMetadata workspaceMetaData) {
-                readUsers.addAll(workspaceMetaData.getReadUsers());
-                writeUsers.addAll(workspaceMetaData.getWriteUsers());
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                return workspaceMetadata;
             }
         });
 
         workspaceComponent.putWorkspace(1, "", json);
 
-        assertEquals(2, writeUsers.size());
-        assertTrue(writeUsers.contains("user1@example.com"));
-        assertTrue(writeUsers.contains("user2@example.com"));
-        assertEquals(2, readUsers.size());
-        assertTrue(readUsers.contains("user3@example.com"));
-        assertTrue(readUsers.contains("user4@example.com"));
+        assertEquals(2, workspaceMetadata.getWriteUsers().size());
+        assertTrue(workspaceMetadata.getWriteUsers().contains("user1@example.com"));
+        assertTrue(workspaceMetadata.getWriteUsers().contains("user2@example.com"));
+        assertEquals(2, workspaceMetadata.getReadUsers().size());
+        assertTrue(workspaceMetadata.getReadUsers().contains("user3@example.com"));
+        assertTrue(workspaceMetadata.getReadUsers().contains("user4@example.com"));
     }
 
     @Test
     void putWorkspace_DoesNotUpdateTheRoleBasedSecurity_WhenUsersAreNotDefined() throws Exception {
         Workspace workspace = new Workspace("Name", "Description");
-        workspace.getConfiguration().addUser("user1@example.com", Role.ReadWrite);
-        workspace.getConfiguration().addUser("user2@example.com", Role.ReadOnly);
-
         String json = WorkspaceUtils.toJson(workspace, false);
 
-        final Set<String> readUsers = new HashSet<>();
-        Set<String> writeUsers = new HashSet<>();
+        WorkspaceMetadata workspaceMetadata = new WorkspaceMetadata(1);
+        workspaceMetadata.addWriteUser("write@example.com");
+        workspaceMetadata.addReadUser("read@example.com");
 
         WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
-            public void putWorkspaceMetadata(WorkspaceMetadata workspaceMetaData) {
-                readUsers.addAll(workspaceMetaData.getReadUsers());
-                writeUsers.addAll(workspaceMetaData.getWriteUsers());
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                return workspaceMetadata;
             }
         });
 
         workspaceComponent.putWorkspace(1, "", json);
 
-        assertEquals(1, writeUsers.size());
-        assertTrue(writeUsers.contains("user1@example.com"));
-        assertEquals(1, readUsers.size());
-        assertTrue(readUsers.contains("user2@example.com"));
+        assertEquals(1, workspaceMetadata.getWriteUsers().size());
+        assertTrue(workspaceMetadata.getWriteUsers().contains("write@example.com"));
+        assertEquals(1, workspaceMetadata.getReadUsers().size());
+        assertTrue(workspaceMetadata.getReadUsers().contains("read@example.com"));
+    }
 
-        // and update the workspace again, this time without users
-        workspace = new Workspace("Name", "Description");
-        json = WorkspaceUtils.toJson(workspace, false);
+    @Test
+    void putWorkspace_DoesNotUpdateTheRoleBasedSecurity_WhenAuthenticationIsEnabledAndAdminUsersAreDefined() throws Exception {
+        Properties properties = new Properties();
+        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
+        properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "admin@example.com");
+        Configuration.init(Profile.Server, properties);
+
+        Workspace workspace = new Workspace("Name", "Description");
+        workspace.getConfiguration().addUser("user1@example.com", Role.ReadWrite);
+        workspace.getConfiguration().addUser("user2@example.com", Role.ReadWrite);
+        workspace.getConfiguration().addUser("user3@example.com", Role.ReadOnly);
+        workspace.getConfiguration().addUser("user4@example.com", Role.ReadOnly);
+        String json = WorkspaceUtils.toJson(workspace, false);
+
+        WorkspaceMetadata workspaceMetadata = new WorkspaceMetadata(1);
+        workspaceMetadata.addWriteUser("write@example.com");
+        workspaceMetadata.addReadUser("read@example.com");
+
+        WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
+            @Override
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                return workspaceMetadata;
+            }
+        });
+
         workspaceComponent.putWorkspace(1, "", json);
 
-        // check that existing users have not disappeared
-        assertEquals(1, writeUsers.size());
-        assertTrue(writeUsers.contains("user1@example.com"));
-        assertEquals(1, readUsers.size());
-        assertTrue(readUsers.contains("user2@example.com"));
+        assertEquals(1, workspaceMetadata.getWriteUsers().size());
+        assertTrue(workspaceMetadata.getWriteUsers().contains("write@example.com"));
+        assertEquals(1, workspaceMetadata.getReadUsers().size());
+        assertTrue(workspaceMetadata.getReadUsers().contains("read@example.com"));
     }
+
     @Test
     void test_putWorkspace_ThrowsAnException_WhenWorkspaceScopeValidationIsStrictAndTheWorkspaceIsUnscoped() throws Exception {
         Workspace workspace = new Workspace("Name", "Description");

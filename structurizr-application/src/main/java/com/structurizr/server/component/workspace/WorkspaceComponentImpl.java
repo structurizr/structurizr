@@ -398,21 +398,25 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
                     workspaceMetadata.setName(workspaceToBeStored.getName());
                     workspaceMetadata.setDescription(workspaceToBeStored.getDescription());
 
-                    // configure users
+                    // configure workspace visibility and users
                     if (configuration != null) {
-                        if (configuration.getVisibility() != null) {
-                            workspaceMetadata.setPublicWorkspace(configuration.getVisibility() == Visibility.Public);
-                        }
 
-                        if (!configuration.getUsers().isEmpty()) {
-                            workspaceMetadata.clearWriteUsers();
-                            workspaceMetadata.clearReadUsers();
+                        // only configure workspace visibility and users if no admin users/roles are defined
+                        if (Configuration.getInstance().isAuthenticationEnabled() && Configuration.getInstance().getAdminUsersAndRoles().isEmpty()) {
+                            if (configuration.getVisibility() != null) {
+                                workspaceMetadata.setPublicWorkspace(configuration.getVisibility() == Visibility.Public);
+                            }
 
-                            for (com.structurizr.configuration.User user : configuration.getUsers()) {
-                                if (user.getRole() == Role.ReadWrite) {
-                                    workspaceMetadata.addWriteUser(user.getUsername());
-                                } else {
-                                    workspaceMetadata.addReadUser(user.getUsername());
+                            if (!configuration.getUsers().isEmpty()) {
+                                workspaceMetadata.clearWriteUsers();
+                                workspaceMetadata.clearReadUsers();
+
+                                for (com.structurizr.configuration.User user : configuration.getUsers()) {
+                                    if (user.getRole() == Role.ReadWrite) {
+                                        workspaceMetadata.addWriteUser(user.getUsername());
+                                    } else {
+                                        workspaceMetadata.addReadUser(user.getUsername());
+                                    }
                                 }
                             }
                         }
