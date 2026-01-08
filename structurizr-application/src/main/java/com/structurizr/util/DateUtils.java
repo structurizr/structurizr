@@ -35,6 +35,21 @@ public class DateUtils {
         return date.before(getXMinutesAgo(numberOfMinutes));
     }
 
+    public static Date getXDaysAgo(int numberOfDays) {
+        Calendar cal = getCalendar();
+        cal.add(Calendar.DAY_OF_MONTH, -numberOfDays);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+
+        return cal.getTime();
+    }
+
+    public static boolean isOlderThanXDays(Date date, int numberOfDays) {
+        return date.before(getXDaysAgo(numberOfDays));
+    }
+
     public static Date removeMilliseconds(Date date) {
         Calendar cal = getCalendar();
         cal.setTime(date);
