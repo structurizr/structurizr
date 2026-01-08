@@ -10,7 +10,7 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class WorkspaceMetaDataTests {
+public class WorkspaceMetadataTests {
 
     @Test
     void getName_WhenNull() {
@@ -20,7 +20,7 @@ public class WorkspaceMetaDataTests {
     }
 
     @Test
-    public void isPublic() {
+    void isPublic() {
         WorkspaceMetadata workspace = new WorkspaceMetadata(1);
         assertFalse(workspace.isPublicWorkspace());
 
@@ -29,7 +29,7 @@ public class WorkspaceMetaDataTests {
     }
 
     @Test
-    public void isPublicWorkspace() {
+    void isPublicWorkspace() {
         WorkspaceMetadata workspace = new WorkspaceMetadata(1);
         assertFalse(workspace.isPublicWorkspace()); // workspaces are private by default
 
@@ -38,7 +38,7 @@ public class WorkspaceMetaDataTests {
     }
 
     @Test
-    public void sharingToken() {
+    void sharingToken() {
         WorkspaceMetadata workspace = new WorkspaceMetadata(1);
         assertEquals("", workspace.getSharingToken());
         assertFalse(workspace.isShareable());
@@ -50,7 +50,53 @@ public class WorkspaceMetaDataTests {
     }
 
     @Test
-    public void hasNoUsersConfigured_ReturnsTrue_WhenTheWorkspaceHasNoConfiguredUsers() {
+    void addReadUser_WhenNull() {
+        WorkspaceMetadata workspace = new WorkspaceMetadata(1);
+        workspace.addReadUser(null);
+        assertEquals(0, workspace.getReadUsers().size());
+    }
+
+    @Test
+    void addReadUser_WhenEmpty() {
+        WorkspaceMetadata workspace = new WorkspaceMetadata(1);
+        workspace.addReadUser("");
+        assertEquals(0, workspace.getReadUsers().size());
+    }
+
+    @Test
+    void addReadUser_DoesAddUserMultipleTimes() {
+        WorkspaceMetadata workspace = new WorkspaceMetadata(1);
+        workspace.addReadUser("read@example.com");
+        workspace.addReadUser("read@example.com");
+        workspace.addReadUser("READ@example.com");
+        assertEquals(1, workspace.getReadUsers().size());
+    }
+
+    @Test
+    void addWriteUser_WhenNull() {
+        WorkspaceMetadata workspace = new WorkspaceMetadata(1);
+        workspace.addWriteUser(null);
+        assertEquals(0, workspace.getWriteUsers().size());
+    }
+
+    @Test
+    void addWriteUser_WhenEmpty() {
+        WorkspaceMetadata workspace = new WorkspaceMetadata(1);
+        workspace.addWriteUser("");
+        assertEquals(0, workspace.getWriteUsers().size());
+    }
+
+    @Test
+    void addWriteUser_DoesAddUserMultipleTimes() {
+        WorkspaceMetadata workspace = new WorkspaceMetadata(1);
+        workspace.addWriteUser("write@example.com");
+        workspace.addWriteUser("write@example.com");
+        workspace.addWriteUser("WRITE@example.com");
+        assertEquals(1, workspace.getWriteUsers().size());
+    }
+
+    @Test
+    void hasNoUsersConfigured_ReturnsTrue_WhenTheWorkspaceHasNoConfiguredUsers() {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
         Configuration.init(Profile.Server, properties);
@@ -60,7 +106,7 @@ public class WorkspaceMetaDataTests {
     }
 
     @Test
-    public void hasNoUsersConfigured_ReturnsFalse_WhenAuthenticationIsEnabledAndTheWorkspaceHasAReadOnlyUser() {
+    void hasNoUsersConfigured_ReturnsFalse_WhenAuthenticationIsEnabledAndTheWorkspaceHasAReadOnlyUser() {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
         Configuration.init(Profile.Server, properties);
@@ -71,7 +117,7 @@ public class WorkspaceMetaDataTests {
     }
 
     @Test
-    public void hasNoUsersConfigured_ReturnsFalse_WhenAuthenticationIsEnabledAndTheWorkspaceHasAReadWriteUser() {
+    void hasNoUsersConfigured_ReturnsFalse_WhenAuthenticationIsEnabledAndTheWorkspaceHasAReadWriteUser() {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
         Configuration.init(Profile.Server, properties);
@@ -82,7 +128,7 @@ public class WorkspaceMetaDataTests {
     }
 
     @Test
-    public void isReadUser_ReturnsFalse_WhenAuthenticationIsEnabledAndTheUserIsNotAReadUser() {
+    void isReadUser_ReturnsFalse_WhenAuthenticationIsEnabledAndTheUserIsNotAReadUser() {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
         Configuration.init(Profile.Server, properties);
@@ -95,7 +141,7 @@ public class WorkspaceMetaDataTests {
     }
 
     @Test
-    public void isReadUser_ReturnsTrue_WhenTheUserIsAReadUser() {
+    void isReadUser_ReturnsTrue_WhenTheUserIsAReadUser() {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
         Configuration.init(Profile.Server, properties);
@@ -108,7 +154,7 @@ public class WorkspaceMetaDataTests {
     }
 
     @Test
-    public void isReadUser_ReturnsFalse_WhenAuthenticationIsEnabledAndTheUserRoleIsNotAReadUser() {
+    void isReadUser_ReturnsFalse_WhenAuthenticationIsEnabledAndTheUserRoleIsNotAReadUser() {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
         Configuration.init(Profile.Server, properties);
@@ -121,7 +167,7 @@ public class WorkspaceMetaDataTests {
     }
 
     @Test
-    public void isReadUser_ReturnsTrue_WhenAuthenticationIsEnabledAndTheUserRoleIsAReadUser() {
+    void isReadUser_ReturnsTrue_WhenAuthenticationIsEnabledAndTheUserRoleIsAReadUser() {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
         Configuration.init(Profile.Server, properties);
@@ -134,7 +180,7 @@ public class WorkspaceMetaDataTests {
     }
 
     @Test
-    public void isWriteUser_ReturnsFalse_WhenAuthenticationIsEnabledAndTheUserIsNotAWriteUser() {
+    void isWriteUser_ReturnsFalse_WhenAuthenticationIsEnabledAndTheUserIsNotAWriteUser() {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
         Configuration.init(Profile.Server, properties);
@@ -147,7 +193,7 @@ public class WorkspaceMetaDataTests {
     }
 
     @Test
-    public void isWriteUser_ReturnsTrue_WhenAuthenticationIsEnabledAndTheUserIsAWriteUser() {
+    void isWriteUser_ReturnsTrue_WhenAuthenticationIsEnabledAndTheUserIsAWriteUser() {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
         Configuration.init(Profile.Server, properties);
@@ -160,7 +206,7 @@ public class WorkspaceMetaDataTests {
     }
 
     @Test
-    public void test_isWriteUser_ReturnsFalse_WhenAuthenticationIsEnabledAndTheUserRoleIsNotAWriteUser() {
+    void test_isWriteUser_ReturnsFalse_WhenAuthenticationIsEnabledAndTheUserRoleIsNotAWriteUser() {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
         Configuration.init(Profile.Server, properties);
@@ -173,7 +219,7 @@ public class WorkspaceMetaDataTests {
     }
 
     @Test
-    public void test_isWriteUser_ReturnsTrue_WhenAuthenticationIsEnabledAndTheUserRoleIsAWriteUser() {
+    void test_isWriteUser_ReturnsTrue_WhenAuthenticationIsEnabledAndTheUserRoleIsAWriteUser() {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
         Configuration.init(Profile.Server, properties);
@@ -186,7 +232,7 @@ public class WorkspaceMetaDataTests {
     }
 
     @Test
-    public void test_isLocked_ReturnsFalse_WhenTheWorkspaceIsNotLocked() {
+    void test_isLocked_ReturnsFalse_WhenTheWorkspaceIsNotLocked() {
         WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.setLockedUser(null);
         workspaceMetaData.setLockedDate(null);
@@ -194,7 +240,7 @@ public class WorkspaceMetaDataTests {
     }
 
     @Test
-    public void test_isLocked_ReturnsTrue_WhenTheWorkspaceIsLocked() {
+    void test_isLocked_ReturnsTrue_WhenTheWorkspaceIsLocked() {
         WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.setLockedUser("user");
         workspaceMetaData.setLockedDate(new Date());
@@ -203,7 +249,7 @@ public class WorkspaceMetaDataTests {
     }
 
     @Test
-    public void test_isLocked_ReturnsFalse_WhenTheWorkspaceWasLockedOverTwoMinutesAgo() {
+    void test_isLocked_ReturnsFalse_WhenTheWorkspaceWasLockedOverTwoMinutesAgo() {
         WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.setLockedUser("user");
         workspaceMetaData.setLockedDate(DateUtils.getXMinutesAgo(3));
@@ -212,7 +258,7 @@ public class WorkspaceMetaDataTests {
     }
 
     @Test
-    public void test_isLockedBy_ReturnsFalse_WhenTheWorkspaceIsNotLocked() {
+    void test_isLockedBy_ReturnsFalse_WhenTheWorkspaceIsNotLocked() {
         WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.setLockedUser(null);
         workspaceMetaData.setLockedDate(null);
@@ -220,7 +266,7 @@ public class WorkspaceMetaDataTests {
     }
 
     @Test
-    public void test_isLockedBy_ReturnsTrue_WhenTheWorkspaceIsLockedByTheSpecifiedUserAndAgent() {
+    void test_isLockedBy_ReturnsTrue_WhenTheWorkspaceIsLockedByTheSpecifiedUserAndAgent() {
         WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.setLockedUser("user");
         workspaceMetaData.setLockedAgent("agent");
@@ -230,7 +276,7 @@ public class WorkspaceMetaDataTests {
     }
 
     @Test
-    public void test_isLockedBy_ReturnsFalse_WhenTheWorkspaceIsNotLockedByTheSpecifiedUserAndAgent() {
+    void test_isLockedBy_ReturnsFalse_WhenTheWorkspaceIsNotLockedByTheSpecifiedUserAndAgent() {
         WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.setLockedUser("user1");
         workspaceMetaData.setLockedAgent("agent1");
@@ -240,7 +286,7 @@ public class WorkspaceMetaDataTests {
     }
 
     @Test
-    public void test_isLockedBy_ReturnsFalse_WhenTheWorkspaceIsNotLockedByTheSpecifiedUser() {
+    void test_isLockedBy_ReturnsFalse_WhenTheWorkspaceIsNotLockedByTheSpecifiedUser() {
         WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.setLockedUser("user1");
         workspaceMetaData.setLockedAgent("agent1");
@@ -250,7 +296,7 @@ public class WorkspaceMetaDataTests {
     }
 
     @Test
-    public void fromProperties_and_toProperties() throws Exception {
+    void fromProperties_and_toProperties() throws Exception {
         Properties properties = new Properties();
         properties.setProperty(WorkspaceMetadata.NAME_PROPERTY, "Name");
         properties.setProperty(WorkspaceMetadata.DESCRIPTION_PROPERTY, "Description");
@@ -316,7 +362,7 @@ public class WorkspaceMetaDataTests {
     }
 
     @Test
-    public void fromProperties_DefaultsLastModifiedDateWhenNotSet() throws Exception {
+    void fromProperties_DefaultsLastModifiedDateWhenNotSet() throws Exception {
         WorkspaceMetadata workspace = WorkspaceMetadata.fromProperties(123, new Properties());
         assertEquals(DateUtils.parseIsoDate("1970-01-01T00:00:00Z"), workspace.getLastModifiedDate());
     }

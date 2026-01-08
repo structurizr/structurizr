@@ -35,25 +35,41 @@ public class DeleteWorkspaceController extends AbstractWorkspaceController {
         User user = getUser();
 
         try {
-            WorkspaceMetadata workspace = workspaceComponent.getWorkspaceMetadata(workspaceId);
-            if (workspace != null) {
-                if (!Configuration.getInstance().isAuthenticationEnabled() || Configuration.getInstance().getAdminUsersAndRoles().isEmpty() || user.isAdmin()) {
-                    if (workspaceComponent.deleteWorkspace(workspaceId)) {
-                        try {
-                            searchComponent.delete(workspaceId);
-                        } catch (SearchComponentException e) {
-                            log.error(e);
-                        }
+            WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
+            if (workspaceMetadata == null) {
+                return show404Page(model);
+            }
+
+            if (!Configuration.getInstance().getAdminUsersAndRoles().isEmpty() && !user.isAdmin()) {
+                return "redirect:/workspace/" + workspaceId;
+            }
+
+            // the workspace can be deleted when
+            // - authentication is disabled
+            // - authentication is enabled but no workspace users are configured
+            // - authentication is enabled and the user is a write user
+            // - authentication is enabled and the user is an admin user
+            if (
+                !Configuration.getInstance().isAuthenticationEnabled() ||
+                workspaceMetadata.hasNoUsersConfigured() ||
+                workspaceMetadata.isWriteUser(user) ||
+                user.isAdmin()
+            ) {
+                if (workspaceComponent.deleteWorkspace(workspaceId)) {
+                    try {
+                        searchComponent.delete(workspaceId);
+                    } catch (SearchComponentException e) {
+                        log.error(e);
                     }
                 }
-            } else {
-                return show404Page(model);
+
+                return "redirect:/";
             }
         } catch (WorkspaceComponentException e) {
             log.error(e);
         }
 
-        return "redirect:/";
+        return "redirect:/workspace/" + workspaceId;
     }
 
 }

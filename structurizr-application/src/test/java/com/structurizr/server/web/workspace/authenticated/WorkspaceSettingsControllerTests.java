@@ -135,4 +135,24 @@ public class WorkspaceSettingsControllerTests extends ControllerTestsBase {
         assertEquals(true, model.getAttribute("showAdminFeatures"));
     }
 
+    @Test
+    void showAuthenticatedWorkspaceSettings_ReturnsThe404Page_WhenAuthenticationIsEnabledAndTheUserHasReadAccess()  {
+        enableAuthentication();
+        setUser("read@example.com");
+
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
+        workspaceMetaData.addWriteUser("write@example.com");
+        workspaceMetaData.addReadUser("read@example.com");
+
+        controller.setWorkspaceComponent(new MockWorkspaceComponent() {
+            @Override
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                return workspaceMetaData;
+            }
+        });
+
+        String view = controller.showAuthenticatedWorkspaceSettings(1, "version", model);
+        assertEquals("404", view);
+    }
+
 }

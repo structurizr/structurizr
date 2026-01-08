@@ -1,6 +1,7 @@
 package com.structurizr.server.web.workspace.authenticated;
 
 import com.structurizr.configuration.Configuration;
+import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.Views;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,11 @@ public class WorkspaceSettingsController extends AbstractWorkspaceController {
             @RequestParam(required = false) String version,
             ModelMap model
     ) {
+        WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
+        if (workspaceMetadata != null && workspaceMetadata.isReadUser(getUser())) {
+            return show404Page(model);
+        }
+
         model.addAttribute("showAdminFeatures", !Configuration.getInstance().isAuthenticationEnabled() || Configuration.getInstance().getAdminUsersAndRoles().isEmpty() || getUser().isAdmin());
         return showAuthenticatedView(Views.WORKSPACE_SETTINGS, workspaceId, null, version, model, true, true);
     }

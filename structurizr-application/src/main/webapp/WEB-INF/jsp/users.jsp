@@ -7,27 +7,10 @@
 
         <br />
 
-        <p class="centered" style="font-size: 20px">
-            <c:choose>
-            <c:when test="${empty workspace.writeUsers}">
-            <img src="/static/bootstrap-icons/unlock.svg" class="icon-md" /> Public <span class="smaller">(role-based access is not active)</span>
-            </c:when>
-            <c:otherwise>
-                <c:choose>
-                    <c:when test="${workspace.publicWorkspace}">
-                    <img src="/static/bootstrap-icons/unlock.svg" class="icon-md" /> Public <span class="smaller">(role-based access is active and <a href="/workspace/${workspaceId}/settings">the workspace is marked as public</a>)</span>
-                    </c:when>
-                    <c:otherwise>
-                    <img src="/static/bootstrap-icons/lock.svg" class="icon-md" /> Private <span class="smaller">(role-based access is active and <a href="/workspace/${workspaceId}/settings">the workspace is marked as private</a>)</span>
-                    </c:otherwise>
-                </c:choose>
-            </c:otherwise>
-            </c:choose>
-        </p>
-
         <p>
             This page shows the set of users/roles that have access to this workspace.
-            Having no users/roles defined on this page means that the workspace is public, and accessible to anybody who has access to your Structurizr installation.
+            Having no users/roles defined on this page means that the workspace is accessible to any authenticated user.
+            Users and roles can also be configured via the <a href="https://docs.structurizr.com/dsl/language#users" target="_blank">Structurizr DSL</a>.
         </p>
 
         <p class="small centered">
@@ -64,7 +47,7 @@
                 </div>
 
                 <div class="centered">
-                    <button type="submit" class="btn btn-default">Update</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </div>
                 </form>
             </c:when>

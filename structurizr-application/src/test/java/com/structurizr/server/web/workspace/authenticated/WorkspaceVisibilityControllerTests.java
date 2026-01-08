@@ -83,6 +83,34 @@ public class WorkspaceVisibilityControllerTests extends ControllerTestsBase {
     }
 
     @Test
+    void changeVisibility_DoesNothingAndRedirectsToTheWorkspaceSettingsPage_WhenAuthenticationIsEnabledAndTheUserIsAReadUser() {
+        Properties properties = new Properties();
+        enableAuthentication(properties);
+        setUser("read@example.com");
+
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
+        workspaceMetaData.addWriteUser("write@example.com");
+        workspaceMetaData.addReadUser("read@example.com");
+        assertFalse(workspaceMetaData.isPublicWorkspace());
+
+        controller.setWorkspaceComponent(new MockWorkspaceComponent() {
+            @Override
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                return workspaceMetaData;
+            }
+
+            @Override
+            public void makeWorkspacePublic(long workspaceId) throws WorkspaceComponentException {
+                fail();
+            }
+        });
+
+        String view = controller.changeVisibility(1, "public", model);
+        assertEquals("redirect:/workspace/1/settings", view);
+        assertFalse(workspaceMetaData.isPublicWorkspace());
+    }
+
+    @Test
     void changeVisibility_MakesTheWorkspacePublic_WhenAuthenticationIsEnabledAndTheUserIsAnAdmin() {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "admin@example.com");

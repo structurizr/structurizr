@@ -42,30 +42,6 @@ public class DeleteWorkspaceControllerTests extends ControllerTestsBase {
     }
 
     @Test
-    void deleteWorkspace_RedirectsToTheHomePage_WhenAuthenticationIsEnabledAndTheUserIsNotAnAdmin() {
-        Properties properties = new Properties();
-        properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "admin@example.com");
-        enableAuthentication(properties);
-        setUser("user@example.com");
-
-        controller.setWorkspaceComponent(new MockWorkspaceComponent() {
-            @Override
-            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
-                return new WorkspaceMetadata(1);
-            }
-
-            @Override
-            public boolean deleteWorkspace(long workspaceId) throws WorkspaceComponentException {
-                fail();
-                return true;
-            }
-        });
-
-        String view = controller.deleteWorkspace(1, model);
-        assertEquals("redirect:/", view);
-    }
-
-    @Test
     void deleteWorkspace_DeletesTheWorkspace_WhenAuthenticationIsDisabled() {
         disableAuthentication();
         setUser("user@example.com");
@@ -97,7 +73,7 @@ public class DeleteWorkspaceControllerTests extends ControllerTestsBase {
     }
 
     @Test
-    void deleteWorkspace_DeletesTheWorkspace_WhenAuthenticationIsEnabledAndNoAdminUsersAreDefined() {
+    void deleteWorkspace_DeletesTheWorkspace_WhenAuthenticationIsEnabledAndNoUsersAreConfigured() {
         enableAuthentication();
         setUser("user@example.com");
 
@@ -106,6 +82,40 @@ public class DeleteWorkspaceControllerTests extends ControllerTestsBase {
             @Override
             public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
                 return new WorkspaceMetadata(1);
+            }
+
+            @Override
+            public boolean deleteWorkspace(long workspaceId) throws WorkspaceComponentException {
+                buf.append("1 ");
+                return true;
+            }
+        });
+
+        controller.setSearchComponent(new MockSearchComponent() {
+            @Override
+            public void delete(long workspaceId) {
+                buf.append("2");
+            }
+        });
+
+        String view = controller.deleteWorkspace(1, model);
+        assertEquals("redirect:/", view);
+        assertEquals("1 2", buf.toString());
+    }
+
+    @Test
+    void deleteWorkspace_DeletesTheWorkspace_WhenAuthenticationIsEnabledAndTheUserIsAWriteUser() {
+        Properties properties = new Properties();
+        enableAuthentication(properties);
+        setUser("write@example.com");
+
+        final StringBuilder buf = new StringBuilder();
+        controller.setWorkspaceComponent(new MockWorkspaceComponent() {
+            @Override
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                WorkspaceMetadata workspaceMetadata = new WorkspaceMetadata(1);
+                workspaceMetadata.addWriteUser("write@example.com");
+                return workspaceMetadata;
             }
 
             @Override
@@ -138,7 +148,9 @@ public class DeleteWorkspaceControllerTests extends ControllerTestsBase {
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
             public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
-                return new WorkspaceMetadata(1);
+                WorkspaceMetadata workspaceMetadata = new WorkspaceMetadata(1);
+                workspaceMetadata.addWriteUser("write@example.com");
+                return workspaceMetadata;
             }
 
             @Override
@@ -158,6 +170,58 @@ public class DeleteWorkspaceControllerTests extends ControllerTestsBase {
         String view = controller.deleteWorkspace(1, model);
         assertEquals("redirect:/", view);
         assertEquals("1 2", buf.toString());
+    }
+
+    @Test
+    void deleteWorkspace_RedirectsToTheWorkspaceSummaryPage_WhenAuthenticationIsEnabledAndTheUserIsNotAnAdmin() {
+        Properties properties = new Properties();
+        properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "admin@example.com");
+        enableAuthentication(properties);
+        setUser("write@example.com");
+
+        controller.setWorkspaceComponent(new MockWorkspaceComponent() {
+            @Override
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                WorkspaceMetadata workspaceMetadata = new WorkspaceMetadata(1);
+                workspaceMetadata.addWriteUser("write@example.com");
+                return workspaceMetadata;
+            }
+
+            @Override
+            public boolean deleteWorkspace(long workspaceId) throws WorkspaceComponentException {
+                fail();
+                return true;
+            }
+        });
+
+        String view = controller.deleteWorkspace(1, model);
+        assertEquals("redirect:/workspace/1", view);
+    }
+
+    @Test
+    void deleteWorkspace_RedirectsToTheWorkspaceSummaryPage_WhenAuthenticationIsEnabledAndTheUserIsNotAWriteUser() {
+        Properties properties = new Properties();
+        enableAuthentication(properties);
+        setUser("read@example.com");
+
+        controller.setWorkspaceComponent(new MockWorkspaceComponent() {
+            @Override
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                WorkspaceMetadata workspaceMetadata = new WorkspaceMetadata(1);
+                workspaceMetadata.addWriteUser("write@example.com");
+                workspaceMetadata.addReadUser("read@example.com");
+                return workspaceMetadata;
+            }
+
+            @Override
+            public boolean deleteWorkspace(long workspaceId) throws WorkspaceComponentException {
+                fail();
+                return true;
+            }
+        });
+
+        String view = controller.deleteWorkspace(1, model);
+        assertEquals("redirect:/workspace/1", view);
     }
 
 }

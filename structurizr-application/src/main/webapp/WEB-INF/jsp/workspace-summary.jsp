@@ -111,7 +111,7 @@
 
             <div class="navigationItemSeparator"></div>
 
-            <c:if test="${fn:startsWith(urlPrefix, '/workspace') && dslEditorEnabled}">
+            <c:if test="${workspace.editable && dslEditorEnabled}">
             <div class="navigationItem dslEditorNavigation">
                 <a href="<c:out value="${urlPrefix}" />/dsl-editor<c:out value="${urlSuffix}" escapeXml="false" />"><img src="/static/bootstrap-icons/code-slash.svg" class="icon-sm" /> DSL editor</a>
             </div>
@@ -137,12 +137,12 @@
             </c:if>
 
             <div class="navigationItemSeparator"></div>
-            <c:if test="${fn:startsWith(urlPrefix, '/workspace')}">
+            <c:if test="${workspace.editable eq true}">
             <div class="navigationItem">
                 <a href="<c:out value="${urlPrefix}" />/settings"><img src="/static/bootstrap-icons/gear.svg" class="icon-sm" /> Settings</a>
             </div>
 
-            <c:if test="${workspace.editable eq true and workspace.locked eq true}">
+            <c:if test="${workspace.locked eq true}">
             <div class="navigationItem">
                 <a id="unlockWorkspaceLink" href=""><img src="/static/bootstrap-icons/unlock.svg" class="icon-sm" /> Unlock</a>
             </div>

@@ -277,9 +277,10 @@ public class WorkspaceMetadata {
     }
 
     public void addReadUser(String user) {
-        if (user != null) {
+        if (!StringUtils.isNullOrEmpty(user)) {
             user = user.trim();
-            if (user.length() > 0) {
+
+            if (!readUsers.contains(user)) {
                 readUsers.add(user.toLowerCase());
             }
         }
@@ -307,7 +308,11 @@ public class WorkspaceMetadata {
 
     public void addWriteUser(String user) {
         if (!StringUtils.isNullOrEmpty(user)) {
-            writeUsers.add(user.toLowerCase());
+            user = user.trim();
+
+            if (!writeUsers.contains(user)) {
+                writeUsers.add(user.toLowerCase());
+            }
         }
     }
 
