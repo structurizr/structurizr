@@ -1,5 +1,6 @@
 package com.structurizr.server.component.workspace;
 
+import com.structurizr.server.domain.Image;
 import com.structurizr.server.domain.InputStreamAndContentLength;
 import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.AbstractTestsBase;
@@ -8,6 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -237,6 +240,41 @@ abstract class AbstractWorkspaceAdapterTests extends AbstractTestsBase {
         // try the main branch version
         isacl = getWorkspaceAdapter().getImage(1, "", "image.png");
         assertNull(isacl);
+    }
+
+    @Test
+    void images() throws Exception {
+        File tempDirectory = createTemporaryDirectory();
+        NumberFormat numberFormat = new DecimalFormat("00");
+
+        for (int i = 1; i <= 10; i++) {
+            String filename = "image-" + numberFormat.format(i) + ".png";
+            File image = new File(tempDirectory, filename);
+            Files.copy(
+                    new File("src/main/resources/static/static/img/structurizr-logo.png").toPath(),
+                    image.toPath()
+            );
+            boolean result = getWorkspaceAdapter().putImage(1, "", filename, image);
+            assertTrue(result);
+        }
+
+        List<Image> images = getWorkspaceAdapter().getImages(1);
+        assertEquals(10, images.size());
+        for (int i = 1; i <= 10; i++) {
+            String filename = "image-" + numberFormat.format(i) + ".png";
+            Image image = images.get(i-1);
+            assertEquals(image.getName(), filename);
+            assertEquals(9, image.getSizeInKB());
+        }
+
+        // and a different workspace ID
+        images = getWorkspaceAdapter().getImages(2);
+        assertTrue(images.isEmpty());
+
+        // and delete the images
+        boolean result = getWorkspaceAdapter().deleteImages(1);
+        assertTrue(result);
+        assertTrue(getWorkspaceAdapter().getImages(1).isEmpty());
     }
 
 }

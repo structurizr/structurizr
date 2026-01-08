@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -65,6 +66,8 @@ abstract class AbstractFileSystemWorkspaceAdapter extends AbstractWorkspaceAdapt
                 images.add(new Image(file.getName(), file.length(), new Date(file.lastModified())));
             }
         }
+
+        images.sort(Comparator.comparing(i -> i.getName().toLowerCase()));
 
         return images;
     }
