@@ -108,7 +108,7 @@
             }
         });
 
-        <c:if test="${embed eq true && showDiagramSelector eq false}">
+        <c:if test="${workspace.id > 0 && embed eq true && showDiagramSelector eq false}">
         $('#exportViewList').addClass('hidden');
         $('#exportSelectedViewsButton').addClass('hidden');
         </c:if>
