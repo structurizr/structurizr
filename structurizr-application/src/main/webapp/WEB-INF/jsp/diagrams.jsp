@@ -171,18 +171,21 @@
         event.preventDefault();
         structurizr.ui.setRenderingMode(structurizr.ui.RENDERING_MODE_LIGHT);
         structurizr.diagram.setDarkMode(structurizr.ui.isDarkMode());
+        refreshThumbnail();
     });
 
     $('#renderingModeDarkLink').click(function(event) {
         event.preventDefault();
         structurizr.ui.setRenderingMode(structurizr.ui.RENDERING_MODE_DARK);
         structurizr.diagram.setDarkMode(structurizr.ui.isDarkMode());
+        refreshThumbnail();
     });
 
     $('#renderingModeSystemLink').click(function(event) {
         event.preventDefault();
         structurizr.ui.setRenderingMode(structurizr.ui.RENDERING_MODE_SYSTEM);
         structurizr.diagram.setDarkMode(structurizr.ui.isDarkMode());
+        refreshThumbnail();
     });
 
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
