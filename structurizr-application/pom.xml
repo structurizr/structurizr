@@ -97,17 +97,6 @@
         </exclusion>
       </exclusions>
     </dependency>
-<!--    <dependency>-->
-<!--      <groupId>com.structurizr</groupId>-->
-<!--      <artifactId>structurizr-client</artifactId>-->
-<!--      <version>${project.version}</version>-->
-<!--      <exclusions>-->
-<!--        <exclusion>-->
-<!--          <groupId>commons-logging</groupId>-->
-<!--          <artifactId>commons-logging</artifactId>-->
-<!--        </exclusion>-->
-<!--      </exclusions>-->
-<!--    </dependency>-->
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-api</artifactId>
@@ -287,6 +276,20 @@
               <sources>
                 <source>extensions/src/test/java</source>
               </sources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>add-resource</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>add-resource</goal>
+            </goals>
+            <configuration>
+              <resources>
+                <resource>
+                  <directory>extensions/src/main/resources</directory>
+                </resource>
+              </resources>
             </configuration>
           </execution>
         </executions>
