@@ -27,6 +27,7 @@
     </c:when>
     <c:when test="${workspace.editable eq false && embed eq true && showDiagramSelector eq false}">
         <%-- embedded mode, without the diagram selector --%>
+        <div id="embeddedBanner" style="position: fixed; z-index: 100; width: 100%; opacity: 90%"></div>
     </c:when>
     <c:otherwise>
         <div id="diagramControls">
