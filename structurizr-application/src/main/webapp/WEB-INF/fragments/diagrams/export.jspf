@@ -274,12 +274,10 @@
 
             changeView(viewToExport, function () {
                 var diagramAsSVG = structurizr.diagram.exportCurrentDiagramToSVG(includeDiagramMetadata);
-                diagramAsSVG = replaceLocalThemes(diagramAsSVG);
 
                 var diagramKeyAsSVG;
                 if (viewToExport.type !== structurizr.constants.IMAGE_VIEW_TYPE) {
                     diagramKeyAsSVG = structurizr.diagram.exportCurrentDiagramKeyToSVG();
-                    diagramKeyAsSVG = replaceLocalThemes(diagramKeyAsSVG);
                 }
 
                 addExportedSVGToPage(diagramAsSVG, diagramKeyAsSVG, download);
@@ -435,10 +433,6 @@
         $('#exportAnimation').addClass('hidden');
         $('#exportedDiagrams').empty();
         $('#exportModal').modal('show');
-    }
-
-    function replaceLocalThemes(svg) {
-        return svg.replace(/xlink:href="\/static\/themes\//g, 'xlink:href="https://static.structurizr.com/themes/');
     }
 
 </script>
