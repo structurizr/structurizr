@@ -432,6 +432,10 @@
         $('#exportSVGOptions').removeClass('hidden');
         $('#exportAnimation').addClass('hidden');
         $('#exportedDiagrams').empty();
+
+        const currentView = structurizr.diagram.getCurrentViewOrFilter();
+        $('#exportViewList').val(currentView.key);
+        
         $('#exportModal').modal('show');
     }
 
