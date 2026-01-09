@@ -1,0 +1,1613 @@
+openapi: 3.0.0
+info:
+  version: 1.29.0
+  title: Structurizr
+  description: The web API for Structurizr.
+servers:
+  - url: https://api.structurizr.com
+paths:
+  '/workspace/{id}':
+    get:
+      parameters:
+        - name: id
+          in: path
+          description: The workspace ID.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A Structurizr workspace.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Workspace"
+    put:
+      parameters:
+        - name: id
+          in: path
+          description: The workspace ID.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: The workspace to be stored.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Workspace'
+      responses:
+        '200':
+          description: Updates the workspace.
+  '/workspace/{id}/lock':
+    put:
+      parameters:
+        - name: id
+          in: path
+          description: The workspace ID.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: An API response indicating success or failure.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/APIResponse"
+    delete:
+      parameters:
+        - name: id
+          in: path
+          description: The workspace ID.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: An API response indicating success or failure.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/APIResponse"
+
+components:
+  schemas:
+
+    Workspace:
+      type: object
+      description: Represents a Structurizr workspace, which is a wrapper for a software architecture model, views, and documentation.
+      properties:
+        id:
+          type: number
+          format: long
+          description: The workspace ID.
+        name:
+          type: string
+          description: The name of the workspace.
+        description:
+          type: string
+          description: A short description of the workspace.
+        version:
+          type: string
+          description: A version number for the workspace.
+        thumbnail:
+          type: string
+          description: The thumbnail associated with the workspace; a Base64 encoded PNG file as a data URI (data:image/png;base64).
+        lastModifiedDate:
+          type: string
+          description: The last modified date, in ISO 8601 format (e.g. "2018-09-08T12:40:03Z").
+        lastModifiedUser:
+          type: string
+          description: A string identifying the user who last modified the workspace (e.g. an e-mail address or username).
+        lastModifiedAgent:
+          type: string
+          description: A string identifying the agent that was last used to modify the workspace (e.g. "structurizr-java/1.2.0").
+        model:
+          $ref: '#/components/schemas/Model'
+        views:
+          $ref: '#/components/schemas/Views'
+        documentation:
+          $ref: '#/components/schemas/Documentation'
+        configuration:
+          $ref: '#/components/schemas/WorkspaceConfiguration'
+        properties:
+          type: object
+          description: A set of arbitrary name-value properties.
+          additionalProperties: true
+
+    Model:
+      type: object
+      description: A software architecture model.
+      properties:
+        enterprise:
+          type: object
+          description: The enterprise associated with this model.
+          properties:
+            name:
+              type: string
+              description: The name of the enterprise.
+        people:
+          type: array
+          items:
+            $ref: '#/components/schemas/Person'
+        softwareSystems:
+          type: array
+          items:
+            $ref: '#/components/schemas/SoftwareSystem'
+        deploymentNodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeploymentNode'
+        properties:
+          type: object
+          description: A set of arbitrary name-value properties.
+          additionalProperties: true
+
+    Person:
+      type: object
+      description: A person who uses a software system.
+      properties:
+        id:
+          type: string
+          description: The ID of this person in the model.
+        name:
+          type: string
+          description: The name of this person.
+        description:
+          type: string
+          description: A short description of this person.
+        tags:
+          type: string
+          description: A comma separated list of tags associated with this person.
+        url:
+          type: string
+          description: The URL where more information about this element can be found.
+        location:
+          type: string
+          description: The location of this person.
+          enum:
+            - External
+            - Internal
+            - Unspecified
+        group:
+          type: string
+          description: The name of the group in which this person should be included in.
+        properties:
+          type: object
+          description: A set of arbitrary name-value properties.
+          additionalProperties: true
+        perspectives:
+          type: array
+          items:
+            $ref: '#/components/schemas/Perspective'
+          description: The set of perspectives associated with this element.
+        relationships:
+          type: array
+          items:
+            $ref: '#/components/schemas/Relationship'
+          description: The set of relationships from this person to other elements.
+
+    SoftwareSystem:
+      type: object
+      description: A software system.
+      properties:
+        id:
+          type: string
+          description: The ID of this software system in the model.
+        name:
+          type: string
+          description: The name of this software system.
+        description:
+          type: string
+          description: A short description of this software system.
+        location:
+          type: string
+          description: The location of this software system.
+          enum:
+            - External
+            - Internal
+            - Unspecified
+        tags:
+          type: string
+          description: A comma separated list of tags associated with this software system.
+        url:
+          type: string
+          description: The URL where more information about this element can be found.
+        containers:
+          type: array
+          description: The set of containers within this software system.
+          items:
+            $ref: '#/components/schemas/Container'
+        group:
+          type: string
+          description: The name of the group in which this software system should be included in.
+        properties:
+          type: object
+          description: A set of arbitrary name-value properties.
+          additionalProperties: true
+        perspectives:
+          type: array
+          items:
+            $ref: '#/components/schemas/Perspective'
+          description: The set of perspectives associated with this element.
+        relationships:
+          type: array
+          description: The set of relationships from this software system to other
+            elements.
+          items:
+            $ref: '#/components/schemas/Relationship'
+        documentation:
+          $ref: '#/components/schemas/Documentation'
+
+    Container:
+      type: object
+      description: A container (something that can execute code or host data).
+      properties:
+        id:
+          type: string
+          description: The ID of this container in the model.
+        name:
+          type: string
+          description: The name of this container.
+        description:
+          type: string
+          description: A short description of this container.
+        technology:
+          type: string
+          description: The technology associated with this container (e.g. Apache Tomcat).
+        tags:
+          type: string
+          description: A comma separated list of tags associated with this container.
+        url:
+          type: string
+          description: The URL where more information about this element can be found.
+        components:
+          type: array
+          description: The set of components within this container.
+          items:
+            $ref: '#/components/schemas/Component'
+        group:
+          type: string
+          description: The name of the group in which this container should be included in.
+        properties:
+          type: object
+          description: A set of arbitrary name-value properties.
+          additionalProperties: true
+        perspectives:
+          type: array
+          items:
+            $ref: '#/components/schemas/Perspective'
+          description: The set of perspectives associated with this element.
+        relationships:
+          type: array
+          description: The set of relationships from this container to other elements.
+          items:
+            $ref: '#/components/schemas/Relationship'
+        documentation:
+          $ref: '#/components/schemas/Documentation'
+
+    Component:
+      type: object
+      description: A component (a grouping of related functionality behind an interface that runs inside a container).
+      properties:
+        id:
+          type: string
+          description: The ID of this component in the model.
+        name:
+          type: string
+          description: The name of this component.
+        description:
+          type: string
+          description: A short description of this component.
+        technology:
+          type: string
+          description: The technology associated with this component (e.g. Spring Bean).
+        tags:
+          type: string
+          description: A comma separated list of tags associated with this component.
+        url:
+          type: string
+          description: The URL where more information about this element can be found.
+        group:
+          type: string
+          description: The name of the group in which this component should be included in.
+        properties:
+          type: object
+          description: A set of arbitrary name-value properties.
+          additionalProperties: true
+        perspectives:
+          type: array
+          items:
+            $ref: '#/components/schemas/Perspective'
+          description: The set of perspectives associated with this element.
+        relationships:
+          type: array
+          description: The set of relationships from this component to other elements.
+          items:
+            $ref: '#/components/schemas/Relationship'
+        documentation:
+          $ref: '#/components/schemas/Documentation'
+
+    DeploymentNode:
+      type: object
+      description: A deployment node.
+      properties:
+        id:
+          type: string
+          description: The ID of this deployment node in the model.
+        name:
+          type: string
+          description: The name of this deployment node.
+        description:
+          type: string
+          description: A short description of this deployment node.
+        technology:
+          type: string
+          description: The technology associated with this deployment node (e.g. Apache Tomcat).
+        environment:
+          type: string
+          description: The deployment environment in which this deployment node resides (e.g. "Development", "Live", etc).
+        instances:
+          type: string
+          description: The number of instances; either a number (e.g. 1, 2, etc) or a range (e.g. 0..N, 0..*, 1..3, etc).
+        tags:
+          type: string
+          description: A comma separated list of tags associated with this deployment node.
+        url:
+          type: string
+          description: The URL where more information about this element can be found.
+        children:
+          type: array
+          description: The set of child/nested deployment nodes.
+          items:
+            $ref: '#/components/schemas/DeploymentNode'
+        infrastructureNodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/InfrastructureNode'
+        softwareSystemInstances:
+          type: array
+          description: The set of software systems instances running in this deployment node..
+          items:
+            $ref: '#/components/schemas/SoftwareSystemInstance'
+        containerInstances:
+          type: array
+          description: The set of container instances running in this deployment node..
+          items:
+            $ref: '#/components/schemas/ContainerInstance'
+        properties:
+          type: object
+          description: A set of arbitrary name-value properties.
+          additionalProperties: true
+        perspectives:
+          type: array
+          items:
+            $ref: '#/components/schemas/Perspective'
+          description: The set of perspectives associated with this element.
+        relationships:
+          type: array
+          description: The set of relationships from this deployment node to other elements.
+          items:
+            $ref: '#/components/schemas/Relationship'
+
+    InfrastructureNode:
+      type: object
+      description: An infrastructure node.
+      properties:
+        id:
+          type: string
+          description: The ID of this infrastructure node in the model.
+        name:
+          type: string
+          description: The name of this infrastructure node.
+        description:
+          type: string
+          description: A short description of this infrastructure node.
+        technology:
+          type: string
+          description: The technology associated with this infrastructure node (e.g. "Route 53").
+        environment:
+          type: string
+          description: The deployment environment in which this infrastructure node resides (e.g. "Development", "Live", etc).
+        tags:
+          type: string
+          description: A comma separated list of tags associated with this infrastructure node.
+        url:
+          type: string
+          description: The URL where more information about this element can be found.
+        properties:
+          type: object
+          description: A set of arbitrary name-value properties.
+          additionalProperties: true
+        perspectives:
+          type: array
+          items:
+            $ref: '#/components/schemas/Perspective'
+          description: The set of perspectives associated with this element.
+        relationships:
+          type: array
+          description: The set of relationships from this infrastructure node to other elements.
+          items:
+            $ref: '#/components/schemas/Relationship'
+
+    SoftwareSystemInstance:
+      type: object
+      description: An instance of a software system, running on a deployment node.
+      properties:
+        id:
+          type: string
+          description: The ID of this software system instance in the model.
+        softwareSystemId:
+          type: string
+          description: The ID of the software system this is an instance of.
+        instanceId:
+          type: number
+          description: The number/index of this instance.
+        environment:
+          type: string
+          description: The deployment environment in which this software system instance resides (e.g. "Development", "Live", etc).
+        tags:
+          type: string
+          description: A comma separated list of tags associated with this software system instance.
+        properties:
+          type: object
+          description: A set of arbitrary name-value properties.
+          additionalProperties: true
+        perspectives:
+          type: array
+          items:
+            $ref: '#/components/schemas/Perspective'
+          description: The set of perspectives associated with this element.
+        relationships:
+          type: array
+          description: The set of relationships from this software system instance to other elements.
+          items:
+            $ref: '#/components/schemas/Relationship'
+        healthChecks:
+          type: array
+          description: The set of HTTP-based health checks for this software system instance.
+          items:
+            $ref: '#/components/schemas/HttpHealthCheck'
+
+    ContainerInstance:
+      type: object
+      description: An instance of a container, running on a deployment node.
+      properties:
+        id:
+          type: string
+          description: The ID of this container instance in the model.
+        containerId:
+          type: string
+          description: The ID of the container this is an instance of.
+        instanceId:
+          type: number
+          description: The number/index of this instance.
+        environment:
+          type: string
+          description: The deployment environment in which this container instance resides (e.g. "Development", "Live", etc).
+        tags:
+          type: string
+          description: A comma separated list of tags associated with this container instance.
+        properties:
+          type: object
+          description: A set of arbitrary name-value properties.
+          additionalProperties: true
+        perspectives:
+          type: array
+          items:
+            $ref: '#/components/schemas/Perspective'
+          description: The set of perspectives associated with this element.
+        relationships:
+          type: array
+          description: The set of relationships from this container instance to other elements.
+          items:
+            $ref: '#/components/schemas/Relationship'
+        healthChecks:
+          type: array
+          description: The set of HTTP-based health checks for this container instance.
+          items:
+            $ref: '#/components/schemas/HttpHealthCheck'
+
+    HttpHealthCheck:
+      type: object
+      description: Describes a HTTP based health check.
+      properties:
+        name:
+          type: string
+          description: The name of the health check.
+        url:
+          type: string
+          description: The health check URL/endpoint.
+        interval:
+          type: number
+          format: integer
+          description: The polling interval, in seconds.
+        timeout:
+          type: number
+          format: integer
+          description: The timeout after which a health check is deemed as failed, in milliseconds.
+        headers:
+          type: object
+          description: A set of name-value pairs corresponding to HTTP headers that should be sent with the request.
+          additionalProperties: true
+
+    Relationship:
+      type: object
+      description: A relationship between two elements.
+      properties:
+        id:
+          type: string
+          description: The ID of this relationship in the model.
+        description:
+          type: string
+          description: A short description of this relationship.
+        tags:
+          type: string
+          description: A comma separated list of tags associated with this relationship.
+        url:
+          type: string
+          description: The URL where more information about this relationship can be found.
+        properties:
+          type: object
+          description: A set of arbitrary name-value properties.
+          additionalProperties: true
+        perspectives:
+          type: array
+          items:
+            $ref: '#/components/schemas/Perspective'
+          description: The set of perspectives associated with this relationship.
+        sourceId:
+          type: string
+          description: The ID of the source element.
+        destinationId:
+          type: string
+          description: The ID of the destination element.
+        technology:
+          type: string
+          description: The technology associated with this relationship (e.g. HTTPS, JDBC, etc).
+        interactionStyle:
+          type: string
+          description: The interaction style (synchronous or asynchronous).
+          enum:
+            - Synchronous
+            - Asynchronous
+        linkedRelationshipId:
+          type: string
+          description: The ID of the container-container relationship upon which this container instance-container instance relationship is based.
+
+    Perspective:
+      type: object
+      description: Represents an architectural perspective, that can be applied to elements and relationships.
+      properties:
+        name:
+          type: string
+          description: The name of this perspective (e.g. "Security").
+        description:
+          type: string
+          description: The description of this perspective.
+        value:
+          type: string
+          description: The value of this perspective (optional).
+
+    Views:
+      type: object
+      description: The set of views onto a software architecture model.
+      properties:
+        systemLandscapeViews:
+          type: array
+          description: The set of system landscape views.
+          items:
+            $ref: '#/components/schemas/SystemLandscapeView'
+        systemContextViews:
+          type: array
+          description: The set of system context views.
+          items:
+            $ref: '#/components/schemas/SystemContextView'
+        containerViews:
+          type: array
+          description: The set of container views.
+          items:
+            $ref: '#/components/schemas/ContainerView'
+        componentViews:
+          type: array
+          description: The set of component views.
+          items:
+            $ref: '#/components/schemas/ComponentView'
+        dynamicViews:
+          type: array
+          description: The set of dynamic views.
+          items:
+            $ref: '#/components/schemas/DynamicView'
+        deploymentViews:
+          type: array
+          description: The set of deployment views.
+          items:
+            $ref: '#/components/schemas/DeploymentView'
+        filteredViews:
+          type: array
+          description: The set of filtered views.
+          items:
+            $ref: '#/components/schemas/FilteredView'
+        imageViews:
+          type: array
+          description: The set of image views.
+          items:
+            $ref: '#/components/schemas/ImageView'
+        configuration:
+          $ref: '#/components/schemas/Configuration'
+
+    SystemLandscapeView:
+      type: object
+      description: A system landscape view.
+      properties:
+        key:
+          type: string
+          description: A unique identifier for this view.
+        order:
+          type: number
+          description: An integer representing the creation order of this view.
+        title:
+          type: string
+          description: The title of this view (optional).
+        description:
+          type: string
+          description: The description of this view.
+        properties:
+          type: object
+          description: A set of arbitrary name-value properties.
+          additionalProperties: true
+        paperSize:
+          type: string
+          description: The paper size that should be used to render this view.
+          enum:
+            - A6_Portrait
+            - A6_Landscape
+            - A5_Portrait
+            - A5_Landscape
+            - A4_Portrait
+            - A4_Landscape
+            - A3_Portrait
+            - A3_Landscape
+            - A2_Portrait
+            - A2_Landscape
+            - A1_Portrait
+            - A1_Landscape
+            - A0_Portrait
+            - A0_Landscape
+            - Letter_Portrait
+            - Letter_Landscape
+            - Legal_Portrait
+            - Legal_Landscape
+            - Slide_4_3
+            - Slide_16_9
+            - Slide_16_10
+        dimensions:
+          $ref: '#/components/schemas/Dimensions'
+        automaticLayout:
+          $ref: '#/components/schemas/AutomaticLayout'
+        enterpriseBoundaryVisible:
+          type: boolean
+          description: Specifies whether the enterprise boundary (to differentiate internal elements from external elements) should be visible on the resulting diagram.
+        elements:
+          type: array
+          description: The set of elements in this views.
+          items:
+            $ref: '#/components/schemas/ElementView'
+        relationships:
+          type: array
+          description: The set of relationships in this views.
+          items:
+            $ref: '#/components/schemas/RelationshipView'
+        animations:
+          type: array
+          description: The set of animation steps (optional).
+          items:
+            $ref: '#/components/schemas/AnimationStep'
+
+    SystemContextView:
+      type: object
+      description: A system context view.
+      properties:
+        key:
+          type: string
+          description: A unique identifier for this view.
+        order:
+          type: number
+          description: An integer representing the creation order of this view.
+        title:
+          type: string
+          description: The title of this view (optional).
+        description:
+          type: string
+          description: The description of this view.
+        properties:
+          type: object
+          description: A set of arbitrary name-value properties.
+          additionalProperties: true
+        softwareSystemId:
+          type: string
+          description: The ID of the software system this view is associated with.
+        paperSize:
+          type: string
+          description: The paper size that should be used to render this view.
+          enum:
+            - A6_Portrait
+            - A6_Landscape
+            - A5_Portrait
+            - A5_Landscape
+            - A4_Portrait
+            - A4_Landscape
+            - A3_Portrait
+            - A3_Landscape
+            - A2_Portrait
+            - A2_Landscape
+            - A1_Portrait
+            - A1_Landscape
+            - A0_Portrait
+            - A0_Landscape
+            - Letter_Portrait
+            - Letter_Landscape
+            - Legal_Portrait
+            - Legal_Landscape
+            - Slide_4_3
+            - Slide_16_9
+            - Slide_16_10
+        dimensions:
+          $ref: '#/components/schemas/Dimensions'
+        automaticLayout:
+          $ref: '#/components/schemas/AutomaticLayout'
+        enterpriseBoundaryVisible:
+          type: boolean
+          description: Specifies whether the enterprise boundary (to differentiate internal elements from external elements") should be visible on the resulting diagram.
+        elements:
+          type: array
+          description: The set of elements in this view.
+          items:
+            $ref: '#/components/schemas/ElementView'
+        relationships:
+          type: array
+          description: The set of relationships in this view.
+          items:
+            $ref: '#/components/schemas/RelationshipView'
+        animations:
+          type: array
+          description: The set of animation steps (optional).
+          items:
+            $ref: '#/components/schemas/AnimationStep'
+
+    ContainerView:
+      type: object
+      description: A container view.
+      properties:
+        key:
+          type: string
+          description: A unique identifier for this view.
+        order:
+          type: number
+          description: An integer representing the creation order of this view.
+        title:
+          type: string
+          description: The title of this view (optional).
+        description:
+          type: string
+          description: The description of this view.
+        properties:
+          type: object
+          description: A set of arbitrary name-value properties.
+          additionalProperties: true
+        softwareSystemId:
+          type: string
+          description: The ID of the software system this view is associated with.
+        paperSize:
+          type: string
+          description: The paper size that should be used to render this view.
+          enum:
+            - A6_Portrait
+            - A6_Landscape
+            - A5_Portrait
+            - A5_Landscape
+            - A4_Portrait
+            - A4_Landscape
+            - A3_Portrait
+            - A3_Landscape
+            - A2_Portrait
+            - A2_Landscape
+            - A1_Portrait
+            - A1_Landscape
+            - A0_Portrait
+            - A0_Landscape
+            - Letter_Portrait
+            - Letter_Landscape
+            - Legal_Portrait
+            - Legal_Landscape
+            - Slide_4_3
+            - Slide_16_9
+            - Slide_16_10
+        dimensions:
+          $ref: '#/components/schemas/Dimensions'
+        automaticLayout:
+          $ref: '#/components/schemas/AutomaticLayout'
+        elements:
+          type: array
+          description: The set of elements in this views.
+          items:
+            $ref: '#/components/schemas/ElementView'
+        relationships:
+          type: array
+          description: The set of relationships in this views.
+          items:
+            $ref: '#/components/schemas/RelationshipView'
+        animations:
+          type: array
+          description: The set of animation steps (optional).
+          items:
+            $ref: '#/components/schemas/AnimationStep'
+        externalSoftwareSystemBoundariesVisible:
+          type: boolean
+          description: Specifies whether software system boundaries should be visible for "external" containers (those outside the software system in scope).
+
+    ComponentView:
+      type: object
+      description: A component view.
+      properties:
+        key:
+          type: string
+          description: A unique identifier for this view.
+        order:
+          type: number
+          description: An integer representing the creation order of this view.
+        title:
+          type: string
+          description: The title of this view (optional).
+        description:
+          type: string
+          description: The description of this view.
+        properties:
+          type: object
+          description: A set of arbitrary name-value properties.
+          additionalProperties: true
+        containerId:
+          type: string
+          description: The ID of the container this view is associated with.
+        paperSize:
+          type: string
+          description: The paper size that should be used to render this view.
+          enum:
+            - A6_Portrait
+            - A6_Landscape
+            - A5_Portrait
+            - A5_Landscape
+            - A4_Portrait
+            - A4_Landscape
+            - A3_Portrait
+            - A3_Landscape
+            - A2_Portrait
+            - A2_Landscape
+            - A1_Portrait
+            - A1_Landscape
+            - A0_Portrait
+            - A0_Landscape
+            - Letter_Portrait
+            - Letter_Landscape
+            - Legal_Portrait
+            - Legal_Landscape
+            - Slide_4_3
+            - Slide_16_9
+            - Slide_16_10
+        dimensions:
+          $ref: '#/components/schemas/Dimensions'
+        automaticLayout:
+          $ref: '#/components/schemas/AutomaticLayout'
+        elements:
+          type: array
+          description: The set of elements in this views.
+          items:
+            $ref: '#/components/schemas/ElementView'
+        relationships:
+          type: array
+          description: The set of relationships in this views.
+          items:
+            $ref: '#/components/schemas/RelationshipView'
+        animations:
+          type: array
+          description: The set of animation steps (optional).
+          items:
+            $ref: '#/components/schemas/AnimationStep'
+        externalContainerBoundariesVisible:
+          type: boolean
+          description: Specifies whether container boundaries should be visible for "external" components (those outside the container in scope).
+
+    DynamicView:
+      type: object
+      description: A dynamic view.
+      properties:
+        key:
+          type: string
+          description: A unique identifier for this view.
+        order:
+          type: number
+          description: An integer representing the creation order of this view.
+        title:
+          type: string
+          description: The title of this view (optional).
+        description:
+          type: string
+          description: The description of this view.
+        properties:
+          type: object
+          description: A set of arbitrary name-value properties.
+          additionalProperties: true
+        elementId:
+          type: string
+          description: The ID of the element this view is associated with (optional).
+        paperSize:
+          type: string
+          description: The paper size that should be used to render this view.
+          enum:
+            - A6_Portrait
+            - A6_Landscape
+            - A5_Portrait
+            - A5_Landscape
+            - A4_Portrait
+            - A4_Landscape
+            - A3_Portrait
+            - A3_Landscape
+            - A2_Portrait
+            - A2_Landscape
+            - A1_Portrait
+            - A1_Landscape
+            - A0_Portrait
+            - A0_Landscape
+            - Letter_Portrait
+            - Letter_Landscape
+            - Legal_Portrait
+            - Legal_Landscape
+            - Slide_4_3
+            - Slide_16_9
+            - Slide_16_10
+        dimensions:
+          $ref: '#/components/schemas/Dimensions'
+        automaticLayout:
+          $ref: '#/components/schemas/AutomaticLayout'
+        elements:
+          type: array
+          description: The set of elements in this views.
+          items:
+            $ref: '#/components/schemas/ElementView'
+        relationships:
+          type: array
+          description: The set of relationships in this views.
+          items:
+            $ref: '#/components/schemas/RelationshipView'
+        externalBoundariesVisible:
+          type: boolean
+          description: Specifies software system/container boundaries should be visible for "external" containers/components (those outside the element in scope)
+
+    DeploymentView:
+      type: object
+      description: A deployment view.
+      properties:
+        key:
+          type: string
+          description: A unique identifier for this view.
+        order:
+          type: number
+          description: An integer representing the creation order of this view.
+        title:
+          type: string
+          description: The title of this view (optional).
+        description:
+          type: string
+          description: The description of this view.
+        properties:
+          type: object
+          description: A set of arbitrary name-value properties.
+          additionalProperties: true
+        softwareSystemId:
+          type: string
+          description: The ID of the software system this view is associated with (optional).
+        environment:
+          type: string
+          description: The name of the environment that this deployment view is for (e.g. "Development", "Live", etc).
+        paperSize:
+          type: string
+          description: The paper size that should be used to render this view.
+          enum:
+            - A6_Portrait
+            - A6_Landscape
+            - A5_Portrait
+            - A5_Landscape
+            - A4_Portrait
+            - A4_Landscape
+            - A3_Portrait
+            - A3_Landscape
+            - A2_Portrait
+            - A2_Landscape
+            - A1_Portrait
+            - A1_Landscape
+            - A0_Portrait
+            - A0_Landscape
+            - Letter_Portrait
+            - Letter_Landscape
+            - Legal_Portrait
+            - Legal_Landscape
+            - Slide_4_3
+            - Slide_16_9
+            - Slide_16_10
+        dimensions:
+          $ref: '#/components/schemas/Dimensions'
+        automaticLayout:
+          $ref: '#/components/schemas/AutomaticLayout'
+        elements:
+          type: array
+          description: The set of elements in this views.
+          items:
+            $ref: '#/components/schemas/ElementView'
+        relationships:
+          type: array
+          description: The set of relationships in this views.
+          items:
+            $ref: '#/components/schemas/RelationshipView'
+        animations:
+          type: array
+          description: The set of animation steps (optional).
+          items:
+            $ref: '#/components/schemas/AnimationStep'
+
+    FilteredView:
+      type: object
+      description: Represents a view on top of a view, which can be used to include or exclude specific elements.
+      properties:
+        key:
+          type: string
+          description: A unique identifier for this view.
+        order:
+          type: number
+          description: An integer representing the creation order of this view.
+        title:
+          type: string
+          description: The title of this view (optional).
+        description:
+          type: string
+          description: The description of this view.
+        properties:
+          type: object
+          description: A set of arbitrary name-value properties.
+          additionalProperties: true
+        baseViewKey:
+          type: string
+          description: The key of the view on which this filtered view is based.
+        mode:
+          type: string
+          description: Whether elements/relationships are being included or excluded based upon the set of tags.
+          enum:
+            - Include
+            - Exclude
+        tags:
+          type: array
+          description: The set of tags to include/exclude elements/relationships when rendering this filtered view.
+          items:
+            type: string
+
+    ImageView:
+      type: object
+      description: A view that has been rendered elsewhere (e.g. PlantUML, Mermaid, Kroki, etc) as a image (e.g. PNG).
+      properties:
+        key:
+          type: string
+          description: A unique identifier for this view.
+        order:
+          type: number
+          description: An integer representing the creation order of this view.
+        title:
+          type: string
+          description: The title of this view (optional).
+        description:
+          type: string
+          description: The description of this view.
+        properties:
+          type: object
+          description: A set of arbitrary name-value properties.
+          additionalProperties: true
+        elementId:
+          type: string
+          description: The ID of the element this view is associated with (optional).
+        content:
+          type: string
+          description: The content of this image view, which needs to be a URL or a data URI.
+        contentType:
+          type: string
+          description: The content type of this view (e.g. "image/png").
+
+    ElementView:
+      type: object
+      description: An instance of a model element (Person, Software System, Container or Component) in a View.
+      properties:
+        id:
+          type: string
+          description: The ID of the element.
+        x:
+          type: number
+          format: integer
+          description: The horizontal position of the element when rendered.
+        y:
+          type: number
+          format: integer
+          description: The vertical position of the element when rendered.
+
+    RelationshipView:
+      type: object
+      description: An instance of a model relationship in a View.
+      properties:
+        id:
+          type: string
+          description: The ID of the relationship.
+        description:
+          type: string
+          description: The description of this relationship (used in dynamic views only).
+        response:
+          type: boolean
+          description: Signifies whether this relationship represents a return/response message (used in dynamic views only).
+        order:
+          type: string
+          description: Gets the order of this relationship (used in dynamic views only; e.g. 1.0, 1.1, 2.0, etc).
+        vertices:
+          type: array
+          description: The set of vertices used to render the relationship.
+          items:
+            $ref: '#/components/schemas/Vertex'
+        routing:
+          type: string
+          description: The routing algorithm used when rendering this individual relationship.
+          enum:
+            - Direct
+            - Curved
+            - Orthogonal
+        position:
+          type: number
+          format: integer
+          description: The position of the annotation along the line; 0 (start) to 100 (end).
+
+    Vertex:
+      type: object
+      description: The X, Y coordinate of a bend in a line.
+      properties:
+        x:
+          type: number
+          format: integer
+          description: The horizontal position of the vertex when rendered.
+        y:
+          type: number
+          format: integer
+          description: The vertical position of the vertex when rendered.
+
+    AnimationStep:
+      type: object
+      description: An animation step
+      properties:
+        order:
+          type: number
+          format: integer
+          description: The order of this animation step.
+        elements:
+          type: array
+          description: The set of element IDs that should be included in this animation step.
+          items:
+            type: string
+        relationships:
+          type: array
+          description: The set of relationship IDs that should be included in this animation step.
+          items:
+            type: string
+
+    Dimensions:
+      type: object
+      description: Represents a width and height pair.
+      properties:
+        width:
+          type: number
+          format: integer
+          description: The width (pixels).
+        height:
+          type: number
+          format: integer
+          description: The height (pixels).
+
+    AutomaticLayout:
+      type: object
+      description: Represents the auto-layout configuration for a given view.
+      properties:
+        implementation:
+          type: string
+          description: The automatic layout implementation.
+          enum:
+            - Graphviz
+            - Dagre
+        rankDirection:
+          type: string
+          description: The algorithm rank direction.
+          enum:
+            - TopBottom
+            - BottomTop
+            - LeftRight
+            - RightLeft
+        rankSeparation:
+          type: number
+          format: integer
+          description: The separation between ranks (pixels).
+        nodeSeparation:
+          type: number
+          format: integer
+          description: The separation between nodes in the same rank (pixels).
+        edgeSeparation:
+          type: number
+          format: integer
+          description: The separation between edges (pixels).
+        vertices:
+          type: boolean
+          description: Whether vertices should be created during automatic layout.
+
+    Configuration:
+      type: object
+      description: The configuration associated with a set of views.
+      properties:
+        styles:
+          type: object
+          description: The styles associated with this set of views.
+          properties:
+            elements:
+              type: array
+              description: The set of element styles.
+              items:
+                $ref: '#/components/schemas/ElementStyle'
+            relationships:
+              type: array
+              description: The set of relationship styles.
+              items:
+                $ref: '#/components/schemas/RelationshipStyle'
+        lastSavedView:
+          type: string
+          description: The key of the view that was saved most recently.
+        defaultView:
+          type: string
+          description: The key of the view that should be shown by default.
+        themes:
+          type: array
+          description: The URL(s) of the theme(s) to be used when rendering diagrams.
+          items:
+            type: string
+        branding:
+          $ref: '#/components/schemas/Branding'
+        terminology:
+          $ref: '#/components/schemas/Terminology'
+        metadataSymbols:
+          type: string
+          description: The type of symbols to use when rendering metadata.
+          enum:
+            - SquareBrackets,
+            - RoundBrackets,
+            - CurlyBrackets,
+            - AngleBrackets,
+            - DoubleAngleBrackets,
+            - None
+        properties:
+          type: object
+          description: A set of arbitrary name-value properties.
+          additionalProperties: true
+
+    Branding:
+      type: object
+      description: A wrapper for the font and logo for diagram/documentation branding purposes.
+      properties:
+        logo:
+          type: string
+          format: url
+          description: A Base64 data URI representation of a PNG/JPG/GIF file.
+        font:
+          type: object
+          description: Represents a font, including a name and an optional URL for web fonts.
+          properties:
+            name:
+              type: string
+              description: The font name (e.g. "Times New Roman", "Open Sans", etc).
+            url:
+              type: string
+              format: url
+              description: For web fonts, the URL where the font can be found.
+
+    ElementStyle:
+      type: object
+      description: A definition of an element style.
+      properties:
+        tag:
+          type: string
+          description: The tag to which this element style applies.
+        colourScheme:
+          type: string
+          description: The colour scheme this style targets.
+          enum:
+            - Light
+            - Dark
+        width:
+          type: number
+          format: integer
+          description: The width of the element, in pixels.
+        height:
+          type: number
+          format: integer
+          description: The height of the element, in pixels.
+        background:
+          type: string
+          description: The background colour of the element, as a HTML RGB hex string (e.g. '#ffffff').
+        stroke:
+          type: string
+          description: The stroke colour of the element, as a HTML RGB hex string (e.g. '#000000').
+        strokeWidth:
+          type: number
+          format: integer
+          description: The width of the stroke, in pixels.
+        color:
+          type: string
+          description: The foreground (text) colour of the element, as a HTML RGB hex string (e.g. '#ffffff').
+        fontSize:
+          type: number
+          format: integer
+          description: The standard font size used to render text, in pixels.
+        shape:
+          type: string
+          description: The shape used to render the element.
+          enum:
+            - Box
+            - RoundedBox
+            - Component
+            - Circle
+            - Ellipse
+            - Hexagon
+            - Diamond
+            - Folder
+            - Cylinder
+            - Pipe
+            - WebBrowser
+            - Window
+            - MobileDevicePortrait
+            - MobileDeviceLandscape
+            - Person
+            - Robot
+        icon:
+          type: string
+          description: A Base64 data URI representation of a PNG/JPG/GIF file.
+        iconPosition:
+          type: string
+          description: The position of the icon inside the element.
+          enum:
+            - Top
+            - Bottom
+            - Left
+        border:
+          type: string
+          description: The type of border used to render the element.
+          enum:
+            - Solid
+            - Dashed
+            - Dotted
+        opacity:
+          type: number
+          format: integer
+          description: The opacity used when rendering the element; 0-100.
+        metadata:
+          type: boolean
+          description: Whether the element metadata should be shown or not.
+        description:
+          type: boolean
+          description: Whether the element description should be shown or not.
+
+    RelationshipStyle:
+      type: object
+      description: A definition of a relationship style.
+      properties:
+        tag:
+          type: string
+          description: The tag to which this relationship style applies.
+        colourScheme:
+          type: string
+          description: The colour scheme this style targets.
+          enum:
+            - Light
+            - Dark
+        thickness:
+          type: number
+          format: integer
+          description: The thickness of the line, in pixels.
+        color:
+          type: string
+          description: The colour of the line, as a HTML RGB hex string (e.g. '#ffffff').
+        fontSize:
+          type: number
+          format: integer
+          description: The standard font size used to render the relationship annotation, in pixels.
+        width:
+          type: number
+          format: integer
+          description: The width of the relationship annotation, in pixels.
+        dashed:
+          type: boolean
+          description: A flag to indicate whether the line is rendered as dashed or not.
+        routing:
+          type: string
+          description: The routing algorithm used when rendering lines.
+          enum:
+            - Direct
+            - Curved
+            - Orthogonal
+        position:
+          type: number
+          format: integer
+          description: The position of the annotation along the line; 0 (start) to 100 (end).
+        opacity:
+          type: number
+          format: integer
+          description: The opacity used when rendering the line; 0-100.
+
+    Documentation:
+      type: object
+      description: A wrapper for documentation.
+      properties:
+        sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentationSection'
+        decisions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Decision'
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/Image'
+
+    DocumentationSection:
+      type: object
+      description: A documentation section.
+      properties:
+        content:
+          type: string
+          description: The Markdown or AsciiDoc content of the section.
+        format:
+          type: string
+          description: The content format type.
+          enum:
+            - Markdown
+            - AsciiDoc
+        order:
+          type: number
+          format: integer
+          description: The order (index) of the section in the document.
+
+    Decision:
+      type: object
+      description: A decision record (e.g. architecture decision record).
+      properties:
+        id:
+          type: string
+          description: The ID of the decision.
+        date:
+          type: string
+          description: The date that the decision was made (ISO 8601 format).
+        status:
+          type: string
+          description: The status of the decision.
+          enum:
+            - Proposed
+            - Accepted
+            - Superseded
+            - Deprecated
+            - Rejected
+        title:
+          type: string
+          description: The title of the decision.
+        content:
+          type: string
+          description: The Markdown or AsciiDoc content of the section.
+        format:
+          type: string
+          description: The content format type.
+          enum:
+            - Markdown
+            - AsciiDoc
+        elementId:
+          type: string
+          description: The ID of the element (in the model) that this decision applies to (optional).
+
+    Image:
+      type: object
+      description: Represents a base64 encoded image (png/jpg/gif).
+      properties:
+        name:
+          type: string
+          description: The name of the image.
+        content:
+          type: string
+          description: The (base64 encoded) content of the image.
+        type:
+          type: string
+          description: The image MIME type (e.g. "image/png").
+
+    Terminology:
+      type: object
+      description: Provides a way for the terminology on diagrams, etc to be modified (e.g. language translations).
+      properties:
+        enterprise:
+          type: string
+          description: The terminology used when rendering the enterprise boundary.
+        person:
+          type: string
+          description: The terminology used when rendering people.
+        softwareSystem:
+          type: string
+          description: The terminology used when rendering software systems.
+        container:
+          type: string
+          description: The terminology used when rendering containers.
+        component:
+          type: string
+          description: The terminology used when rendering components.
+        code:
+          type: string
+          description: The terminology used when rendering code elements.
+        deploymentNode:
+          type: string
+          description: The terminology used when rendering deployment nodes.
+        relationship:
+          type: string
+          description: The terminology used when rendering relationships.
+
+    WorkspaceConfiguration:
+      type: object
+      description: The workspace configuration (for Structurizr cloud service and on-premises installation).
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        visibility:
+          type: string
+          description: The visibility of the workspace
+          enum:
+            - Public
+            - Private
+        scope:
+          type: string
+          description: The scope of the workspace (can be unset for unscoped).
+          enum:
+            - Landscape
+            - SoftwareSystem
+
+    User:
+      type: object
+      description: Represents a user who should have access to a workspace.
+      properties:
+        username:
+          type: string
+          description: The username of the user (e.g. e-mail address).
+        role:
+          type: string
+          description: The user's role.
+          enum:
+            - ReadWrite
+            - ReadOnly
+
+    APIResponse:
+      type: object
+      description: An API response.
+      properties:
+        success:
+          type: boolean
+          description: 'true if the API call was successful, false otherwise.'
+        message:
+          type: string
+          description: 'A human readable response message.'
+        revision:
+          type: integer
+          description: 'The internal revision number.'
