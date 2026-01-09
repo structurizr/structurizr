@@ -21,8 +21,8 @@ public class PushCommand extends AbstractCommand {
     public void run(String... args) throws Exception {
         Options options = new Options();
 
-        Option option = new Option("url", "structurizrApiUrl", true, "Structurizr API URL (default: https://api.structurizr.com)");
-        option.setRequired(false);
+        Option option = new Option("url", "structurizrApiUrl", true, "Structurizr API URL");
+        option.setRequired(true);
         options.addOption(option);
 
         option = new Option("id", "workspaceId", true, "Workspace ID");
