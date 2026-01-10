@@ -83,7 +83,7 @@
                 </c:if>
 
                 <c:if test="${not empty param.version}">
-                    <span class="label label-version"><img src="/static/bootstrap-icons/clock-history.svg" class="icon-sm icon-white" /> ${workspace.internalVersion}</span>
+                    <span class="label label-version"><img src="/static/bootstrap-icons/clock-history.svg" class="icon-sm icon-white" /> ${workspace.userFriendlyInternalVersion}</span>
                 </c:if>
             </div>
         </div>

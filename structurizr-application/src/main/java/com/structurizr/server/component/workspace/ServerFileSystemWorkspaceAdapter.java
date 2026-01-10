@@ -146,7 +146,7 @@ class ServerFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspaceAdapte
             try {
                 // and write a versioned workspace.json file too
                 SimpleDateFormat sdf = new SimpleDateFormat(VERSION_TIMESTAMP_FORMAT);
-                sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+                sdf.setTimeZone(TimeZone.getTimeZone(UTC_TIME_ZONE));
                 Files.writeString(new File(path, "workspace-" + sdf.format(workspaceMetadata.getLastModifiedDate()) + ".json").toPath(), json);
             } catch (Exception e) {
                 log.error(e);

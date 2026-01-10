@@ -1,13 +1,10 @@
 package com.structurizr.server.domain;
 
 import com.structurizr.configuration.Configuration;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import com.structurizr.util.DateUtils;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.TimeZone;
 
 /**
  * Represents a Structurizr user.
@@ -102,7 +99,7 @@ public final class User {
     }
 
     public String getTimeZone() {
-        return TimeZone.getDefault().getID();
+        return DateUtils.UTC_TIME_ZONE;
     }
 
     public String getName() {

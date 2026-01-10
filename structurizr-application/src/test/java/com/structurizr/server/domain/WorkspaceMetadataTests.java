@@ -462,4 +462,17 @@ public class WorkspaceMetadataTests {
         assertFalse(wmd.hasAccess(user));
     }
 
+    @Test
+    void internalVersion() {
+        WorkspaceMetadata wmd = new WorkspaceMetadata(1);
+
+        assertNull(wmd.getUserFriendlyInternalVersion());
+
+        wmd.setInternalVersion("20260109162427000"); // parseable
+        assertEquals("2026-01-09 16:24:27", wmd.getUserFriendlyInternalVersion());
+
+        wmd.setInternalVersion("20260109162427"); // not parseable
+        assertEquals("20260109162427", wmd.getUserFriendlyInternalVersion());
+    }
+
 }

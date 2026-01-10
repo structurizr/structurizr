@@ -12,6 +12,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static com.structurizr.util.DateUtils.UTC_TIME_ZONE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -42,7 +43,7 @@ class ServerFileSystemWorkspaceAdapterTests extends AbstractWorkspaceAdapterTest
 
         Calendar cal = DateUtils.getCalendar();
         SimpleDateFormat sdf = new SimpleDateFormat(ServerFileSystemWorkspaceAdapter.VERSION_TIMESTAMP_FORMAT);
-        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        sdf.setTimeZone(TimeZone.getTimeZone(UTC_TIME_ZONE));
 
         List<String> filenames = new ArrayList<>();
         for (int i = 0; i < 50; i++) {

@@ -5,10 +5,11 @@ import com.structurizr.util.DateUtils;
 import com.structurizr.util.StringUtils;
 
 import java.text.ParseException;
-import java.util.Date;
-import java.util.LinkedHashSet;
-import java.util.Properties;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+import static com.structurizr.util.DateUtils.USER_FRIENDLY_DATE_FORMAT;
+import static com.structurizr.util.DateUtils.UTC_TIME_ZONE;
 
 public class WorkspaceMetadata {
 
@@ -338,6 +339,26 @@ public class WorkspaceMetadata {
 
     public void setInternalVersion(String internalVersion) {
         this.internalVersion = internalVersion;
+    }
+
+    public String getUserFriendlyInternalVersion() {
+        if (!StringUtils.isNullOrEmpty(internalVersion)) {
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+                sdf.setTimeZone(TimeZone.getTimeZone(UTC_TIME_ZONE));
+
+                Date date = sdf.parse(internalVersion);
+
+                sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                sdf.setTimeZone(TimeZone.getTimeZone(UTC_TIME_ZONE));
+
+                return sdf.format(date);
+            } catch (ParseException e) {
+                return internalVersion;
+            }
+        } else {
+            return internalVersion;
+        }
     }
 
     public boolean isActive() {

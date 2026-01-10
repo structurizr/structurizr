@@ -127,7 +127,7 @@ label {
 }
 .label {
     font-weight: normal;
-    padding: 5px;
+    padding: 7px 10px 9px 10px;
     border-radius: 4px;
 }
 .imageTitle {
@@ -187,12 +187,12 @@ a {
     background: #1168BD;
 }
 .label-branch {
-    background: #438DD5;
+    background: #02172C;
     color: #ffffff;
     font-size: 12px;
 }
 .label-version {
-    background: #85BBF0;
+    background: #438DD5;
     color: white;
     font-size: 12px;
 }
