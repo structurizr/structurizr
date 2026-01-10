@@ -138,6 +138,31 @@ public class WorkspaceVisibilityControllerTests extends ControllerTestsBase {
     }
 
     @Test
+    void changeVisibility_MakesTheWorkspacePublic_WhenAuthenticationIsEnabledAndNoUsersAreConfigured() {
+        enableAuthentication();
+        setUser("user@example.com");
+
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
+        assertFalse(workspaceMetaData.isPublicWorkspace());
+
+        controller.setWorkspaceComponent(new MockWorkspaceComponent() {
+            @Override
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                return workspaceMetaData;
+            }
+
+            @Override
+            public void makeWorkspacePublic(long workspaceId) throws WorkspaceComponentException {
+                workspaceMetaData.setPublicWorkspace(true);
+            }
+        });
+
+        String view = controller.changeVisibility(1, "public", model);
+        assertEquals("redirect:/workspace/1/settings", view);
+        assertTrue(workspaceMetaData.isPublicWorkspace());
+    }
+
+    @Test
     void changeVisibility_MakesTheWorkspacePublic_WhenAuthenticationIsEnabledAndNoAdminUsersAreDefined() {
         enableAuthentication();
         setUser("user@example.com");

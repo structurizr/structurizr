@@ -40,7 +40,7 @@ public class WorkspaceVisibilityController extends AbstractWorkspaceController {
             WorkspaceMetadata workspace = workspaceComponent.getWorkspaceMetadata(workspaceId);
             if (workspace != null) {
                 User user = getUser();
-                if ((Configuration.getInstance().getAdminUsersAndRoles().isEmpty() && workspace.isWriteUser(user)) || user.isAdmin()) {
+                if (workspace.hasNoUsersConfigured() || (Configuration.getInstance().getAdminUsersAndRoles().isEmpty() && workspace.isWriteUser(user)) || user.isAdmin()) {
                     switch (action.toLowerCase()) {
                         case PUBLIC_ACTION:
                             workspaceComponent.makeWorkspacePublic(workspaceId);
