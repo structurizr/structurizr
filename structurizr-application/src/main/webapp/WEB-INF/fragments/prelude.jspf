@@ -60,6 +60,7 @@
                 <a id="brandingLogoAnchor" href="/"><img src="/static/img/structurizr-banner-light.png" alt="Structurizr" class="img-light img-responsive brandingLogo" /><img src="/static/img/structurizr-banner-dark.png" alt="Structurizr" class="img-dark img-responsive brandingLogo" /></a>
             </div>
             <div class="col-10 centered" style="padding: 20px 20px 10px 20px; text-align: right;">
+                <c:if test="${searchEnabled}">
                 <span class="topNavigationItem" style="margin-right: 0">
                     <form id="searchForm" method="get" action="/search" style="display: inline-block">
                         <div class="form-inline" style="margin-top: 8px">
@@ -69,6 +70,7 @@
                         </div>
                     </form>
                 </span>
+                </c:if>
 
                 <c:if test="${authenticationEnabled}">
                 <c:choose>

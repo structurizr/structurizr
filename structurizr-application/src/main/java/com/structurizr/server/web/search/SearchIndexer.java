@@ -1,6 +1,8 @@
 package com.structurizr.server.web.search;
 
 import com.structurizr.Workspace;
+import com.structurizr.configuration.Configuration;
+import com.structurizr.configuration.StructurizrProperties;
 import com.structurizr.server.component.search.SearchComponent;
 import com.structurizr.server.component.workspace.WorkspaceComponent;
 import com.structurizr.server.domain.WorkspaceMetadata;
@@ -33,6 +35,10 @@ final class SearchIndexer {
 
     @PostConstruct
     void rebuildSearchIndex() {
+        if (Configuration.getInstance().getProperty(StructurizrProperties.SEARCH_IMPLEMENTATION).equals(StructurizrProperties.SEARCH_VARIANT_NONE)) {
+            return;
+        }
+
         // rebuild search indexes on startup
         log.info("Rebuilding search index...");
 

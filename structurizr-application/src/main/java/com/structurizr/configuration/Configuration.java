@@ -282,9 +282,6 @@ public class Configuration {
         features.configure(Features.DIAGRAM_REVIEWS, Boolean.parseBoolean(getProperty(Features.DIAGRAM_REVIEWS)));
         features.configure(Features.DIAGRAM_ANONYMOUS_THUMBNAILS, Boolean.parseBoolean(getProperty(Features.DIAGRAM_ANONYMOUS_THUMBNAILS)));
 
-        String search = getProperty(SEARCH_IMPLEMENTATION);
-        features.configure(Features.WORKSPACE_SEARCH, !search.equals(SEARCH_VARIANT_NONE));
-
         // for backwards compatibility (older versions had structurizr.dslEditor=true)
         if (!isFeatureEnabled(Features.UI_DSL_EDITOR)) {
             features.configure(Features.UI_DSL_EDITOR, Boolean.parseBoolean(getProperty(DSL_EDITOR)));

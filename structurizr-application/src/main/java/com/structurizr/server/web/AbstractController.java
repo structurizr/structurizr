@@ -3,6 +3,7 @@ package com.structurizr.server.web;
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Features;
 import com.structurizr.configuration.Profile;
+import com.structurizr.configuration.StructurizrProperties;
 import com.structurizr.dsl.StructurizrDslParserException;
 import com.structurizr.server.component.workspace.WorkspaceBranch;
 import com.structurizr.server.component.workspace.WorkspaceVersion;
@@ -76,7 +77,7 @@ public abstract class AbstractController {
         model.addAttribute("user", user);
 
         model.addAttribute("authenticationEnabled", Configuration.getInstance().isAuthenticationEnabled());
-        model.addAttribute("searchEnabled", Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_SEARCH));
+        model.addAttribute("searchEnabled", !Configuration.getInstance().getProperty(StructurizrProperties.SEARCH_IMPLEMENTATION).equals(StructurizrProperties.SEARCH_VARIANT_NONE));
         model.addAttribute("dslEditorEnabled", Configuration.getInstance().isFeatureEnabled(Features.UI_DSL_EDITOR));
 
         if (StringUtils.isNullOrEmpty(pageTitle)) {

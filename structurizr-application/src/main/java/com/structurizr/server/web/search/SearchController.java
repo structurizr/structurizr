@@ -1,6 +1,8 @@
 package com.structurizr.server.web.search;
 
+import com.structurizr.configuration.Features;
 import com.structurizr.configuration.Profile;
+import com.structurizr.configuration.StructurizrProperties;
 import com.structurizr.server.component.search.SearchComponent;
 import com.structurizr.server.component.search.SearchComponentException;
 import com.structurizr.server.component.search.SearchResult;
@@ -36,6 +38,11 @@ final class SearchController extends AbstractWorkspaceController {
                          @RequestParam(required = false) String query,
                          @RequestParam(required = false) Long workspaceId,
                          @RequestParam(required = false) String category) {
+
+        if (Configuration.getInstance().getProperty(StructurizrProperties.SEARCH_IMPLEMENTATION).equals(StructurizrProperties.SEARCH_VARIANT_NONE)) {
+            return showFeatureNotAvailablePage(model);
+        }
+
         model.addAttribute("searchBaseUrl", "/");
 
         List<SearchResult> filteredSearchResults = new ArrayList<>();
