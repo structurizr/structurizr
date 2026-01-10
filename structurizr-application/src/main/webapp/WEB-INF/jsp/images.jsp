@@ -7,7 +7,7 @@
             See <a href="https://docs.structurizr.com/server/embed" target="_blank">Structurizr server - Embedding diagrams - PNG embed</a> for more details.
         </p>
         <p class="smaller">
-            (<a href="/workspace/${workspaceId}">back to workspace summary</a>)
+            (<a href="${urlPrefix}">back to workspace summary</a>)
         </p>
 
         <br />
@@ -32,7 +32,7 @@
         <c:if test="${workspace.editable}">
         <div class="centered">
             <form id="deleteImagesForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/images/delete" method="post">
-                <button class="btn btn-default" type="submit" name="action" value="delete" title="Delete published images"><img src="/static/bootstrap-icons/trash3.svg" class="icon-btn" /> Delete published images</button>
+                <button class="btn btn-danger" type="submit" name="action" value="delete" title="Delete published images"><img src="/static/bootstrap-icons/trash3.svg" class="icon-btn icon-white" /> Delete published images</button>
             </form>
         </div>
         </c:if>
