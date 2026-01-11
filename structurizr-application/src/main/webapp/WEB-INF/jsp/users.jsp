@@ -34,13 +34,13 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="writeUsersTextArea">Read-write users and roles</label>
+                            <label for="writeUsersTextArea"><img src="/static/bootstrap-icons/pencil.svg" class="icon-sm" /> Read-write users and roles</label>
                             <textarea id="writeUsersTextArea" name="writeUsers" class="form-control" rows="10">${writeUsers}</textarea>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="readUsersTextArea">Read-only users and roles</label>
+                            <label for="readUsersTextArea"><img src="/static/bootstrap-icons/eye.svg" class="icon-sm" /> Read-only users and roles</label>
                             <textarea id="readUsersTextArea" name="readUsers" class="form-control" rows="10">${readUsers}</textarea>
                         </div>
                     </div>

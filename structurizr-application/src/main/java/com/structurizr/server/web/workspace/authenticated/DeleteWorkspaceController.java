@@ -3,7 +3,7 @@ package com.structurizr.server.web.workspace.authenticated;
 import com.structurizr.server.component.search.SearchComponent;
 import com.structurizr.server.component.search.SearchComponentException;
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
-import com.structurizr.configuration.Configuration;
+import com.structurizr.server.domain.Permission;
 import com.structurizr.server.domain.User;
 import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.workspace.AbstractWorkspaceController;
@@ -16,6 +16,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.Set;
 
 @Controller
 @Profile("command-server")
@@ -40,31 +42,21 @@ public class DeleteWorkspaceController extends AbstractWorkspaceController {
                 return show404Page(model);
             }
 
-            if (!Configuration.getInstance().getAdminUsersAndRoles().isEmpty() && !user.isAdmin()) {
+            Set<Permission> permissions = workspaceMetadata.getPermissions(user);
+
+            if (!permissions.contains(Permission.Admin)) {
                 return "redirect:/workspace/" + workspaceId;
             }
 
-            // the workspace can be deleted when
-            // - authentication is disabled
-            // - authentication is enabled but no workspace users are configured
-            // - authentication is enabled and the user is a write user
-            // - authentication is enabled and the user is an admin user
-            if (
-                !Configuration.getInstance().isAuthenticationEnabled() ||
-                workspaceMetadata.hasNoUsersConfigured() ||
-                workspaceMetadata.isWriteUser(user) ||
-                user.isAdmin()
-            ) {
-                if (workspaceComponent.deleteWorkspace(workspaceId)) {
-                    try {
-                        searchComponent.delete(workspaceId);
-                    } catch (SearchComponentException e) {
-                        log.error(e);
-                    }
+            if (workspaceComponent.deleteWorkspace(workspaceId)) {
+                try {
+                    searchComponent.delete(workspaceId);
+                } catch (SearchComponentException e) {
+                    log.error(e);
                 }
-
-                return "redirect:/";
             }
+
+            return "redirect:/";
         } catch (WorkspaceComponentException e) {
             log.error(e);
         }

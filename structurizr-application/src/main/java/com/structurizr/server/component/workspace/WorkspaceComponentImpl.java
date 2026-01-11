@@ -146,7 +146,9 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
             } else {
                 // authenticated request
                 for (WorkspaceMetadata workspace : workspaces) {
-                    if (workspace.hasAccess(user)) {
+                    Set<Permission> permissions = workspace.getPermissions(user);
+
+                    if (!permissions.isEmpty()) {
                         // user is configured to see the workspace
                         workspace.setUrlPrefix("/workspace");
                         filteredWorkspaces.add(workspace);
@@ -255,9 +257,6 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
             try {
                 // create and write the workspace metadata
                 WorkspaceMetadata workspaceMetadata = new WorkspaceMetadata(workspaceId);
-                if (user != null) {
-                    workspaceMetadata.setOwner(user.getUsername());
-                }
                 workspaceMetadata.setApiKey(UUID.randomUUID().toString());
                 workspaceMetadata.setApiSecret(UUID.randomUUID().toString());
 
@@ -402,7 +401,7 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
                     if (configuration != null) {
 
                         // only configure workspace visibility and users if no admin users/roles are defined
-                        if (Configuration.getInstance().isAuthenticationEnabled() && Configuration.getInstance().getAdminUsersAndRoles().isEmpty()) {
+                        if (Configuration.getInstance().isAuthenticationEnabled() && !Configuration.getInstance().adminUsersEnabled()) {
                             if (configuration.getVisibility() != null) {
                                 workspaceMetadata.setPublicWorkspace(configuration.getVisibility() == Visibility.Public);
                             }

@@ -76,7 +76,15 @@
                 <c:choose>
                     <c:when test="${user.authenticated}">
                         <span class="topNavigationItem" style="margin-right: 0">
-                            <a href="/user/profile"><span class="label structurizrBackgroundLight" style="font-size: 18px"><img src="/static/bootstrap-icons/person.svg" class="icon-sm icon-white" /> ${user.username}</span></a>
+                            <a href="/user/profile">
+                                <span class="label structurizrBackgroundLight" style="font-size: 18px">
+                                    <c:choose>
+                                        <c:when test="${user.admin}"><img src="/static/bootstrap-icons/person-fill-gear.svg" class="icon-md icon-white" /></c:when>
+                                        <c:otherwise><img src="/static/bootstrap-icons/person-fill.svg" class="icon-md icon-white" /></c:otherwise>
+                                    </c:choose>
+                                ${user.username}
+                                </span>
+                            </a>
                         </span>
                     </c:when>
                     <c:otherwise>

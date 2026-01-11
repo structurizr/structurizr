@@ -3,7 +3,7 @@ package com.structurizr.server.web.workspace.authenticated;
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Features;
 import com.structurizr.server.component.workspace.WorkspaceBranch;
-import com.structurizr.server.component.workspace.WorkspaceComponentException;
+import com.structurizr.server.domain.Permission;
 import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.workspace.AbstractWorkspaceController;
 import org.apache.commons.logging.Log;
@@ -14,6 +14,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.Set;
 
 @Controller
 @Profile("command-server")
@@ -34,16 +36,15 @@ public class DeleteBranchController extends AbstractWorkspaceController {
             return show404Page(model);
         }
 
-        try {
-            WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
-            if (workspaceMetadata != null) {
-                if (!Configuration.getInstance().isAuthenticationEnabled() || workspaceMetadata.hasNoUsersConfigured() || workspaceMetadata.isWriteUser(getUser())) {
-                    workspaceComponent.deleteBranch(workspaceId, branch);
-                    return "redirect:/workspace/" + workspaceId;
-                }
-            }
-        } catch (WorkspaceComponentException e) {
-            log.error(e);
+        WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
+        if (workspaceMetadata == null) {
+            return show404Page(model);
+        }
+
+        Set<Permission> permissions = workspaceMetadata.getPermissions(getUser());
+        if (permissions.contains(Permission.Write)) {
+            workspaceComponent.deleteBranch(workspaceId, branch);
+            return "redirect:/workspace/" + workspaceId;
         }
 
         return show404Page(model);

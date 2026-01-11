@@ -22,8 +22,12 @@ public final class User {
     public User(String username, Set<String> roles, AuthenticationMethod authenticationMethod) {
         this.username = username;
 
+        if (authenticationMethod == null) {
+            throw new IllegalArgumentException("Authentication method cannot be null");
+        }
+        this.authenticationMethod = authenticationMethod;
+
         setRoles(roles);
-        setAuthenticationMethod(authenticationMethod);
     }
 
     public boolean isAuthenticated() {
@@ -48,14 +52,6 @@ public final class User {
 
     public AuthenticationMethod getAuthenticationMethod() {
         return authenticationMethod;
-    }
-
-    private void setAuthenticationMethod(AuthenticationMethod authenticationMethod) {
-        if (authenticationMethod != null) {
-            this.authenticationMethod = authenticationMethod;
-        } else {
-            this.authenticationMethod = AuthenticationMethod.LOCAL;
-        }
     }
 
     public boolean isUserOrRole(Set<String> usersAndRoles) {
@@ -95,7 +91,11 @@ public final class User {
     }
 
     public boolean isAdmin() {
-        return isUserOrRole(Configuration.getInstance().getAdminUsersAndRoles());
+        if (Configuration.getInstance().adminUsersEnabled()) {
+            return isUserOrRole(Configuration.getInstance().getAdminUsersAndRoles());
+        } else {
+            return false;
+        }
     }
 
     public String getTimeZone() {

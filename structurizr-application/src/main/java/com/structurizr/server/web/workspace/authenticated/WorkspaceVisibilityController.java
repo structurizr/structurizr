@@ -1,7 +1,7 @@
 package com.structurizr.server.web.workspace.authenticated;
 
 import com.structurizr.configuration.Configuration;
-import com.structurizr.server.component.workspace.WorkspaceComponentException;
+import com.structurizr.server.domain.Permission;
 import com.structurizr.server.domain.User;
 import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.workspace.AbstractWorkspaceController;
@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Set;
 
 @Controller
 @Profile("command-server")
@@ -36,33 +38,31 @@ public class WorkspaceVisibilityController extends AbstractWorkspaceController {
             return showFeatureNotAvailablePage(model);
         }
 
-        try {
-            WorkspaceMetadata workspace = workspaceComponent.getWorkspaceMetadata(workspaceId);
-            if (workspace != null) {
-                User user = getUser();
-                if (workspace.hasNoUsersConfigured() || (Configuration.getInstance().getAdminUsersAndRoles().isEmpty() && workspace.isWriteUser(user)) || user.isAdmin()) {
-                    switch (action.toLowerCase()) {
-                        case PUBLIC_ACTION:
-                            workspaceComponent.makeWorkspacePublic(workspaceId);
-                            break;
-                        case PRIVATE_ACTION:
-                            workspaceComponent.makeWorkspacePrivate(workspaceId);
-                            break;
-                        case SHARE_ACTION:
-                            workspaceComponent.shareWorkspace(workspaceId);
-                            break;
-                        case UNSHARE_ACTION:
-                            workspaceComponent.unshareWorkspace(workspaceId);
-                            break;
-                        default:
-                            return show404Page(model);
-                    }
-                }
-            } else {
-                return show404Page(model);
+        WorkspaceMetadata workspace = workspaceComponent.getWorkspaceMetadata(workspaceId);
+        if (workspace == null) {
+            return show404Page(model);
+        }
+
+        User user = getUser();
+        Set<Permission> permissions = workspace.getPermissions(user);
+
+        if (permissions.contains(Permission.Admin)) {
+            switch (action.toLowerCase()) {
+                case PUBLIC_ACTION:
+                    workspaceComponent.makeWorkspacePublic(workspaceId);
+                    break;
+                case PRIVATE_ACTION:
+                    workspaceComponent.makeWorkspacePrivate(workspaceId);
+                    break;
+                case SHARE_ACTION:
+                    workspaceComponent.shareWorkspace(workspaceId);
+                    break;
+                case UNSHARE_ACTION:
+                    workspaceComponent.unshareWorkspace(workspaceId);
+                    break;
+                default:
+                    return show404Page(model);
             }
-        } catch (WorkspaceComponentException e) {
-            log.error(e);
         }
 
         return "redirect:/workspace/" + workspaceId + "/settings";

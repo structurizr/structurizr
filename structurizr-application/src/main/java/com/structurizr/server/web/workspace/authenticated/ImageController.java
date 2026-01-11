@@ -3,6 +3,7 @@ package com.structurizr.server.web.workspace.authenticated;
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Features;
 import com.structurizr.server.component.workspace.WorkspaceBranch;
+import com.structurizr.server.domain.Permission;
 import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.api.ApiException;
 import com.structurizr.server.web.api.ApiResponse;
@@ -19,6 +20,7 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Base64;
+import java.util.Set;
 
 @Controller
 class ImageController extends AbstractImageController {
@@ -34,7 +36,8 @@ class ImageController extends AbstractImageController {
             return null;
         }
 
-        if (workspaceMetadata.hasAccess(getUser())) {
+        Set<Permission> permissions = workspaceMetadata.getPermissions(getUser());
+        if (!permissions.isEmpty()) {
             return getImage(workspaceMetadata, WorkspaceBranch.NO_BRANCH, diagramKey, response);
         } else {
             response.setStatus(404);
@@ -54,7 +57,8 @@ class ImageController extends AbstractImageController {
             return null;
         }
 
-        if (workspaceMetadata.hasAccess(getUser())) {
+        Set<Permission> permissions = workspaceMetadata.getPermissions(getUser());
+        if (!permissions.isEmpty()) {
             return getImage(workspaceMetadata, branch, diagramKey, response);
         }
 
@@ -113,7 +117,8 @@ class ImageController extends AbstractImageController {
             throw new ApiException("404");
         }
 
-        if (workspaceMetadata.hasAccess(getUser())) {
+        Set<Permission> permissions = workspaceMetadata.getPermissions(getUser());
+        if (!permissions.isEmpty()) {
             try {
                 String base64Image = imageAsBase64EncodedDataUri.split(",")[1];
                 byte[] decodedImage = Base64.getDecoder().decode(base64Image.getBytes(StandardCharsets.UTF_8));

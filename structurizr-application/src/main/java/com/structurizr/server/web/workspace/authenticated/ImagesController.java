@@ -2,6 +2,7 @@ package com.structurizr.server.web.workspace.authenticated;
 
 import com.structurizr.configuration.Configuration;
 import com.structurizr.server.domain.Image;
+import com.structurizr.server.domain.Permission;
 import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.Views;
 import org.springframework.context.annotation.Profile;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -52,7 +54,9 @@ class ImagesController extends AbstractWorkspaceController {
         if (workspaceMetadata == null) {
             return show404Page(model);
         }
-        if (workspaceMetadata.hasNoUsersConfigured() || workspaceMetadata.isWriteUser(getUser())) {
+
+        Set<Permission> permissions = workspaceMetadata.getPermissions(getUser());
+        if (permissions.contains(Permission.Write)) {
             workspaceComponent.deleteImages(workspaceId);
         }
 

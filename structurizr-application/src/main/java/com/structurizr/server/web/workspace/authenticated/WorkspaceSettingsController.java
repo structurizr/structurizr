@@ -1,6 +1,7 @@
 package com.structurizr.server.web.workspace.authenticated;
 
-import com.structurizr.configuration.Configuration;
+import com.structurizr.server.domain.Permission;
+import com.structurizr.server.domain.User;
 import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.Views;
 import org.springframework.context.annotation.Profile;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Set;
 
 @Controller
 @Profile("command-server")
@@ -22,11 +25,20 @@ public class WorkspaceSettingsController extends AbstractWorkspaceController {
             ModelMap model
     ) {
         WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
-        if (workspaceMetadata != null && workspaceMetadata.isReadUser(getUser())) {
+        if (workspaceMetadata == null) {
             return show404Page(model);
         }
 
-        model.addAttribute("showAdminFeatures", !Configuration.getInstance().isAuthenticationEnabled() || Configuration.getInstance().getAdminUsersAndRoles().isEmpty() || getUser().isAdmin());
+        User user = getUser();
+        Set<Permission> permissions = workspaceMetadata.getPermissions(user);
+
+
+        if (permissions.contains(Permission.Write)) {
+            model.addAttribute("showAdminFeatures", permissions.contains(Permission.Admin));
+        } else {
+            return show404Page(model);
+        }
+
         return showAuthenticatedView(Views.WORKSPACE_SETTINGS, workspaceId, null, version, model, true, true);
     }
 

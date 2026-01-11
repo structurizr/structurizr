@@ -3,6 +3,7 @@ package com.structurizr.server.web.workspace.authenticated;
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Profile;
 import com.structurizr.configuration.StructurizrProperties;
+import com.structurizr.server.domain.Permission;
 import com.structurizr.server.web.Views;
 import com.structurizr.util.HtmlUtils;
 import com.structurizr.util.StringUtils;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import static com.structurizr.configuration.StructurizrProperties.AUTO_REFRESH_INTERVAL_PROPERTY;
+import java.util.Set;
 
 @Controller
 class DiagramViewerController extends AbstractWorkspaceController {
@@ -40,7 +41,8 @@ class DiagramViewerController extends AbstractWorkspaceController {
                     if (Configuration.getInstance().getProfile() == Profile.Local) {
                         model.addAttribute("includeEditButton", "true".equalsIgnoreCase(Configuration.getInstance().getProperty(StructurizrProperties.EDITABLE_PROPERTY)));
                     } else {
-                        model.addAttribute("includeEditButton", !Configuration.getInstance().isAuthenticationEnabled() || workspaceMetadata.hasNoUsersConfigured() || workspaceMetadata.isWriteUser(getUser()));
+                        Set<Permission> permissions = workspaceMetadata.getPermissions(getUser());
+                        model.addAttribute("includeEditButton", permissions.contains(Permission.Write));
                     }
                 },
                 branch, version, model, false, false

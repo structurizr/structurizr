@@ -56,14 +56,6 @@ public class DiagramEditorController extends AbstractWorkspaceController {
         model.addAttribute("quickNavigationPath", "diagram-editor");
         model.addAttribute("paperSizes", PaperSize.getOrderedPaperSizes());
 
-        if (!workspaceMetadata.hasNoUsersConfigured() && !workspaceMetadata.isWriteUser(getUser())) {
-            if (workspaceMetadata.isReadUser(getUser())) {
-                return showError("workspace-is-readonly", model);
-            } else {
-                return show404Page(model);
-            }
-        }
-
         return lockWorkspaceAndShowAuthenticatedView(Views.DIAGRAMS, workspaceMetadata, branch, version, model, false);
     }
 

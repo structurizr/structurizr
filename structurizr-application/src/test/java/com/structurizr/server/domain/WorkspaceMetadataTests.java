@@ -309,8 +309,7 @@ public class WorkspaceMetadataTests {
         properties.setProperty(WorkspaceMetadata.API_SECRET_PROPERTY, "0987654321");
         properties.setProperty(WorkspaceMetadata.PUBLIC_PROPERTY, "true");
         properties.setProperty(WorkspaceMetadata.SHARING_TOKEN_PROPERTY, "12345678901234567890");
-        properties.setProperty(WorkspaceMetadata.OWNER_PROPERTY, "user@example.com");
-        properties.setProperty(WorkspaceMetadata.LOCKED_USER_PROPERTY, "user2@example.com");
+        properties.setProperty(WorkspaceMetadata.LOCKED_USER_PROPERTY, "user@example.com");
         properties.setProperty(WorkspaceMetadata.LOCKED_AGENT_PROPERTY, "structurizr/web");
         properties.setProperty(WorkspaceMetadata.LOCKED_DATE_PROPERTY, "2022-01-31T14:30:59Z");
         properties.setProperty(WorkspaceMetadata.READ_USERS_AND_ROLES_PROPERTY, "user1,user2,user3");
@@ -330,8 +329,7 @@ public class WorkspaceMetadataTests {
         assertEquals("0987654321", workspace.getApiSecret());
         assertFalse(workspace.isPublicWorkspace()); // sharing token is active, and takes priority
         assertEquals("12345678901234567890", workspace.getSharingToken());
-        assertEquals("user@example.com", workspace.getOwner());
-        assertEquals("user2@example.com", workspace.getLockedUser());
+        assertEquals("user@example.com", workspace.getLockedUser());
         assertEquals("structurizr/web", workspace.getLockedAgent());
         assertEquals(DateUtils.parseIsoDate("2022-01-31T14:30:59Z"), workspace.getLockedDate());
         assertEquals(Set.of("user1", "user2", "user3"), workspace.getReadUsers());
@@ -352,8 +350,7 @@ public class WorkspaceMetadataTests {
         assertEquals("0987654321", properties.getProperty(WorkspaceMetadata.API_SECRET_PROPERTY));
         assertEquals("false", properties.getProperty(WorkspaceMetadata.PUBLIC_PROPERTY));
         assertEquals("12345678901234567890", properties.getProperty(WorkspaceMetadata.SHARING_TOKEN_PROPERTY));
-        assertEquals("user@example.com", properties.getProperty(WorkspaceMetadata.OWNER_PROPERTY));
-        assertEquals("user2@example.com", properties.getProperty(WorkspaceMetadata.LOCKED_USER_PROPERTY));
+        assertEquals("user@example.com", properties.getProperty(WorkspaceMetadata.LOCKED_USER_PROPERTY));
         assertEquals("structurizr/web", properties.getProperty(WorkspaceMetadata.LOCKED_AGENT_PROPERTY));
         assertEquals("2022-01-31T14:30:59Z", properties.getProperty(WorkspaceMetadata.LOCKED_DATE_PROPERTY));
         assertEquals("user1,user2,user3", properties.getProperty(WorkspaceMetadata.READ_USERS_AND_ROLES_PROPERTY));
@@ -385,84 +382,6 @@ public class WorkspaceMetadataTests {
     }
 
     @Test
-    void hasAccess_ReturnsTrue_WhenAuthenticationIsDisabled() {
-        Properties properties = new Properties();
-        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_NONE);
-        Configuration.init(Profile.Server, properties);
-
-        User user = new User("user@example.com");
-
-        WorkspaceMetadata wmd = new WorkspaceMetadata(1);
-        assertTrue(wmd.hasAccess(user));
-    }
-
-    @Test
-    void hasAccess_ReturnsTrue_WhenAuthenticationIsEnabledAndNoUsersAreConfigured() {
-        Properties properties = new Properties();
-        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
-        Configuration.init(Profile.Server, properties);
-
-        User user = new User("user@example.com");
-
-        WorkspaceMetadata wmd = new WorkspaceMetadata(1);
-        assertTrue(wmd.hasAccess(user));
-    }
-
-    @Test
-    void hasAccess_ReturnsTrue_WhenAuthenticationIsEnabledAndTheUserIsAnAdmin() {
-        Properties properties = new Properties();
-        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
-        properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "user@example.com");
-        Configuration.init(Profile.Server, properties);
-
-        User user = new User("user@example.com");
-
-        WorkspaceMetadata wmd = new WorkspaceMetadata(1);
-        wmd.addWriteUser("write@example.com");
-        assertTrue(wmd.hasAccess(user));
-    }
-
-    @Test
-    void hasAccess_ReturnsTrue_WhenAuthenticationIsEnabledAndTheUserIsAWriteUser() {
-        Properties properties = new Properties();
-        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
-        Configuration.init(Profile.Server, properties);
-
-        User user = new User("write@example.com");
-
-        WorkspaceMetadata wmd = new WorkspaceMetadata(1);
-        wmd.addWriteUser("write@example.com");
-        assertTrue(wmd.hasAccess(user));
-    }
-
-    @Test
-    void hasAccess_ReturnsTrue_WhenAuthenticationIsEnabledAndTheUserIsAReadUser() {
-        Properties properties = new Properties();
-        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
-        Configuration.init(Profile.Server, properties);
-
-        User user = new User("read@example.com");
-
-        WorkspaceMetadata wmd = new WorkspaceMetadata(1);
-        wmd.addReadUser("read@example.com");
-        assertTrue(wmd.hasAccess(user));
-    }
-
-    @Test
-    void hasAccess_ReturnsFalse_WhenAuthenticationIsEnabledAndTheUserIsNotAWriteOrReadUser() {
-        Properties properties = new Properties();
-        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
-        Configuration.init(Profile.Server, properties);
-
-        User user = new User("user@example.com");
-
-        WorkspaceMetadata wmd = new WorkspaceMetadata(1);
-        wmd.addWriteUser("write@example.com");
-        wmd.addReadUser("read@example.com");
-        assertFalse(wmd.hasAccess(user));
-    }
-
-    @Test
     void internalVersion() {
         WorkspaceMetadata wmd = new WorkspaceMetadata(1);
 
@@ -473,6 +392,129 @@ public class WorkspaceMetadataTests {
 
         wmd.setInternalVersion("20260109162427"); // not parseable
         assertEquals("20260109162427", wmd.getUserFriendlyInternalVersion());
+    }
+
+    @Test
+    void getPermissions_WhenAuthenticationIsDisabled() {
+        Properties properties = new Properties();
+        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_NONE);
+        Configuration.init(Profile.Server, properties);
+
+        WorkspaceMetadata wmd = new WorkspaceMetadata(1);
+        User user = new User("user@example.com");
+
+        assertTrue(wmd.getPermissions(user).contains(Permission.Admin));
+        assertTrue(wmd.getPermissions(user).contains(Permission.Write));
+        assertTrue(wmd.getPermissions(user).contains(Permission.Read));
+    }
+
+    @Test
+    void getPermissions_WhenAuthenticationIsEnabled_AnonymousUser_NoWorkspaceUsers_NoAdminUsers() {
+        Properties properties = new Properties();
+        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
+        properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "");
+        Configuration.init(Profile.Server, properties);
+
+        WorkspaceMetadata wmd = new WorkspaceMetadata(1);
+
+        User user = new User("user@example.com", Set.of(), AuthenticationMethod.NONE); // no access
+        assertFalse(wmd.getPermissions(user).contains(Permission.Admin));
+        assertFalse(wmd.getPermissions(user).contains(Permission.Write));
+        assertFalse(wmd.getPermissions(user).contains(Permission.Read));
+    }
+
+    @Test
+    void getPermissions_WhenAuthenticationIsEnabled_NoWorkspaceUsers_NoAdminUsers() {
+        Properties properties = new Properties();
+        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
+        properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "");
+        Configuration.init(Profile.Server, properties);
+
+        WorkspaceMetadata wmd = new WorkspaceMetadata(1);
+
+        User user = new User("user@example.com"); // admin, write, read
+        assertTrue(wmd.getPermissions(user).contains(Permission.Admin));
+        assertTrue(wmd.getPermissions(user).contains(Permission.Write));
+        assertTrue(wmd.getPermissions(user).contains(Permission.Read));
+    }
+
+    @Test
+    void getPermissions_WhenAuthenticationIsEnabled_NoWorkspaceUsers_AdminUsers() {
+        Properties properties = new Properties();
+        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
+        properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "admin@example.com");
+        Configuration.init(Profile.Server, properties);
+
+        WorkspaceMetadata wmd = new WorkspaceMetadata(1);
+
+        User user = new User("user@example.com"); // write, read
+        assertFalse(wmd.getPermissions(user).contains(Permission.Admin));
+        assertTrue(wmd.getPermissions(user).contains(Permission.Write));
+        assertTrue(wmd.getPermissions(user).contains(Permission.Read));
+
+        User admin = new User("admin@example.com"); // admin, write, read
+        assertTrue(wmd.getPermissions(admin).contains(Permission.Admin));
+        assertTrue(wmd.getPermissions(admin).contains(Permission.Write));
+        assertTrue(wmd.getPermissions(admin).contains(Permission.Read));
+    }
+
+    @Test
+    void getPermissions_WhenAuthenticationIsEnabled_WorkspaceUsers_NoAdminUsers() {
+        Properties properties = new Properties();
+        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
+        properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "");
+        Configuration.init(Profile.Server, properties);
+
+        WorkspaceMetadata wmd = new WorkspaceMetadata(1);
+        wmd.addWriteUser("write@example.com");
+        wmd.addReadUser("read@example.com");
+
+        User user = new User("user@example.com"); // no permissions
+        assertFalse(wmd.getPermissions(user).contains(Permission.Admin));
+        assertFalse(wmd.getPermissions(user).contains(Permission.Write));
+        assertFalse(wmd.getPermissions(user).contains(Permission.Read));
+
+        User write = new User("write@example.com"); // admin, write, read
+        assertTrue(wmd.getPermissions(write).contains(Permission.Admin));
+        assertTrue(wmd.getPermissions(write).contains(Permission.Write));
+        assertTrue(wmd.getPermissions(write).contains(Permission.Read));
+
+        User read = new User("read@example.com"); // read
+        assertFalse(wmd.getPermissions(read).contains(Permission.Admin));
+        assertFalse(wmd.getPermissions(read).contains(Permission.Write));
+        assertTrue(wmd.getPermissions(read).contains(Permission.Read));
+    }
+
+    @Test
+    void getPermissions_WhenAuthenticationIsEnabled_WorkspaceUsers_AdminUsers() {
+        Properties properties = new Properties();
+        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
+        properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "admin@example.com");
+        Configuration.init(Profile.Server, properties);
+
+        WorkspaceMetadata wmd = new WorkspaceMetadata(1);
+        wmd.addWriteUser("write@example.com");
+        wmd.addReadUser("read@example.com");
+
+        User user = new User("user@example.com"); // no permissions
+        assertFalse(wmd.getPermissions(user).contains(Permission.Admin));
+        assertFalse(wmd.getPermissions(user).contains(Permission.Write));
+        assertFalse(wmd.getPermissions(user).contains(Permission.Read));
+
+        User admin = new User("admin@example.com"); // admin, write, read
+        assertTrue(wmd.getPermissions(admin).contains(Permission.Admin));
+        assertTrue(wmd.getPermissions(admin).contains(Permission.Write));
+        assertTrue(wmd.getPermissions(admin).contains(Permission.Read));
+
+        User write = new User("write@example.com"); // write, read
+        assertFalse(wmd.getPermissions(write).contains(Permission.Admin));
+        assertTrue(wmd.getPermissions(write).contains(Permission.Write));
+        assertTrue(wmd.getPermissions(write).contains(Permission.Read));
+
+        User read = new User("read@example.com"); // read
+        assertFalse(wmd.getPermissions(read).contains(Permission.Admin));
+        assertFalse(wmd.getPermissions(read).contains(Permission.Write));
+        assertTrue(wmd.getPermissions(read).contains(Permission.Read));
     }
 
 }

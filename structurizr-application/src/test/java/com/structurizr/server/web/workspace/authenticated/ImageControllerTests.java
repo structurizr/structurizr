@@ -124,6 +124,7 @@ public class ImageControllerTests extends ControllerTestsBase {
             }
         });
 
+        setUser("user@example.com");
         Resource resource = controller.getAuthenticatedImage(1, "thumbnail.png", response);
         assertEquals(200, response.getStatus());
         assertNotNull(resource);

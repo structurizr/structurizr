@@ -51,7 +51,7 @@ public class ServerHomeControllerTests extends ControllerTestsBase {
 
 
     @Test
-    void showHomePage_WhenAuthenticationIsEnabledAndTheUserIsAuthenticatedAndNoAdminUsersAreConfigured() {
+    void showHomePage_WhenAuthenticationIsEnabledAndTheUserIsAuthenticatedAndHasAdminPermission() {
         enableAuthentication();
         setUser("user@example.com");
 
@@ -73,7 +73,7 @@ public class ServerHomeControllerTests extends ControllerTestsBase {
     }
 
     @Test
-    void showAuthenticatedDashboard_WhenAuthenticationIsEnabledAndTheUserIsAuthenticatedAndTheUserIsNotAnAdmin() {
+    void showAuthenticatedDashboard_WhenAuthenticationIsEnabledAndTheUserIsAuthenticatedAndDoesNotHaveAdminPermission() {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "admin@example.com");
         enableAuthentication(properties);

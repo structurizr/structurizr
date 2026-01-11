@@ -2,6 +2,7 @@ package com.structurizr.server.web.workspace.authenticated;
 
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
 import com.structurizr.server.component.workspace.WorkspaceLockResponse;
+import com.structurizr.server.domain.Permission;
 import com.structurizr.server.domain.User;
 import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.util.DateUtils;
@@ -13,6 +14,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
+import java.util.Set;
 
 @Controller
 @Profile("command-server")
@@ -85,7 +87,8 @@ public class LockController extends AbstractWorkspaceController {
         }
 
         User user = getUser();
-        if (workspaceMetadata.hasNoUsersConfigured() || workspaceMetadata.isWriteUser(user)) {
+        Set<Permission> permissions = workspaceMetadata.getPermissions(user);
+        if (permissions.contains(Permission.Write)) {
             try {
                 workspaceComponent.unlockWorkspace(workspaceId);
             } catch (WorkspaceComponentException e) {

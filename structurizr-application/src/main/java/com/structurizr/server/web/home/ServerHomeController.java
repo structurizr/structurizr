@@ -34,7 +34,7 @@ final class ServerHomeController extends AbstractHomeController {
 
         if (Configuration.getInstance().isAuthenticationEnabled()) {
             if (user.isAuthenticated()) {
-                model.addAttribute("userCanCreateWorkspace", Configuration.getInstance().getAdminUsersAndRoles().isEmpty() || user.isAdmin());
+                model.addAttribute("userCanCreateWorkspace", !Configuration.getInstance().adminUsersEnabled() || user.isAdmin());
             } else {
                 model.addAttribute("userCanCreateWorkspace", false);
             }

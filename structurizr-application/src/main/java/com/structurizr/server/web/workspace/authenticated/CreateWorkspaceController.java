@@ -23,7 +23,7 @@ public class CreateWorkspaceController extends AbstractWorkspaceController {
         try {
             User user = getUser();
 
-            if (!Configuration.getInstance().isAuthenticationEnabled() || Configuration.getInstance().getAdminUsersAndRoles().isEmpty() || user.isUserOrRole(Configuration.getInstance().getAdminUsersAndRoles())) {
+            if (!Configuration.getInstance().isAuthenticationEnabled() || !Configuration.getInstance().adminUsersEnabled() || user.isAdmin()) {
                 long workspaceId = workspaceComponent.createWorkspace(user);
                 return "redirect:/workspace/" + workspaceId;
             } else {

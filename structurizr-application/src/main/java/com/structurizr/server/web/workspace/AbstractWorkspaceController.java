@@ -41,7 +41,7 @@ public abstract class AbstractWorkspaceController extends AbstractController {
                 workspaceMetadata.setEditable(true);
 
                 if (Configuration.getInstance().getProfile() == Profile.Server) {
-                    if (workspaceMetadata.isPublicWorkspace() || workspaceMetadata.hasNoUsersConfigured()) {
+                    if (workspaceMetadata.isPublicWorkspace()) {
                         model.addAttribute("sharingUrlPrefix", "/share/" + workspaceMetadata.getId());
                     }
                 }

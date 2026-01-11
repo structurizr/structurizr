@@ -161,6 +161,10 @@ public class Configuration {
         return new HashSet<>(adminUsersAndRoles);
     }
 
+    public boolean adminUsersEnabled() {
+        return !adminUsersAndRoles.isEmpty();
+    }
+
     private void setAdminUsersAndRoles(String... usersAndRoles) {
         adminUsersAndRoles = new HashSet<>();
         if (usersAndRoles != null) {

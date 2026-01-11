@@ -150,7 +150,12 @@
 
             <c:if test="${authenticationEnabled}">
             <div class="navigationItem">
-                <a href="<c:out value="${urlPrefix}" />/users"><img src="/static/bootstrap-icons/people.svg" class="icon-sm" /> Users</a>
+                <a href="<c:out value="${urlPrefix}" />/users"><img src="/static/bootstrap-icons/people.svg" class="icon-sm" /> Users and roles</a>
+                <div style="margin-bottom: 5px;">
+                    <img src="/static/bootstrap-icons/pencil.svg" class="icon-xs" style="margin-left: 26px;" /> ${workspace.numberOfWriteUsers}
+                    <br />
+                    <img src="/static/bootstrap-icons/eye.svg" class="icon-xs" style="margin-left: 26px;" /> ${workspace.numberOfReadUsers}
+                </div>
             </div>
             </c:if>
             </c:if>

@@ -24,8 +24,6 @@ public class AbstractWorkspaceControllerTests extends AbstractControllerTests {
 
     @Test
     void showAuthenticatedView_ReturnsThe404Page_WhenTheWorkspaceDoesNotExist() {
-        final WorkspaceMetadata workspaceMetaData = null;
-
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
             public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
@@ -39,7 +37,25 @@ public class AbstractWorkspaceControllerTests extends AbstractControllerTests {
     }
 
     @Test
-    void showAuthenticatedView_ReturnsThe404Page_WhenAuthenticationIsEnabledAndTheUserDoesNotHaveAccess() {
+    void showAuthenticatedView_ReturnsThe404Page_WhenAuthenticationIsEnabledAndTheUserIsAnonymous() {
+        enableAuthentication();
+
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
+        workspaceMetaData.addWriteUser("user1@example.com");
+
+        controller.setWorkspaceComponent(new MockWorkspaceComponent() {
+            @Override
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                return workspaceMetaData;
+            }
+        });
+
+        String view = controller.showAuthenticatedView("view", 1, "main", "version", model, true, true);
+        assertEquals("404", view);
+    }
+
+    @Test
+    void showAuthenticatedView_ReturnsThe404Page_WhenAuthenticationIsEnabledAndTheUserHasNoPermissions() {
         enableAuthentication();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
@@ -63,7 +79,7 @@ public class AbstractWorkspaceControllerTests extends AbstractControllerTests {
     }
 
     @Test
-    void showAuthenticatedView_ReturnsTheView_WhenAuthenticationIsEnabledAndTheUserHasWriteAccess() {
+    void showAuthenticatedView_ReturnsTheView_WhenAuthenticationIsEnabledAndTheUserHasWritePermission() {
         enableAuthentication();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
@@ -92,7 +108,7 @@ public class AbstractWorkspaceControllerTests extends AbstractControllerTests {
     }
 
     @Test
-    void showAuthenticatedView_ReturnsTheView_WhenAuthenticationIsEnabledAndTheUserHasReadAccess() {
+    void showAuthenticatedView_ReturnsTheView_WhenAuthenticationIsEnabledAndTheUserHasReadPermission() {
         enableAuthentication();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);

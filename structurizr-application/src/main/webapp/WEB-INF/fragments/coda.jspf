@@ -3,10 +3,6 @@
     <c:if test="${showFooter eq true}">
     <div id="footer">
         <p>
-            <a href="https://docs.structurizr.com" target="_blank">Structurizr v<span id="buildNumber">${version.buildNumber}</span></a>
-            <c:if test="${user.authenticated}">
-            | <a href="/signout">Sign out</a>
-            </c:if>
         </p>
         <p>
             <a id="renderingModeLightLink" href="" title="Light"><img src="/static/bootstrap-icons/sun.svg" class="icon-sm" /></a> |

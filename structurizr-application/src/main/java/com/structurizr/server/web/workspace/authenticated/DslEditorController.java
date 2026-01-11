@@ -6,10 +6,10 @@ import com.structurizr.dsl.StructurizrDslParser;
 import com.structurizr.dsl.StructurizrDslParserException;
 import com.structurizr.inspection.DefaultInspector;
 import com.structurizr.server.component.workspace.WorkspaceValidationUtils;
+import com.structurizr.server.domain.Permission;
 import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Features;
-import com.structurizr.server.domain.User;
 import com.structurizr.server.web.Views;
 import com.structurizr.util.BuiltInThemes;
 import com.structurizr.util.DslTemplate;
@@ -24,6 +24,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.Set;
 
 @Controller
 @Profile("command-server")
@@ -51,16 +52,6 @@ public class DslEditorController extends AbstractWorkspaceController {
             return showError("workspace-is-client-side-encrypted", model);
         }
 
-        if (Configuration.getInstance().isAuthenticationEnabled()) {
-            if (workspaceMetadata.hasUsersConfigured() && !workspaceMetadata.isWriteUser(getUser())) {
-                if (workspaceMetadata.isReadUser(getUser())) {
-                    return showError("workspace-is-readonly", model);
-                } else {
-                    return show404Page(model);
-                }
-            }
-        }
-
         model.addAttribute("publishThumbnails", StringUtils.isNullOrEmpty(branch) && StringUtils.isNullOrEmpty(version));
         model.addAttribute("quickNavigationPath", "diagram-editor");
         try {
@@ -83,8 +74,8 @@ public class DslEditorController extends AbstractWorkspaceController {
             return new DslEditorResponse(false, "404");
         }
 
-        User user = getUser();
-        if (!workspaceMetadata.hasNoUsersConfigured() && !workspaceMetadata.isWriteUser(getUser())) {
+        Set<Permission> permissions = workspaceMetadata.getPermissions(getUser());
+        if (!permissions.contains(Permission.Write)) {
             return new DslEditorResponse(false, "404");
         }
 
