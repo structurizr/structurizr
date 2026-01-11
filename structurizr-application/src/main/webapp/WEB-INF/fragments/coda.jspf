@@ -3,6 +3,14 @@
     <c:if test="${showFooter eq true}">
     <div id="footer">
         <p>
+            <c:choose>
+            <c:when test="${structurizrConfiguration.profile == 'Local'}">
+            <a href="https://docs.structurizr.com/local" target="_blank">Structurizr v${version.buildNumber}</a>
+            </c:when>
+            <c:otherwise>
+            <a href="https://docs.structurizr.com/server" target="_blank">Structurizr v${version.buildNumber}</a>
+            </c:otherwise>
+            </c:choose>
         </p>
         <p>
             <a id="renderingModeLightLink" href="" title="Light"><img src="/static/bootstrap-icons/sun.svg" class="icon-sm" /></a> |
