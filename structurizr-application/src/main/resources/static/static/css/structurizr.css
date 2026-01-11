@@ -187,7 +187,7 @@ a {
     background: #3066B7;
 }
 .label-branch {
-    background: #02172C;
+    background: #08427B;
     color: #ffffff;
     font-size: 12px;
 }
@@ -610,4 +610,37 @@ hr {
 .btn-default:disabled {
     background: #ffffff;
     border: solid 1px #ffffff;
+}
+
+.ace_editor {
+    border: solid 1px #dddddd;
+}
+.ace_content {
+    background: white;
+}
+.ace_structurizr_keyword {
+    color: #1168BD;
+}
+.ace_structurizr_keyword_disabled {
+    color: #cccccc;
+}
+.ace_structurizr_variable {
+    color: #772222;
+}
+.ace_structurizr_string {
+    color: #555555;
+}
+.ace_structurizr_comment {
+    color: #999999;
+}
+.ace_structurizr_default {
+    color: #777777;
+}
+.ace_structurizr_brace {
+    color: #1168BD;
+}
+.ace_structurizr_constant {
+    color: #00aa00;
+}
+.ace_structurizr_whitespace {
 }

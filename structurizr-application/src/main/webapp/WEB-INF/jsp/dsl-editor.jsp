@@ -8,103 +8,46 @@
 <%@ include file="/WEB-INF/fragments/progress-message.jspf" %>
 <%@ include file="/WEB-INF/fragments/dsl/introduction.jspf" %>
 
+<style>
+    .label-branch, .label-version {
+        font-size: 10px;
+        padding: 4px 8px 4px 8px;
+        margin-left: 20px;
+    }
+</style>
+
 <script nonce="${scriptNonce}">
     progressMessage.show('<p>Loading workspace...</p>');
 </script>
 
-<style>
-    #sourceTextArea {
-        border: solid 1px #dddddd;
-    }
-    .section {
-        padding-bottom: 0px;
-    }
-    pre {
-        padding: 5px;
-    }
-     .ace_structurizr_keyword {
-         color: #1168BD;
-     }
-
-    .ace_structurizr_keyword_disabled {
-        color: #cccccc;
-    }
-
-    .ace_structurizr_variable {
-        color: #772222;
-    }
-
-    .ace_structurizr_string {
-        color: #555555;
-    }
-
-    .ace_structurizr_comment {
-        color: #999999;
-    }
-
-    .ace_structurizr_default {
-        color: #777777;
-    }
-
-    .ace_structurizr_brace {
-        color: #1168BD;
-    }
-
-    .ace_structurizr_constant {
-        color: #00aa00;
-    }
-
-    .ace_structurizr_whitespace {
-    }
-</style>
-
-<div id="editorControls" class="centered">
+<div class="centered">
     <div id="banner"></div>
-    <div class="row" style="padding-bottom: 0px">
-        <div class="col-sm-2" style="padding: 18px 30px 10px 30px">
-            <a href="/"><img src="/static/img/structurizr-banner-light.png" alt="Structurizr" class="img-light img-responsive brandingLogo" /><img src="/static/img/structurizr-banner-dark.png" alt="Structurizr" class="img-dark img-responsive brandingLogo" /></a>
-        </div>
-        <div class="col-sm-10 small" style="padding: 18px 30px 10px 30px">
-            <div class="form-group"style="margin-bottom: 10px;">
-                <div class="btn-group">
-                    <button id="dashboardButton" class="btn btn-default" title="Return to dashboard"><img src="/static/bootstrap-icons/house.svg" class="icon-btn" /></button>
-                    <button id="workspaceSummaryButton" class="btn btn-default" title="Workspace summary"><img src="/static/bootstrap-icons/folder.svg" class="icon-btn" /></button>
-                    <button id="sourceButton" class="btn btn-default" title="Source"><img src="/static/bootstrap-icons/code-slash.svg" class="icon-btn" /></button>
-                    <button id="diagramsButton" class="btn btn-default" title="Diagrams"><img src="/static/bootstrap-icons/bounding-box.svg" class="icon-btn" /></button>
-                    <button id="helpButton" class="btn btn-default" title="Help"><img src="/static/bootstrap-icons/question-circle.svg" class="icon-btn" /></button>
-                </div>
-
-                <div class="btn-group">
-                    <button id="saveButton" class="btn btn-default" title="Save workspace" disabled="disabled" style="text-shadow: none"><img src="/static/bootstrap-icons/folder-check.svg" class="icon-btn" /></button>
-                </div>
-
-                <c:if test="${not empty workspace.branch}">
-                    <span class="label label-branch"><img src="/static/bootstrap-icons/bezier2.svg" class="icon-sm icon-white" /> ${workspace.branch}</span>
-                </c:if>
-
-                <c:if test="${not empty param.version}">
-                    <span class="label label-version"><img src="/static/bootstrap-icons/clock-history.svg" class="icon-sm icon-white" /> ${workspace.userFriendlyInternalVersion}</span>
-                </c:if>
-            </div>
-        </div>
-    </div>
 </div>
 
-<div class="section" style="padding-top: 20px">
+<div id="errorMessageAlert" class="alert alert-danger small hidden centered">
+    <span id="errorMessage"></span>
+</div>
 
-    <div id="errorMessageAlert" class="alert alert-danger small hidden centered">
-        <span id="errorMessage"></span>
-    </div>
+<div class="section" style="padding-top: 20px; padding-bottom: 0">
+    <div class="row" style="margin-left: 0; margin-right: 0; padding-bottom: 0">
+        <div id="sourcePanel" class="col-6 centered">
 
-    <div class="row" style="margin-left: 0; margin-right: 0;">
-        <div id="sourcePanel" class="col-sm-6 centered">
             <div style="text-align: left; margin-bottom: 10px">
-                <div style="float: right">
+                <div id="sourceControls" style="float: right">
+                    <div class="btn-group">
+                        <button id="dashboardButton" class="btn btn-default" title="Return to dashboard"><img src="/static/bootstrap-icons/house.svg" class="icon-btn" /></button>
+                        <button id="workspaceSummaryButton" class="btn btn-default" title="Workspace summary"><img src="/static/bootstrap-icons/folder.svg" class="icon-btn" /></button>
+                    </div>
                     <label class="btn btn-default small">
-                        <img src="/static/bootstrap-icons/cloud-upload.svg" class="icon-btn" />
-                        Upload <input id="uploadFileInput" type="file" style="display: none;">
+                        <img src="/static/bootstrap-icons/cloud-upload.svg" title="Upload DSL" class="icon-btn" />
+                        <input id="uploadFileInput" type="file" style="display: none;">
                     </label>
-                    <button id="renderButton" class="btn btn-default"><img src="/static/bootstrap-icons/play.svg" class="icon-btn" /> Render</button>
+                    <div class="btn-group">
+                        <button id="sourceButton" class="btn btn-default" title="Source"><img src="/static/bootstrap-icons/code-slash.svg" class="icon-btn" /></button>
+                        <button id="diagramsButton" class="btn btn-default" title="Diagrams"><img src="/static/bootstrap-icons/bounding-box.svg" class="icon-btn" /></button>
+                    </div>
+                    <button id="saveButton" class="btn btn-default" title="Save workspace" disabled="disabled" style="text-shadow: none"><img src="/static/bootstrap-icons/folder-check.svg" class="icon-btn" /></button>
+                    <button id="renderButton" class="btn btn-primary"><img src="/static/bootstrap-icons/play.svg" class="icon-btn icon-white" /></button>
                 </div>
 
                 <div>
@@ -115,12 +58,28 @@
             <div id="sourceTextArea"></div>
 
             <div class="smaller" style="margin-top: 5px">
-                Structurizr DSL <a href="https://github.com/structurizr/java/blob/master/changelog.md" target="_blank">v${dslVersion}</a>
+                <a href="https://docs.structurizr.com" target="_blank" style="margin-right: 20px;">Structurizr v${version.buildNumber}</a>
+                <a id="renderingModeLightLink" href="" title="Light"><img src="/static/bootstrap-icons/sun.svg" class="icon-xs" /></a> |
+                <a id="renderingModeDarkLink" href="" title="Dark"><img src="/static/bootstrap-icons/moon-fill.svg" class="icon-xs" /></a> |
+                <a id="renderingModeSystemLink" href="" title="System"><img src="/static/bootstrap-icons/sliders.svg" class="icon-xs" /></a>
+
+                <c:if test="${not empty workspace.branch}">
+                    <span class="label label-branch"><img src="/static/bootstrap-icons/bezier2.svg" class="icon-xs icon-white" /> ${workspace.branch}</span>
+                </c:if>
+
+                <c:if test="${not empty param.version}">
+                    <span class="label label-version"><img src="/static/bootstrap-icons/clock-history.svg" class="icon-xs icon-white" /> ${workspace.userFriendlyInternalVersion}</span>
+                </c:if>
             </div>
         </div>
-        <div id="diagramsPanel" class="col-sm-6 centered">
+        <div id="diagramsPanel" class="col-6 centered">
             <div id="viewListPanel" style="margin-bottom: 10px">
-                <select id="viewsList" class="form-control"></select>
+                <div class="form-inline">
+                        <span id="diagramNavButtons" class="hidden">
+                            <button id="viewSourceButton" class="btn btn-primary" title="Source" style="margin-top: -4px;"><img src="/static/bootstrap-icons/code-slash.svg" class="icon-btn icon-white" /> View source</button>
+                        </span>
+                    <select id="viewsList" class="form-select" style="width: auto; display: inline-block;"></select>
+                </div>
             </div>
 
             <div>
@@ -141,9 +100,9 @@
 
     $('#dashboardButton').click(function() { window.location.href='/'; });
     $('#workspaceSummaryButton').click(function() { window.location.href='${urlPrefix}${urlSuffix}'; });
-    $('#sourceButton').click(function() { sourceButtonClicked(); });
-    $('#diagramsButton').click(function() { diagramsButtonClicked(); });
-    $('#helpButton').click(function() { window.open('https://docs.structurizr.com/dsl'); });
+    $('#sourceButton').click(function(event) { sourceButtonClicked(event); });
+    $('#diagramsButton').click(function(event) { diagramsButtonClicked(event); });
+    $('#viewSourceButton').click(function(event) { sourceButtonClicked(event); });
     $('#saveButton').click(function() { saveWorkspace(); });
     $('#renderButton').click(function() { refresh(); });
 
@@ -271,12 +230,17 @@
         progressMessage.hide();
     }
 
-    var verticalPadding = 100;
-
     function resize() {
-        var navHeight = $('#editorControls').outerHeight();
-        $('#sourceTextArea').css('height', (window.innerHeight - navHeight - verticalPadding) + 'px');
-        structurizr.embed.setMaxHeight(window.innerHeight - navHeight - verticalPadding);
+        const sourceControlsHeight = $('#sourceControls').outerHeight();
+        const bannerHeight = $('#banner').outerHeight();
+        const verticalPadding = 60;
+
+        $('#sourceTextArea').css('height', (window.innerHeight - sourceControlsHeight - bannerHeight - verticalPadding) + 'px');
+        if (editor) {
+            editor.resize(true);
+        }
+        structurizr.embed.setMaxHeight(window.innerHeight - bannerHeight - verticalPadding - 20);
+        structurizr.embed.resizeEmbeddedDiagrams();
     }
 
     function renderStructurizrDiagram() {
@@ -398,7 +362,8 @@
         $('#errorMessage').text(message);
     }
 
-    function sourceButtonClicked() {
+    function sourceButtonClicked(e) {
+        e.preventDefault();
         if (sourceVisible === false || diagramsVisible === false) {
             showSourceAndDiagrams();
         } else {
@@ -408,7 +373,8 @@
         editor.focus();
     }
 
-    function diagramsButtonClicked() {
+    function diagramsButtonClicked(e) {
+        e.preventDefault();
         if (diagramsVisible === false || sourceVisible === false) {
             showSourceAndDiagrams();
         } else {
@@ -420,31 +386,30 @@
 
     function hideSource() {
         $('#sourcePanel').addClass('hidden');
-        $('#diagramsPanel').removeClass('col-sm-6');
+        $('#diagramsPanel').removeClass('col-6');
 
         sourceVisible = false;
-        $('#sourceButton').removeClass('hidden');
-        $('#diagramsButton').addClass('hidden');
+        $('#diagramNavButtons').removeClass('hidden');
         resize();
     }
 
     function showSourceAndDiagrams() {
         $('#sourcePanel').removeClass('hidden');
-        $('#sourcePanel').addClass('col-sm-6');
+        $('#sourcePanel').addClass('col-6');
         $('#diagramsPanel').removeClass('hidden');
-        $('#diagramsPanel').addClass('col-sm-6');
+        $('#diagramsPanel').addClass('col-6');
+
+        $('#diagramNavButtons').addClass('hidden');
 
         sourceVisible = true;
         diagramsVisible = true;
 
-        $('#sourceButton').removeClass('hidden');
-        $('#diagramsButton').removeClass('hidden');
         resize();
     }
 
     function hideDiagrams() {
         $('#diagramsPanel').addClass('hidden');
-        $('#sourcePanel').removeClass('col-sm-6');
+        $('#sourcePanel').removeClass('col-6');
 
         diagramsVisible = false;
         $('#sourceButton').addClass('hidden');

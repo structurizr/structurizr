@@ -30,6 +30,9 @@ code {
     background: #85BBF0;
 }
 
+.thumbnail {
+    border: solid 1px #444444;
+}
 .img-thumbnail, .thumbnail {
     background: #111111;
 }
@@ -196,4 +199,24 @@ hr {
 }
 .icon-btn {
     filter: invert(1.0);
+}
+
+.ace_editor {
+    border: solid 1px #444444;
+}
+.ace_content {
+    background: #111111;
+}
+.ace-tm .ace_gutter {
+    background: #444444;
+    color: white;
+}
+.ace-tm .ace_gutter-active-line {
+    background: #777777;
+}
+.ace_structurizr_variable {
+    color: #aa2222;
+}
+.ace_structurizr_string {
+    color: #aaaaaa;
 }

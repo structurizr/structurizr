@@ -1,12 +1,12 @@
 <select id="keywords" class="form-select" style="width: auto; display: inline-block">
-    <option value="https://docs.structurizr.com/dsl">Structurizr DSL documentation</option>
-    <option value="https://docs.structurizr.com/dsl/tutorial">Structurizr DSL tutorial</option>
-    <option value="https://docs.structurizr.com/dsl/cookbook">Structurizr DSL cookbook</option>
+    <option value="https://docs.structurizr.com/dsl">DSL documentation</option>
+    <option value="https://docs.structurizr.com/dsl/tutorial">DSL tutorial</option>
+    <option value="https://docs.structurizr.com/dsl/cookbook">DSL cookbook</option>
     <option value="https://docs.structurizr.com/dsl/basics">Basics</option>
     <option value="https://docs.structurizr.com/dsl/identifiers">Identifiers</option>
     <option value="https://docs.structurizr.com/dsl/implied-relationships">Implied relationships</option>
     <option value="https://docs.structurizr.com/dsl/expressions">Expressions</option>
-    <option value="https://docs.structurizr.com/dsl/language">Structurizr DSL language reference</option>
+    <option value="https://docs.structurizr.com/dsl/language">DSL language reference</option>
     <option value="https://docs.structurizr.com/dsl/language#workspace">workspace</option>
     <option value="https://docs.structurizr.com/dsl/language#model">&nbsp;- model</option>
     <option value="https://docs.structurizr.com/dsl/language#group">&nbsp;&nbsp;&nbsp;- group</option>
