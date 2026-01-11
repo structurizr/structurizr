@@ -214,7 +214,7 @@ abstract class AbstractWorkspaceAdapterTests extends AbstractTestsBase {
         assertTrue(result);
 
         InputStreamAndContentLength isacl = getWorkspaceAdapter().getImage(1, "", "image.png");
-        assertEquals(9262, isacl.getContentLength());
+        assertEquals(11871, isacl.getContentLength());
 
         // try a branch version
         isacl = getWorkspaceAdapter().getImage(1, "branch", "image.png");
@@ -235,7 +235,7 @@ abstract class AbstractWorkspaceAdapterTests extends AbstractTestsBase {
         assertTrue(result);
 
         InputStreamAndContentLength isacl = getWorkspaceAdapter().getImage(1, "branch", "image.png");
-        assertEquals(9262, isacl.getContentLength());
+        assertEquals(11871, isacl.getContentLength());
 
         // try the main branch version
         isacl = getWorkspaceAdapter().getImage(1, "", "image.png");
@@ -264,7 +264,7 @@ abstract class AbstractWorkspaceAdapterTests extends AbstractTestsBase {
             String filename = "image-" + numberFormat.format(i) + ".png";
             Image image = images.get(i-1);
             assertEquals(image.getName(), filename);
-            assertEquals(9, image.getSizeInKB());
+            assertEquals(11, image.getSizeInKB());
         }
 
         // and a different workspace ID

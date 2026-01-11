@@ -27,7 +27,7 @@
         </c:if>
 
         <p class="centered">
-            <a href="/signout"><span class="label structurizrBackgroundBase" style="font-size: 18px"><img src="/static/bootstrap-icons/box-arrow-right.svg" class="icon-sm icon-white" /> Sign out</span></a>
+            <a href="/signout"><span class="label structurizrBackgroundLight" style="font-size: 18px"><img src="/static/bootstrap-icons/box-arrow-right.svg" class="icon-sm icon-white" /> Sign out</span></a>
         </p>
     </div>
 </div>

@@ -151,7 +151,7 @@ label {
 }
 
 a {
-    color: #1168BD;
+    color: #3066B7;
     text-decoration: none;
 }
 
@@ -168,7 +168,7 @@ a {
     color: #ffffff;
 }
 .structurizrBackgroundBase {
-    background: #1168BD;
+    background: #3066B7;
     color: #ffffff;
 }
 .structurizrBackgroundLight {
@@ -184,7 +184,7 @@ a {
 }
 
 .label-primary {
-    background: #1168BD;
+    background: #3066B7;
 }
 .label-branch {
     background: #02172C;
@@ -511,7 +511,7 @@ hr {
 }
 
 .joint-link.joint-theme-default .marker-vertex {
-    fill: #1168BD;
+    fill: #dd0000;
     r: 25px;
 }
 
@@ -561,7 +561,7 @@ hr {
 }
 
 .brandingLogo {
-    max-height: 35px;
+    max-height: 48px;
     margin-top: 5px;
 }
 
@@ -570,6 +570,14 @@ hr {
 }
 .btn-active {
     background: #999999;
+}
+.btn-primary, .btn-primary:hover, .btn-primary:active {
+    background: #3066B7;
+    border-color: #3066B7;
+}
+.btn-danger, .btn-danger:hover, .btn-danger:active {
+    background: darkred;
+    border-color: darkred;
 }
 
 #quickFindModal .selected {

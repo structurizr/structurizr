@@ -2,7 +2,7 @@
 
     <c:if test="${showFooter eq true}">
     <div id="footer">
-        <p>
+        <p id="versionDetails">
             <c:choose>
             <c:when test="${structurizrConfiguration.profile == 'Local'}">
             <a href="https://docs.structurizr.com/local" target="_blank">Structurizr v${version.buildNumber}</a>
