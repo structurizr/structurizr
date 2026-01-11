@@ -44,21 +44,6 @@
             <div class="navigationItemSeparator"></div>
 
             <div class="navigationItem">
-                <c:if test="${not empty sharingUrlPrefix}">
-                <a id="shareLink" href="" title="Share"><img src="/static/bootstrap-icons/share-fill.svg" class="icon-sm" /></a>
-                |
-                <script nonce="${scriptNonce}">
-                    $('#shareLink').click(function(event) {
-                        event.preventDefault();
-
-                        if (requestedScope === WORKSPACE_SCOPE) {
-                            window.open('${sharingUrlPrefix}/documentation/' + window.location.hash);
-                        } else {
-                            window.open('${sharingUrlPrefix}/documentation/' + requestedScope + window.location.hash);
-                        }
-                    });
-                </script>
-                </c:if>
                 <a id="exportLink" href="" class="hidden" title="Export to offline HTML page"><img src="/static/bootstrap-icons/filetype-html.svg" class="icon-sm" /></a> |
                 <a id="renderingModeLightLink" href="" title="Light"><img src="/static/bootstrap-icons/sun.svg" class="icon-sm" /></a> |
                 <a id="renderingModeDarkLink" href="" title="Dark"><img src="/static/bootstrap-icons/moon-fill.svg" class="icon-sm" /></a> |

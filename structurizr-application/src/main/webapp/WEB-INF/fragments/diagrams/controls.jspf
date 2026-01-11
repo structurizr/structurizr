@@ -50,10 +50,6 @@
             <script nonce="${scriptNonce}">$('#embedDiagramButton').click(function() { openEmbedModal(); });</script>
             </c:if>
 
-            <c:if test="${not empty sharingUrlPrefix}">
-            <button id="shareButton" class="btn btn-default" title="Share"><img src="/static/bootstrap-icons/share.svg" class="icon-btn" /></button>
-            <script nonce="${scriptNonce}">$('#shareButton').click(function() { window.open('${sharingUrlPrefix}/diagrams#' + structurizr.diagram.getCurrentViewOrFilter().key); });</script>
-            </c:if>
             <button id="helpButton" class="btn btn-default" title="Help"><img src="/static/bootstrap-icons/question-circle.svg" class="icon-btn" /></button>
         </div>
         <script nonce="${scriptNonce}">

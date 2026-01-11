@@ -6,7 +6,7 @@
 
     function publishAllViews() {
         numberOfPublishedImages = 0;
-        publishImages(structurizr.workspace.getViews());
+        publishImages(structurizr.workspace.getViews().map(function(view) { return { key: view.key }; }));
     }
 
     function publishViewsFinished() {
@@ -25,6 +25,8 @@
 
                         if (view.type !== structurizr.constants.IMAGE_VIEW_TYPE) {
                             structurizr.diagram.exportCurrentDiagramKeyToPNG(function (diagramKeyAsPNG) {
+                                addExportedPNGToPage(diagramAsPNG, diagramKeyAsPNG, undefined, false);
+
                                 publishImage(view.key, view.key + colorScheme + '-key.png', diagramKeyAsPNG, function () {
                                     viewsToExport.splice(0, 1);
                                     publishImages(viewsToExport);
@@ -38,6 +40,9 @@
                     });
                 });
             });
+        } else {
+            window.open('/workspace/' + structurizr.workspace.id + '/images');
+            $('#exportModal').modal('hide');
         }
     }
 

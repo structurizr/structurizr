@@ -417,6 +417,7 @@
         $('#exportPNGOptions').removeClass('hidden');
         $('#exportSVGOptions').addClass('hidden');
         $('#exportAnimation').addClass('hidden');
+        $('#publishAllViewsButton').removeClass('hidden');
         $('#exportedDiagrams').empty();
 
         const currentView = structurizr.diagram.getCurrentViewOrFilter();
@@ -431,6 +432,7 @@
         $('#exportPNGOptions').addClass('hidden');
         $('#exportSVGOptions').removeClass('hidden');
         $('#exportAnimation').addClass('hidden');
+        $('#publishAllViewsButton').addClass('hidden');
         $('#exportedDiagrams').empty();
 
         const currentView = structurizr.diagram.getCurrentViewOrFilter();
