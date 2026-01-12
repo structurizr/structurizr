@@ -5012,7 +5012,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
         // remove some cursor definitions (leave the pointer and zoom-in cursors)
         svgMarkup = svgMarkup.replace(/cursor: move !important/g, '');
-        svgMarkup = svgMarkup.replace(/class="marker-vertices"/g, 'class="marker-vertices" display="none"');
+        svgMarkup = svgMarkup.replace(/class="joint-tools-layer"/g, 'class="joint-tools-layer" display="none"');
 
         svgMarkup = svgMarkup.replace(/class="[\w -]*"/g, '');
         svgMarkup = svgMarkup.replace(/data-type="[\w.]*"/g, '');
