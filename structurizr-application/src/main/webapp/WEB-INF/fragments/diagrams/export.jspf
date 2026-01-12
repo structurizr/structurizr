@@ -37,7 +37,7 @@
                     </label>
                     </c:if>
 
-                    <label for="exportFilenamePrefix">Filename prefix</label> <input type="text" id="exportFilenamePrefix" class="form-control" disabled="disabled" style="width: auto; display: inline-block;" />
+                    <label for="exportFilenamePrefix">Filename prefix</label> <input type="text" id="exportFilenamePrefix" class="form-control" style="width: auto; display: inline-block;" />
                 </div>
 
                 <div id="exportedDiagrams" class="centered" style="margin-top: 40px"></div>
@@ -159,7 +159,7 @@
             const viewToExport = structurizr.workspace.findViewByKey(viewsToExport[0]);
 
             changeView(viewToExport, function () {
-                if (includeDiagramAnimations === true && !structurizr.diagram.currentViewIsImage()) {
+                if (includeDiagramAnimations === true && !structurizr.diagram.currentViewIsImage() && structurizr.diagram.currentViewHasAnimation()) {
                     structurizr.diagram.exportCurrentDiagramKey(options, function(diagramKeyExport) {
 
                         var stepNumber = 1;
@@ -370,6 +370,10 @@
     function exportToImages() {
         $('#exportAnimation').addClass('hidden');
         $('#exportedDiagrams').empty();
+        if ($('#exportPublish').is(':checked') === true) {
+            $('#exportFilenamePrefix').val('');
+            $('#exportFilenamePrefix').attr('disabled', 'disabled');
+        }
 
         const currentView = structurizr.diagram.getCurrentViewOrFilter();
         $('#exportViewList').val(currentView.key);

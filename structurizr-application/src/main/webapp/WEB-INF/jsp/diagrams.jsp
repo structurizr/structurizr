@@ -126,7 +126,7 @@
                 </c:if>
 
                 <c:if test="${structurizrConfiguration.profile == 'Playground'}">
-                    <button id="embeddedExportToPNGButton" class="btn btn-default" title="Export diagram and key/legend to PNG"><img src="/static/bootstrap-icons/filetype-png.svg" class="icon-btn" /></button>
+                    <button id="embeddedExportButton" class="btn btn-default" title="Export diagram and key/legend to PNG/SVG"><img src="/static/bootstrap-icons/file-earmark-image.svg" class="icon-btn" /></button>
                 </c:if>
 
                 <div class="btn-group">
@@ -137,7 +137,7 @@
                 <button id="exitFullScreenButton" class="btn btn-default hidden" title="Exit Full Screen [Escape]"><img src="/static/bootstrap-icons/fullscreen-exit.svg" class="icon-btn" /></button>
 
                 <script nonce="${scriptNonce}">
-                    $('#embeddedExportToPNGButton').click(function() { exportToPNG(); });
+                    $('#embeddedExportButton').click(function() { exportToImages(); });
 
                     $('#zoomOutButton').click(function() { structurizr.diagram.zoomOut(); });
                     $('#zoomInButton').click(function() { structurizr.diagram.zoomIn(); });
@@ -1284,10 +1284,10 @@
     function putImage(viewKey, filename, imageAsBase64EncodedDataUri, callback) {
         <c:choose>
         <c:when test="${not empty workspace.branch}">
-        const url = '/workspace/${workspace.id}/branch/${workspace.branch}/images/' + encodeURIComponent(filename);
+        const url = '${urlPrefix}/branch/${workspace.branch}/images/' + encodeURIComponent(filename);
         </c:when>
         <c:otherwise>
-        const url = '/workspace/${workspace.id}/images/' + encodeURIComponent(filename);
+        const url = '${urlPrefix}/images/' + encodeURIComponent(filename);
         </c:otherwise>
         </c:choose>
 

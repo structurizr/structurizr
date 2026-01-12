@@ -1,7 +1,5 @@
 package com.structurizr.server.web.workspace.authenticated;
 
-import com.structurizr.configuration.Configuration;
-import com.structurizr.configuration.Features;
 import com.structurizr.server.component.workspace.WorkspaceBranch;
 import com.structurizr.server.domain.Permission;
 import com.structurizr.server.domain.WorkspaceMetadata;
@@ -12,7 +10,6 @@ import com.structurizr.util.ImageUtils;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,18 +60,12 @@ class ImageController extends AbstractImageController {
         return null;
     }
 
-    public boolean isAnonymousThumbnailsEnabled() {
-        return Configuration.getInstance().isFeatureEnabled(Features.DIAGRAM_ANONYMOUS_THUMBNAILS);
-    }
-
     @RequestMapping(value = "/workspace/{workspaceId}/branch/{branch}/images/{filename:.+}", method = RequestMethod.OPTIONS)
-    @PreAuthorize("isAuthenticated() || this.isAnonymousThumbnailsEnabled()")
     public void optionsImage(@PathVariable("workspaceId") long workspaceId, @PathVariable("branch") String branch, @PathVariable("filename") String filename, HttpServletResponse response) {
         addAccessControlAllowHeaders(response);
     }
 
     @RequestMapping(value = "/workspace/{workspaceId}/images/{filename:.+}", method = RequestMethod.OPTIONS)
-    @PreAuthorize("isAuthenticated() || this.isAnonymousThumbnailsEnabled()")
     public void optionsImage(@PathVariable("workspaceId") long workspaceId, @PathVariable("filename") String filename, HttpServletResponse response) {
         addAccessControlAllowHeaders(response);
     }
@@ -86,7 +77,6 @@ class ImageController extends AbstractImageController {
     }
 
     @RequestMapping(value = "/workspace/{workspaceId}/branch/{branch}/images/{filename:.+}", method = RequestMethod.PUT, consumes = "text/plain", produces = "application/json; charset=UTF-8")
-    @PreAuthorize("isAuthenticated() || this.isAnonymousThumbnailsEnabled()")
     public @ResponseBody ApiResponse putImage(@PathVariable("workspaceId")long workspaceId,
                                               @PathVariable("branch")String branch,
                                               @PathVariable("filename")String filename,
@@ -97,7 +87,6 @@ class ImageController extends AbstractImageController {
     }
 
     @RequestMapping(value = "/workspace/{workspaceId}/images/{filename:.+}", method = RequestMethod.PUT, consumes = "text/plain", produces = "application/json; charset=UTF-8")
-    @PreAuthorize("isAuthenticated() || this.isAnonymousThumbnailsEnabled()")
     public @ResponseBody ApiResponse putImage(@PathVariable("workspaceId")long workspaceId,
                                               @PathVariable("filename")String filename,
                                               @RequestBody String imageAsBase64EncodedDataUri,
