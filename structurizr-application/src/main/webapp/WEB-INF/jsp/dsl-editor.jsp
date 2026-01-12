@@ -58,7 +58,6 @@
             <div id="sourceTextArea"></div>
 
             <div class="smaller" style="margin-top: 5px">
-                <a href="https://docs.structurizr.com" target="_blank" style="margin-right: 20px;">Structurizr v${version.buildNumber}</a>
                 <a id="renderingModeLightLink" href="" title="Light"><img src="/static/bootstrap-icons/sun.svg" class="icon-xs" /></a> |
                 <a id="renderingModeDarkLink" href="" title="Dark"><img src="/static/bootstrap-icons/moon-fill.svg" class="icon-xs" /></a> |
                 <a id="renderingModeSystemLink" href="" title="System"><img src="/static/bootstrap-icons/sliders.svg" class="icon-xs" /></a>
