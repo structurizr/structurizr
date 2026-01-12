@@ -5,6 +5,7 @@ import com.structurizr.server.domain.Permission;
 import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.api.ApiException;
 import com.structurizr.server.web.api.ApiResponse;
+import com.structurizr.server.web.api.NotFoundApiException;
 import com.structurizr.server.web.workspace.AbstractImageController;
 import com.structurizr.util.ImageUtils;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Set;
 
 @Controller
@@ -76,31 +78,29 @@ class ImageController extends AbstractImageController {
         response.addHeader("Access-Control-Allow-Methods", "GET, PUT");
     }
 
+    @RequestMapping(value = "/workspace/{workspaceId}/images/{filename:.+}", method = RequestMethod.PUT, consumes = "text/plain", produces = "application/json; charset=UTF-8")
+    public @ResponseBody ApiResponse putImage(@PathVariable("workspaceId")long workspaceId,
+                                              @PathVariable("filename")String filename,
+                                              @RequestBody String imageAsBase64EncodedDataUri) {
+
+        return storeImage(workspaceId, WorkspaceBranch.NO_BRANCH, filename, imageAsBase64EncodedDataUri);
+    }
+
     @RequestMapping(value = "/workspace/{workspaceId}/branch/{branch}/images/{filename:.+}", method = RequestMethod.PUT, consumes = "text/plain", produces = "application/json; charset=UTF-8")
     public @ResponseBody ApiResponse putImage(@PathVariable("workspaceId")long workspaceId,
                                               @PathVariable("branch")String branch,
                                               @PathVariable("filename")String filename,
-                                              @RequestBody String imageAsBase64EncodedDataUri,
-                                              @ModelAttribute("remoteIpAddress") String ipAddress) {
+                                              @RequestBody String imageAsBase64EncodedDataUri) {
 
-        return storeImage(workspaceId, branch, filename, imageAsBase64EncodedDataUri, ipAddress);
+        return storeImage(workspaceId, branch, filename, imageAsBase64EncodedDataUri);
     }
 
-    @RequestMapping(value = "/workspace/{workspaceId}/images/{filename:.+}", method = RequestMethod.PUT, consumes = "text/plain", produces = "application/json; charset=UTF-8")
-    public @ResponseBody ApiResponse putImage(@PathVariable("workspaceId")long workspaceId,
-                                              @PathVariable("filename")String filename,
-                                              @RequestBody String imageAsBase64EncodedDataUri,
-                                              @ModelAttribute("remoteIpAddress") String ipAddress) {
-
-        return storeImage(workspaceId, WorkspaceBranch.NO_BRANCH, filename, imageAsBase64EncodedDataUri, ipAddress);
-    }
-
-    private ApiResponse storeImage(long workspaceId, String branch, String filename, String imageAsBase64EncodedDataUri, String ipAddress) {
+    private ApiResponse storeImage(long workspaceId, String branch, String filename, String imageAsBase64EncodedDataUri) {
         WorkspaceBranch.validateBranchName(branch);
 
         WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
         if (workspaceMetadata == null) {
-            throw new ApiException("404");
+            throw new NotFoundApiException();
         }
 
         Set<Permission> permissions = workspaceMetadata.getPermissions(getUser());
@@ -112,7 +112,7 @@ class ImageController extends AbstractImageController {
                 } else if (filename.endsWith(ImageUtils.SVG_EXTENSION)) {
                     file = File.createTempFile("structurizr", ImageUtils.SVG_EXTENSION);
                 } else {
-                    throw new ApiException("404");
+                    throw new NotFoundApiException();
                 }
 
                 ImageUtils.writeDataUriToFile(imageAsBase64EncodedDataUri, file);
@@ -122,13 +122,13 @@ class ImageController extends AbstractImageController {
                 } else {
                     throw new ApiException("Failed to save image");
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
                 throw new ApiException("Failed to save image");
             }
         }
 
-        throw new ApiException("Failed to save image");
+        throw new NotFoundApiException();
     }
 
 }
