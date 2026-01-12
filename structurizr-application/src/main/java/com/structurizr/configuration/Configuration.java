@@ -260,8 +260,6 @@ public class Configuration {
             setDefault(Features.WORKSPACE_ARCHIVING, FALSE);
             setDefault(Features.WORKSPACE_BRANCHES, FALSE);
             setDefault(Features.WORKSPACE_SCOPE_VALIDATION, Features.WORKSPACE_SCOPE_VALIDATION_RELAXED);
-            setDefault(Features.DIAGRAM_REVIEWS, TRUE);
-            setDefault(Features.DIAGRAM_ANONYMOUS_THUMBNAILS, FALSE);
         }
     }
 
@@ -283,8 +281,6 @@ public class Configuration {
         features.configure(Features.WORKSPACE_ARCHIVING, Boolean.parseBoolean(getProperty(Features.WORKSPACE_ARCHIVING)));
         features.configure(Features.WORKSPACE_BRANCHES, Boolean.parseBoolean(getProperty(Features.WORKSPACE_BRANCHES)));
         features.configure(Features.WORKSPACE_SCOPE_VALIDATION, getProperty(Features.WORKSPACE_SCOPE_VALIDATION).equalsIgnoreCase(Features.WORKSPACE_SCOPE_VALIDATION_STRICT));
-        features.configure(Features.DIAGRAM_REVIEWS, Boolean.parseBoolean(getProperty(Features.DIAGRAM_REVIEWS)));
-        features.configure(Features.DIAGRAM_ANONYMOUS_THUMBNAILS, Boolean.parseBoolean(getProperty(Features.DIAGRAM_ANONYMOUS_THUMBNAILS)));
 
         // for backwards compatibility (older versions had structurizr.dslEditor=true)
         if (!isFeatureEnabled(Features.UI_DSL_EDITOR)) {

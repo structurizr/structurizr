@@ -10,8 +10,4 @@ public class Features {
     public static final String WORKSPACE_SCOPE_VALIDATION_STRICT = "strict";
     public static final String WORKSPACE_SCOPE_VALIDATION_RELAXED = "relaxed";
 
-    public static final String DIAGRAM_REVIEWS = "structurizr.feature.diagramreviews";
-
-    public static final String DIAGRAM_ANONYMOUS_THUMBNAILS = "structurizr.feature.diagram.anonymousthumbnails";
-
 }
