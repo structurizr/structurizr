@@ -1308,7 +1308,6 @@
             }
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
-            // status[viewKey] = true;
             console.log(jqXHR);
             console.log(jqXHR.status);
             console.log("Text status: " + textStatus);
