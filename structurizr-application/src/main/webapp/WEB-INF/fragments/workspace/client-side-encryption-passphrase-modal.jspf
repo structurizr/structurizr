@@ -21,7 +21,7 @@
                     </label>
                 </div>
 
-                <div id="decryptionAlert" class="alert alert-danger" role="alert" style="display:none; margin-top: 20px;">
+                <div id="decryptionAlert" class="alert alert-danger hidden" role="alert" style="margin-top: 20px;">
                     The workspace could not be decrypted.
                 </div>
             </div>
@@ -43,25 +43,26 @@
         });
 
         modal.find('#decryptButton').click(function () {
-            promptForPassphraseAndDecryptWorkspace(workspace, callback);
+            usePassphraseAndDecryptWorkspace(workspace, callback);
         });
 
         modal.find('#passphrase').keydown(function(evt) {
             if (evt.keyCode === 13) { // the enter key
-                promptForPassphraseAndDecryptWorkspace(workspace, callback);
+                usePassphraseAndDecryptWorkspace(workspace, callback);
             }
         });
 
-        var passphrase = getWorkspaceEncryptionPassphraseFromLocalStorage(workspace.id);
+        const passphrase = getWorkspaceEncryptionPassphraseFromLocalStorage(workspace.id);
         if (passphrase) {
             decryptWorkspace(workspace, passphrase, callback);
         } else {
-            modal.modal('show', { keyboard: false });
+            const myModal = new bootstrap.Modal(document.getElementById('clientSideEncryptedWorkspacePassphraseModal'));
+            myModal.show()
         }
     }
 
-    function promptForPassphraseAndDecryptWorkspace(workspace, callback) {
-        var modal = $('#clientSideEncryptedWorkspacePassphraseModal');
+    function usePassphraseAndDecryptWorkspace(workspace, callback) {
+        const modal = $('#clientSideEncryptedWorkspacePassphraseModal');
         var passphrase = modal.find('#passphrase').val();
         var storePassphrase = modal.find('#storePassphraseInLocalStorage')[0].checked;
         if (storePassphrase === true) {
@@ -72,8 +73,6 @@
     }
 
     function decryptWorkspace(workspace, passphrase, callback) {
-        var modal = $('#clientSideEncryptedWorkspacePassphraseModal');
-
         try {
             structurizrEncryptionStrategy = new structurizr.io.EncryptionStrategy(
                 {
@@ -87,15 +86,21 @@
                 }
             );
 
-            var decryptedWorkspace = structurizrEncryptionStrategy.decrypt(workspace);
+            const decryptedWorkspace = structurizrEncryptionStrategy.decrypt(workspace);
 
-            modal.modal('hide');
+            const myModalEl = document.getElementById('clientSideEncryptedWorkspacePassphraseModal');
+            const modalInstance = bootstrap.Modal.getInstance(myModalEl);
+            if (modalInstance) {
+                modalInstance.hide();
+            }
+
             callback(decryptedWorkspace);
         } catch (e) {
+            console.log(e);
             console.error("Could not decrypt the workspace with the given passphrase");
             removeWorkspaceEncryptionPassphraseFromLocalStorage(workspace.id);
 
-            modal.find('#decryptionAlert').show();
+            $('#decryptionAlert').removeClass('hidden');
         }
     }
 
