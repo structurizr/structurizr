@@ -2,6 +2,7 @@ package com.structurizr.server.component.workspace;
 
 import com.structurizr.server.domain.Image;
 import com.structurizr.server.domain.InputStreamAndContentLength;
+import com.structurizr.util.ImageUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -59,7 +60,7 @@ abstract class AbstractFileSystemWorkspaceAdapter extends AbstractWorkspaceAdapt
         List<Image> images = new LinkedList<>();
         File imagesDirectory = getPathToWorkspaceImages(workspaceId, WorkspaceBranch.NO_BRANCH);
 
-        File[] files = imagesDirectory.listFiles((dir, name) -> name.matches(PNG_FILENAME_REGEX));
+        File[] files = imagesDirectory.listFiles((dir, name) -> name.toLowerCase().endsWith(ImageUtils.PNG_EXTENSION) || name.toLowerCase().endsWith(ImageUtils.SVG_EXTENSION));
 
         if (files != null) {
             for (File file : files) {

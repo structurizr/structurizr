@@ -17,7 +17,7 @@ public abstract class AbstractImageController extends AbstractWorkspaceControlle
         filename = HtmlUtils.filterHtml(filename);
 
         try {
-            InputStreamAndContentLength inputStreamAndContentLength = workspaceComponent.getImage(workspaceMetadata.getId(), branch, filename + ".png");
+            InputStreamAndContentLength inputStreamAndContentLength = workspaceComponent.getImage(workspaceMetadata.getId(), branch, filename);
             if (inputStreamAndContentLength != null) {
                 response.setStatus(200);
                 return new InputStreamResource(inputStreamAndContentLength.getInputStream()) {
@@ -32,9 +32,9 @@ public abstract class AbstractImageController extends AbstractWorkspaceControlle
             }
         } catch (Exception e) {
             if (filename.endsWith("thumbnail")) {
-                log.warn("Error while trying to get image " + filename + ".png from workspace with ID " + workspaceMetadata.getId());
+                log.warn("Error while trying to get image " + filename + " from workspace with ID " + workspaceMetadata.getId());
             } else {
-                log.error("Error while trying to get image " + filename + ".png from workspace with ID " + workspaceMetadata.getId(), e);
+                log.error("Error while trying to get image " + filename + " from workspace with ID " + workspaceMetadata.getId(), e);
             }
 
             response.setStatus(404);

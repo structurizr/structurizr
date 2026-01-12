@@ -11,9 +11,6 @@ abstract class AbstractWorkspaceAdapter implements WorkspaceAdapter {
     static final String VERSION_TIMESTAMP_FORMAT = "yyyyMMddHHmmssSSS";
     static final String WORKSPACE_VERSION_JSON_FILENAME_REGEX = "workspace-\\d{17}\\.json";
 
-    static final String PNG_FILE_EXTENSION = ".png";
-    static final String PNG_FILENAME_REGEX = ".*\\.png";
-
     static final String BRANCHES_DIRECTORY_NAME = "branches";
     static final String IMAGES_DIRECTORY_NAME = "images";
 

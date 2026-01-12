@@ -13,6 +13,7 @@ import com.structurizr.io.json.EncryptedJsonWriter;
 import com.structurizr.server.domain.*;
 import com.structurizr.server.domain.User;
 import com.structurizr.util.DateUtils;
+import com.structurizr.util.ImageUtils;
 import com.structurizr.util.StringUtils;
 import com.structurizr.util.WorkspaceUtils;
 import org.apache.commons.logging.Log;
@@ -583,20 +584,11 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
 
     @Override
     public boolean putImage(long workspaceId, String branch, String filename, File file) {
-        if (isImage(filename)) {
+        if (ImageUtils.isImage(filename)) {
             return workspaceAdapter.putImage(workspaceId, branch, filename, file);
         } else {
             throw new WorkspaceComponentException(filename + " is not an image");
         }
-    }
-
-    private boolean isImage(String filename) {
-        if (StringUtils.isNullOrEmpty(filename)) {
-            return false;
-        }
-
-        filename = filename.toLowerCase();
-        return filename.endsWith(".jpg") || filename.endsWith(".jpeg") || filename.endsWith(".png") || filename.endsWith(".gif");
     }
 
     @Override

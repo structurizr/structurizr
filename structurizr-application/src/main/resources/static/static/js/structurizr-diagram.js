@@ -4954,40 +4954,10 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         };
     }
 
-    function convertDiagramToPNG(includeDiagramMetadata, crop, callback) {
-        var svgMarkup = self.exportCurrentDiagramToSVG(includeDiagramMetadata);
+    function convertDiagramToPNG(options, callback) {
+        const svg = self.exportCurrentDiagramToSVG(options);
 
-        var contentArea;
-        if (crop === true) {
-            contentArea = findContentArea(true, 50);
-        } else {
-            contentArea = {
-                minX: 0,
-                minY: 0,
-                maxX: diagramWidth,
-                maxY: diagramHeight
-            }
-        }
-
-        const width = contentArea.maxX - contentArea.minX;
-        const height = contentArea.maxY - contentArea.minY;
-
-        const viewbox = ' viewBox="' + contentArea.minX + " " + contentArea.minY + " " + width + " " + height + '"';
-        const svgOpeningTag = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="' + width +'" height="' + height + '" style="width: ' + width + 'px; height: ' + height + 'px; background: ' + canvasColor + '"' + viewbox + '>';
-
-        // replace opening tag with dimensions (some browsers seem to require this)
-        svgMarkup = svgOpeningTag + svgMarkup.substring(svgMarkup.indexOf('>') + 1, svgMarkup.length);
-
-        // this hides the handles used to change vertices
-        svgMarkup = svgMarkup.replace(/class="marker-vertices"/g, 'class="marker-vertices" display="none"');
-
-        // and remove the &nbsp; added by JointJS (otherwise you get a blank PNG file)
-        svgMarkup = svgMarkup.replace(/&nbsp;/g, ' ');
-
-        // remove any control characters (these shouldn't be there anyway, but...)
-        svgMarkup = svgMarkup.replace(/[\x00-\x19]+/g, "");
-
-        return svgToPng(svgMarkup, width, height, callback);
+        return svgToPng(svg.markup, svg.width, svg.height, callback);
     }
 
     function svgToPng(svgMarkup, width, height, callback) {
@@ -5011,7 +4981,20 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
     }
 
 
-    this.exportCurrentDiagramToSVG = function(includeDiagramMetadata) {
+    this.exportCurrentDiagramToSVG = function(options, callback) {
+        if (options === undefined) {
+            options = {
+                metadata: true,
+                crop: false
+            }
+        }
+
+        const includeDiagramMetadata = options.metadata;
+        const crop = options.crop;
+
+        var width = diagramWidth;
+        var height = diagramHeight;
+
         var currentScale = scale;
         this.zoomTo(1.0);
 
@@ -5044,10 +5027,52 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         $(".structurizrNavigation").attr('display', 'block');
         $(".structurizrMetadata>tspan").attr('display', 'block');
 
-        return svgMarkup;
+        if (crop) {
+            var contentArea;
+            if (crop === true) {
+                contentArea = findContentArea(true, 50);
+            } else {
+                contentArea = {
+                    minX: 0,
+                    minY: 0,
+                    maxX: diagramWidth,
+                    maxY: diagramHeight
+                }
+            }
+
+            width = contentArea.maxX - contentArea.minX;
+            height = contentArea.maxY - contentArea.minY;
+
+            const viewbox = ' viewBox="' + contentArea.minX + " " + contentArea.minY + " " + width + " " + height + '"';
+            const svgOpeningTag = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="' + width +'" height="' + height + '" style="width: ' + width + 'px; height: ' + height + 'px; background: ' + canvasColor + '"' + viewbox + '>';
+
+            // replace opening tag with dimensions (some browsers seem to require this)
+            svgMarkup = svgOpeningTag + svgMarkup.substring(svgMarkup.indexOf('>') + 1, svgMarkup.length);
+
+            // this hides the handles used to change vertices
+            svgMarkup = svgMarkup.replace(/class="marker-vertices"/g, 'class="marker-vertices" display="none"');
+
+            // and remove the &nbsp; added by JointJS (otherwise you get a blank PNG file)
+            svgMarkup = svgMarkup.replace(/&nbsp;/g, ' ');
+
+            // remove any control characters (these shouldn't be there anyway, but...)
+            svgMarkup = svgMarkup.replace(/[\x00-\x19]+/g, "");
+        }
+
+        const result = {
+            markup: svgMarkup,
+            width: width,
+            height: height
+        };
+
+        if (callback !== undefined) {
+            callback(result.markup);
+        } else {
+            return result;
+        }
     };
 
-    this.exportCurrentDiagramKeyToSVG = function() {
+    this.exportCurrentDiagramKeyToSVG = function(callback) {
         var svgMarkup = diagramKey;
 
         var diagramKeyWidth = svgMarkup.match(/width="(\d*)"/)[1];
@@ -5056,7 +5081,11 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         svgMarkup = svgMarkup.substring(svgMarkup.indexOf(">") +1 );
         svgMarkup = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 ' + diagramKeyWidth + ' ' + diagramKeyHeight + '" style="background: ' + canvasColor + '">' + svgMarkup;
 
-        return svgMarkup;
+        if (callback !== undefined) {
+            callback(svgMarkup);
+        } else {
+            return svgMarkup;
+        }
     };
 
     function resizeImage(url, width, height, callback) {
@@ -5073,16 +5102,36 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         sourceImage.src = url;
     }
 
-    this.exportCurrentDiagramToPNG = function(includeDiagramMetadata, crop, callback) {
+    this.exportCurrentDiagram = function(options, callback) {
+        if (options.format === 'png') {
+            return this.exportCurrentDiagramToPNG(options, callback);
+        } else {
+            return this.exportCurrentDiagramToSVG(options, callback);
+        }
+    };
+
+    this.exportCurrentDiagramToPNG = function(options, callback) {
         var currentScale = scale;
         this.zoomTo(1.0);
         $(".structurizrNavigation").attr('display', 'none');
 
-        convertDiagramToPNG(includeDiagramMetadata, crop, function(png) {
+        convertDiagramToPNG(options, function(png) {
             $(".structurizrNavigation").attr('display', 'block');
             self.zoomTo(currentScale);
             callback(png);
         });
+    };
+
+    this.exportCurrentDiagramKey = function(options, callback) {
+        if (currentView.type === structurizr.constants.IMAGE_VIEW_TYPE) {
+            return callback(undefined);
+        }
+
+        if (options.format === 'png') {
+            return this.exportCurrentDiagramKeyToPNG(callback);
+        } else {
+            return this.exportCurrentDiagramKeyToSVG(callback);
+        }
     };
 
     this.exportCurrentDiagramKeyToPNG = function(callback) {
@@ -5095,7 +5144,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
     this.exportCurrentThumbnailToPNG = function(callback) {
         try {
-            convertDiagramToPNG(true, false, function(exportedImage) {
+            convertDiagramToPNG({ metadata: true, crop: false }, function(exportedImage) {
                 $(".structurizrNavigation").attr('display', 'block');
                 resizeImage(exportedImage, thumbnailWidth, Math.floor(diagramHeight / (diagramWidth / thumbnailWidth)), callback);
             });
@@ -5106,6 +5155,10 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
     this.currentViewIsDynamic = function() {
         return currentView.type === structurizr.constants.DYNAMIC_VIEW_TYPE;
+    };
+
+    this.currentViewIsImage = function() {
+        return currentView.type === structurizr.constants.IMAGE_VIEW_TYPE;
     };
 
     this.currentViewHasAnimation = function() {

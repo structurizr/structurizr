@@ -247,7 +247,7 @@ abstract class AbstractWorkspaceAdapterTests extends AbstractTestsBase {
         File tempDirectory = createTemporaryDirectory();
         NumberFormat numberFormat = new DecimalFormat("00");
 
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 1; i <= 5; i++) {
             String filename = "image-" + numberFormat.format(i) + ".png";
             File image = new File(tempDirectory, filename);
             Files.copy(
@@ -258,13 +258,29 @@ abstract class AbstractWorkspaceAdapterTests extends AbstractTestsBase {
             assertTrue(result);
         }
 
+        String svg = "<svg><!--" + "*".repeat(2048) + "--></svg>";
+        for (int i = 1; i <= 5; i++) {
+            String filename = "image-" + numberFormat.format(i+5) + ".svg";
+            File image = new File(tempDirectory, filename);
+            Files.writeString(image.toPath(), svg);
+            boolean result = getWorkspaceAdapter().putImage(1, "", filename, image);
+            assertTrue(result);
+        }
+
         List<Image> images = getWorkspaceAdapter().getImages(1);
         assertEquals(10, images.size());
         for (int i = 1; i <= 10; i++) {
-            String filename = "image-" + numberFormat.format(i) + ".png";
-            Image image = images.get(i-1);
-            assertEquals(image.getName(), filename);
-            assertEquals(11, image.getSizeInKB());
+            if (i < 6) {
+                String filename = "image-" + numberFormat.format(i) + ".png";
+                Image image = images.get(i - 1);
+                assertEquals(image.getName(), filename);
+                assertEquals(11, image.getSizeInKB());
+            } else {
+                String filename = "image-" + numberFormat.format(i) + ".svg";
+                Image image = images.get(i - 1);
+                assertEquals(image.getName(), filename);
+                assertEquals(2, image.getSizeInKB());
+            }
         }
 
         // and a different workspace ID

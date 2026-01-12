@@ -2,9 +2,9 @@
     <div class="container centered">
         <h1>Images</h1>
         <p>
-            Structurizr supports the ability to embed diagrams via a static PNG file via a regular image tag in HTML, Markdown, AsciiDoc, etc.
+            Structurizr supports the ability to embed diagrams via a static PNG/SVG file via a regular image tag in HTML, Markdown, AsciiDoc, etc.
             <br />
-            See <a href="https://docs.structurizr.com/server/embed" target="_blank">Structurizr server - Embedding diagrams - PNG embed</a> for more details.
+            See <a href="https://docs.structurizr.com/server/embed" target="_blank">Structurizr server - Embedding diagrams</a> for more details.
         </p>
         <p class="smaller">
             (<a href="${urlPrefix}">back to workspace summary</a>)

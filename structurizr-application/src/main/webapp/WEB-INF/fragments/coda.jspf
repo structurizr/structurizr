@@ -27,6 +27,13 @@
             console.log(error);
         };
 
+        function logError(msg, url, lineNo, error) {
+            console.log(msg);
+            console.log(url);
+            console.log(lineNo);
+            console.log(error);
+        }
+
         $('#renderingModeLightLink').click(function(event) {
             event.preventDefault();
             structurizr.ui.setRenderingMode(structurizr.ui.RENDERING_MODE_LIGHT);

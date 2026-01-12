@@ -28,7 +28,7 @@ public class ImageControllerTests extends ControllerTestsBase {
     }
 
     @Test
-    public void getAuthenticatedImage_ReturnsA404_WhenTheWorkspaceDoesNotExist() {
+    public void getAuthenticatedPngImage_ReturnsA404_WhenTheWorkspaceDoesNotExist() {
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
             public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
@@ -36,13 +36,13 @@ public class ImageControllerTests extends ControllerTestsBase {
             }
         });
 
-        Resource resource = controller.getAuthenticatedImage(1, "thumbnail.png", response);
+        Resource resource = controller.getAuthenticatedPngImage(1, "thumbnail", response);
         assertEquals(404, response.getStatus());
         assertNull(resource);
     }
 
     @Test
-    void getAuthenticatedImage_ReturnsA404_WhenTheImageDoesNotExist() throws Exception {
+    void getAuthenticatedPngImage_ReturnsA404_WhenTheImageDoesNotExist() throws Exception {
         disableAuthentication();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
@@ -58,13 +58,13 @@ public class ImageControllerTests extends ControllerTestsBase {
             }
         });
 
-        Resource resource = controller.getAuthenticatedImage(1, "thumbnail.png", response);
+        Resource resource = controller.getAuthenticatedPngImage(1, "thumbnail", response);
         assertEquals(404, response.getStatus());
         assertNull(resource);
     }
 
     @Test
-    void getAuthenticatedImage_ReturnsA404_WhenTheUserDoesNotHaveAccessToTheWorkspace() {
+    void getAuthenticatedPngImage_ReturnsA404_WhenTheUserDoesNotHaveAccessToTheWorkspace() {
         enableAuthentication();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
@@ -78,88 +78,15 @@ public class ImageControllerTests extends ControllerTestsBase {
         });
 
         setUser("user1@example.com");
-        Resource resource = controller.getAuthenticatedImage(1, "thumbnail.png", response);
+        Resource resource = controller.getAuthenticatedPngImage(1, "thumbnail", response);
         assertEquals(404, response.getStatus());
         assertNull(resource);
     }
 
     @Test
-    void getAuthenticatedImage_ReturnsTheImage_AuthenticationIsDisabled() throws Exception {
-        disableAuthentication();
-
-        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
-        controller.setWorkspaceComponent(new MockWorkspaceComponent() {
-            @Override
-            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
-                return workspaceMetaData;
-            }
-
-            @Override
-            public InputStreamAndContentLength getImage(long workspaceId, String branch, String diagramKey) throws WorkspaceComponentException {
-                return IMAGE;
-            }
-        });
-
-        Resource resource = controller.getAuthenticatedImage(1, "thumbnail.png", response);
-        assertEquals(200, response.getStatus());
-        assertNotNull(resource);
-        assertEquals(1234, resource.contentLength());
-    }
-
-    @Test
-    void getAuthenticatedImage_ReturnsTheImage_WhenNoUsersAreConfigured() throws Exception {
+    void getAuthenticatedPngImage_ReturnsTheImage_WhenTheUserHasAccessToTheWorkspace() throws Exception {
         enableAuthentication();
-
-        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
-
-        controller.setWorkspaceComponent(new MockWorkspaceComponent() {
-            @Override
-            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
-                return workspaceMetaData;
-            }
-
-            @Override
-            public InputStreamAndContentLength getImage(long workspaceId, String branch, String diagramKey) throws WorkspaceComponentException {
-                return IMAGE;
-            }
-        });
-
         setUser("user@example.com");
-        Resource resource = controller.getAuthenticatedImage(1, "thumbnail.png", response);
-        assertEquals(200, response.getStatus());
-        assertNotNull(resource);
-        assertEquals(1234, resource.contentLength());
-    }
-
-    @Test
-    void getAuthenticatedImage_ReturnsTheImage_WhenTheUserHasReadAccessToTheWorkspace() throws Exception {
-        enableAuthentication();
-
-        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
-        workspaceMetaData.addReadUser("user@example.com");
-
-        controller.setWorkspaceComponent(new MockWorkspaceComponent() {
-            @Override
-            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
-                return workspaceMetaData;
-            }
-
-            @Override
-            public InputStreamAndContentLength getImage(long workspaceId, String branch, String diagramKey) throws WorkspaceComponentException {
-                return IMAGE;
-            }
-        });
-
-        setUser("user@example.com");
-        Resource resource = controller.getAuthenticatedImage(1, "thumbnail.png", response);
-        assertEquals(200, response.getStatus());
-        assertNotNull(resource);
-        assertEquals(1234, resource.contentLength());
-    }
-
-    @Test
-    void getAuthenticatedImage_ReturnsTheImage_WhenTheUserHasWriteAccessToTheWorkspace() throws Exception {
-        enableAuthentication();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addWriteUser("user@example.com");
@@ -176,8 +103,89 @@ public class ImageControllerTests extends ControllerTestsBase {
             }
         });
 
+        Resource resource = controller.getAuthenticatedPngImage(1, "thumbnail", response);
+        assertEquals(200, response.getStatus());
+        assertNotNull(resource);
+        assertEquals(1234, resource.contentLength());
+    }
+
+    @Test
+    public void getAuthenticatedSvgImage_ReturnsA404_WhenTheWorkspaceDoesNotExist() {
+        controller.setWorkspaceComponent(new MockWorkspaceComponent() {
+            @Override
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                return null;
+            }
+        });
+
+        Resource resource = controller.getAuthenticatedSvgImage(1, "thumbnail", response);
+        assertEquals(404, response.getStatus());
+        assertNull(resource);
+    }
+
+    @Test
+    void getAuthenticatedSvgImage_ReturnsA404_WhenTheImageDoesNotExist() throws Exception {
+        disableAuthentication();
+
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
+        controller.setWorkspaceComponent(new MockWorkspaceComponent() {
+            @Override
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                return workspaceMetaData;
+            }
+
+            @Override
+            public InputStreamAndContentLength getImage(long workspaceId, String branch, String filename) {
+                return null;
+            }
+        });
+
+        Resource resource = controller.getAuthenticatedSvgImage(1, "thumbnail", response);
+        assertEquals(404, response.getStatus());
+        assertNull(resource);
+    }
+
+    @Test
+    void getAuthenticatedSvgImage_ReturnsA404_WhenTheUserDoesNotHaveAccessToTheWorkspace() {
+        enableAuthentication();
+
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
+        workspaceMetaData.addWriteUser("user2@example.com");
+
+        controller.setWorkspaceComponent(new MockWorkspaceComponent() {
+            @Override
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                return workspaceMetaData;
+            }
+        });
+
+        setUser("user1@example.com");
+        Resource resource = controller.getAuthenticatedSvgImage(1, "thumbnail", response);
+        assertEquals(404, response.getStatus());
+        assertNull(resource);
+    }
+
+    @Test
+    void getAuthenticatedSvgImage_ReturnsTheImage_WhenTheUserHasAccessToTheWorkspace() throws Exception {
+        enableAuthentication();
         setUser("user@example.com");
-        Resource resource = controller.getAuthenticatedImage(1, "thumbnail.png", response);
+
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
+        workspaceMetaData.addWriteUser("user@example.com");
+
+        controller.setWorkspaceComponent(new MockWorkspaceComponent() {
+            @Override
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                return workspaceMetaData;
+            }
+
+            @Override
+            public InputStreamAndContentLength getImage(long workspaceId, String branch, String diagramKey) throws WorkspaceComponentException {
+                return IMAGE;
+            }
+        });
+
+        Resource resource = controller.getAuthenticatedSvgImage(1, "thumbnail", response);
         assertEquals(200, response.getStatus());
         assertNotNull(resource);
         assertEquals(1234, resource.contentLength());

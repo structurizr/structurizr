@@ -154,7 +154,6 @@
 <%@ include file="/WEB-INF/fragments/diagrams/embed.jspf" %>
 </c:if>
 <%@ include file="/WEB-INF/fragments/diagrams/export.jspf" %>
-<%@ include file="/WEB-INF/fragments/diagrams/publish.jspf" %>
 <%@ include file="/WEB-INF/fragments/diagrams/perspectives.jspf" %>
 <%@ include file="/WEB-INF/fragments/diagrams/filter.jspf" %>
 <%@ include file="/WEB-INF/fragments/diagrams/auto-layout.jspf" %>
@@ -256,15 +255,15 @@
                     options = {};
                 }
 
-                if (options.includeMetadata === undefined) {
-                    options.includeMetadata = true;
+                if (options.metadata === undefined) {
+                    options.metadata = true;
                 }
 
                 if (options.crop === undefined) {
                     options.crop = false;
                 }
 
-                return structurizr.diagram.exportCurrentDiagramToPNG(options.includeMetadata, options.crop, callback);
+                return structurizr.diagram.exportCurrentDiagramToPNG(options, callback);
             };
 
             this.exportCurrentDiagramKeyToPNG = function(callback) {
@@ -280,7 +279,7 @@
                     options.includeMetadata = true;
                 }
 
-                return structurizr.diagram.exportCurrentDiagramToSVG(options.includeMetadata);
+                return structurizr.diagram.exportCurrentDiagramToSVG(options).markup;
             };
 
             this.exportCurrentDiagramKeyToSVG = function() {
@@ -1254,6 +1253,31 @@
                     }
                 }
             }
+        });
+    }
+
+    function publishImage(filename, imageAsBase64EncodedDataUri, callback) {
+        $.ajax({
+            url: '/workspace/${workspace.id}/images/' + encodeURIComponent(filename),
+            type: "PUT",
+            contentType: 'text/plain',
+            cache: false,
+            headers: {
+                'Content-Type': 'text/plain'
+            },
+            dataType: 'json',
+            data: imageAsBase64EncodedDataUri
+        })
+        .done(function(data, textStatus, jqXHR) {
+            if (callback) {
+                callback();
+            }
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            if (callback) {
+                callback();
+            }
+            logError(jqXHR, textStatus, errorThrown);
         });
     }
 

@@ -8,49 +8,46 @@ import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.api.ApiException;
 import com.structurizr.server.web.api.ApiResponse;
 import com.structurizr.server.web.workspace.AbstractImageController;
+import com.structurizr.util.ImageUtils;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.util.Base64;
 import java.util.Set;
 
 @Controller
 class ImageController extends AbstractImageController {
 
     @ResponseBody
-    @RequestMapping(value = "/workspace/{workspaceId}/images/{diagramKey}.png", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
-    public Resource getAuthenticatedImage(@PathVariable("workspaceId") long workspaceId,
-                                          @PathVariable("diagramKey") String diagramKey,
+    @RequestMapping(value = "/workspace/{workspaceId}/images/{filename}.png", method = RequestMethod.GET, produces = ImageUtils.CONTENT_TYPE_IMAGE_PNG)
+    public Resource getAuthenticatedPngImage(@PathVariable("workspaceId") long workspaceId,
+                                          @PathVariable("filename") String filename,
                                           HttpServletResponse response) {
-        WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
-        if (workspaceMetadata == null) {
-            response.setStatus(404);
-            return null;
-        }
-
-        Set<Permission> permissions = workspaceMetadata.getPermissions(getUser());
-        if (!permissions.isEmpty()) {
-            return getImage(workspaceMetadata, WorkspaceBranch.NO_BRANCH, diagramKey, response);
-        } else {
-            response.setStatus(404);
-            return null;
-        }
+        return getImage(workspaceId, WorkspaceBranch.NO_BRANCH, filename + ImageUtils.PNG_EXTENSION, response);
     }
 
     @ResponseBody
-    @RequestMapping(value = "/workspace/{workspaceId}/branch/{branch}/images/{diagramKey}.png", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
-    public Resource getAuthenticatedImage(@PathVariable("workspaceId") long workspaceId,
-                                          @PathVariable("branch") String branch,
-                                          @PathVariable("diagramKey") String diagramKey,
+    @RequestMapping(value = "/workspace/{workspaceId}/images/{filename}.svg", method = RequestMethod.GET, produces = ImageUtils.CONTENT_TYPE_IMAGE_SVG)
+    public Resource getAuthenticatedSvgImage(@PathVariable("workspaceId") long workspaceId,
+                                          @PathVariable("filename") String filename,
                                           HttpServletResponse response) {
+        return getImage(workspaceId, WorkspaceBranch.NO_BRANCH, filename + ImageUtils.SVG_EXTENSION, response);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/workspace/{workspaceId}/branch/{branch}/images/{filename}.png", method = RequestMethod.GET, produces = ImageUtils.CONTENT_TYPE_IMAGE_PNG)
+    public Resource getAuthenticatedPngImage(@PathVariable("workspaceId") long workspaceId,
+                                          @PathVariable("branch") String branch,
+                                          @PathVariable("filename") String filename,
+                                          HttpServletResponse response) {
+        return getImage(workspaceId, branch, filename + ImageUtils.PNG_EXTENSION, response);
+    }
+
+    protected Resource getImage(long workspaceId, String branch, String filename, HttpServletResponse response) {
         WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
         if (workspaceMetadata == null) {
             response.setStatus(404);
@@ -59,7 +56,7 @@ class ImageController extends AbstractImageController {
 
         Set<Permission> permissions = workspaceMetadata.getPermissions(getUser());
         if (!permissions.isEmpty()) {
-            return getImage(workspaceMetadata, branch, diagramKey, response);
+            return getImage(workspaceMetadata, branch, filename, response);
         }
 
         response.setStatus(404);
@@ -120,10 +117,16 @@ class ImageController extends AbstractImageController {
         Set<Permission> permissions = workspaceMetadata.getPermissions(getUser());
         if (!permissions.isEmpty()) {
             try {
-                String base64Image = imageAsBase64EncodedDataUri.split(",")[1];
-                byte[] decodedImage = Base64.getDecoder().decode(base64Image.getBytes(StandardCharsets.UTF_8));
-                File file = File.createTempFile("structurizr", ".png");
-                Files.write(file.toPath(), decodedImage);
+                File file;
+                if (filename.toLowerCase().endsWith(ImageUtils.PNG_EXTENSION)) {
+                    file = File.createTempFile("structurizr", ImageUtils.PNG_EXTENSION);
+                } else if (filename.endsWith(ImageUtils.SVG_EXTENSION)) {
+                    file = File.createTempFile("structurizr", ImageUtils.SVG_EXTENSION);
+                } else {
+                    throw new ApiException("404");
+                }
+
+                ImageUtils.writeDataUriToFile(imageAsBase64EncodedDataUri, file);
 
                 if (workspaceComponent.putImage(workspaceId, branch, filename, file)) {
                     return new ApiResponse("OK");

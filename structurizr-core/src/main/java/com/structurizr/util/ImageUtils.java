@@ -7,6 +7,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Base64;
 
@@ -23,6 +24,12 @@ public class ImageUtils {
     public static final String CONTENT_TYPE_IMAGE_PNG = "image/png";
     public static final String CONTENT_TYPE_IMAGE_JPG = "image/jpeg";
     public static final String CONTENT_TYPE_IMAGE_SVG = "image/svg+xml";
+
+    public static final String PNG_EXTENSION = ".png";
+    public static final String JPG_EXTENSION = ".jpg";
+    public static final String JPEG_EXTENSION = ".jpeg";
+    public static final String GIF_EXTENSION = ".gif";
+    public static final String SVG_EXTENSION = ".svg";
 
     /**
      * Gets the content type of the specified file representing an image.
@@ -126,6 +133,34 @@ public class ImageUtils {
         return DATA_URI_PREFIX + CONTENT_TYPE_IMAGE_PNG + ";base64," + Base64.getEncoder().encodeToString(png);
     }
 
+    /**
+     * Writes a base64 encoded image data URI to a file.
+     *
+     * @param dataUri       a base64 encoded data URI.
+     * @param file          the File to write to
+     * @throws IOException      if something goes wrong
+     */
+    public static void writeDataUriToFile(String dataUri, File file) throws IOException {
+        String base64Image = dataUri.split(",")[1];
+        byte[] decodedImage = Base64.getDecoder().decode(base64Image.getBytes(StandardCharsets.UTF_8));
+        Files.write(file.toPath(), decodedImage);
+    }
+
+    public static boolean isImage(String filename) {
+        if (StringUtils.isNullOrEmpty(filename)) {
+            return false;
+        }
+
+        filename = filename.toLowerCase();
+
+        return
+                filename.endsWith(PNG_EXTENSION) ||
+                filename.endsWith(JPG_EXTENSION) ||
+                filename.endsWith(JPEG_EXTENSION) ||
+                filename.endsWith(GIF_EXTENSION) ||
+                filename.endsWith(SVG_EXTENSION);
+    }
+
     public static void validateImage(String imageDescriptor) {
         if (StringUtils.isNullOrEmpty(imageDescriptor)) {
             return;
@@ -138,7 +173,7 @@ public class ImageUtils {
             return;
         }
 
-        if (imageDescriptor.toLowerCase().endsWith(".png") || imageDescriptor.toLowerCase().endsWith(".jpg") || imageDescriptor.toLowerCase().endsWith(".jpeg") || imageDescriptor.toLowerCase().endsWith(".gif") || imageDescriptor.toLowerCase().endsWith(".svg")) {
+        if (isImage(imageDescriptor)) {
             // it's just a filename
             return;
         }
