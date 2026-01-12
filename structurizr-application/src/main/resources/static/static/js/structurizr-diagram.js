@@ -3530,7 +3530,8 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                         new joint.linkTools.Vertices({
                             vertexAdding: true,
                             vertexMoving: true,
-                            vertexRemoving: true
+                            vertexRemoving: true,
+                            scale: 2
                         })
                         //new joint.linkTools.Segments()
                     ]
