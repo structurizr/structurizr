@@ -3,10 +3,10 @@
 <script type="text/javascript" src="<c:url value="/static/js/structurizr-embed.js" />"></script>
 <script type="text/javascript" src="<c:url value="/static/js/structurizr-content.js" />"></script>
 <script type="text/javascript" src="/static/js/markdown-it-13.0.1.min.js"></script>
-<script type="text/javascript" src="/static/js/katex-0.16.4.min.js"></script>
+<script type="text/javascript" src="/static/js/katex-0.16.27.min.js"></script>
 <script type="text/javascript" src="/static/js/asciidoctor-2.2.6.min.js"></script>
 
-<link href="/static/css/katex-0.16.4.min.css" rel="stylesheet" media="screen" />
+<link href="/static/css/katex-0.16.27.min.css" rel="stylesheet" media="screen" />
 <link href="<c:url value="/static/css/structurizr-asciidoctor.css" />" rel="stylesheet" media="screen" />
 <link href="<c:url value="/static/css/structurizr-decisions.css" />" rel="stylesheet" media="screen" />
 
