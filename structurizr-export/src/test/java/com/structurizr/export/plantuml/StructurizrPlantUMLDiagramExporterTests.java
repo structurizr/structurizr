@@ -2970,7 +2970,6 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
         view.getViewSet().getConfiguration().addProperty(StructurizrPlantUMLExporter.PLANTUML_INCLUDES_PROPERTY, "styles.puml");
 
         Diagram diagram = new StructurizrPlantUMLExporter().export(view);
-        System.out.println(diagram.getDefinition());
         assertTrue(diagram.getDefinition().contains("!include styles.puml\n"));
     }
 

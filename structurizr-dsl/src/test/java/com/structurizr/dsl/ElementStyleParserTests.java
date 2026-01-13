@@ -585,7 +585,6 @@ class ElementStyleParserTests extends AbstractTests {
         context.getFeatures().enable(Features.FILE_SYSTEM);
 
         parser.parseIcon(context, tokens("icon", "src/test/resources/dsl/logo.png"));
-        System.out.println(elementStyle.getIcon());
         assertTrue(elementStyle.getIcon().startsWith("data:image/png;base64,"));
     }
 
