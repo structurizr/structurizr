@@ -313,13 +313,6 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
                 workspaceMetadata = new WorkspaceMetadata(workspaceId);
             }
 
-            // todo: workspace event listener plugin
-//            if (Configuration.getInstance().getWorkspaceEventListener() != null) {
-//                WorkspaceEvent event = createWorkspaceEvent(workspaceMetadata, json);
-//                Configuration.getInstance().getWorkspaceEventListener().beforeSave(event);
-//                json = event.getJson();
-//            }
-
             if (json.contains(ENCRYPTION_STRATEGY_STRING) && json.contains(CIPHERTEXT_STRING)) {
                 EncryptedJsonReader jsonReader = new EncryptedJsonReader();
                 StringReader stringReader = new StringReader(json);
@@ -435,55 +428,6 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
             throw new WorkspaceComponentException(e.getMessage(), e);
         }
     }
-
-//    private WorkspaceEvent createWorkspaceEvent(WorkspaceMetaData workspaceMetadata, String workspaceAsJson) {
-//        return new WorkspaceEvent() {
-//
-//            private String json = workspaceAsJson;
-//
-//            @Override
-//            public WorkspaceProperties getWorkspaceProperties() {
-//                return workspaceMetadata.toWorkspaceProperties();
-//            }
-//
-//            @Override
-//            public String getJson() {
-//                return json;
-//            }
-//
-//            @Override
-//            public void setJson(String json) {
-//                this.json = json;
-//            }
-//        };
-//
-//            public WorkspaceProperties(WorkspaceMetaData workspaceMetadata) {
-//            this.id = workspaceMetadata.getId();
-//            this.name = workspaceMetadata.getName();
-//            this.description = workspaceMetadata.getDescription();
-//
-//            this.users = new LinkedHashSet<>();
-//            for (String user : workspaceMetadata.getReadUsers()) {
-//                users.add(new com.structurizr.configuration.User(user, Role.ReadOnly));
-//            }
-//            for (String user : workspaceMetadata.getWriteUsers()) {
-//                users.add(new com.structurizr.configuration.User(user, Role.ReadWrite));
-//            }
-//
-//            if (workspaceMetadata.isPublicWorkspace()) {
-//                this.visibility = Visibility.Public;
-//            } else {
-//                this.visibility = Visibility.Private;
-//            }
-//
-//            this.lastModifiedDate = workspaceMetadata.getLastModifiedDate();
-//        }
-//
-//        this.workspaceId = workspaceMetadata.getId();
-//        this.workspaceProperties = new WorkspaceProperties(workspaceMetadata);
-//        this.json = json;
-//
- //    }
 
     @Override
     public List<WorkspaceVersion> getWorkspaceVersions(long workspaceId, String branch) {
