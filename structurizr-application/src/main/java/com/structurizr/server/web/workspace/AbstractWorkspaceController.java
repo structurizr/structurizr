@@ -45,6 +45,10 @@ public abstract class AbstractWorkspaceController extends AbstractController {
             if (WorkspaceBranch.isMainBranch(branch)) {
                 branch = "";
             } else {
+                if (!StringUtils.isNullOrEmpty(branch) && !Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_BRANCHES)) {
+                    return showError("workspace-branches-not-enabled", model);
+                }
+
                 // check branch exists
                 WorkspaceBranch.validateBranchName(branch);
 
@@ -55,13 +59,8 @@ public abstract class AbstractWorkspaceController extends AbstractController {
                     model.addAttribute("errorMessage", "Branch \"" + requestedBranch + "\" does not exist");
                     return show500Page(model);
                 }
-            }
 
-            if (!StringUtils.isNullOrEmpty(branch) && !Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_BRANCHES)) {
-                return showError("workspace-branches-not-enabled", model);
-            } else {
                 workspaceMetadata.setBranch(branch);
-                addUrlSuffix(branch, version, model);
             }
 
             if (editable) {
@@ -80,6 +79,7 @@ public abstract class AbstractWorkspaceController extends AbstractController {
             }
 
             addCommonAttributes(model, workspaceMetadata.getName(), showHeaderAndFooter);
+            addUrlSuffix(branch, version, model);
 
             workspaceMetadata.setInternalVersion(version);
             model.addAttribute("workspace", workspaceMetadata);

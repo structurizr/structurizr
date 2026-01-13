@@ -16,6 +16,7 @@ public class EmbedController extends AbstractEmbedController {
     @RequestMapping(value = "/embed/{workspaceId}")
     public String embedDiagrams(
             @PathVariable("workspaceId") long workspaceId,
+            @RequestParam(value = "branch", required = false) String branch,
             @RequestParam(value = "diagram", required = false) String diagramIdentifier,
             @RequestParam(required = false) boolean diagramSelector,
             @RequestParam(required = false, defaultValue = "") String iframe,
@@ -30,12 +31,12 @@ public class EmbedController extends AbstractEmbedController {
 
         if (!Configuration.getInstance().isAuthenticationEnabled()) {
             model.addAttribute("urlPrefix", "/workspace/" + workspaceId);
-            return showEmbed(workspaceMetadata, diagramIdentifier, diagramSelector, iframe, health, perspective, model);
+            return showEmbed(workspaceMetadata, branch, diagramIdentifier, diagramSelector, iframe, health, perspective, model);
         }
 
         if (workspaceMetadata.isPublicWorkspace()) {
             model.addAttribute("urlPrefix", "/share/" + workspaceId);
-            return showEmbed(workspaceMetadata, diagramIdentifier, diagramSelector, iframe, health, perspective, model);
+            return showEmbed(workspaceMetadata, branch, diagramIdentifier, diagramSelector, iframe, health, perspective, model);
         }
 
         return "404";

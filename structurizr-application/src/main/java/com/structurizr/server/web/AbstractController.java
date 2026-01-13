@@ -138,6 +138,8 @@ public abstract class AbstractController {
         } else if (!StringUtils.isNullOrEmpty(version)) {
             WorkspaceVersion.validateVersionIdentifier(version);
             model.addAttribute(URL_SUFFIX, String.format("?version=%s", version));
+        } else {
+            model.addAttribute(URL_SUFFIX, "");
         }
     }
 

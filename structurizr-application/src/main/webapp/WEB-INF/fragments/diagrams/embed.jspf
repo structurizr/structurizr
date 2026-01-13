@@ -18,11 +18,11 @@
 
                 <c:choose>
                     <c:when test="${not structurizrConfiguration.authenticationEnabled || workspace.publicWorkspace}">
-                    <pre class="embedCode"><code id="embedCodeFragment">&lt;iframe <b>id="myEmbeddedDiagram"</b> src="<span class="baseUrl"></span>/embed/${workspace.id}?diagram=<span class="diagramEmbedDiagramId"></span>&diagramSelector=<span class="diagramEmbedDiagramSelector">false</span>&<b>iframe=myEmbeddedDiagram</b>" width="100%" marginwidth="0" marginheight="0" frameborder="0" scrolling="no" allowfullscreen="true"&gt;&lt;/iframe&gt;
+                    <pre class="embedCode"><code id="embedCodeFragment">&lt;iframe <b>id="myEmbeddedDiagram"</b> src="<span class="baseUrl"></span>/embed/${workspace.id}?diagram=<span class="diagramEmbedDiagramId"></span>&diagramSelector=<span class="diagramEmbedDiagramSelector">false</span>&branch=${workspace.branch}&<b>iframe=myEmbeddedDiagram</b>" width="100%" marginwidth="0" marginheight="0" frameborder="0" scrolling="no" allowfullscreen="true"&gt;&lt;/iframe&gt;
 &lt;script type="text/javascript" src="<span class="baseUrl"></span>/static/js/structurizr-embed.js"&gt;&lt;/script&gt;</code></pre>
                     </c:when>
                     <c:when test="${workspace.shareable}">
-                <pre class="embedCode"><code id="embedCodeFragment">&lt;iframe <b>id="myEmbeddedDiagram"</b> src="<span class="baseUrl"></span>/embed/${workspace.id}/${workspace.sharingToken}?&diagram=<span class="diagramEmbedDiagramId"></span>&diagramSelector=<span class="diagramEmbedDiagramSelector">false</span>&<b>iframe=myEmbeddedDiagram</b>" width="100%" marginwidth="0" marginheight="0" frameborder="0" scrolling="no" allowfullscreen="true"&gt;&lt;/iframe&gt;
+                <pre class="embedCode"><code id="embedCodeFragment">&lt;iframe <b>id="myEmbeddedDiagram"</b> src="<span class="baseUrl"></span>/embed/${workspace.id}/${workspace.sharingToken}?&diagram=<span class="diagramEmbedDiagramId"></span>&diagramSelector=<span class="diagramEmbedDiagramSelector">false</span>&branch=${workspace.branch}&<b>iframe=myEmbeddedDiagram</b>" width="100%" marginwidth="0" marginheight="0" frameborder="0" scrolling="no" allowfullscreen="true"&gt;&lt;/iframe&gt;
 &lt;script type="text/javascript" src="<span class="baseUrl"></span>/static/js/structurizr-embed.js"&gt;&lt;/script&gt;</code></pre>
                     </c:when>
                 </c:choose>
