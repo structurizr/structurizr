@@ -171,7 +171,6 @@
                     <c:out value="${workspace.description}" escapeXml="true" />
                 </p>
 
-                <c:if test="${fn:startsWith(urlPrefix, '/workspace')}">
                 <div class="centered" style="margin-top: 20px">
                     <c:if test="${not empty branches}">
                     <form id="workspaceBranchForm" class="form-inline" style="display: inline-block" method="get" action="<c:out value="${urlPrefix}" />">
@@ -184,6 +183,7 @@
                     </form>
                     </c:if>
 
+                    <c:if test="${fn:startsWith(urlPrefix, '/workspace')}">
                     <c:if test="${not empty versions && versions.size() > 1}">
                     <form id="workspaceVersionForm" class="form-inline" style="display: inline-block" method="get" action="<c:out value="${urlPrefix}" />">
                         <c:if test="${not empty branch}">

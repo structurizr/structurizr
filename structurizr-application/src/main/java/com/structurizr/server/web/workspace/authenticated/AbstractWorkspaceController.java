@@ -48,27 +48,6 @@ abstract class AbstractWorkspaceController extends com.structurizr.server.web.wo
             return show404Page(model);
         }
 
-        if (WorkspaceBranch.isMainBranch(branch)) {
-            branch = "";
-        } else {
-            // check branch exists
-            WorkspaceBranch.validateBranchName(branch);
-
-            final String requestedBranch = branch;
-            List<WorkspaceBranch> branches = workspaceComponent.getWorkspaceBranches(workspaceId);
-
-            if (branches.stream().noneMatch(b -> b.getName().equals(requestedBranch))) {
-                model.addAttribute("errorMessage", "Branch \"" + requestedBranch + "\" does not exist");
-                return show500Page(model);
-            }
-        }
-
-        if (!StringUtils.isNullOrEmpty(branch) && !Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_BRANCHES)) {
-            return showError("workspace-branches-not-enabled", model);
-        } else {
-            workspaceMetadata.setBranch(branch);
-        }
-
         User user = getUser();
         Set<Permission> permissions = workspaceMetadata.getPermissions(user);
 
@@ -76,8 +55,13 @@ abstract class AbstractWorkspaceController extends com.structurizr.server.web.wo
             return show404Page(model);
         }
 
+        if (WorkspaceBranch.isMainBranch(branch)) {
+            branch = "";
+        }
+
         String urlPrefix = "/workspace/" + workspaceMetadata.getId();
         model.addAttribute(URL_PREFIX, urlPrefix);
+
         if (!StringUtils.isNullOrEmpty(branch)) {
             model.addAttribute("thumbnailUrl", urlPrefix + "/branch/" + branch + "/images/");
         } else {
@@ -91,16 +75,6 @@ abstract class AbstractWorkspaceController extends com.structurizr.server.web.wo
                 model.addAttribute("sharingUrlPrefix", "/share/" + workspaceMetadata.getId() + "/" + workspaceMetadata.getSharingToken());
             }
         }
-
-        if (WorkspaceBranch.isMainBranch(branch)) {
-            branch = "";
-        }
-
-        if (!StringUtils.isNullOrEmpty(branch) && !Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_BRANCHES)) {
-            return showError("workspace-branches-not-enabled", model);
-        }
-
-        addUrlSuffix(branch, version, model);
 
         function.run(workspaceMetadata);
 
