@@ -54,7 +54,11 @@ class ServerFileSystemWorkspaceAdapterTests extends AbstractWorkspaceAdapterTest
             filenames.add(filename);
         }
 
-        workspaceAdapter.removeOldWorkspaceVersions(30);
+        Properties properties = Configuration.getInstance().getProperties();
+        properties.setProperty(StructurizrProperties.MAX_WORKSPACE_VERSIONS, "30");
+        Configuration.init(Profile.Server, properties);
+
+        workspaceAdapter.removeOldWorkspaceVersions();
 
         File[] files = workspaceDirectory.listFiles((dir, name) -> name.matches(ServerFileSystemWorkspaceAdapter.WORKSPACE_VERSION_JSON_FILENAME_REGEX));
         assertEquals(30, files.length);
@@ -64,7 +68,11 @@ class ServerFileSystemWorkspaceAdapterTests extends AbstractWorkspaceAdapterTest
             assertTrue(new File(workspaceDirectory, filename).exists());
         }
 
-        workspaceAdapter.removeOldWorkspaceVersions(10);
+        properties = Configuration.getInstance().getProperties();
+        properties.setProperty(StructurizrProperties.MAX_WORKSPACE_VERSIONS, "10");
+        Configuration.init(Profile.Server, properties);
+
+        workspaceAdapter.removeOldWorkspaceVersions();
         files = workspaceDirectory.listFiles((dir, name) -> name.matches(ServerFileSystemWorkspaceAdapter.WORKSPACE_VERSION_JSON_FILENAME_REGEX));
         assertEquals(10, files.length);
         assertTrue(workspaceJson.exists());

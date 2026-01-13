@@ -279,4 +279,9 @@ abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspa
         return lastModifiedDate;
     }
 
+    @Override
+    public void removeOldWorkspaceVersions() {
+        // not supported
+    }
+
 }

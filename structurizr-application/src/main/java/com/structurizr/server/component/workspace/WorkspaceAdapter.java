@@ -37,4 +37,6 @@ interface WorkspaceAdapter {
 
     long getLastModifiedDate();
 
+    void removeOldWorkspaceVersions();
+
 }

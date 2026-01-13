@@ -79,4 +79,8 @@ class MockWorkspaceAdapter implements WorkspaceAdapter {
         return 0;
     }
 
+    @Override
+    public void removeOldWorkspaceVersions() {
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.structurizr.server.component.workspace;
 
 import com.structurizr.configuration.Configuration;
+import com.structurizr.configuration.StructurizrProperties;
 import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.util.StringUtils;
 import org.apache.commons.logging.Log;
@@ -197,31 +198,6 @@ class ServerFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspaceAdapte
         return !workspaceDirectory.exists();
     }
 
-    // todo: add this to a schedule
-    public void removeOldWorkspaceVersions(int maxWorkspaceVersions) {
-        try {
-            Collection<Long> workspaceIds = getWorkspaceIds();
-
-            for (Long workspaceId : workspaceIds) {
-                File workspaceDirectory = getPathToWorkspace(workspaceId);
-                File[] files = workspaceDirectory.listFiles((dir, name) -> name.matches(WORKSPACE_VERSION_JSON_FILENAME_REGEX));
-
-                if (files != null) {
-                    Arrays.sort(files, (a,b) -> b.getName().compareTo(a.getName()));
-
-                    if (files.length > maxWorkspaceVersions) {
-                        for (int i = maxWorkspaceVersions; i < files.length; i++) {
-                            File file = files[i];
-                            file.delete();
-                        }
-                    }
-                }
-            }
-        } catch (Throwable t) {
-            log.error(t);
-        }
-    }
-
     @Override
     public List<WorkspaceBranch> getWorkspaceBranches(long workspaceId) {
         List<WorkspaceBranch> branches = new ArrayList<>();
@@ -286,6 +262,33 @@ class ServerFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspaceAdapte
     @Override
     public long getLastModifiedDate() {
         return 0;
+    }
+
+    @Override
+    public void removeOldWorkspaceVersions() {
+        int maxWorkspaceVersions = Integer.parseInt(Configuration.getInstance().getProperty(StructurizrProperties.MAX_WORKSPACE_VERSIONS));
+
+        try {
+            Collection<Long> workspaceIds = getWorkspaceIds();
+
+            for (Long workspaceId : workspaceIds) {
+                File workspaceDirectory = getPathToWorkspace(workspaceId);
+                File[] files = workspaceDirectory.listFiles((dir, name) -> name.matches(WORKSPACE_VERSION_JSON_FILENAME_REGEX));
+
+                if (files != null) {
+                    Arrays.sort(files, (a,b) -> b.getName().compareTo(a.getName()));
+
+                    if (files.length > maxWorkspaceVersions) {
+                        for (int i = maxWorkspaceVersions; i < files.length; i++) {
+                            File file = files[i];
+                            file.delete();
+                        }
+                    }
+                }
+            }
+        } catch (Throwable t) {
+            log.error(t);
+        }
     }
 
 }
