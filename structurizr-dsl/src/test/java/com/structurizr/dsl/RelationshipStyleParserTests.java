@@ -435,4 +435,86 @@ class RelationshipStyleParserTests extends AbstractTests {
         assertEquals(true, relationshipStyle.getJump());
     }
 
+    @Test
+    void test_parseMetadata_ThrowsAnException_WhenTheMetadataIsMissing() {
+        try {
+            parser.parseMetadata(relationshipStyleDslContext(), tokens("metadata"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Expected: metadata <true|false>", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseMetadata_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parseMetadata(relationshipStyleDslContext(), tokens("metadata", "boolean", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: metadata <true|false>", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseMetadata_ThrowsAnException_WhenTheMetadataIsNotValid() {
+        try {
+            parser.parseMetadata(relationshipStyleDslContext(), tokens("metadata", "abc"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Metadata must be true or false", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseMetadata_SetsTheMetadata() {
+        RelationshipStyleDslContext context = relationshipStyleDslContext();
+
+        parser.parseMetadata(context, tokens("metadata", "false"));
+        assertEquals(false, relationshipStyle.getMetadata());
+
+        parser.parseMetadata(context, tokens("metadata", "true"));
+        assertEquals(true, relationshipStyle.getMetadata());
+    }
+
+    @Test
+    void test_parseDescription_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parseDescription(relationshipStyleDslContext(), tokens("description", "boolean", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: description <true|false>", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseDescription_ThrowsAnException_WhenTheDescriptionIsMissing() {
+        try {
+            parser.parseDescription(relationshipStyleDslContext(), tokens("description"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Expected: description <true|false>", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseDescription_ThrowsAnException_WhenTheDescriptionIsNotValid() {
+        try {
+            parser.parseDescription(relationshipStyleDslContext(), tokens("description", "abc"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Description must be true or false", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseDescription_SetsTheDescription() {
+        RelationshipStyleDslContext context = relationshipStyleDslContext();
+
+        parser.parseDescription(context, tokens("description", "false"));
+        assertEquals(false, relationshipStyle.getDescription());
+
+        parser.parseDescription(context, tokens("description", "true"));
+        assertEquals(true, relationshipStyle.getDescription());
+    }
+
 }

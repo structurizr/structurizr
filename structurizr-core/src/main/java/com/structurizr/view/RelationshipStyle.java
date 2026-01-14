@@ -48,6 +48,12 @@ public final class RelationshipStyle extends AbstractStyle {
     @JsonInclude(value = JsonInclude.Include.NON_NULL)
     private Integer opacity;
 
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
+    private Boolean metadata;
+
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
+    private Boolean description;
+
     RelationshipStyle() {
     }
 
@@ -220,6 +226,52 @@ public final class RelationshipStyle extends AbstractStyle {
         return this;
     }
 
+    /**
+     * Determines whether the relationship metadata should be shown or not.
+     *
+     * @return  true (shown), false (hidden) or null (not set)
+     */
+    public Boolean getMetadata() {
+        return metadata;
+    }
+
+    /**
+     * Sets whether the relationship metadata should be shown or not.
+     *
+     * @param metadata  true (shown), false (hidden) or null (not set)
+     */
+    public void setMetadata(Boolean metadata) {
+        this.metadata = metadata;
+    }
+
+    public RelationshipStyle metadata(boolean metadata) {
+        setMetadata(metadata);
+        return this;
+    }
+
+    /**
+     * Determines whether the relationship description should be shown or not.
+     *
+     * @return  true (shown), false (hidden) or null (not set)
+     */
+    public Boolean getDescription() {
+        return description;
+    }
+
+    /**
+     * Sets whether the relationship description should be shown or not.
+     *
+     * @param description   true (shown), false (hidden) or null (not set)
+     */
+    public void setDescription(Boolean description) {
+        this.description = description;
+    }
+
+    public RelationshipStyle description(boolean description) {
+        setDescription(description);
+        return this;
+    }
+
     void copyFrom(RelationshipStyle relationshipStyle) {
         if (relationshipStyle.getThickness() != null) {
             this.setThickness(relationshipStyle.getThickness());
@@ -259,6 +311,14 @@ public final class RelationshipStyle extends AbstractStyle {
 
         if (relationshipStyle.getOpacity() != null) {
             this.setOpacity(relationshipStyle.getOpacity());
+        }
+
+        if (relationshipStyle.getMetadata() != null) {
+            this.setMetadata(relationshipStyle.getMetadata());
+        }
+
+        if (relationshipStyle.getDescription() != null) {
+            this.setDescription(relationshipStyle.getDescription());
         }
 
         for (String name : relationshipStyle.getProperties().keySet()) {

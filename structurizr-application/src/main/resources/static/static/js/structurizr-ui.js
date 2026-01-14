@@ -157,7 +157,7 @@ structurizr.ui.ElementStyle = function(width, height, background, color, fontSiz
 
 };
 
-structurizr.ui.RelationshipStyle = function(thickness, color, dashed, routing, jump, fontSize, width, position, opacity) {
+structurizr.ui.RelationshipStyle = function(thickness, color, dashed, routing, jump, fontSize, width, position, opacity, metadata, description) {
     this.thickness = thickness;
     this.color = color;
     this.dashed = dashed;
@@ -167,6 +167,8 @@ structurizr.ui.RelationshipStyle = function(thickness, color, dashed, routing, j
     this.width = width;
     this.position = position;
     this.opacity = opacity;
+    this.metadata = metadata;
+    this.description = description;
 
     this.tag = "Relationship";
 
@@ -396,7 +398,7 @@ structurizr.ui.findRelationshipStyle = function(relationship, darkMode) {
     }
 
     const defaults = darkMode ? structurizr.ui.DARK_MODE_DEFAULTS : structurizr.ui.LIGHT_MODE_DEFAULTS;
-    const defaultRelationshipStyle = new structurizr.ui.RelationshipStyle(2, defaults.color, true, 'Direct', undefined, 24, 200, 50, 100);
+    const defaultRelationshipStyle = new structurizr.ui.RelationshipStyle(2, defaults.color, true, 'Direct', undefined, 24, 200, 50, 100, true, true);
 
     var defaultStyle = defaultRelationshipStyle;
 
@@ -443,7 +445,9 @@ structurizr.ui.findRelationshipStyle = function(relationship, darkMode) {
         defaultStyle.fontSize,
         defaultStyle.width,
         defaultStyle.position,
-        defaultStyle.opacity);
+        defaultStyle.opacity,
+        defaultStyle.metadata,
+        defaultStyle.description);
     style.tags = [ "Relationship" ];
 
     const tags = structurizr.workspace.getAllTagsForRelationship(relationship);
@@ -460,6 +464,8 @@ structurizr.ui.findRelationshipStyle = function(relationship, darkMode) {
             style.copyStyleAttributeIfSpecified(relationshipStyle, 'width');
             style.copyStyleAttributeIfSpecified(relationshipStyle, 'position');
             style.copyStyleAttributeIfSpecified(relationshipStyle, 'opacity');
+            style.copyStyleAttributeIfSpecified(relationshipStyle, 'metadata');
+            style.copyStyleAttributeIfSpecified(relationshipStyle, 'description');
 
             if (style.tags.indexOf(tags[i].trim()) === -1) {
                 style.tags.push(tags[i].trim());

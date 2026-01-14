@@ -3143,8 +3143,12 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         }
     }
 
-    function formatTechnologyForRelationship(relationship) {
-        return structurizr.ui.getMetadataForRelationship(relationship);
+    function formatTechnologyForRelationship(relationship, configuration) {
+        if (configuration.metadata !== undefined && configuration.metadata === false) {
+            return '';
+        } else {
+            return structurizr.ui.getMetadataForRelationship(relationship);
+        }
     }
 
     function breakText(text, width, font, fontSize) {
@@ -3359,10 +3363,14 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                 }
             }
 
-            description = breakText(description, configuration.width, font.name, configuration.fontSize);
+            if (configuration.description !== undefined && configuration.description === false) {
+                description = '';
+            } else {
+                description = breakText(description, configuration.width, font.name, configuration.fontSize);
+            }
             const heightOfDescription = calculateHeight(description, configuration.fontSize, 0);
 
-            var technology = formatTechnologyForRelationship(relationship);
+            var technology = formatTechnologyForRelationship(relationship, configuration);
             technology = breakText(technology, configuration.width, font.name, configuration.fontSize * metadataFontSizeDifferenceRatio);
             const heightOfTechnology = calculateHeight(technology, configuration.fontSize * metadataFontSizeDifferenceRatio, 0);
 
@@ -3412,7 +3420,8 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                     attrs: {
                         rect: {
                             fill: canvasColor,
-                            'pointer-events': 'none'
+                            'pointer-events': 'none',
+                            class: 'structurizrDescription'
                         },
                         text: {
                             text: description,
@@ -3421,7 +3430,8 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                             'font-weight': 'normal',
                             'font-size': configuration.fontSize + 'px',
                             'pointer-events': 'none',
-                            'lineHeight': lineHeight
+                            'lineHeight': lineHeight,
+                            class: 'structurizrDescription'
                         }
                     }
                 });
@@ -3437,17 +3447,18 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                         rect: {
                             'class': 'structurizrMetaData',
                             fill: canvasColor,
-                            'pointer-events': 'none'
+                            'pointer-events': 'none',
+                            class: 'structurizrMetaData'
                         },
                         text: {
-                            'class': 'structurizrMetaData',
                             text: technology,
                             fill: fill,
                             'font-family': font.name,
                             'font-weight': 'normal',
                             'font-size': (configuration.fontSize * metadataFontSizeDifferenceRatio) + 'px',
                             'pointer-events': 'none',
-                            'lineHeight': lineHeight
+                            'lineHeight': lineHeight,
+                            class: 'structurizrMetaData'
                         }
                     }
                 });
@@ -6528,10 +6539,12 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
     function showDescription() {
         $('.structurizrElement .structurizrDescription').css('display', 'block');
+        $('.joint-link .structurizrDescription').css('display', 'block');
     }
 
     function hideDescription() {
         $('.structurizrElement .structurizrDescription').css('display', 'none');
+        $('.joint-link .structurizrDescription').css('display', 'none');
     }
 
     this.showDiagramScope = function(bool) {

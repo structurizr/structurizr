@@ -1441,6 +1441,9 @@ components:
             - Direct
             - Curved
             - Orthogonal
+        jump:
+          type: boolean
+          description: Whether relationship jumps should be rendered.
         position:
           type: number
           format: integer
@@ -1449,6 +1452,12 @@ components:
           type: number
           format: integer
           description: The opacity used when rendering the line; 0-100.
+        metadata:
+          type: boolean
+          description: Whether the relationship metadata should be shown or not.
+        description:
+          type: boolean
+          description: Whether the relationship description should be shown or not.
 
     Documentation:
       type: object

@@ -257,4 +257,48 @@ final class RelationshipStyleParser extends AbstractParser {
         }
     }
 
+    void parseMetadata(RelationshipStyleDslContext context, Tokens tokens) {
+        RelationshipStyle style = context.getStyle();
+
+        if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: metadata <true|false>");
+        }
+
+        if (tokens.includes(FIRST_PROPERTY_INDEX)) {
+            String metadata = tokens.get(1);
+
+            if ("true".equalsIgnoreCase(metadata)) {
+                style.setMetadata(true);
+            } else if ("false".equalsIgnoreCase(metadata)) {
+                style.setMetadata(false);
+            } else {
+                throw new RuntimeException("Metadata must be true or false");
+            }
+        } else {
+            throw new RuntimeException("Expected: metadata <true|false>");
+        }
+    }
+
+    void parseDescription(RelationshipStyleDslContext context, Tokens tokens) {
+        RelationshipStyle style = context.getStyle();
+
+        if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: description <true|false>");
+        }
+
+        if (tokens.includes(FIRST_PROPERTY_INDEX)) {
+            String description = tokens.get(1);
+
+            if ("true".equalsIgnoreCase(description)) {
+                style.setDescription(true);
+            } else if ("false".equalsIgnoreCase(description)) {
+                style.setDescription(false);
+            } else {
+                throw new RuntimeException("Description must be true or false");
+            }
+        } else {
+            throw new RuntimeException("Expected: description <true|false>");
+        }
+    }
+
 }
