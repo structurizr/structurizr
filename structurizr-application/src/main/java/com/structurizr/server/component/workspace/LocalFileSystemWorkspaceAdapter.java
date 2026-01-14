@@ -209,7 +209,7 @@ abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspa
         File[] files = directory.listFiles();
         if (files != null) {
             for (File file : files) {
-                if (file.getName().startsWith(".") || file.getName().equals(StructurizrProperties.CONFIGURATION_FILE_NAME)) {
+                if (file.getName().startsWith(".") || file.getName().equals(StructurizrProperties.CONFIGURATION_FILENAME)) {
                     // ignore
                 } else if (file.isFile()) {
                     if (file.getName().equals(WORKSPACE_JSON_FILENAME) && new File(file.getParentFile(), WORKSPACE_DSL_FILENAME).exists()) {

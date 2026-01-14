@@ -72,18 +72,18 @@ QUnit.test("Workspace.description returns the description", function( assert ) {
 
 QUnit.test("Workspace.getProperty() returns undefined when the property doesn't exist", function( assert ) {
     var workspace = new structurizr.Workspace({});
-    assert.equal(workspace.getProperty('structurizr.dslEditor'), undefined);
+    assert.equal(workspace.getProperty('structurizr.someProperty'), undefined);
 });
 
 QUnit.test("Workspace.getProperty() returns the named property", function( assert ) {
     var workspace = new structurizr.Workspace(
         {
             properties: {
-                'structurizr.dslEditor': 'false'
+                'structurizr.someProperty': 'false'
             }
         }
     );
-    assert.equal(workspace.getProperty('structurizr.dslEditor'), 'false');
+    assert.equal(workspace.getProperty('structurizr.someProperty'), 'false');
 });
 
 QUnit.test("Workspace.hasElements() returns false when there are no elements in the model", function( assert ) {

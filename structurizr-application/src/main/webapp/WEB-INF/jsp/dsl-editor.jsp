@@ -140,12 +140,6 @@
     }
 
     function init() {
-        if (structurizr.workspace.getProperty('structurizr.dslEditor') === 'false') {
-            alert('The browser-based DSL editor has been disabled for this workspace - please use the Structurizr CLI or Structurizr Lite instead.');
-            unsavedChanges = false;
-            history.back();
-        }
-
         renderEditor();
         renderDiagrams();
 

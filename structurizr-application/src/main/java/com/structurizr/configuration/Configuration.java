@@ -256,8 +256,6 @@ public class Configuration {
             setDefault(MAX_WORKSPACE_VERSIONS, DEFAULT_MAX_WORKSPACE_VERSIONS);
             setDefault(CACHE_EXPIRY_IN_MINUTES, DEFAULT_CACHE_EXPIRY_IN_MINUTES);
             setDefault(ADMIN_USERS_AND_ROLES, "");
-            setDefault(WORKSPACE_EVENT_LISTENER_PLUGIN, "");
-            setDefault(DSL_EDITOR, FALSE); // backwards compatibility
 
             setDefault(Features.UI_DSL_EDITOR, FALSE);
             setDefault(Features.WORKSPACE_ARCHIVING, FALSE);
@@ -284,13 +282,6 @@ public class Configuration {
         features.configure(Features.WORKSPACE_ARCHIVING, Boolean.parseBoolean(getProperty(Features.WORKSPACE_ARCHIVING)));
         features.configure(Features.WORKSPACE_BRANCHES, Boolean.parseBoolean(getProperty(Features.WORKSPACE_BRANCHES)));
         features.configure(Features.WORKSPACE_SCOPE_VALIDATION, getProperty(Features.WORKSPACE_SCOPE_VALIDATION).equalsIgnoreCase(Features.WORKSPACE_SCOPE_VALIDATION_STRICT));
-
-        // for backwards compatibility (older versions had structurizr.dslEditor=true)
-        if (!isFeatureEnabled(Features.UI_DSL_EDITOR)) {
-            features.configure(Features.UI_DSL_EDITOR, Boolean.parseBoolean(getProperty(DSL_EDITOR)));
-        }
-
-        properties.remove(DSL_EDITOR); // not needed after the feature has been configured
     }
 
     private void configureLogging() {

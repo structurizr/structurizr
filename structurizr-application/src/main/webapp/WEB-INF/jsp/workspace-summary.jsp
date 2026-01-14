@@ -345,10 +345,6 @@
     }
 
     function workspaceLoaded() {
-        if (structurizr.workspace.getProperty('structurizr.dslEditor') === 'false') {
-            $('.dslEditorNavigation').addClass('hidden');
-        }
-
         $('#workspaceName').html(structurizr.util.escapeHtml(structurizr.workspace.name));
         $('#workspaceDescription').html(structurizr.util.escapeHtml(structurizr.workspace.description));
         var diagramsDiv = $('#diagrams');
