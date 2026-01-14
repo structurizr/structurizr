@@ -14,10 +14,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.session.SessionAutoConfiguration;
+import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEvent;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -46,9 +48,9 @@ public class Server extends SpringBootServletInitializer {
 		properties.setProperty(DATA_DIRECTORY, structurizrDataDirectory.getAbsolutePath());
 
 		Configuration.init(Profile.Playground, properties);
-		Configuration.getInstance().banner(Server.class);
 
 		SpringApplication app = new SpringApplication(Server.class);
+		app.addListeners((ApplicationListener<ApplicationEnvironmentPreparedEvent>) event -> Configuration.getInstance().banner(Server.class));
 		app.run(args);
 	}
 

@@ -40,7 +40,7 @@ final class SearchIndexer {
         }
 
         // rebuild search indexes on startup
-        log.info("Rebuilding search index...");
+        log.debug("Rebuilding search index...");
 
         try {
             Collection<WorkspaceMetadata> workspaces = workspaceComponent.getWorkspaces();
@@ -48,7 +48,7 @@ final class SearchIndexer {
                 executorService.submit(() -> {
                     try {
                         if (!workspaceMetadata.isClientEncrypted()) {
-                            log.info("Indexing workspace with ID " + workspaceMetadata.getId());
+                            log.debug("Indexing workspace with ID " + workspaceMetadata.getId());
                             String json = workspaceComponent.getWorkspace(workspaceMetadata.getId(), null, null);
                             Workspace workspace = WorkspaceUtils.fromJson(json);
                             searchComponent.index(workspace);

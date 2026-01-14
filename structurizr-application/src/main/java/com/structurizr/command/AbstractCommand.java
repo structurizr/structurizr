@@ -1,5 +1,7 @@
 package com.structurizr.command;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 import com.structurizr.Workspace;
 import com.structurizr.dsl.StructurizrDslParser;
 import com.structurizr.http.HttpClient;
@@ -9,12 +11,7 @@ import com.structurizr.util.WorkspaceUtils;
 import com.structurizr.validation.WorkspaceScopeValidatorFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.core.config.Configurator;
-import org.apache.logging.log4j.core.config.builder.api.ConfigurationBuilder;
-import org.apache.logging.log4j.core.config.builder.api.ConfigurationBuilderFactory;
-import org.apache.logging.log4j.core.config.builder.impl.BuiltConfiguration;
-import org.apache.logging.log4j.core.layout.PatternLayout;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.net.URL;
@@ -133,22 +130,8 @@ public abstract class AbstractCommand {
     }
 
     protected void configureDebugLogging() {
-        ConfigurationBuilder<BuiltConfiguration> builder = ConfigurationBuilderFactory.newConfigurationBuilder();
-
-        builder.add(
-            builder.newAppender("stdout", "Console")
-                .add(
-                    builder.newLayout(PatternLayout.class.getSimpleName())
-                        .addAttribute(
-                            "pattern",
-                            "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
-                        )
-                )
-        );
-
-        builder.add(builder.newLogger("com.structurizr", Level.DEBUG));
-
-        Configurator.reconfigure(builder.build());
+        Logger root = (Logger) LoggerFactory.getLogger("com.structurizr");
+        root.setLevel(Level.DEBUG);
     }
 
 }

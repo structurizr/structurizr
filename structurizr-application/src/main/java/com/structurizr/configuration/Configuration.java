@@ -68,6 +68,8 @@ public class Configuration {
         if (!getWorkDirectory().exists()) {
             getWorkDirectory().mkdirs();
         }
+
+        configureLogging();
     }
 
     public static Configuration init(Profile profile, Properties properties) {
@@ -189,7 +191,7 @@ public class Configuration {
     }
 
     private void loadProperties() {
-        File file = new File(getDataDirectory(), StructurizrProperties.CONFIGURATION_FILE_NAME);
+        File file = new File(getDataDirectory(), StructurizrProperties.CONFIGURATION_FILENAME);
         Properties propertiesFromFile = new Properties();
         try {
             if (file.exists()) {
@@ -230,6 +232,7 @@ public class Configuration {
     }
 
     private void setDefaults() {
+        setDefault(DEBUG, FALSE);
         setDefault(NETWORK_TIMEOUT, DEFAULT_NETWORK_TIMEOUT_OF_SIXTY_SECONDS);
 
         if (profile != Profile.Playground) {
@@ -288,6 +291,30 @@ public class Configuration {
         }
 
         properties.remove(DSL_EDITOR); // not needed after the feature has been configured
+    }
+
+    private void configureLogging() {
+        boolean debug = Boolean.parseBoolean(getProperty(StructurizrProperties.DEBUG));
+        if (debug) {
+            System.setProperty(LOGGING_LEVEL_STRUCTURIZR, "debug");
+            System.setProperty(LOGGING_LEVEL_OTHER, "debug");
+        } else {
+            System.setProperty(LOGGING_LEVEL_STRUCTURIZR, "info");
+            System.setProperty(LOGGING_LEVEL_OTHER, "warn");
+        }
+
+        if (StringUtils.isNullOrEmpty(System.getProperty(LOGGING_FILENAME))) {
+            File logDirectory = new File(getWorkDirectory(), "logs");
+            if (getDataDirectory().canWrite()) {
+                logDirectory.mkdir();
+                File logFilename = new File(logDirectory, "structurizr.log");
+                System.setProperty(LOGGING_FILENAME, logFilename.getAbsolutePath());
+                properties.setProperty(LOGGING_FILENAME, logFilename.getAbsolutePath());
+            } else {
+                // don't write logs
+                System.setProperty(LOGGING_FILENAME, "");
+            }
+        }
     }
 
     public StructurizrDslParser createStructurizrDslParser() {

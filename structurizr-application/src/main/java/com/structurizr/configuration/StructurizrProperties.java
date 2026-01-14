@@ -5,6 +5,11 @@ public class StructurizrProperties {
     public static final String DATA_DIRECTORY = "structurizr.datadirectory";
     public static final String CONFIGURATION_FILE_NAME = "structurizr.properties";
 
+    public static final String DEBUG = "structurizr.debug";
+    public static final String LOGGING_FILENAME = "structurizr.logging.filename";
+    public static final String LOGGING_LEVEL_STRUCTURIZR = "structurizr.logging.level.structurizr";
+    public static final String LOGGING_LEVEL_OTHER = "structurizr.logging.level.other";
+
     public static final String EDITABLE_PROPERTY = "structurizr.editable";
 
     public static final String WORKSPACE_THREADS = "structurizr.workspace.threads";

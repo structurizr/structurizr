@@ -3,7 +3,9 @@ package com.structurizr.server;
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Profile;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEvent;
 import org.springframework.boot.web.servlet.context.ServletWebServerInitializedEvent;
+import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.EventListener;
 
 import java.io.File;
@@ -22,10 +24,10 @@ public class Local extends AbstractServer {
 		}
 
 		Configuration.init(Profile.Local, properties);
-		Configuration.getInstance().banner(Local.class);
 
 		SpringApplication app = new SpringApplication(Local.class);
 		app.setAdditionalProfiles("command-local");
+		app.addListeners((ApplicationListener<ApplicationEnvironmentPreparedEvent>) event -> Configuration.getInstance().banner(Local.class));
 		app.run(args);
 	}
 
