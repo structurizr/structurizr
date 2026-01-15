@@ -982,7 +982,9 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             }
         });
 
-        if (view.automaticLayout || forceApplyAutomaticLayout) {
+        if (forceApplyAutomaticLayout) {
+            structurizr.diagram.applyAutomaticLayout('LeftRight', 300, 300, 300, true);
+        } else if (view.automaticLayout) {
             if (view.automaticLayout) {
                 structurizr.diagram.applyAutomaticLayout(
                     view.automaticLayout.rankDirection,
@@ -991,8 +993,6 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                     view.automaticLayout.edgeSeparation,
                     view.automaticLayout.vertices
                 );
-            } else {
-                structurizr.diagram.applyAutomaticLayout('LeftRight', 300, 300, 300, true);
             }
         }
 
@@ -6447,9 +6447,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                 }
             });
 
-            if (this.getCurrentViewOrFilter().type !== structurizr.constants.FILTERED_VIEW_TYPE) {
-                this.autoPageSize();
-            }
+            this.autoPageSize();
             this.zoomFitHeight();
 
             centreDiagram();

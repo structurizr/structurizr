@@ -993,36 +993,7 @@
 
     function changeView(view, callback) {
         structurizr.diagram.reset();
-
-        // var actualView = view;
-        // if (view.type === structurizr.constants.FILTERED_VIEW_TYPE) {
-        //     actualView = structurizr.workspace.findViewByKey(view.baseViewKey);
-        // }
-
-        // if (actualView.automaticLayout) {
-        //     structurizr.diagram.changeView(view.key, function () {
-        //         structurizr.diagram.applyAutomaticLayout(
-        //             actualView.automaticLayout.rankDirection,
-        //             actualView.automaticLayout.rankSeparation,
-        //             actualView.automaticLayout.nodeSeparation,
-        //             actualView.automaticLayout.edgeSeparation,
-        //             actualView.automaticLayout.vertices,
-        //             50,
-        //             100,
-        //             true
-        //         );
-        //
-        //         if (structurizr.diagram.getCurrentViewOrFilter().type !== structurizr.constants.FILTERED_VIEW_TYPE) {
-        //             structurizr.diagram.autoPageSize();
-        //         }
-        //
-        //         if (callback) {
-        //             callback();
-        //         }
-        //     });
-        // } else {
-            structurizr.diagram.changeView(view.key, callback);
-        // }
+        structurizr.diagram.changeView(view.key, callback);
     }
 
     function initQuickNavigation() {

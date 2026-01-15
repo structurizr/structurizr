@@ -215,7 +215,6 @@ workspace "Name" "Description" {
             description "Description"
 
             include *
-            autoLayout
 
             properties {
                 "Name" "Value"

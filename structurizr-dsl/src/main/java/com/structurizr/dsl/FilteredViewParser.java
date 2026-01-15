@@ -67,6 +67,17 @@ final class FilteredViewParser extends AbstractViewParser {
             throw new RuntimeException("The view \"" + baseKey + "\" does not exist");
         }
 
+        if (baseView instanceof StaticView || baseView instanceof DeploymentView) {
+            // okay
+        } else {
+            throw new RuntimeException("The view \"" + baseKey + "\" must be a System Landscape, System Context, Container, Component, or Deployment view");
+        }
+
+        ModelView modelView = (ModelView)baseView;
+        if (modelView.getAutomaticLayout() != null) {
+            throw new RuntimeException("The view \"" + baseKey + "\" has automatic layout enabled - this is not supported for filtered views");
+        }
+
         if (tokens.includes(KEY_INDEX)) {
             key = tokens.get(KEY_INDEX);
             validateViewKey(key);
@@ -74,10 +85,8 @@ final class FilteredViewParser extends AbstractViewParser {
 
         if (baseView instanceof StaticView) {
             return workspace.getViews().createFilteredView((StaticView)baseView, key, description, filterMode, tags.toArray(new String[0]));
-        } else if (baseView instanceof DeploymentView) {
-            return workspace.getViews().createFilteredView((DeploymentView)baseView, key, description, filterMode, tags.toArray(new String[0]));
         } else {
-            throw new RuntimeException("The view \"" + baseKey + "\" must be a System Landscape, System Context, Container, Component, or Deployment view");
+            return workspace.getViews().createFilteredView((DeploymentView)baseView, key, description, filterMode, tags.toArray(new String[0]));
         }
     }
 
