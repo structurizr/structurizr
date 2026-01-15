@@ -34,6 +34,9 @@
         font-size: 11px;
         margin-top: 5px;
     }
+    .selected {
+        border: solid 1px #777777;
+    }
 </style>
 
 <div class="section centered">
@@ -55,33 +58,38 @@
 
     const themesList = $('#themesList');
     const externalTheme = '${param.url}';
-    const theme = localStorage.getItem(LOCAL_STORAGE_THEME_KEY);
+    const previousTheme = localStorage.getItem(LOCAL_STORAGE_THEME_KEY);
 
-    if (externalTheme.length > 0) {
-        loadTheme(externalTheme);
-    } else {
-    themesList.val(theme);
-        if (theme && theme.length > 0) {
-            loadTheme('${structurizrConfiguration.webUrl}/static/themes/' + theme + '/theme.json');
-        }
+    if (previousTheme.length > 0) {
+        themesList.val(previousTheme);
     }
 
+    loadSelectedTheme();
+
     themesList.change(function() {
-        const theme = $(this).val();
+        loadSelectedTheme();
+    });
+
+    function loadSelectedTheme() {
+        const theme = themesList.val();
         if (theme && theme.length > 0) {
             loadTheme('${structurizrConfiguration.webUrl}/static/themes/' + theme + '/theme.json');
             localStorage.setItem(LOCAL_STORAGE_THEME_KEY, theme);
+        } else {
+            if (externalTheme.length > 0) {
+                loadTheme(externalTheme);
+                localStorage.setItem(LOCAL_STORAGE_THEME_KEY, '');
+            } else {
+                reset();
+            }
         }
-    });
+    }
 
     function loadTheme(url) {
         $.get(url, undefined, function (data) {
             try {
                 const theme = JSON.parse(data);
                 renderElementStyles(theme, url);
-
-                $('#themeName').text(theme.name);
-                $('#themeDescription').text(theme.description);
             } catch (e) {
                 console.log('Could not load theme from ' + url);
                 console.log(e);
@@ -94,12 +102,15 @@
             });
     }
 
+    function reset() {
+        quickNavigation.clear();
+        $('#elementStyles').empty();
+    }
+
     function renderElementStyles(theme, url) {
         var index = 0;
         const baseUrl = url.substring(0, url.lastIndexOf('/') + 1);
-        quickNavigation.clear();
-
-        $('#elementStyles').empty();
+        reset();
 
         if (theme.elements !== undefined) {
             var elementStyles = theme.elements;
@@ -107,33 +118,38 @@
                 return a.tag.toLowerCase().localeCompare(b.tag.toLowerCase());
             });
 
-            elementStyles.forEach(function (elementStyle) {
-                try {
-                    var html = '<div class="elementStyle">';
+            elementStyles.forEach(function(elementStyle) {
+                if (elementStyle.icon && elementStyle.icon.length > 0) {
+                    try {
+                        if (elementStyle.icon) {
+                            if (elementStyle.icon.indexOf('http') === 0) {
+                                // do nothing
+                            } else {
+                                elementStyle.icon = baseUrl + structurizr.util.escapeHtml(elementStyle.icon);
+                            }
 
-                    if (elementStyle.icon) {
-                        if (elementStyle.icon.indexOf('http') === 0) {
-                            // do nothing
-                        } else {
-                            elementStyle.icon = baseUrl + structurizr.util.escapeHtml(elementStyle.icon);
                         }
 
+                        var html = '';
+                        html += '<div id="style' + index + '" class="elementStyle">';
+                        html += elementStyle.icon ? '<img src="' + structurizr.util.escapeHtml(elementStyle.icon) + '" class="icon" />' : '';
+                        html += '<div id="style' + index + 'Tag" class="tag">';
+                        html += structurizr.util.escapeHtml(elementStyle.tag);
+                        html += '</div>';
+
+                        $('#elementStyles').append(html);
+
+                        addHandler("Element", elementStyle, index);
+                    } catch (error) {
+                        console.log(error);
                     }
-
-                    html += elementStyle.icon ? '<img src="' + structurizr.util.escapeHtml(elementStyle.icon) + '" class="icon" />' : '';
-
-                    html += '<div id="style' + index + '" class="tag">';
-                    html += structurizr.util.escapeHtml(elementStyle.tag);
-                    html += '</div>';
-
-                    $('#elementStyles').append(html);
-
-                    addHandler("Element", elementStyle, index);
-                } catch (error) {
-                    console.log(error);
                 }
 
                 index++;
+            });
+
+            $('.elementStyle').click(function() {
+                selectStyle($(this).attr('id'));
             });
         }
     }
@@ -144,10 +160,17 @@
             item = '<img src="' + structurizr.util.escapeHtml(elementStyle.icon) + '" class="img-responsive" style="display: inline-block; height: 20px; margin-right: 7px" />' + item;
         }
         quickNavigation.addHandler(item, function() {
-            const element = document.getElementById('style' + index);
+            const id = 'style' + index;
+            const element = document.getElementById(id);
             element.scrollIntoView();
-            structurizr.util.selectText('style' + index);
+            selectStyle(id);
         });
+    }
+
+    function selectStyle(id) {
+        $('.elementStyle').removeClass('selected');
+        $('#' + id).addClass('selected');
+        structurizr.util.selectText(id + 'Tag');
     }
 </script>
 
