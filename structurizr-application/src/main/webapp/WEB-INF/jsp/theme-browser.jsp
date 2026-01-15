@@ -1,3 +1,5 @@
+<%@ include file="/WEB-INF/fragments/quick-navigation.jspf" %>
+
 <style>
     html {
         scroll-padding-top: 100px;
@@ -173,5 +175,3 @@
         structurizr.util.selectText(id + 'Tag');
     }
 </script>
-
-<%@ include file="/WEB-INF/fragments/quick-navigation.jspf" %>
