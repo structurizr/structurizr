@@ -8,11 +8,14 @@ import com.structurizr.view.ThemeUtils;
 import com.structurizr.view.Themes;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Inlines built-in theme icons into the workspace.
@@ -20,6 +23,29 @@ import java.util.Set;
 public final class BuiltInThemes {
 
     private static final Log log = LogFactory.getLog(BuiltInThemes.class);
+
+    private static final String README = "README.md";
+
+    public static List<String> getThemes() {
+        List<String> themes = new ArrayList<>();
+
+        ClassLoader cl = BuiltInThemes.class.getClassLoader();
+        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver(cl);
+
+        try {
+            Resource[] resources = resolver.getResources("classpath*:/static/static/themes/*") ;
+            for (Resource resource: resources) {
+                if (!README.equals(resource.getFilename())) {
+                    themes.add(resource.getFilename());
+                }
+            }
+        } catch (IOException e) {
+            log.error(e);
+        }
+
+        Collections.sort(themes);
+        return themes;
+    }
 
     public static void inlineIcons(Workspace workspace) {
         try {

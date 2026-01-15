@@ -34,6 +34,10 @@
                         </div>
 
                         <div class="btn-group">
+                            <button id="themeBrowserButton" class="btn btn-default" title="Theme browser"><img src="/static/bootstrap-icons/palette.svg" class="icon-btn" /></button>
+                        </div>
+
+                        <div class="btn-group">
                             <button id="sourceButton" class="btn btn-default" title="Source"><img src="/static/bootstrap-icons/code-slash.svg" class="icon-btn" /></button>
                             <button id="diagramsButton" class="btn btn-default" title="Diagrams"><img src="/static/bootstrap-icons/bounding-box.svg" class="icon-btn" /></button>
                         </div>
@@ -102,6 +106,7 @@
     $('#homeButton').click(function(event) { event.preventDefault(); window.location.href = '/'; });
     $('#loadFromLocalStorageButton').click(function(event) { loadFromLocalStorage(event); });
     $('#saveToLocalStorageButton').click(function(event) { saveToLocalStorage(event); });
+    $('#themeBrowserButton').click(function(event) { openThemeBrowser(event); });
     $('#sourceButton').click(function(event) { sourceButtonClicked(event); });
     $('#diagramsButton').click(function(event) { diagramsButtonClicked(event); });
     $('#viewSourceButton').click(function(event) { sourceButtonClicked(event); });
@@ -303,6 +308,11 @@
         } catch (e) {
             console.log(e);
         }
+    }
+
+    function openThemeBrowser(e) {
+        e.preventDefault();
+        window.open('/theme-browser', "structurizrThemeBrowser", "top=100,left=300,width=800,height=800,location=no,menubar=no,status=no,toolbar=no");
     }
 
     function sourceButtonClicked(e) {
