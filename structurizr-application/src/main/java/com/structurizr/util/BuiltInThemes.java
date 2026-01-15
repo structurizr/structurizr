@@ -14,6 +14,7 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
@@ -24,8 +25,6 @@ public final class BuiltInThemes {
 
     private static final Log log = LogFactory.getLog(BuiltInThemes.class);
 
-    private static final String README = "README.md";
-
     public static List<String> getThemes() {
         List<String> themes = new ArrayList<>();
 
@@ -33,11 +32,13 @@ public final class BuiltInThemes {
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver(cl);
 
         try {
-            Resource[] resources = resolver.getResources("classpath*:/static/static/themes/*") ;
+            Resource[] resources = resolver.getResources("classpath*:static/static/themes/*/theme.json") ;
             for (Resource resource: resources) {
-                if (!README.equals(resource.getFilename())) {
-                    themes.add(resource.getFilename());
-                }
+                String themeName = resource.getURI().toString();
+                themeName = themeName.replace("/theme.json", "");
+                themeName = themeName.substring(themeName.lastIndexOf('/') + 1);
+
+                themes.add(themeName);
             }
         } catch (IOException e) {
             log.error(e);
