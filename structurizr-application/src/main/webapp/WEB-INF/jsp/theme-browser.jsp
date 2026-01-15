@@ -60,7 +60,7 @@
     const externalTheme = '${param.url}';
     const previousTheme = localStorage.getItem(LOCAL_STORAGE_THEME_KEY);
 
-    if (previousTheme.length > 0) {
+    if (previousTheme && previousTheme.length > 0) {
         themesList.val(previousTheme);
     }
 
