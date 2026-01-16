@@ -62,10 +62,6 @@ public class WorkspaceApiClient extends AbstractApiClient {
     public WorkspaceApiClient(String url, long workspaceId, String apiKey) {
         super(url);
 
-        if (StringUtils.isNullOrEmpty(apiKey)) {
-            throw new IllegalArgumentException("The API key must not be null or empty");
-        }
-
         if (workspaceId <= 0) {
             throw new IllegalArgumentException("The workspace ID must be a positive integer");
         }

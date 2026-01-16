@@ -30,7 +30,7 @@ public class PullCommand extends AbstractCommand {
         options.addOption(option);
 
         option = new Option("key", "apiKey", true, "Workspace API key");
-        option.setRequired(true);
+        option.setRequired(false);
         options.addOption(option);
 
         option = new Option("branch", "branch", true, "Branch name");

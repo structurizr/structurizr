@@ -1,5 +1,6 @@
 package com.structurizr.server.web.workspace.authenticated;
 
+import com.structurizr.configuration.Configuration;
 import com.structurizr.server.domain.Permission;
 import com.structurizr.server.domain.User;
 import com.structurizr.server.domain.WorkspaceMetadata;
@@ -37,6 +38,8 @@ public class WorkspaceSettingsController extends AbstractWorkspaceController {
         } else {
             return show404Page(model);
         }
+
+        model.addAttribute("apiKeyRequired", Configuration.getInstance().isAuthenticationEnabled());
 
         return showAuthenticatedView(Views.WORKSPACE_SETTINGS, workspaceId, null, version, model, true, true);
     }

@@ -24,7 +24,7 @@ public class LockCommand extends AbstractCommand {
         options.addOption(option);
 
         option = new Option("key", "apiKey", true, "Workspace API key");
-        option.setRequired(true);
+        option.setRequired(false);
         options.addOption(option);
 
         CommandLineParser commandLineParser = new DefaultParser();

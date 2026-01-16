@@ -22,23 +22,13 @@ public class WorkspaceApiClientTests {
     }
 
     @Test
-    void construction_ThrowsAnException_WhenANullApiKeyIsUsed() {
-        try {
-            client = new WorkspaceApiClient("https://localhost", 1234, null);
-            fail();
-        } catch (IllegalArgumentException iae) {
-            assertEquals("The API key must not be null or empty", iae.getMessage());
-        }
+    void construction_WithANullApiKey() {
+        client = new WorkspaceApiClient("https://localhost", 1234, null);
     }
 
     @Test
-    void construction_ThrowsAnException_WhenAnEmptyApiKeyIsUsed() {
-        try {
-            client = new WorkspaceApiClient("https://localhost", 1234, "");
-            fail();
-        } catch (IllegalArgumentException iae) {
-            assertEquals("The API key must not be null or empty", iae.getMessage());
-        }
+    void construction_WithAnEmptyApiKey() {
+        client = new WorkspaceApiClient("https://localhost", 1234, "");
     }
 
     @Test
