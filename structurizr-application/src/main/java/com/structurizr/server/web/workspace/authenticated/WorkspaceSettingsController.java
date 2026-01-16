@@ -32,7 +32,6 @@ public class WorkspaceSettingsController extends AbstractWorkspaceController {
         User user = getUser();
         Set<Permission> permissions = workspaceMetadata.getPermissions(user);
 
-
         if (permissions.contains(Permission.Write)) {
             model.addAttribute("showAdminFeatures", permissions.contains(Permission.Admin));
         } else {

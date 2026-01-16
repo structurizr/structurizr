@@ -33,10 +33,6 @@ public class PullCommand extends AbstractCommand {
         option.setRequired(true);
         options.addOption(option);
 
-        option = new Option("secret", "apiSecret", true, "Workspace API secret");
-        option.setRequired(true);
-        options.addOption(option);
-
         option = new Option("branch", "branch", true, "Branch name");
         option.setRequired(false);
         options.addOption(option);
@@ -55,7 +51,6 @@ public class PullCommand extends AbstractCommand {
         String apiUrl = "";
         long workspaceId = 1;
         String apiKey = "";
-        String apiSecret = "";
         String branch = "";
         String passphrase = "";
         boolean debug = false;
@@ -66,7 +61,6 @@ public class PullCommand extends AbstractCommand {
             apiUrl = cmd.getOptionValue("structurizrApiUrl", "https://api.structurizr.com");
             workspaceId = Long.parseLong(cmd.getOptionValue("workspaceId"));
             apiKey = cmd.getOptionValue("apiKey");
-            apiSecret = cmd.getOptionValue("apiSecret");
             branch = cmd.getOptionValue("branch");
             passphrase = cmd.getOptionValue("passphrase");
             debug = cmd.hasOption("debug");
@@ -90,7 +84,7 @@ public class PullCommand extends AbstractCommand {
             file = new File("structurizr-" + workspaceId + "-" + branch + "-workspace.json");
         }
 
-        WorkspaceApiClient client = new WorkspaceApiClient(apiUrl, apiKey, apiSecret);
+        WorkspaceApiClient client = new WorkspaceApiClient(apiUrl, workspaceId, apiKey);
         client.setBranch(branch);
         client.setAgent(getAgent());
 
@@ -99,7 +93,7 @@ public class PullCommand extends AbstractCommand {
             client.setEncryptionStrategy(new AesEncryptionStrategy(passphrase));
         }
 
-        Workspace workspace = client.getWorkspace(workspaceId);
+        Workspace workspace = client.getWorkspace();
 
         WorkspaceUtils.saveWorkspaceToJson(workspace, file);
         log.info(" - workspace saved as " + file.getCanonicalPath());

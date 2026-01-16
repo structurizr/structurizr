@@ -27,10 +27,6 @@ public class DeleteCommand extends AbstractCommand {
         option.setRequired(true);
         options.addOption(option);
 
-        option = new Option("secret", "apiSecret", true, "Workspace API secret");
-        option.setRequired(true);
-        options.addOption(option);
-
         option = new Option("branch", "branch", true, "Branch name");
         option.setRequired(true);
         options.addOption(option);
@@ -41,7 +37,6 @@ public class DeleteCommand extends AbstractCommand {
         String apiUrl = "";
         long workspaceId = 1;
         String apiKey = "";
-        String apiSecret = "";
         String branch = "";
 
         try {
@@ -50,7 +45,6 @@ public class DeleteCommand extends AbstractCommand {
             apiUrl = cmd.getOptionValue("structurizrApiUrl", "https://api.structurizr.com");
             workspaceId = Long.parseLong(cmd.getOptionValue("workspaceId"));
             apiKey = cmd.getOptionValue("apiKey");
-            apiSecret = cmd.getOptionValue("apiSecret");
             branch = cmd.getOptionValue("branch");
         } catch (ParseException e) {
             log.error(e.getMessage());
@@ -60,9 +54,9 @@ public class DeleteCommand extends AbstractCommand {
         }
 
         log.debug("Deleting branch " + branch + " for workspace " + workspaceId + " at " + apiUrl);
-        WorkspaceApiClient client = new WorkspaceApiClient(apiUrl, apiKey, apiSecret);
+        WorkspaceApiClient client = new WorkspaceApiClient(apiUrl, workspaceId, apiKey);
         client.setAgent(getAgent());
-        boolean deleted = client.deleteBranch(workspaceId, branch);
+        boolean deleted = client.deleteBranch(branch);
 
         log.debug(" - " + deleted);
 

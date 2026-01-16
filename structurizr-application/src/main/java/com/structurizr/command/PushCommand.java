@@ -33,10 +33,6 @@ public class PushCommand extends AbstractCommand {
         option.setRequired(true);
         options.addOption(option);
 
-        option = new Option("secret", "apiSecret", true, "Workspace API secret");
-        option.setRequired(true);
-        options.addOption(option);
-
         option = new Option("branch", "branch", true, "Branch name");
         option.setRequired(false);
         options.addOption(option);
@@ -67,7 +63,6 @@ public class PushCommand extends AbstractCommand {
         String apiUrl = "";
         long workspaceId = 1;
         String apiKey = "";
-        String apiSecret = "";
         String branch = "";
         String workspacePath = "";
         String passphrase = "";
@@ -81,7 +76,6 @@ public class PushCommand extends AbstractCommand {
             apiUrl = cmd.getOptionValue("structurizrApiUrl", "https://api.structurizr.com");
             workspaceId = Long.parseLong(cmd.getOptionValue("workspaceId"));
             apiKey = cmd.getOptionValue("apiKey");
-            apiSecret = cmd.getOptionValue("apiSecret");
             branch = cmd.getOptionValue("branch");
             workspacePath = cmd.getOptionValue("workspace");
             passphrase = cmd.getOptionValue("passphrase");
@@ -110,7 +104,7 @@ public class PushCommand extends AbstractCommand {
             log.info("Pushing workspace " + workspaceId + " to " + apiUrl + " (branch=" + branch + ")");
         }
 
-        WorkspaceApiClient client = new WorkspaceApiClient(apiUrl, apiKey, apiSecret);
+        WorkspaceApiClient client = new WorkspaceApiClient(apiUrl, workspaceId, apiKey);
         client.setBranch(branch);
         client.setAgent(getAgent());
         client.setWorkspaceArchiveLocation(null);
@@ -143,7 +137,7 @@ public class PushCommand extends AbstractCommand {
         }
 
         log.info(" - pushing workspace");
-        client.putWorkspace(workspaceId, workspace);
+        client.putWorkspace(workspace);
 
         log.info(" - finished");
     }

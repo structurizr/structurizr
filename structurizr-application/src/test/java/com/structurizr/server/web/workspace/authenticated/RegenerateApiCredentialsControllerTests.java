@@ -7,6 +7,8 @@ import com.structurizr.server.web.MockWorkspaceComponent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import java.util.Properties;
 
@@ -16,11 +18,13 @@ public class RegenerateApiCredentialsControllerTests extends ControllerTestsBase
 
     private RegenerateApiCredentialsController controller;
     private ModelMap model;
+    private RedirectAttributes redirectAttributes;
 
     @BeforeEach
     void setUp() {
         controller = new RegenerateApiCredentialsController();
         model = new ModelMap();
+        redirectAttributes = new RedirectAttributesModelMap();
     }
 
     @Test
@@ -34,7 +38,7 @@ public class RegenerateApiCredentialsControllerTests extends ControllerTestsBase
             }
         });
 
-        String view = controller.regenerateApiCredentials(1, model);
+        String view = controller.regenerateApiCredentials(1, model, redirectAttributes);
         assertEquals("404", view);
     }
 
@@ -48,8 +52,6 @@ public class RegenerateApiCredentialsControllerTests extends ControllerTestsBase
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addWriteUser("user@example.com");
         workspaceMetaData.setApiKey("key");
-        workspaceMetaData.setApiSecret("secret");
-
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
@@ -63,10 +65,9 @@ public class RegenerateApiCredentialsControllerTests extends ControllerTestsBase
             }
         });
 
-        String view = controller.regenerateApiCredentials(1, model);
+        String view = controller.regenerateApiCredentials(1, model, redirectAttributes);
         assertEquals("redirect:/workspace/1/settings", view);
         assertEquals("key", workspaceMetaData.getApiKey());
-        assertEquals("secret", workspaceMetaData.getApiSecret());
     }
 
     @Test
@@ -78,7 +79,6 @@ public class RegenerateApiCredentialsControllerTests extends ControllerTestsBase
 
         final WorkspaceMetadata workspaceMetadata = new WorkspaceMetadata(1);
         workspaceMetadata.setApiKey("key");
-        workspaceMetadata.setApiSecret("secret");
 
         StringBuilder buf = new StringBuilder();
 
@@ -90,15 +90,14 @@ public class RegenerateApiCredentialsControllerTests extends ControllerTestsBase
 
             @Override
             public void putWorkspaceMetadata(WorkspaceMetadata wmd) {
-                buf.append(wmd.getId() + "|" + wmd.getApiKey() + "|" + wmd.getApiSecret());
+                buf.append(wmd.getId() + "|" + wmd.getApiKey());
             }
         });
 
-        String view = controller.regenerateApiCredentials(1, model);
+        String view = controller.regenerateApiCredentials(1, model, redirectAttributes);
         assertEquals("redirect:/workspace/1/settings", view);
         assertNotEquals("key", workspaceMetadata.getApiKey());
-        assertNotEquals("secret", workspaceMetadata.getApiSecret());
-        assertEquals("1|" + workspaceMetadata.getApiKey() + "|" + workspaceMetadata.getApiSecret(), buf.toString());
+        assertEquals("1|" + workspaceMetadata.getApiKey(), buf.toString());
     }
 
 }

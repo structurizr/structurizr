@@ -2,16 +2,12 @@ structurizr.io.StructurizrApiClient = class StructurizrApiClient {
 
     #apiUrl = 'https://api.structurizr.com';
     #workspaceId;
-    #apiKey;
-    #apiSecret;
     #branch;
     #username;
     #agent;
 
-    constructor(apiUrl, workspaceId, apiKey, apiSecret, branch, username, agent) {
+    constructor(apiUrl, workspaceId, branch, username, agent) {
         this.#workspaceId = workspaceId;
-        this.#apiKey = apiKey;
-        this.#apiSecret = apiSecret;
         this.#branch = branch;
         this.#username = username;
         this.#agent = agent;
@@ -26,18 +22,12 @@ structurizr.io.StructurizrApiClient = class StructurizrApiClient {
     }
 
     getWorkspace(version, callback) {
-        const contentMd5 = CryptoJS.MD5("");
-        const contentType = '';
-        const nonce = new Date().getTime();
-
         var branchPath;
         if (this.#branch === undefined || this.#branch === '') {
             branchPath = '';
         } else {
             branchPath = '/branch/' + this.#branch;
         }
-        const content = "GET" + "\n" + this.#getPath() + "/workspace/" + this.#workspaceId + branchPath + "\n" + contentMd5 + "\n" + contentType + "\n" + nonce + "\n";
-        const hmac = CryptoJS.HmacSHA256(content, this.#apiSecret).toString(CryptoJS.enc.Hex);
 
         var url = this.#apiUrl + "/workspace/" + this.#workspaceId + branchPath;
         if (version !== undefined && version.trim().length > 0) {
@@ -48,11 +38,6 @@ structurizr.io.StructurizrApiClient = class StructurizrApiClient {
             url: url,
             type: "GET",
             cache: false,
-            headers: {
-                'Content-MD5': btoa(contentMd5),
-                'Nonce': nonce,
-                'X-Authorization': this.#apiKey + ":" + btoa(hmac)
-            },
             dataType: 'json'
         })
             .done(function(json) {
@@ -91,9 +76,7 @@ structurizr.io.StructurizrApiClient = class StructurizrApiClient {
         workspace.lastModifiedUser = this.#username;
 
         const jsonAsString = JSON.stringify(workspace);
-        const contentMd5 = CryptoJS.MD5(jsonAsString);
         const contentType = 'application/json; charset=UTF-8';
-        const nonce = new Date().getTime();
 
         var branchPath;
         if (this.#branch === undefined || this.#branch === '') {
@@ -102,13 +85,6 @@ structurizr.io.StructurizrApiClient = class StructurizrApiClient {
             branchPath = '/branch/' + this.#branch;
         }
 
-        const content = "PUT" + "\n" +
-            this.#getPath() + "/workspace/" + this.#workspaceId + branchPath + "\n" +
-            contentMd5 + "\n" +
-            contentType + "\n" +
-            nonce + "\n";
-        const hmac = CryptoJS.HmacSHA256(content, this.#apiSecret).toString(CryptoJS.enc.Hex);
-
         $.ajax({
             url: this.#apiUrl + "/workspace/" + this.#workspaceId + branchPath,
             type: "PUT",
@@ -116,9 +92,6 @@ structurizr.io.StructurizrApiClient = class StructurizrApiClient {
             cache: false,
             headers: {
                 'Content-Type': contentType,
-                'Content-MD5': btoa(contentMd5),
-                'Nonce': nonce,
-                'X-Authorization': this.#apiKey + ":" + btoa(hmac),
                 'X-User-Agent': workspace.lastModifiedAgent
             },
             dataType: 'json',

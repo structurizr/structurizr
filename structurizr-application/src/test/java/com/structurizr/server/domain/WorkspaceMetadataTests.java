@@ -306,7 +306,6 @@ public class WorkspaceMetadataTests {
         properties.setProperty(WorkspaceMetadata.LAST_MODIFIED_AGENT_PROPERTY, "structurizr/dsl");
         properties.setProperty(WorkspaceMetadata.LAST_MODIFIED_DATE_PROPERTY, "2021-01-31T14:30:59Z");
         properties.setProperty(WorkspaceMetadata.API_KEY_PROPERTY, "1234567890");
-        properties.setProperty(WorkspaceMetadata.API_SECRET_PROPERTY, "0987654321");
         properties.setProperty(WorkspaceMetadata.PUBLIC_PROPERTY, "true");
         properties.setProperty(WorkspaceMetadata.SHARING_TOKEN_PROPERTY, "12345678901234567890");
         properties.setProperty(WorkspaceMetadata.LOCKED_USER_PROPERTY, "user@example.com");
@@ -326,7 +325,6 @@ public class WorkspaceMetadataTests {
         assertEquals("structurizr/dsl", workspace.getLastModifiedAgent());
         assertEquals(DateUtils.parseIsoDate("2021-01-31T14:30:59Z"), workspace.getLastModifiedDate());
         assertEquals("1234567890", workspace.getApiKey());
-        assertEquals("0987654321", workspace.getApiSecret());
         assertFalse(workspace.isPublicWorkspace()); // sharing token is active, and takes priority
         assertEquals("12345678901234567890", workspace.getSharingToken());
         assertEquals("user@example.com", workspace.getLockedUser());
@@ -347,7 +345,6 @@ public class WorkspaceMetadataTests {
         assertEquals("structurizr/dsl", properties.getProperty(WorkspaceMetadata.LAST_MODIFIED_AGENT_PROPERTY));
         assertEquals("2021-01-31T14:30:59Z", properties.getProperty(WorkspaceMetadata.LAST_MODIFIED_DATE_PROPERTY));
         assertEquals("1234567890", properties.getProperty(WorkspaceMetadata.API_KEY_PROPERTY));
-        assertEquals("0987654321", properties.getProperty(WorkspaceMetadata.API_SECRET_PROPERTY));
         assertEquals("false", properties.getProperty(WorkspaceMetadata.PUBLIC_PROPERTY));
         assertEquals("12345678901234567890", properties.getProperty(WorkspaceMetadata.SHARING_TOKEN_PROPERTY));
         assertEquals("user@example.com", properties.getProperty(WorkspaceMetadata.LOCKED_USER_PROPERTY));

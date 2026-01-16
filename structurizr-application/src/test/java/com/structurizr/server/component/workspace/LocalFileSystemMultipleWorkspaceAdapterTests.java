@@ -110,8 +110,6 @@ class LocalFileSystemMultipleWorkspaceAdapterTests extends AbstractWorkspaceAdap
             WorkspaceMetadata wmd = workspaceAdapter.getWorkspaceMetadata(1);
             assertEquals("JSON", wmd.getName());
             assertEquals("Description", wmd.getDescription());
-            assertFalse(StringUtils.isNullOrEmpty(wmd.getApiKey()));
-            assertFalse(StringUtils.isNullOrEmpty(wmd.getApiSecret()));
         } catch (Exception e) {
             e.printStackTrace();
             fail();

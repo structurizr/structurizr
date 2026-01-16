@@ -1,31 +1,31 @@
 package com.structurizr.server.web.api;
 
 import com.structurizr.Workspace;
-import com.structurizr.api.HashBasedMessageAuthenticationCode;
-import com.structurizr.api.HmacAuthorizationHeader;
-import com.structurizr.api.HmacContent;
 import com.structurizr.api.HttpHeaders;
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Features;
+import com.structurizr.configuration.StructurizrProperties;
 import com.structurizr.io.WorkspaceReaderException;
 import com.structurizr.io.json.JsonReader;
 import com.structurizr.server.component.search.SearchComponent;
 import com.structurizr.server.component.workspace.WorkspaceBranch;
 import com.structurizr.server.component.workspace.WorkspaceComponent;
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
+import com.structurizr.server.domain.Permission;
+import com.structurizr.server.domain.User;
 import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.AbstractController;
-import com.structurizr.util.Md5Digest;
 import com.structurizr.util.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.StringReader;
-import java.util.Base64;
 
 /**
  * An implementation of the Structurizr workspace API.
@@ -67,7 +67,17 @@ public class AbstractWorkspaceApiController extends AbstractController {
             }
 
             if (workspaceId > 0) {
-                authoriseRequest(workspaceId, "GET", getPath(request, workspaceId, branch), null, request, response);
+                WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
+                if (workspaceMetadata == null) {
+                    throw new ApiException("404");
+                }
+
+                User user = getUser();
+                if (user != null && !workspaceMetadata.getPermissions(user).isEmpty()) {
+                    authoriseRequest(workspaceMetadata, user, Permission.Read);
+                } else {
+                    authoriseRequest(workspaceMetadata, request);
+                }
 
                 if (!StringUtils.isNullOrEmpty(branch) && !Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_BRANCHES)) {
                     throw new ApiException("Workspace branches are not enabled for this installation");
@@ -100,7 +110,17 @@ public class AbstractWorkspaceApiController extends AbstractController {
             }
 
             if (workspaceId > 0) {
-                authoriseRequest(workspaceId, "PUT", getPath(request, workspaceId, branch), json, request, response);
+                WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
+                if (workspaceMetadata == null) {
+                    throw new ApiException("404");
+                }
+
+                User user = getUser();
+                if (user != null && !workspaceMetadata.getPermissions(user).isEmpty()) {
+                    authoriseRequest(workspaceMetadata, user, Permission.Write);
+                } else {
+                    authoriseRequest(workspaceMetadata, request);
+                }
 
                 if (!StringUtils.isNullOrEmpty(branch) && !Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_BRANCHES)) {
                     throw new ApiException("Workspace branches are not enabled for this installation");
@@ -157,72 +177,45 @@ public class AbstractWorkspaceApiController extends AbstractController {
         }
     }
 
-    protected void authoriseRequest(long workspaceId, String httpMethod, String path, String content, HttpServletRequest request, HttpServletResponse response) throws WorkspaceComponentException {
-        try {
-            String authorizationHeaderAsString = request.getHeader(HttpHeaders.X_AUTHORIZATION);
-            if (authorizationHeaderAsString == null || authorizationHeaderAsString.trim().length() == 0) {
-                // fallback on the regular header
-                authorizationHeaderAsString = request.getHeader(HttpHeaders.AUTHORIZATION);
-            }
-
-            if (authorizationHeaderAsString == null || authorizationHeaderAsString.trim().length() == 0) {
-                throw new HttpUnauthorizedException("Authorization header must be provided");
-            }
-
-            WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
-            String apiKey = workspaceMetadata.getApiKey();
-
-            HmacAuthorizationHeader hmacAuthorizationHeader = HmacAuthorizationHeader.parse(authorizationHeaderAsString);
-            String apiKeyFromAuthorizationHeader = hmacAuthorizationHeader.getApiKey();
-
-            if (!apiKeyFromAuthorizationHeader.equals(apiKey)) {
-                throw new HttpUnauthorizedException("Incorrect API key");
-            }
-
-            String contentType = request.getHeader(HttpHeaders.CONTENT_TYPE);
-            if (StringUtils.isNullOrEmpty(contentType) || contentType.startsWith(";")) {
-                contentType = "";
-            } else if (!contentType.contains(" ")) {
-                String[] parts = contentType.split(";");
-                contentType = parts[0] + "; " + parts[1];
-            }
-
-            String nonce = request.getHeader(HttpHeaders.NONCE);
-            if (nonce == null || nonce.length() == 0) {
-                throw new HttpUnauthorizedException("Request header missing: " + HttpHeaders.NONCE);
-            }
-
-            String contentMd5InRequest;
-            String contentMd5Header = request.getHeader(HttpHeaders.CONTENT_MD5);
-
-            if (!StringUtils.isNullOrEmpty(content)) {
-                if (contentMd5Header == null || contentMd5Header.length() == 0) {
-                    throw new HttpUnauthorizedException("Request header missing: " + HttpHeaders.CONTENT_MD5);
-                }
-
-                contentMd5InRequest = new String(Base64.getDecoder().decode(contentMd5Header));
-
-                String generatedContentMd5 = new Md5Digest().generate(content);
-                if (!contentMd5InRequest.equals(generatedContentMd5)) {
-                    // the content has been tampered with?
-                    throw new HttpUnauthorizedException("MD5 hash doesn't match content");
-                }
-            } else {
-                contentMd5InRequest = "d41d8cd98f00b204e9800998ecf8427e"; // this is the MD5 hash of an empty string
-            }
-
-            String apiSecret = workspaceMetadata.getApiSecret();
-            HashBasedMessageAuthenticationCode code = new HashBasedMessageAuthenticationCode(apiSecret);
-            String hmacInRequest = hmacAuthorizationHeader.getHmac();
-            HmacContent hmacContent = new HmacContent(httpMethod, path, contentMd5InRequest, contentType, nonce);
-            String generatedHmac = code.generate(hmacContent.toString());
-            if (!hmacInRequest.equals(generatedHmac)) {
-                throw new HttpUnauthorizedException("Authorization header doesn't match");
-            }
-        } catch (Exception e) {
-            log.error(e);
-            throw new HttpUnauthorizedException(e.getMessage());
+    protected void authoriseRequest(WorkspaceMetadata workspaceMetadata, User user, Permission requiredPermission) throws WorkspaceComponentException {
+        if (!workspaceMetadata.getPermissions(user).contains(requiredPermission)) {
+            throw new HttpUnauthorizedException("Missing permission " + requiredPermission);
         }
+    }
+
+    protected void authoriseRequest(WorkspaceMetadata workspaceMetadata, HttpServletRequest request) throws WorkspaceComponentException {
+        String authorizationHeaderAsString = request.getHeader(HttpHeaders.X_AUTHORIZATION);
+        if (StringUtils.isNullOrEmpty(authorizationHeaderAsString)) {
+            // fallback on the regular header
+            authorizationHeaderAsString = request.getHeader(HttpHeaders.AUTHORIZATION);
+        }
+
+        if (StringUtils.isNullOrEmpty(authorizationHeaderAsString)) {
+            throw new HttpUnauthorizedException("Authorization header must be provided");
+        }
+
+        String apiKeyFromAuthorizationHeader = authorizationHeaderAsString;
+        String workspaceApiKey = workspaceMetadata.getApiKey();
+
+        BCryptPasswordEncoder bcryptEncoder = new BCryptPasswordEncoder();
+
+        if (bcryptEncoder.matches(apiKeyFromAuthorizationHeader, workspaceApiKey)) {
+            // the given API key matches the bcrypt encoded workspace API key
+            return;
+        }
+
+        if (apiKeyFromAuthorizationHeader.equals(workspaceApiKey)) {
+            // the given API key matches the plaintext workspace API key (this is for backwards compatibility with existing workspace data)
+            return;
+        }
+
+        String adminApiKey = Configuration.getInstance().getProperty(StructurizrProperties.API_KEY);
+        if (bcryptEncoder.matches(apiKeyFromAuthorizationHeader, adminApiKey)) {
+            // the given API key matches the bcrypt encoded admin API key
+            return;
+        }
+
+        throw new HttpUnauthorizedException("Incorrect API key");
     }
 
     @ExceptionHandler(HttpUnauthorizedException.class)

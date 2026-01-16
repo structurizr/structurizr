@@ -5,8 +5,6 @@ public class WorkspaceMetadata {
     private int id;
     private String name;
     private String description;
-    private String apiKey;
-    private String apiSecret;
 
     private String privateUrl;
     private String publicUrl;
@@ -41,22 +39,6 @@ public class WorkspaceMetadata {
 
     void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getApiKey() {
-        return apiKey;
-    }
-
-    void setApiKey(String apiKey) {
-        this.apiKey = apiKey;
-    }
-
-    public String getApiSecret() {
-        return apiSecret;
-    }
-
-    void setApiSecret(String apiSecret) {
-        this.apiSecret = apiSecret;
     }
 
     public String getPrivateUrl() {

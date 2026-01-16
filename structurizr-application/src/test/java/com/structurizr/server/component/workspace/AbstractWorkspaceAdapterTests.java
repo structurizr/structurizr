@@ -27,14 +27,12 @@ abstract class AbstractWorkspaceAdapterTests extends AbstractTestsBase {
         workspaceMetaData.setName("Name");
         workspaceMetaData.setDescription("Description");
         workspaceMetaData.setApiKey("key");
-        workspaceMetaData.setApiSecret("secret");
         workspaceAdapter.putWorkspaceMetadata(workspaceMetaData);
 
         workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.setName("Name");
         workspaceMetaData.setDescription("Description");
         workspaceMetaData.setApiKey("key");
-        workspaceMetaData.setApiSecret("secret");
         workspaceAdapter.putWorkspaceMetadata(workspaceMetaData);
 
         List<Long> ids = getWorkspaceAdapter().getWorkspaceIds();
@@ -53,7 +51,6 @@ abstract class AbstractWorkspaceAdapterTests extends AbstractTestsBase {
         workspaceMetaData.setName("Name");
         workspaceMetaData.setDescription("Description");
         workspaceMetaData.setApiKey("key");
-        workspaceMetaData.setApiSecret("secret");
 
         workspaceAdapter.putWorkspaceMetadata(workspaceMetaData);
 
@@ -61,7 +58,6 @@ abstract class AbstractWorkspaceAdapterTests extends AbstractTestsBase {
         assertEquals("Name", workspaceMetaData.getName());
         assertEquals("Description", workspaceMetaData.getDescription());
         assertEquals("key", workspaceMetaData.getApiKey());
-        assertEquals("secret", workspaceMetaData.getApiSecret());
     }
 
     @Test
@@ -82,7 +78,6 @@ abstract class AbstractWorkspaceAdapterTests extends AbstractTestsBase {
         workspaceMetaData.setName("Name");
         workspaceMetaData.setDescription("Description");
         workspaceMetaData.setApiKey("key");
-        workspaceMetaData.setApiSecret("secret");
 
         workspaceAdapter.putWorkspaceMetadata(workspaceMetaData);
 
@@ -123,7 +118,6 @@ abstract class AbstractWorkspaceAdapterTests extends AbstractTestsBase {
         workspaceMetaData.setName("Name");
         workspaceMetaData.setDescription("Description");
         workspaceMetaData.setApiKey("key");
-        workspaceMetaData.setApiSecret("secret");
 
         workspaceAdapter.putWorkspaceMetadata(workspaceMetaData);
 
@@ -172,14 +166,12 @@ abstract class AbstractWorkspaceAdapterTests extends AbstractTestsBase {
         workspaceMetaData.setName("Name");
         workspaceMetaData.setDescription("Description");
         workspaceMetaData.setApiKey("key");
-        workspaceMetaData.setApiSecret("secret");
         workspaceAdapter.putWorkspaceMetadata(workspaceMetaData);
 
         workspaceMetaData = new WorkspaceMetadata(2);
         workspaceMetaData.setName("Name");
         workspaceMetaData.setDescription("Description");
         workspaceMetaData.setApiKey("key");
-        workspaceMetaData.setApiSecret("secret");
         workspaceAdapter.putWorkspaceMetadata(workspaceMetaData);
 
         List<Long> ids = getWorkspaceAdapter().getWorkspaceIds();

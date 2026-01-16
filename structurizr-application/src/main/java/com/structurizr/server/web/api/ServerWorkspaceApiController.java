@@ -71,29 +71,28 @@ public class ServerWorkspaceApiController extends AbstractWorkspaceApiController
     @RequestMapping(value = "/api/workspace/{workspaceId}/branch", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     public String getBranches(@PathVariable("workspaceId") long workspaceId,
                               HttpServletRequest request, HttpServletResponse response) {
+
+        if (!Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_BRANCHES)) {
+            throw new ApiException("Workspace branches are not enabled for this installation");
+        }
+
+        WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
+
         try {
-            if (!Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_BRANCHES)) {
-                throw new ApiException("Workspace branches are not enabled for this installation");
-            }
+            authoriseRequest(workspaceMetadata, request);
 
-            if (workspaceId > 0) {
-                authoriseRequest(workspaceId, "GET", getPath(request, workspaceId, null) + "/branch", null, request, response);
+            List<WorkspaceBranch> branches = workspaceComponent.getWorkspaceBranches(workspaceId);
 
-                List<WorkspaceBranch> branches = workspaceComponent.getWorkspaceBranches(workspaceId);
+            branches = new ArrayList<>(branches);
+            branches.sort(Comparator.comparing(WorkspaceBranch::getName));
+            String[] array = branches.stream().map(WorkspaceBranch::getName).toArray(String[]::new);
 
-                branches = new ArrayList<>(branches);
-                branches.sort(Comparator.comparing(WorkspaceBranch::getName));
-                String[] array = branches.stream().map(WorkspaceBranch::getName).toArray(String[]::new);
-
-                try {
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    return objectMapper.writeValueAsString(array);
-                } catch (JsonProcessingException e) {
-                    log.error(e);
-                    throw new ApiException("Could not get workspace branches");
-                }
-            } else {
-                throw new ApiException("Workspace ID must be greater than 1");
+            try {
+                ObjectMapper objectMapper = new ObjectMapper();
+                return objectMapper.writeValueAsString(array);
+            } catch (JsonProcessingException e) {
+                log.error(e);
+                throw new ApiException("Could not get workspace branches");
             }
         } catch (WorkspaceComponentException e) {
             log.error(e);
@@ -104,36 +103,27 @@ public class ServerWorkspaceApiController extends AbstractWorkspaceApiController
     @RequestMapping(value = "/api/workspace/{workspaceId}/branch/{branch}", method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
     public @ResponseBody ApiResponse deleteBranch(@PathVariable("workspaceId") long workspaceId,
                                @PathVariable("branch") String branch,
-                              HttpServletRequest request, HttpServletResponse response) {
+                              HttpServletRequest request) {
 
-        try {
-            if (!Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_BRANCHES)) {
-                throw new ApiException("Workspace branches are not enabled for this installation");
-            }
-
-            if (workspaceId > 0) {
-                authoriseRequest(workspaceId, "DELETE", getPath(request, workspaceId, null) + "/branch/" + branch, null, request, response);
-
-                if (WorkspaceBranch.isMainBranch(branch)) {
-                    throw new ApiException("The main branch cannot be deleted");
-                }
-
-                List<WorkspaceBranch> branches = workspaceComponent.getWorkspaceBranches(workspaceId);
-
-                if (branches.stream().anyMatch(b -> b.getName().equals(branch))) {
-                    boolean success = workspaceComponent.deleteBranch(workspaceId, branch);
-                    return new ApiResponse(success);
-                } else {
-                    return new ApiResponse(false, "Workspace branch \"" + branch + "\" does not exist");
-                }
-            } else {
-                throw new ApiException("Workspace ID must be greater than 1");
-            }
-        } catch (WorkspaceComponentException e) {
-            log.error(e);
+        if (!Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_BRANCHES)) {
+            throw new ApiException("Workspace branches are not enabled for this installation");
         }
 
-        throw new ApiException("Could not delete workspace branch");
+        WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
+        authoriseRequest(workspaceMetadata, request);
+
+        if (WorkspaceBranch.isMainBranch(branch)) {
+            throw new ApiException("The main branch cannot be deleted");
+        }
+
+        List<WorkspaceBranch> branches = workspaceComponent.getWorkspaceBranches(workspaceId);
+
+        if (branches.stream().anyMatch(b -> b.getName().equals(branch))) {
+            boolean success = workspaceComponent.deleteBranch(workspaceId, branch);
+            return new ApiResponse(success);
+        } else {
+            return new ApiResponse(false, "Workspace branch \"" + branch + "\" does not exist");
+        }
     }
 
     @RequestMapping(value = "/api/workspace/{workspaceId}/lock", method = RequestMethod.PUT, produces = "application/json; charset=UTF-8")
@@ -141,22 +131,15 @@ public class ServerWorkspaceApiController extends AbstractWorkspaceApiController
                                                    @RequestParam(required = true) String user,
                                                    @RequestParam(required = true) String agent,
                                                    HttpServletRequest request, HttpServletResponse response) {
-        try {
-            if (workspaceId > 0) {
-                authoriseRequest(workspaceId, "PUT", getPath(request, workspaceId, null) + "/lock?user=" + user + "&agent=" + agent, null, request, response);
 
-                if (workspaceComponent.lockWorkspace(workspaceId, user, agent)) {
-                    return new ApiResponse("OK");
-                } else {
-                    WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
-                    return new ApiResponse(false, "The workspace is already locked by " + workspaceMetadata.getLockedUser() + " using " + workspaceMetadata.getLockedAgent() + ".");
-                }
-            } else {
-                throw new ApiException("Workspace ID must be greater than 1");
-            }
-        } catch (WorkspaceComponentException e) {
-            log.error(e);
-            throw new ApiException("Could not lock workspace.");
+        WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
+        authoriseRequest(workspaceMetadata, request);
+
+        if (workspaceComponent.lockWorkspace(workspaceId, user, agent)) {
+            return new ApiResponse("OK");
+        } else {
+            workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId); // refresh metadata
+            return new ApiResponse(false, "The workspace is already locked by " + workspaceMetadata.getLockedUser() + " using " + workspaceMetadata.getLockedAgent() + ".");
         }
     }
 
@@ -165,21 +148,13 @@ public class ServerWorkspaceApiController extends AbstractWorkspaceApiController
                                                      @RequestParam(required = true) String user,
                                                      @RequestParam(required = true) String agent,
                                                      HttpServletRequest request, HttpServletResponse response) {
-        try {
-            if (workspaceId > 0) {
-                authoriseRequest(workspaceId, "DELETE", getPath(request, workspaceId, null) + "/lock?user=" + user + "&agent=" + agent, null, request, response);
+        WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
+        authoriseRequest(workspaceMetadata, request);
 
-                if (workspaceComponent.unlockWorkspace(workspaceId)) {
-                    return new ApiResponse("OK");
-                } else {
-                    return new ApiResponse(false, "Could not unlock workspace.");
-                }
-            } else {
-                throw new ApiException("Workspace ID must be greater than 1");
-            }
-        } catch (WorkspaceComponentException e) {
-            log.error(e);
-            throw new ApiException("Could not unlock workspace.");
+        if (workspaceComponent.unlockWorkspace(workspaceId)) {
+            return new ApiResponse("OK");
+        } else {
+            return new ApiResponse(false, "Could not unlock workspace.");
         }
     }
 

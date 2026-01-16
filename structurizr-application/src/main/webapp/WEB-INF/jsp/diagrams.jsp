@@ -346,10 +346,8 @@
         initControls();
         initKeyboardShortcuts();
 
-        <c:if test="${structurizrConfiguration.profile eq 'Server'}">
-        <c:if test="${workspace.editable && not empty workspace.apiKey}">
+        <c:if test="${structurizrConfiguration.profile eq 'Server' && workspace.editable}">
         new structurizr.Lock(${workspace.id}, '${userAgent}');
-        </c:if>
         </c:if>
 
         progressMessage.hide();

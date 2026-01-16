@@ -35,17 +35,21 @@
                     <br />
                     API URL: <span id="workspace${workspace.id}ApiUrl" style="font-family: 'Courier New', Courier, monospace; cursor: pointer"><span class="baseUrl"></span>/api</span>
                     <br />
-                    API key:
-                    <span id="workspace${workspace.id}ApiKey" style="font-family: 'Courier New', Courier, monospace; cursor: pointer">${workspace.apiKey}</span>
-                    <br />
-                    API secret:
-                    <span id="workspace${workspace.id}ApiSecret" style="font-family: 'Courier New', Courier, monospace; cursor: pointer">${workspace.apiSecret}</span>
+                    API key: <span style="font-family: 'Courier New', Courier, monospace;">********</span>
+                    <br /><br />
                 </p>
 
                 <p>
-                    Structurizr parameters for <a href="https://docs.structurizr.com/push" target="_blank">push</a> and <a href="https://docs.structurizr.com/push" target="_blank">pull</a> via the web API</span>
+                    Structurizr parameters for <a href="https://docs.structurizr.com/push" target="_blank">push</a> and <a href="https://docs.structurizr.com/push" target="_blank">pull</a> via the workspace API:
                     <br />
-                    <pre id="workspace${workspace.id}Cli" style="font-family: 'Courier New', Courier, monospace; cursor: pointer; text-align: left">-url <span class="baseUrl"></span>/api -id ${workspace.id} -key ${workspace.apiKey} -secret ${workspace.apiSecret}</pre>
+                    <pre id="workspace${workspace.id}Push" style="font-family: 'Courier New', Courier, monospace; cursor: pointer; text-align: left">push -url <span class="baseUrl"></span>/api -id ${workspace.id} -key KEY</pre>
+                    <pre id="workspace${workspace.id}Pull" style="font-family: 'Courier New', Courier, monospace; cursor: pointer; text-align: left">pull -url <span class="baseUrl"></span>/api -id ${workspace.id} -key KEY</pre>
+                </p>
+
+                <p>
+                    Or when using <code>curl</code>:
+                    <br />
+                    <pre id="workspace${workspace.id}Curl" style="font-family: 'Courier New', Courier, monospace; cursor: pointer; text-align: left">curl <span class="baseUrl"></span>/api/workspace/${workspace.id} --header 'X-Authorization: KEY'</pre>
                 </p>
 
                 <c:if test="${showAdminFeatures}">
@@ -175,9 +179,9 @@
 
     $('#workspace${workspace.id}Id').click(function() { structurizr.util.selectText('workspace${workspace.id}Id'); });
     $('#workspace${workspace.id}ApiUrl').click(function() { structurizr.util.selectText('workspace${workspace.id}ApiUrl'); });
-    $('#workspace${workspace.id}ApiKey').click(function() { structurizr.util.selectText('workspace${workspace.id}ApiKey'); });
-    $('#workspace${workspace.id}ApiSecret').click(function() { structurizr.util.selectText('workspace${workspace.id}ApiSecret'); });
-    $('#workspace${workspace.id}Cli').click(function() { structurizr.util.selectText('workspace${workspace.id}Cli'); });
+    $('#workspace${workspace.id}Push').click(function() { structurizr.util.selectText('workspace${workspace.id}Push'); });
+    $('#workspace${workspace.id}Pull').click(function() { structurizr.util.selectText('workspace${workspace.id}Pull'); });
+    $('#workspace${workspace.id}Curl').click(function() { structurizr.util.selectText('workspace${workspace.id}Curl'); });
 
     $('#regenerateApiCredentialsForm').on('submit', function() { return confirm('Are you sure you want to regenerate the API credentials?'); });
 

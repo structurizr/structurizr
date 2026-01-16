@@ -26,10 +26,10 @@ public class AdminApiClient extends AbstractApiClient {
      * Creates a new admin API client.
      *
      * @param url       the URL of your Structurizr instance
-     * @param apiKey    the API key of your workspace
+     * @param apiKey    the admin API key
      */
     public AdminApiClient(String url, String apiKey) {
-        setUrl(url);
+        super(url);
 
         if (StringUtils.isNullOrEmpty(apiKey)) {
             throw new IllegalArgumentException("The API key must not be null or empty.");

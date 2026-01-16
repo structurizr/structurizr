@@ -99,8 +99,7 @@
     </div>
 
     <c:forEach var="message" items="${messages.unreadMessages}">
-    <div style="margin: 10px" class="alert alert-${message.type} alert-dismissible" role="alert" style="margin-bottom: 0">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <div style="margin: 10px" class="alert alert-${message.type} centered" role="alert" style="margin-bottom: 0">
         ${message.text}
     </div>
     </c:forEach>

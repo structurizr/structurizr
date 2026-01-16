@@ -7,7 +7,7 @@ import java.util.Stack;
 
 public final class Messages implements Serializable {
 
-    private Stack<Message> messages = new Stack<>();
+    private final Stack<Message> messages = new Stack<>();
 
     public void addSuccessMessage(String message) {
         this.messages.push(new Message(MessageType.success, message));

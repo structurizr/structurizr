@@ -168,6 +168,10 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
 
     @Override
     public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) throws WorkspaceComponentException {
+        if (workspaceId < 0) {
+            throw new IllegalArgumentException("Invalid workspace ID: " + workspaceId);
+        }
+
         WorkspaceMetadata wmd = workspaceMetadataCache.get(workspaceId);
 
         if (wmd == null) {
@@ -259,8 +263,7 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
             try {
                 // create and write the workspace metadata
                 WorkspaceMetadata workspaceMetadata = new WorkspaceMetadata(workspaceId);
-                workspaceMetadata.setApiKey(UUID.randomUUID().toString());
-                workspaceMetadata.setApiSecret(UUID.randomUUID().toString());
+                workspaceMetadata.regenerateApiKey();
 
                 putWorkspaceMetadata(workspaceMetadata);
             } catch (Exception e) {

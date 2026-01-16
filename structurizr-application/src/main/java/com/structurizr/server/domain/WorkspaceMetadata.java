@@ -3,6 +3,7 @@ package com.structurizr.server.domain;
 import com.structurizr.configuration.Configuration;
 import com.structurizr.util.DateUtils;
 import com.structurizr.util.StringUtils;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,7 +24,6 @@ public class WorkspaceMetadata {
     static final String LAST_MODIFIED_DATE_PROPERTY = "lastModifiedDate";
     static final String SIZE_PROPERTY = "size";
     static final String API_KEY_PROPERTY = "apiKey";
-    static final String API_SECRET_PROPERTY = "apiSecret";
     static final String PUBLIC_PROPERTY = "public";
     static final String SHARING_TOKEN_PROPERTY = "sharingToken";
     static final String LOCKED_USER_PROPERTY = "lockedUser";
@@ -40,7 +40,6 @@ public class WorkspaceMetadata {
     private long size;
     private boolean clientSideEncrypted = false;
     private String apiKey;
-    private String apiSecret;
     private boolean publicWorkspace = false;
     private String sharingToken = "";
     private String urlPrefix = "/workspace";
@@ -103,12 +102,14 @@ public class WorkspaceMetadata {
         this.apiKey = apiKey;
     }
 
-    public String getApiSecret() {
-        return apiSecret;
-    }
+    public String regenerateApiKey() {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String apiKey = UUID.randomUUID().toString();
+        String hashedApiKey = encoder.encode(apiKey);
 
-    public void setApiSecret(String apiSecret) {
-        this.apiSecret = apiSecret;
+        setApiKey(hashedApiKey);
+
+        return apiKey;
     }
 
     public boolean isPublicWorkspace() {
@@ -445,7 +446,6 @@ public class WorkspaceMetadata {
         }
         workspace.setSize(Long.parseLong(properties.getProperty(SIZE_PROPERTY, "0")));
         workspace.setApiKey(properties.getProperty(API_KEY_PROPERTY, ""));
-        workspace.setApiSecret(properties.getProperty(API_SECRET_PROPERTY, ""));
         workspace.setPublicWorkspace("true".equals(properties.getProperty(PUBLIC_PROPERTY, "false")));
         workspace.setSharingToken(properties.getProperty(SHARING_TOKEN_PROPERTY, ""));
         workspace.setArchived("true".equals(properties.getProperty(ARCHIVED_PROPERTY)));
@@ -524,7 +524,6 @@ public class WorkspaceMetadata {
         properties.setProperty(SIZE_PROPERTY, "" + this.getSize());
 
         properties.setProperty(API_KEY_PROPERTY, this.getApiKey());
-        properties.setProperty(API_SECRET_PROPERTY, this.getApiSecret());
 
         properties.setProperty(PUBLIC_PROPERTY, "" + this.isPublicWorkspace());
 

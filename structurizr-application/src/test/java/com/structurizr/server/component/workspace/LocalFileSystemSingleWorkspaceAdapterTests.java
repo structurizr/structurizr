@@ -77,8 +77,6 @@ class LocalFileSystemSingleWorkspaceAdapterTests extends AbstractWorkspaceAdapte
         WorkspaceMetadata wmd = workspaceAdapter.getWorkspaceMetadata(1);
         assertEquals("JSON", wmd.getName());
         assertEquals("Description", wmd.getDescription());
-        assertFalse(StringUtils.isNullOrEmpty(wmd.getApiKey()));
-        assertFalse(StringUtils.isNullOrEmpty(wmd.getApiSecret()));
     }
 
     @Test
@@ -93,8 +91,6 @@ class LocalFileSystemSingleWorkspaceAdapterTests extends AbstractWorkspaceAdapte
         WorkspaceMetadata wmd = workspaceAdapter.getWorkspaceMetadata(1);
         assertEquals("DSL", wmd.getName());
         assertEquals("Description", wmd.getDescription());
-        assertFalse(StringUtils.isNullOrEmpty(wmd.getApiKey()));
-        assertFalse(StringUtils.isNullOrEmpty(wmd.getApiSecret()));
     }
 
     @Override

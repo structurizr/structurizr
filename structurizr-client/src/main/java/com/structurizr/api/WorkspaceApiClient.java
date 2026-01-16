@@ -10,7 +10,6 @@ import com.structurizr.io.json.EncryptedJsonWriter;
 import com.structurizr.io.json.JsonReader;
 import com.structurizr.io.json.JsonWriter;
 import com.structurizr.model.IdGenerator;
-import com.structurizr.util.Md5Digest;
 import com.structurizr.util.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -30,9 +29,7 @@ import org.apache.hc.core5.http.io.entity.StringEntity;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.util.Base64;
 import java.util.Date;
 
 /**
@@ -45,8 +42,8 @@ public class WorkspaceApiClient extends AbstractApiClient {
 
     private String user;
 
-    private String apiKey;
-    private String apiSecret;
+    private final long workspaceId;
+    private final String apiKey;
     private String branch = "";
 
     private EncryptionStrategy encryptionStrategy;
@@ -55,30 +52,26 @@ public class WorkspaceApiClient extends AbstractApiClient {
     private boolean mergeFromRemote = true;
     private File workspaceArchiveLocation = new File(".");
 
-    protected WorkspaceApiClient() {
-    }
-
     /**
-     * Creates a new Structurizr API client with the specified API key and secret, for the Structurizr cloud service.
+     * Creates a new Structurizr client with the specified API URL, workspace ID, and API key.
      *
-     * @param apiKey    the API key of your workspace
-     * @param apiSecret the API secret of your workspace
+     * @param url           the URL of your Structurizr server
+     * @param workspaceId   the workspace ID
+     * @param apiKey        the API key of the workspace
      */
-    public WorkspaceApiClient(String apiKey, String apiSecret) {
-        this(STRUCTURIZR_CLOUD_SERVICE_API_URL, apiKey, apiSecret);
-    }
+    public WorkspaceApiClient(String url, long workspaceId, String apiKey) {
+        super(url);
 
-    /**
-     * Creates a new Structurizr client with the specified API URL, key and secret.
-     *
-     * @param url       the URL of your Structurizr instance
-     * @param apiKey    the API key of your workspace
-     * @param apiSecret the API secret of your workspace
-     */
-    public WorkspaceApiClient(String url, String apiKey, String apiSecret) {
-        setUrl(url);
-        setApiKey(apiKey);
-        setApiSecret(apiSecret);
+        if (StringUtils.isNullOrEmpty(apiKey)) {
+            throw new IllegalArgumentException("The API key must not be null or empty");
+        }
+
+        if (workspaceId <= 0) {
+            throw new IllegalArgumentException("The workspace ID must be a positive integer");
+        }
+
+        this.workspaceId = workspaceId;
+        this.apiKey = apiKey;
     }
 
     /**
@@ -88,30 +81,6 @@ public class WorkspaceApiClient extends AbstractApiClient {
      */
     public void setIdGenerator(IdGenerator idGenerator) {
         this.idGenerator = idGenerator;
-    }
-
-    String getApiKey() {
-        return apiKey;
-    }
-
-    protected void setApiKey(String apiKey) {
-        if (apiKey == null || apiKey.trim().length() == 0) {
-            throw new IllegalArgumentException("The API key must not be null or empty.");
-        }
-
-        this.apiKey = apiKey;
-    }
-
-    String getApiSecret() {
-        return apiSecret;
-    }
-
-    protected void setApiSecret(String apiSecret) {
-        if (apiSecret == null || apiSecret.trim().length() == 0) {
-            throw new IllegalArgumentException("The API secret must not be null or empty.");
-        }
-
-        this.apiSecret = apiSecret;
     }
 
     public String getBranch() {
@@ -162,32 +131,26 @@ public class WorkspaceApiClient extends AbstractApiClient {
     }
 
     /**
-     * Locks the workspace with the given ID.
+     * Locks the workspace.
      *
-     * @param   workspaceId     the ID of your workspace
      * @return                  true if the workspace could be locked, false otherwise
      * @throws StructurizrClientException   if there are problems related to the network, authorization, etc
      */
-    public boolean lockWorkspace(long workspaceId) throws StructurizrClientException {
-        return manageLockForWorkspace(workspaceId, true);
+    public boolean lockWorkspace() throws StructurizrClientException {
+        return manageLockForWorkspace(true);
     }
 
     /**
-     * Unlocks the workspace with the given ID.
+     * Unlocks the workspace.
      *
-     * @param   workspaceId     the ID of your workspace
      * @return                  true if the workspace could be unlocked, false otherwise
      * @throws StructurizrClientException   if there are problems related to the network, authorization, etc
      */
-    public boolean unlockWorkspace(long workspaceId) throws StructurizrClientException {
-        return manageLockForWorkspace(workspaceId, false);
+    public boolean unlockWorkspace() throws StructurizrClientException {
+        return manageLockForWorkspace(false);
     }
 
-    private boolean manageLockForWorkspace(long workspaceId, boolean lock) throws StructurizrClientException {
-        if (workspaceId <= 0) {
-            throw new IllegalArgumentException("The workspace ID must be a positive integer.");
-        }
-
+    private boolean manageLockForWorkspace(boolean lock) throws StructurizrClientException {
         try (CloseableHttpClient httpClient = HttpClients.createSystem()) {
             HttpUriRequestBase httpRequest;
 
@@ -199,7 +162,7 @@ public class WorkspaceApiClient extends AbstractApiClient {
                 httpRequest = new HttpDelete(url + WORKSPACE_PATH + "/" + workspaceId + "/lock?user=" + getUser() + "&agent=" + agent);
             }
 
-            addHeaders(httpRequest, "", "");
+            addHeaders(httpRequest, "");
             debugRequest(httpRequest, null);
 
             try (CloseableHttpResponse response = httpClient.execute(httpRequest)) {
@@ -221,19 +184,19 @@ public class WorkspaceApiClient extends AbstractApiClient {
     }
 
     /**
-     * Gets the workspace with the given ID.
+     * Gets the workspace.
      *
-     * @param workspaceId the workspace ID
      * @return a Workspace instance
      * @throws StructurizrClientException   if there are problems related to the network, authorization, JSON deserialization, etc
      */
-    public Workspace getWorkspace(long workspaceId) throws StructurizrClientException {
-        String json = getWorkspaceAsJson(workspaceId);
+    public Workspace getWorkspace() throws StructurizrClientException {
+        String json = getWorkspaceAsJson();
+        checkResponseIsJson(json);
 
         try {
             if (encryptionStrategy == null) {
                 if (json.contains("\"encryptionStrategy\"") && json.contains("\"ciphertext\"")) {
-                    log.warn("The JSON may contain a client-side encrypted workspace, but no passphrase has been specified.");
+                    log.warn("The JSON may contain a client-side encrypted workspace, but no passphrase has been specified");
                 }
 
                 JsonReader jsonReader = new JsonReader();
@@ -259,15 +222,14 @@ public class WorkspaceApiClient extends AbstractApiClient {
     }
 
     /**
-     * Gets the workspace with the given ID, as a JSON string.
+     * Gets the workspace, as a JSON string.
      *
-     * @param workspaceId the workspace ID
      * @return a JSON string
      * @throws StructurizrClientException   if there are problems related to the network, authorization, JSON deserialization, etc
      */
-    public String getWorkspaceAsJson(long workspaceId) throws StructurizrClientException {
+    public String getWorkspaceAsJson() throws StructurizrClientException {
         if (workspaceId <= 0) {
-            throw new IllegalArgumentException("The workspace ID must be a positive integer.");
+            throw new IllegalArgumentException("The workspace ID must be a positive integer");
         }
 
         try (CloseableHttpClient httpClient = HttpClients.createSystem()) {
@@ -280,7 +242,7 @@ public class WorkspaceApiClient extends AbstractApiClient {
                 httpGet = new HttpGet(url + WORKSPACE_PATH + "/" + workspaceId + "/branch/" + branch);
             }
 
-            addHeaders(httpGet, "", "");
+            addHeaders(httpGet, "");
             debugRequest(httpGet, null);
 
             try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
@@ -303,22 +265,19 @@ public class WorkspaceApiClient extends AbstractApiClient {
     }
 
     /**
-     * Updates the given workspace.
+     * Updates the workspace.
      *
-     * @param workspaceId the workspace ID
      * @param workspace   the workspace instance to update
      * @throws StructurizrClientException   if there are problems related to the network, authorization, JSON serialization, etc
      */
-    public void putWorkspace(long workspaceId, Workspace workspace) throws StructurizrClientException {
+    public void putWorkspace(Workspace workspace) throws StructurizrClientException {
         if (workspace == null) {
-            throw new IllegalArgumentException("The workspace must not be null.");
-        } else if (workspaceId <= 0) {
-            throw new IllegalArgumentException("The workspace ID must be a positive integer.");
+            throw new IllegalArgumentException("The workspace must not be null");
         }
 
         try (CloseableHttpClient httpClient = HttpClients.createSystem()) {
             if (mergeFromRemote) {
-                Workspace remoteWorkspace = getWorkspace(workspaceId);
+                Workspace remoteWorkspace = getWorkspace();
                 if (remoteWorkspace != null) {
                     workspace.getViews().copyLayoutInformationFrom(remoteWorkspace.getViews());
                     workspace.getViews().getConfiguration().copyConfigurationFrom(remoteWorkspace.getViews().getConfiguration());
@@ -351,7 +310,7 @@ public class WorkspaceApiClient extends AbstractApiClient {
 
             StringEntity stringEntity = new StringEntity(stringWriter.toString(), ContentType.APPLICATION_JSON);
             httpPut.setEntity(stringEntity);
-            addHeaders(httpPut, EntityUtils.toString(stringEntity), ContentType.APPLICATION_JSON.toString());
+            addHeaders(httpPut, ContentType.APPLICATION_JSON.toString());
 
             debugRequest(httpPut, EntityUtils.toString(stringEntity));
 
@@ -398,20 +357,13 @@ public class WorkspaceApiClient extends AbstractApiClient {
         }
     }
 
-    private void addHeaders(HttpUriRequestBase httpRequest, String content, String contentType) throws Exception {
+    private void addHeaders(HttpUriRequestBase httpRequest, String contentType) {
         String httpMethod = httpRequest.getMethod();
-        String path = httpRequest.getPath();
-        String contentMd5 = new Md5Digest().generate(content);
-        String nonce = "" + System.currentTimeMillis();
 
-        HashBasedMessageAuthenticationCode hmac = new HashBasedMessageAuthenticationCode(apiSecret);
-        HmacContent hmacContent = new HmacContent(httpMethod, path, contentMd5, contentType, nonce);
         httpRequest.addHeader(HttpHeaders.USER_AGENT, agent);
-        httpRequest.addHeader(HttpHeaders.AUTHORIZATION, new HmacAuthorizationHeader(apiKey, hmac.generate(hmacContent.toString())).format());
-        httpRequest.addHeader(HttpHeaders.NONCE, nonce);
+        httpRequest.addHeader(HttpHeaders.AUTHORIZATION, apiKey);
 
         if (httpMethod.equals("PUT")) {
-            httpRequest.addHeader(HttpHeaders.CONTENT_MD5, Base64.getEncoder().encodeToString(contentMd5.getBytes(StandardCharsets.UTF_8)));
             httpRequest.addHeader(HttpHeaders.CONTENT_TYPE, contentType);
         }
     }
@@ -473,27 +425,23 @@ public class WorkspaceApiClient extends AbstractApiClient {
     }
 
     /**
-     * Gets the list of branches for the workspace with the given ID.
+     * Gets the list of branches.
      *
-     * @param   workspaceId     the ID of your workspace
      * @return                  an array of branch names (String)
      * @throws StructurizrClientException   if there are problems related to the network, authorization, etc
      */
-    public String[] getBranches(long workspaceId) throws StructurizrClientException {
-        if (workspaceId <= 0) {
-            throw new IllegalArgumentException("The workspace ID must be a positive integer.");
-        }
-
+    public String[] getBranches() throws StructurizrClientException {
         try (CloseableHttpClient httpClient = HttpClients.createSystem()) {
             HttpUriRequestBase httpRequest;
 
             httpRequest = new HttpGet(url + WORKSPACE_PATH + "/" + workspaceId + "/branch");
 
-            addHeaders(httpRequest, "", "");
+            addHeaders(httpRequest, "");
             debugRequest(httpRequest, null);
 
             try (CloseableHttpResponse response = httpClient.execute(httpRequest)) {
                 String json = EntityUtils.toString(response.getEntity());
+                checkResponseIsJson(json);
                 debugResponse(response, json);
 
                 if (response.getCode() == HttpStatus.SC_OK) {
@@ -511,15 +459,14 @@ public class WorkspaceApiClient extends AbstractApiClient {
     }
 
     /**
-     * Deletes a given branch for the workspace with the given ID.
+     * Deletes a given branch.
      *
-     * @param   workspaceId     the ID of your workspace
      * @return                  true if the branch was deleted, false otherwise
      * @throws StructurizrClientException   if there are problems related to the network, authorization, etc
      */
-    public boolean deleteBranch(long workspaceId, String branch) throws StructurizrClientException {
+    public boolean deleteBranch(String branch) throws StructurizrClientException {
         if (workspaceId <= 0) {
-            throw new IllegalArgumentException("The workspace ID must be a positive integer.");
+            throw new IllegalArgumentException("The workspace ID must be a positive integer");
         }
 
         try (CloseableHttpClient httpClient = HttpClients.createSystem()) {
@@ -527,11 +474,12 @@ public class WorkspaceApiClient extends AbstractApiClient {
 
             httpRequest = new HttpDelete(url + WORKSPACE_PATH + "/" + workspaceId + "/branch/" + branch);
 
-            addHeaders(httpRequest, "", "");
+            addHeaders(httpRequest, "");
             debugRequest(httpRequest, null);
 
             try (CloseableHttpResponse response = httpClient.execute(httpRequest)) {
                 String json = EntityUtils.toString(response.getEntity());
+                checkResponseIsJson(json);
                 debugResponse(response, json);
 
                 if (response.getCode() == HttpStatus.SC_OK) {
@@ -545,6 +493,13 @@ public class WorkspaceApiClient extends AbstractApiClient {
         } catch (Exception e) {
             log.error(e);
             throw new StructurizrClientException(e);
+        }
+    }
+
+    private void checkResponseIsJson(String json) throws StructurizrClientException{
+        if (!json.startsWith("{")) {
+            log.error(json);
+            throw new StructurizrClientException("The response is not a JSON object - is the API URL correct?");
         }
     }
 

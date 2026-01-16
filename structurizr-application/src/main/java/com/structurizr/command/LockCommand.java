@@ -27,17 +27,12 @@ public class LockCommand extends AbstractCommand {
         option.setRequired(true);
         options.addOption(option);
 
-        option = new Option("secret", "apiSecret", true, "Workspace API secret");
-        option.setRequired(true);
-        options.addOption(option);
-
         CommandLineParser commandLineParser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();
 
         String apiUrl = "";
         long workspaceId = 1;
         String apiKey = "";
-        String apiSecret = "";
 
         try {
             CommandLine cmd = commandLineParser.parse(options, args);
@@ -45,7 +40,6 @@ public class LockCommand extends AbstractCommand {
             apiUrl = cmd.getOptionValue("structurizrApiUrl", "https://api.structurizr.com");
             workspaceId = Long.parseLong(cmd.getOptionValue("workspaceId"));
             apiKey = cmd.getOptionValue("apiKey");
-            apiSecret = cmd.getOptionValue("apiSecret");
         } catch (ParseException e) {
             log.error(e.getMessage());
             formatter.printHelp("lock", options);
@@ -54,9 +48,9 @@ public class LockCommand extends AbstractCommand {
         }
 
         log.info("Locking workspace " + workspaceId + " at " + apiUrl);
-        WorkspaceApiClient client = new WorkspaceApiClient(apiUrl, apiKey, apiSecret);
+        WorkspaceApiClient client = new WorkspaceApiClient(apiUrl, workspaceId, apiKey);
         client.setAgent(getAgent());
-        boolean locked = client.lockWorkspace(workspaceId);
+        boolean locked = client.lockWorkspace();
 
         log.info(" - locked " + locked);
         log.info(" - finished");
