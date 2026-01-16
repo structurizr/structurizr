@@ -20,22 +20,18 @@ public class AdminApiClient extends AbstractApiClient {
 
     private static final Log log = LogFactory.getLog(AdminApiClient.class);
 
-    private final String username;
     private final String apiKey;
 
     /**
      * Creates a new admin API client.
      *
      * @param url       the URL of your Structurizr instance
-     * @param username  the username (only required for the Structurizr cloud service)
      * @param apiKey    the API key of your workspace
      */
-    public AdminApiClient(String url, String username, String apiKey) {
+    public AdminApiClient(String url, String apiKey) {
         setUrl(url);
 
-        this.username = username;
-
-        if (apiKey == null || apiKey.trim().length() == 0) {
+        if (StringUtils.isNullOrEmpty(apiKey)) {
             throw new IllegalArgumentException("The API key must not be null or empty.");
         }
 
@@ -52,7 +48,7 @@ public class AdminApiClient extends AbstractApiClient {
         try {
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(url + WORKSPACE_PATH))
-                    .header(HttpHeaders.AUTHORIZATION, createAuthorizationHeader())
+                    .header(HttpHeaders.X_AUTHORIZATION, createAuthorizationHeader())
                     .header(HttpHeaders.USER_AGENT, agent)
                     .build();
             HttpClient client = HttpClient.newHttpClient();
@@ -87,7 +83,7 @@ public class AdminApiClient extends AbstractApiClient {
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(url + WORKSPACE_PATH))
                     .POST(HttpRequest.BodyPublishers.noBody())
-                    .header(HttpHeaders.AUTHORIZATION, createAuthorizationHeader())
+                    .header(HttpHeaders.X_AUTHORIZATION, createAuthorizationHeader())
                     .header(HttpHeaders.USER_AGENT, agent)
                     .build();
             HttpClient client = HttpClient.newHttpClient();
@@ -121,7 +117,7 @@ public class AdminApiClient extends AbstractApiClient {
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(url + WORKSPACE_PATH + "/" + workspaceId))
                     .DELETE()
-                    .header(HttpHeaders.AUTHORIZATION, createAuthorizationHeader())
+                    .header(HttpHeaders.X_AUTHORIZATION, createAuthorizationHeader())
                     .header(HttpHeaders.USER_AGENT, agent)
                     .build();
             HttpClient client = HttpClient.newHttpClient();
@@ -146,11 +142,7 @@ public class AdminApiClient extends AbstractApiClient {
     }
 
     private String createAuthorizationHeader() {
-        if (StringUtils.isNullOrEmpty(username)) {
-            return apiKey;
-        } else {
-            return username + ":" + apiKey;
-        }
+        return apiKey;
     }
 
 }
