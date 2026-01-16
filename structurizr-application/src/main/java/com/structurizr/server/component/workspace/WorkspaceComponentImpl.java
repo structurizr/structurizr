@@ -277,7 +277,7 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
                 workspace.getConfiguration().setScope(WorkspaceScope.SoftwareSystem);
             }
 
-            String json = WorkspaceUtils.toJson(workspace, false);
+            String json = WorkspaceUtils.toJson(workspace, true);
 
             putWorkspace(workspaceId, null, json);
 
@@ -375,7 +375,7 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
                     encryptedJsonWriter.write(encryptedWorkspace, stringWriter);
                     jsonToBeStored = stringWriter.toString();
                 } else {
-                    jsonToBeStored = WorkspaceUtils.toJson(workspace, false);
+                    jsonToBeStored = WorkspaceUtils.toJson(workspace, true);
                 }
             }
 
