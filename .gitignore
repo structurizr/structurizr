@@ -19,3 +19,5 @@ replay_pid*
 */build
 
 structurizr-application/extensions
+
+*.json
