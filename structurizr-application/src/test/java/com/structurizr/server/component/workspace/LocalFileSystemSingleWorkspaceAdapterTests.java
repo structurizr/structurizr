@@ -129,4 +129,14 @@ class LocalFileSystemSingleWorkspaceAdapterTests extends AbstractWorkspaceAdapte
         return workspaceAdapter;
     }
 
+    @Test
+    void getDataDirectory_ThrowsAnException_WhenTheWorkspaceIdIsNot1() {
+        try {
+            workspaceAdapter.getDataDirectory(2);
+            fail();
+        } catch (Exception e) {
+            assertEquals("Workspace ID must be 1", e.getMessage());
+        }
+    }
+
 }

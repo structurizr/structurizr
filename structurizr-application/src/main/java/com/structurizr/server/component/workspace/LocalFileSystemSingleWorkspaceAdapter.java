@@ -38,7 +38,11 @@ class LocalFileSystemSingleWorkspaceAdapter extends LocalFileSystemWorkspaceAdap
 
     @Override
     protected File getDataDirectory(long workspaceId) {
-        return dataDirectory;
+        if (workspaceId == WORKSPACE_ID) {
+            return dataDirectory;
+        } else {
+            throw new IllegalArgumentException("Workspace ID must be " + WORKSPACE_ID);
+        }
     }
 
 }
