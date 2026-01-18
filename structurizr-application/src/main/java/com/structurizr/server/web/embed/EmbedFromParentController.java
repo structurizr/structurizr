@@ -72,7 +72,6 @@ EmbedFromParentController extends AbstractWorkspaceController {
             }
 
             model.addAttribute("showToolbar", editable);
-            model.addAttribute("showDiagramSelector", false);
             model.addAttribute("perspective", perspective);
 
             return Views.DIAGRAMS;

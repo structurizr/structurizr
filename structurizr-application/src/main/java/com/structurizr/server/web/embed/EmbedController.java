@@ -18,7 +18,6 @@ public class EmbedController extends AbstractEmbedController {
             @PathVariable("workspaceId") long workspaceId,
             @RequestParam(value = "branch", required = false) String branch,
             @RequestParam(value = "diagram", required = false) String diagramIdentifier,
-            @RequestParam(required = false) boolean diagramSelector,
             @RequestParam(required = false) boolean health,
             @RequestParam(required = false) String perspective,
             ModelMap model) {
@@ -30,12 +29,12 @@ public class EmbedController extends AbstractEmbedController {
 
         if (!Configuration.getInstance().isAuthenticationEnabled()) {
             model.addAttribute("urlPrefix", "/workspace/" + workspaceId);
-            return showEmbed(workspaceMetadata, branch, diagramIdentifier, diagramSelector, health, perspective, model);
+            return showEmbed(workspaceMetadata, branch, diagramIdentifier, health, perspective, model);
         }
 
         if (workspaceMetadata.isPublicWorkspace()) {
             model.addAttribute("urlPrefix", "/share/" + workspaceId);
-            return showEmbed(workspaceMetadata, branch, diagramIdentifier, diagramSelector, health, perspective, model);
+            return showEmbed(workspaceMetadata, branch, diagramIdentifier, health, perspective, model);
         }
 
         return "404";

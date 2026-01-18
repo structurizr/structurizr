@@ -186,7 +186,6 @@
     });
 
     var embed = ${embed};
-    var diagramSelector = ${showDiagramSelector eq true};
     var views;
     const viewKeys = [];
     var viewsVisited = new structurizr.util.Stack();
@@ -328,10 +327,6 @@
         toggleTooltip();
         </c:if>
 
-        <c:if test="${showDiagramSelector eq true}">
-        initDiagramSelector();
-        </c:if>
-
         initQuickNavigation();
         initExports();
         initSizing();
@@ -386,7 +381,7 @@
         } else {
             $('#diagramEditButtons').addClass('hidden');
 
-            if (embed && !diagramSelector) {
+            if (embed) {
                 $('#diagramControls').addClass('hidden');
             }
         }
@@ -549,8 +544,6 @@
 
     function selectDiagramByView(view)
     {
-        $('#viewType option[value="' + view.key + '"]').prop('selected', true);
-
         if (structurizr.workspace.id > 0) {
             $('.diagramThumbnail').removeClass('diagramThumbnailActive');
             var index = 1;
@@ -629,17 +622,6 @@
             };
 
             index++;
-        });
-    }
-
-    function initDiagramSelector() {
-        const viewsDropDown = $('#viewType');
-        viewsDropDown.empty();
-
-        views.forEach(function(view) {
-            viewsDropDown.append(
-                $('<option></option>').val(structurizr.util.escapeHtml(view.key)).html(structurizr.util.escapeHtml(structurizr.ui.getTitleForView(view)))
-            );
         });
     }
 
@@ -1431,20 +1413,9 @@
         }
     }
 
-    function getViewDropDown() {
-        return $("#viewType");
-    }
-
     // function getPageSizeDropDown() {
     //     return $("#pageSize");
     // }
-
-    getViewDropDown().change(function() {
-        var key = getViewDropDown().val();
-        setTimeout(function() {
-            window.location.hash = encodeURIComponent(key);
-        }, 10);
-    });
 
     // getPageSizeDropDown().change(function() {
     //     var pageSize = getPageSizeDropDown().val();

@@ -26,7 +26,6 @@ abstract class AbstractEmbedController extends AbstractWorkspaceController {
             WorkspaceMetadata workspaceMetadata,
             String branch,
             String diagramIdentifier,
-            boolean diagramSelector,
             boolean health,
             String perspective,
             ModelMap model) {
@@ -68,8 +67,6 @@ abstract class AbstractEmbedController extends AbstractWorkspaceController {
 
         String json = workspaceComponent.getWorkspace(workspaceMetadata.getId(), branch, WorkspaceVersion.LATEST_VERSION);
         model.addAttribute("workspaceAsJson", JsonUtils.base64(json));
-        model.addAttribute("showToolbar", diagramSelector);
-        model.addAttribute("showDiagramSelector", diagramSelector);
         model.addAttribute("embed", true);
         model.addAttribute("health", health);
         model.addAttribute("perspective", perspective);
