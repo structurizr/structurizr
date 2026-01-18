@@ -318,12 +318,11 @@
     }
 
     function postDiagramAspectRatioToParentWindow() {
-        var height = document.getElementById("diagram-canvas").offsetHeight;
-
         window.parent.postMessage({
             src: window.location.toString(),
             context: 'iframe.resize',
-            height: height // pixels
+            aspectRatio: structurizr.diagram.getAspectRatio(),
+            toolbarHeight: 0
         }, '*');
     }
 
