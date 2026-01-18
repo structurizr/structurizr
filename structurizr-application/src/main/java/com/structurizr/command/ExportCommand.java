@@ -8,7 +8,6 @@ import com.structurizr.export.plantuml.C4PlantUMLExporter;
 import com.structurizr.export.plantuml.StructurizrPlantUMLExporter;
 import com.structurizr.export.websequencediagrams.WebSequenceDiagramsExporter;
 import com.structurizr.http.HttpClient;
-import com.structurizr.util.BuiltInThemes;
 import com.structurizr.util.WorkspaceUtils;
 import com.structurizr.view.ColorScheme;
 import com.structurizr.view.ThemeUtils;
@@ -19,7 +18,10 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -27,8 +29,6 @@ import java.util.Base64;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 public class ExportCommand extends AbstractCommand {
 
@@ -132,7 +132,7 @@ public class ExportCommand extends AbstractCommand {
 
         if (STATIC_FORMAT.equals(format)) {
             log.info(" - writing static site to " + outputDir.getAbsolutePath());
-            writeStaticFile("static.html", outputDir);
+            writeStaticFile("static.html", outputDir, "index.html");
 
             ClassLoader cl = this.getClass().getClassLoader();
             ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver(cl);
@@ -233,44 +233,17 @@ public class ExportCommand extends AbstractCommand {
     }
 
     private void writeStaticFile(String filename, File outputDir) throws IOException {
+        writeStaticFile(filename, outputDir, filename);
+    }
+
+    private void writeStaticFile(String filename, File outputDir, String outputFilename) throws IOException {
         InputStream in = getClass().getResourceAsStream("/static/static/" + filename);
         if (in != null) {
-            File outputFile = new File(outputDir, filename);
+            File outputFile = new File(outputDir, outputFilename);
             outputFile.mkdirs();
             Files.copy(in, outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         } else {
             log.error(String.format("Unable to find static file: %s", filename));
-        }
-    }
-
-    private void unzip(InputStream inputStream, String destinationDirectory) {
-        byte[] buffer = new byte[1024];
-
-        try {
-            ZipInputStream zis = new ZipInputStream(inputStream);
-            ZipEntry ze = zis.getNextEntry();
-            while (ze != null) {
-                if (!ze.isDirectory()) {
-                    String fileName = ze.getName();
-                    File destinationFile = new File(destinationDirectory + File.separator + fileName);
-
-                    new File(destinationFile.getParent()).mkdirs();
-                    FileOutputStream fos = new FileOutputStream(destinationFile);
-                    int len;
-                    while ((len = zis.read(buffer)) > 0) {
-                        fos.write(buffer, 0, len);
-                    }
-                    fos.close();
-                }
-                zis.closeEntry();
-                ze = zis.getNextEntry();
-            }
-
-            zis.closeEntry();
-            zis.close();
-            inputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
