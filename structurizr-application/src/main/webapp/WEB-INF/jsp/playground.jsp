@@ -12,7 +12,7 @@
 
 <div class="section" style="padding-top: 20px; padding-bottom: 0">
     <div class="row" style="margin-left: 0; margin-right: 0; padding-bottom: 0">
-        <div id="sourcePanel" class="col-6 centered">
+        <div id="sourcePanel" class="col-5 centered">
 
             <form id="dslForm" action="/" method="post">
                 <input id="dsl" name="dsl" type="hidden" value="" />
@@ -57,7 +57,7 @@
                 <a id="renderingModeSystemLink" href="" title="System"><img src="/static/bootstrap-icons/sliders.svg" class="icon-xs" /></a>
             </div>
         </div>
-        <div id="diagramsPanel" class="col-6 centered">
+        <div id="diagramsPanel" class="col-7 centered">
 
             <c:choose>
             <c:when test="${not empty errorMessage}">
@@ -162,15 +162,17 @@
         progressMessage.hide();
     }
 
+    const paddingTop = 20;
+    const paddingBottom = 60;
+
     function getMaxHeightOfDiagramEditor() {
-        return window.innerHeight - 80;
+        return window.innerHeight - $('#viewListPanel').outerHeight() - paddingTop - paddingBottom;
     }
 
     function resize() {
         const sourceControlsHeight = $('#sourceControls').outerHeight();
-        const verticalPadding = 60;
 
-        $('#sourceTextArea').css('height', (window.innerHeight - sourceControlsHeight - verticalPadding) + 'px');
+        $('#sourceTextArea').css('height', (window.innerHeight - sourceControlsHeight - paddingBottom) + 'px');
         if (editor) {
             editor.resize(true);
         }

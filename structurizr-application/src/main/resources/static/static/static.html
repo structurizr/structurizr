@@ -173,11 +173,7 @@
 
         structurizr.diagram.getPossibleViewportHeight = function() {
             if (structurizr.ui.isFullScreen()) {
-                if (presentationMode) {
-                    return screen.availHeight;
-                } else {
-                    return screen.availHeight;
-                }
+                return screen.availHeight;
             } else {
                 return window.innerHeight;
             }

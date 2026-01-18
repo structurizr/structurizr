@@ -17,16 +17,8 @@
 </c:if>
 
 <c:choose>
-    <c:when test="${workspace.editable eq false && embed eq true && showDiagramSelector eq true}">
-        <%-- embedded mode, with the diagram selector --%>
-        <div id="diagramControls" class="form-group centered" style="margin-bottom: 0px; border: none;">
-            <div class="btn-group">
-                <select id="viewType" class="form-control" style="font-size: 12px;"></select>
-            </div>
-        </div>
-    </c:when>
-    <c:when test="${workspace.editable eq false && embed eq true && showDiagramSelector eq false}">
-        <%-- embedded mode, without the diagram selector --%>
+    <c:when test="${workspace.editable eq false && embed eq true}">
+        <%-- embedded mode, not editable --%>
         <div id="embeddedBanner" style="position: fixed; z-index: 100; width: 100%; opacity: 90%"></div>
     </c:when>
     <c:otherwise>
@@ -978,12 +970,20 @@
     function changeView(view, callback) {
         structurizr.diagram.reset();
         structurizr.diagram.changeView(view.key, callback);
+
+        <c:if test="${embed eq true}">
+        postDiagramAspectRatioToParentWindow();
+        </c:if>
     }
 
     function initQuickNavigation() {
         views.forEach(function(view) {
             const title = structurizr.util.escapeHtml(structurizr.ui.getTitleForView(view));
-            quickNavigation.addItem(title + ' <span class="viewKey">(#' + structurizr.util.escapeHtml(view.key) + ')</span>', '<c:out value="${urlPrefix}" />/${quickNavigationPath}<c:out value="${urlSuffix}" escapeXml="false" />#' + structurizr.util.escapeHtml(view.key));
+            <%--quickNavigation.addItem(title + ' <span class="viewKey">(#' + structurizr.util.escapeHtml(view.key) + ')</span>', '<c:out value="${urlPrefix}" />/${quickNavigationPath}<c:out value="${urlSuffix}" escapeXml="false" />#' + structurizr.util.escapeHtml(view.key));--%>
+            quickNavigation.addHandler(title + ' <span class="viewKey">(#' + structurizr.util.escapeHtml(view.key) + ')</span>',
+            function() {
+                window.location.hash = structurizr.util.escapeHtml(view.key);
+            })
         });
 
         quickNavigation.onOpen(function() {
@@ -1338,16 +1338,17 @@
     }
 
     function postDiagramAspectRatioToParentWindow() {
-        var height = document.getElementById("diagram-canvas").offsetHeight;
+        var toolbarHeight = 0;
         const diagramControls = document.getElementById("diagramControls");
         if (diagramControls) {
-            height += diagramControls.offsetHeight;
+            toolbarHeight += diagramControls.offsetHeight;
         }
 
         window.parent.postMessage({
             src: window.location.toString(),
             context: 'iframe.resize',
-            height: height // pixels
+            aspectRatio: structurizr.diagram.getAspectRatio(),
+            toolbarHeight: toolbarHeight
         }, '*');
     }
 
@@ -1565,12 +1566,6 @@
         structurizr.diagram.changeColorOfElement(elementId, background);
     }
 </script>
-
-<c:if test="${embed eq true}">
-<script nonce="${scriptNonce}">
-    quickNavigation.disable();
-</script>
-</c:if>
 
 <c:choose>
     <c:when test="${loadWorkspaceFromParent eq true}">

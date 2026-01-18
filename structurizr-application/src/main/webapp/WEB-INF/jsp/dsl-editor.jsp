@@ -30,7 +30,7 @@
 
 <div class="section" style="padding-top: 20px; padding-bottom: 0">
     <div class="row" style="margin-left: 0; margin-right: 0; padding-bottom: 0">
-        <div id="sourcePanel" class="col-6 centered">
+        <div id="sourcePanel" class="col-5 centered">
 
             <div style="text-align: left; margin-bottom: 10px">
                 <div id="sourceControls" style="float: right">
@@ -70,7 +70,7 @@
                 </c:if>
             </div>
         </div>
-        <div id="diagramsPanel" class="col-6 centered">
+        <div id="diagramsPanel" class="col-7 centered">
             <div id="viewListPanel" style="margin-bottom: 10px">
                 <div class="form-inline">
                         <span id="diagramNavButtons" class="hidden">
@@ -197,7 +197,6 @@
 
             viewsList.change(function () {
                 viewInFocus = $(this).val();
-                console.log(viewInFocus);
                 changeView();
             });
         }
@@ -213,16 +212,18 @@
         progressMessage.hide();
     }
 
+    const paddingTop = 20;
+    const paddingBottom = 60;
+
     function getMaxHeightOfDiagramEditor() {
-        return window.innerHeight - $('#banner').outerHeight() - 80;
+        return window.innerHeight - $('#banner').outerHeight() - $('#viewListPanel').outerHeight() - paddingTop - paddingBottom;
     }
 
     function resize() {
         const sourceControlsHeight = $('#sourceControls').outerHeight();
         const bannerHeight = $('#banner').outerHeight();
-        const verticalPadding = 60;
 
-        $('#sourceTextArea').css('height', (window.innerHeight - sourceControlsHeight - bannerHeight - verticalPadding) + 'px');
+        $('#sourceTextArea').css('height', (window.innerHeight - sourceControlsHeight - bannerHeight - paddingBottom) + 'px');
         if (editor) {
             editor.resize(true);
         }
@@ -243,10 +244,10 @@
 
             setTimeout(function () {
                 try {
-                    document.getElementById('diagramEditorIframe').contentWindow.structurizr.scripting = undefined;
-                    document.getElementById('diagramEditorIframe').contentWindow.structurizr.diagram.onWorkspaceChanged(workspaceChanged);
-                    document.getElementById('diagramEditorIframe').contentWindow.structurizr.diagram.onViewChanged(function(view) {
-                        document.getElementById('diagramEditorIframe').contentWindow.viewChanged(view);
+                    getEmbeddedDiagram().contentWindow.structurizr.scripting = undefined;
+                    getEmbeddedDiagram().contentWindow.structurizr.diagram.onWorkspaceChanged(workspaceChanged);
+                    getEmbeddedDiagram().contentWindow.structurizr.diagram.onViewChanged(function(view) {
+                        getEmbeddedDiagram().contentWindow.viewChanged(view);
 
                         if (document.getElementById('viewsList').value !== view) {
                             document.getElementById('viewsList').value = view;
@@ -269,9 +270,13 @@
 
     function changeView() {
         if (structurizr.workspace.hasViews()) {
-            document.getElementById('diagramEditorIframe').contentWindow.changeView(structurizr.workspace.findViewByKey(viewInFocus));
-            $('#diagramEditorIframe').focus();
+            getEmbeddedDiagram().contentWindow.changeView(structurizr.workspace.findViewByKey(viewInFocus));
+            $('.structurizrEmbed').focus();
         }
+    }
+
+    function getEmbeddedDiagram() {
+        return document.getElementsByClassName('structurizrEmbed')[0];
     }
 
     function workspaceChanged() {
@@ -364,7 +369,7 @@
 
         if (save) {
             try {
-                const embeddedDiagramEditor = document.getElementById('diagramEditorIframe');
+                const embeddedDiagramEditor = getEmbeddedDiagram();
                 if (embeddedDiagramEditor && embeddedDiagramEditor.contentWindow && structurizr.workspace.hasViews()) {
                     structurizr.workspace.views.configuration.lastSavedView = embeddedDiagramEditor.contentWindow.structurizr.diagram.getCurrentViewOrFilter().key;
                 }
@@ -385,7 +390,7 @@
                     editor.session.getUndoManager().markClean();
 
                     try {
-                        const embeddedDiagramEditor = document.getElementById('diagramEditorIframe');
+                        const embeddedDiagramEditor = getEmbeddedDiagram();
                         if (embeddedDiagramEditor && embeddedDiagramEditor.contentWindow && structurizr.workspace.hasViews()) {
                             embeddedDiagramEditor.contentWindow.refreshThumbnail();
                         }

@@ -5,6 +5,8 @@ var structurizr = structurizr || {
 structurizr.ui.Embed = function() {
 
     const ASPECT_RATIO_ATTRIBUTE = 'data-aspect-ratio';
+    const TOOLBAR_HEIGHT_ATTRIBUTE = 'data-toolbar-height';
+    const MAX_HEIGHT = 'max-height';
 
     this.receiveStructurizrResponsiveEmbedMessage = function(event) {
         if (event === undefined) {
@@ -15,7 +17,6 @@ structurizr.ui.Embed = function() {
             const iframes = document.getElementsByTagName('iframe');
             for (var i = 0; i < iframes.length; i++) {
                 const iframe = iframes[i];
-                const eventHeight = event.data.height;
 
                 // find iframe (the hash needs to be removed if present)
                 var eventSrc = event.data.src;
@@ -24,57 +25,56 @@ structurizr.ui.Embed = function() {
                 }
 
                 if (iframe.src === eventSrc) {
-                    const aspectRatio = iframe.offsetWidth / eventHeight;
-                    iframe.setAttribute(ASPECT_RATIO_ATTRIBUTE, '' + aspectRatio);
-
-                    resize(iframe, iframe.offsetWidth, eventHeight);
+                    iframe.setAttribute(ASPECT_RATIO_ATTRIBUTE, '' + event.data.aspectRatio);
+                    iframe.setAttribute(TOOLBAR_HEIGHT_ATTRIBUTE, '' + event.data.toolbarHeight);
+                    resizeIframe(iframe);
                 }
             }
 
         }
     };
 
-    function resize(iframe, width, height) {
-        const maxHeightAttribute = iframe.style['max-height'];
+    function resizeIframe(iframe) {
+        const parentNode = iframe.parentNode;
+        if (parentNode) {
+            const availableWidth = parentNode.offsetWidth;
 
-        if (maxHeightAttribute === undefined || maxHeightAttribute === '') {
-            // set to requested size
-            iframe.style.width = width;
-            iframe.style.height = height + 'px';
-            return;
-        }
+            const aspectRatio = parseFloat(iframe.getAttribute(ASPECT_RATIO_ATTRIBUTE));
+            const toolbarHeight = parseInt(iframe.getAttribute(TOOLBAR_HEIGHT_ATTRIBUTE));
+            const maxHeightAttribute = iframe.style[MAX_HEIGHT];
 
-        var maxHeight;
-        if (maxHeightAttribute.indexOf('px') > 0) {
-            maxHeight = parseInt(maxHeightAttribute.substring(0, maxHeightAttribute.indexOf('px')));
-        }
+            var calculatedHeight = ((availableWidth / aspectRatio) + toolbarHeight);
 
-        if (height <= maxHeight) {
-            // set to requested size
-            iframe.style.width = width;
-            iframe.style.height = height + 'px';
-        } else {
-            // shrink width, and set height to max height
-            const aspectRatio = iframe.getAttribute(ASPECT_RATIO_ATTRIBUTE);
-            iframe.style.width = (maxHeight * aspectRatio) + 'px';
-            iframe.style.height = maxHeight + 'px';
+            if (maxHeightAttribute === undefined || maxHeightAttribute === '') {
+                iframe.style.width = availableWidth + 'px';
+                iframe.style.height = calculatedHeight + 'px';
+                return;
+            }
+
+            var maxHeight;
+            if (maxHeightAttribute.indexOf('px') > 0) {
+                maxHeight = parseInt(maxHeightAttribute.substring(0, maxHeightAttribute.indexOf('px')));
+            }
+
+            if (calculatedHeight <= maxHeight) {
+                iframe.style.width = availableWidth + 'px';
+                iframe.style.height = calculatedHeight + 'px';
+            } else {
+                // shrink width, and set height to max height
+                const maxDiagramHeight = (maxHeight - toolbarHeight);
+                iframe.style.width = (maxDiagramHeight * aspectRatio) + 'px';
+                iframe.style.height = maxHeight + 'px';
+            }
         }
     }
 
     this.resize = function () {
         const iframes = document.getElementsByTagName('iframe');
         for (var i = 0; i < iframes.length; i++) {
-            const iframe = iframes[i];
-            const parentNode = iframe.parentNode;
-            if (parentNode) {
-                iframe.width = parentNode.offsetWidth;
-
-                const aspectRatio = iframe.getAttribute(ASPECT_RATIO_ATTRIBUTE);
-
-                resize(iframe, parentNode.offsetWidth, parentNode.offsetWidth / aspectRatio);
-            }
+            resizeIframe(iframes[i]);
         }
     };
+
 };
 
 structurizr.embed = new structurizr.ui.Embed();

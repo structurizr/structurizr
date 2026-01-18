@@ -18,18 +18,14 @@
 
                 <c:choose>
                     <c:when test="${not structurizrConfiguration.authenticationEnabled || workspace.publicWorkspace}">
-                    <pre class="embedCode"><code id="embedCodeFragment">&lt;iframe src="<span class="baseUrl"></span>/embed/${workspace.id}?diagram=<span class="diagramEmbedDiagramId"></span>&diagramSelector=<span class="diagramEmbedDiagramSelector">false</span>&branch=${workspace.branch}" style="width: 100%; border: none; overflow: hidden;" allow="fullscreen"&gt;&lt;/iframe&gt;
+                    <pre class="embedCode"><code id="embedCodeFragment">&lt;iframe src="<span class="baseUrl"></span>/embed/${workspace.id}?diagram=<span class="diagramEmbedDiagramId"></span>&branch=${workspace.branch}" style="width: 100%; border: none; overflow: hidden;" allow="fullscreen"&gt;&lt;/iframe&gt;
 &lt;script type="text/javascript" src="<span class="baseUrl"></span>/static/js/structurizr-embed.js"&gt;&lt;/script&gt;</code></pre>
                     </c:when>
                     <c:when test="${workspace.shareable}">
-                <pre class="embedCode"><code id="embedCodeFragment">&lt;iframe src="<span class="baseUrl"></span>/embed/${workspace.id}/${workspace.sharingToken}?&diagram=<span class="diagramEmbedDiagramId"></span>&diagramSelector=<span class="diagramEmbedDiagramSelector">false</span>&branch=${workspace.branch}" style="width: 100%; border: none; overflow: hidden;" allow="fullscreen"&gt;&lt;/iframe&gt;
+                <pre class="embedCode"><code id="embedCodeFragment">&lt;iframe src="<span class="baseUrl"></span>/embed/${workspace.id}/${workspace.sharingToken}?&diagram=<span class="diagramEmbedDiagramId"></span>&branch=${workspace.branch}" style="width: 100%; border: none; overflow: hidden;" allow="fullscreen"&gt;&lt;/iframe&gt;
 &lt;script type="text/javascript" src="<span class="baseUrl"></span>/static/js/structurizr-embed.js"&gt;&lt;/script&gt;</code></pre>
                     </c:when>
                 </c:choose>
-
-                <div>
-                    <label>Include diagram selector <input type="checkbox" id="diagramSelectorToggle" /></label>
-                </div>
 
                 <c:if test="${workspace.clientEncrypted}">
                     <div class="centered">
@@ -48,14 +44,6 @@
 
     $('#embedCodeFragment').click(function() { structurizr.util.selectText('embedCodeFragment'); });
     $('#notionUrl').click(function() { structurizr.util.selectText('notionUrl'); });
-
-    $('#diagramSelectorToggle').click(function() {
-        if ($('#diagramSelectorToggle').is(':checked')) {
-            $('.diagramEmbedDiagramSelector').html('true');
-        } else {
-            $('.diagramEmbedDiagramSelector').html('false');
-        }
-    });
 
     function initEmbed() {
         const baseUrl = window.location.protocol + '//' + window.location.host;

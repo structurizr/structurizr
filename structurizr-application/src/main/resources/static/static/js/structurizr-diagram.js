@@ -982,9 +982,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             }
         });
 
-        if (forceApplyAutomaticLayout) {
-            structurizr.diagram.applyAutomaticLayout('LeftRight', 300, 300, 300, true);
-        } else if (view.automaticLayout) {
+        if (view.automaticLayout) {
             if (view.automaticLayout) {
                 structurizr.diagram.applyAutomaticLayout(
                     view.automaticLayout.rankDirection,
@@ -994,6 +992,8 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                     view.automaticLayout.vertices
                 );
             }
+        } else if (forceApplyAutomaticLayout) {
+            structurizr.diagram.applyAutomaticLayout('LeftRight', 300, 300, 300, true);
         }
 
         if (callback !== undefined) {
@@ -1671,6 +1671,10 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
     this.getHeight = function() {
         return diagramHeight;
     };
+
+    this.getAspectRatio = function() {
+        return diagramWidth / diagramHeight;
+    }
 
     function renderElementInternals(element, cell, configuration, width, horizontalOffset, height, verticalOffset) {
         const defaultIconWidth = 60;
