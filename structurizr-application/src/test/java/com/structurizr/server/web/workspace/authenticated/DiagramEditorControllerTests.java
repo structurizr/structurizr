@@ -111,6 +111,7 @@ public class DiagramEditorControllerTests extends ControllerTestsBase {
         assertTrue(workspaceMetaData.isLocked());
         assertEquals("1234567890", workspaceMetaData.getLockedUser());
         assertTrue(workspaceMetaData.getLockedAgent().startsWith("structurizr/diagrams/"));
+        assertEquals(true, model.getAttribute("retainWorkspaceLock"));
     }
 
     @Test
@@ -147,6 +148,7 @@ public class DiagramEditorControllerTests extends ControllerTestsBase {
         assertTrue(workspaceMetaData.isLocked());
         assertEquals("user@example.com", workspaceMetaData.getLockedUser());
         assertTrue(workspaceMetaData.getLockedAgent().startsWith("structurizr/diagrams/"));
+        assertEquals(true, model.getAttribute("retainWorkspaceLock"));
     }
 
     @Test
@@ -185,6 +187,7 @@ public class DiagramEditorControllerTests extends ControllerTestsBase {
         assertTrue(workspaceMetaData.isLocked());
         assertEquals("user1@example.com", workspaceMetaData.getLockedUser());
         assertTrue(workspaceMetaData.getLockedAgent().startsWith("structurizr/diagrams/"));
+        assertEquals(true, model.getAttribute("retainWorkspaceLock"));
     }
 
     @Test

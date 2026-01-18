@@ -124,6 +124,7 @@ public class DslEditorControllerTests extends ControllerTestsBase {
         assertTrue(workspaceMetaData.isLocked());
         assertTrue(workspaceMetaData.getLockedUser().matches("[0-9]*"));
         assertTrue(workspaceMetaData.getLockedAgent().startsWith("structurizr/dsl-editor/"));
+        assertEquals(true, model.getAttribute("retainWorkspaceLock"));
     }
 
     @Test
@@ -161,6 +162,7 @@ public class DslEditorControllerTests extends ControllerTestsBase {
         assertTrue(workspaceMetaData.isLocked());
         assertEquals("user@example.com", workspaceMetaData.getLockedUser());
         assertTrue(workspaceMetaData.getLockedAgent().startsWith("structurizr/dsl-editor/"));
+        assertEquals(true, model.getAttribute("retainWorkspaceLock"));
     }
 
     @Test
@@ -200,6 +202,7 @@ public class DslEditorControllerTests extends ControllerTestsBase {
         assertTrue(workspaceMetaData.isLocked());
         assertEquals("user1@example.com", workspaceMetaData.getLockedUser());
         assertTrue(workspaceMetaData.getLockedAgent().startsWith("structurizr/dsl-editor/"));
+        assertEquals(true, model.getAttribute("retainWorkspaceLock"));
     }
 
     @Test

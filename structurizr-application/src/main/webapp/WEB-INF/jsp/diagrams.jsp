@@ -12,7 +12,7 @@
 <script type="text/javascript" src="<c:url value="/static/js/structurizr-diagram.js" />"></script>
 <script type="text/javascript" src="<c:url value="/static/js/structurizr-healthcheck.js" />"></script>
 
-<c:if test="${structurizrConfiguration.profile eq 'Server'}">
+<c:if test="${retainWorkspaceLock}">
 <script type="text/javascript" src="<c:url value="/static/js/structurizr-lock.js" />"></script>
 </c:if>
 
@@ -346,7 +346,7 @@
         initControls();
         initKeyboardShortcuts();
 
-        <c:if test="${structurizrConfiguration.profile eq 'Server' && workspace.editable}">
+        <c:if test="${retainWorkspaceLock}">
         new structurizr.Lock(${workspace.id}, '${userAgent}');
         </c:if>
 
@@ -966,7 +966,7 @@
             }
         });
 
-        <c:if test="${structurizrConfiguration.profile == 'Server' && workspace.editable && workspace.locked}">
+        <c:if test="${retainWorkspaceLock}">
         $(window).on("unload", function() {
             navigator.sendBeacon('/workspace/${workspace.id}/unlock?agent=${userAgent}');
         });

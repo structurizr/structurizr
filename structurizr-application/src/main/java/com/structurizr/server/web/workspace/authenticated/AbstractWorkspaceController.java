@@ -128,6 +128,7 @@ abstract class AbstractWorkspaceController extends com.structurizr.server.web.wo
                 return showError("workspace-could-not-be-locked", model);
             }
         } else {
+            model.addAttribute("retainWorkspaceLock", true);
             model.addAttribute("userAgent", agent);
             return showAuthenticatedView(view, workspaceMetadata.getId(), branch, version, model, showHeaderAndFooter, true);
         }
