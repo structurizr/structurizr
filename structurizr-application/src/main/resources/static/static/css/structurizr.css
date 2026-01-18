@@ -435,7 +435,6 @@ hr {
 #topNavigation, #workspaceSummaryControls {
     background: #ffffff;
     border-bottom: solid 1px #dddddd;
-    box-shadow: 0px 0px 3px #dddddd;
     font-size: 18px;
     font-weight: normal;
 }
@@ -446,7 +445,6 @@ hr {
 #editorControls, #diagramControls, #explorationControls, #documentationControls, #decisionLogControls, #healthControls {
     background: #ffffff;
     border-bottom: solid 1px #dddddd;
-    box-shadow: 0px 0px 3px #dddddd;
 }
 #topNavigation .row, #workspaceSummaryControls .row, #diagramControls .row, #explorationControls .row, #documentationControls .row, #decisionLogControls .row, #healthControls .row {
     margin-left: 0;

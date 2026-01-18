@@ -151,3 +151,7 @@ code {
 .img-dark {
     display: none;
 }
+
+.structurizrDiagramViewport {
+    background: #ffffff;
+}

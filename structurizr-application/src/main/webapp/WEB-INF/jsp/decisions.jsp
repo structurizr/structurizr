@@ -530,7 +530,6 @@
         $('#documentationPanel').css('height', contentHeight + 'px');
         documentationNavigationPanel.css('height', contentHeight + 'px');
 
-        structurizr.embed.setMaxHeight(0.8 * contentHeight);
         $('.img-thumbnail').css('max-height', 0.8 * contentHeight);
 
         if (graph !== undefined && $('#graphContent').is(':visible')) {

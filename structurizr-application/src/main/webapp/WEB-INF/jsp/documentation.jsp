@@ -612,7 +612,6 @@
         const documentationPanelHeight = (window.innerHeight - topNavigationHeight - padding - navigationDropDownHeight);
         $('#documentationPanel').css('height', documentationPanelHeight + 'px');
 
-        structurizr.embed.setMaxHeight(0.8 * documentationPanelHeight);
         $('.img-thumbnail').css('max-height', 0.8 * documentationPanelHeight);
 
         $('#documentationContent').css('margin-bottom', (0.75 * documentationPanelHeight) + 'px');

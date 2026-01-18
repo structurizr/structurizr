@@ -4,153 +4,79 @@ var structurizr = structurizr || {
 
 structurizr.ui.Embed = function() {
 
-    var maxHeight = undefined;
-    const embeds = {};
+    const ASPECT_RATIO_ATTRIBUTE = 'data-aspect-ratio';
 
     this.receiveStructurizrResponsiveEmbedMessage = function(event) {
         if (event === undefined) {
             return;
         }
 
-        if (event.data) {
-            if (event.data.iframe) {
-                try {
-                    var elementId = event.data.iframe;
-                    var aspectRatio = event.data.aspectRatio;
-                    var addition = event.data.controlsHeight;
-                    var type = event.data.type;
-                    if (type === undefined) {
-                        type = 'diagram';
-                    }
-                    var scriptingContext = event.data.scriptingContext;
+        if (event.data && event.data.context === 'iframe.resize') {
+            const iframes = document.getElementsByTagName('iframe');
+            for (var i = 0; i < iframes.length; i++) {
+                const iframe = iframes[i];
+                const eventHeight = event.data.height;
 
-                    var embed = getEmbed(elementId);
-                    embed.aspectRatio = aspectRatio;
-                    embed.addition = addition;
-                    embed.type = type;
-                    embed.scriptingContext = scriptingContext;
+                // find iframe (the hash needs to be removed if present)
+                var eventSrc = event.data.src;
+                if (eventSrc.indexOf('#') > 0) {
+                    eventSrc = eventSrc.substring(0, eventSrc.indexOf('#'));
+                }
 
-                    resize(embed);
-                } catch (err) {
-                    console.log(event);
-                    console.log("Ignoring message: " + err);
+                if (iframe.src === eventSrc) {
+                    const aspectRatio = iframe.offsetWidth / eventHeight;
+                    iframe.setAttribute(ASPECT_RATIO_ATTRIBUTE, '' + aspectRatio);
+
+                    resize(iframe, iframe.offsetWidth, eventHeight);
                 }
             }
 
         }
     };
 
-    this.setMaxHeight = function(height) {
-        maxHeight = height;
-    };
+    function resize(iframe, width, height) {
+        const maxHeightAttribute = iframe.style['max-height'];
 
-    function getEmbed(elementId) {
-        var embed = embeds[elementId];
-
-        if (embed === undefined) {
-            embed = {
-                elementId: elementId,
-                aspectRatio: 1,
-                addition: 0,
-                type: 'diagram',
-                scriptingContext: undefined,
-                width: window.innerWidth
-            };
-
-            const iframe = getElement(embed.elementId);
-            if (iframe) {
-                const parentNode = iframe.parentNode;
-                if (parentNode) {
-                    embed.width = parentNode.offsetWidth;
-                }
-            }
-
-            embeds[elementId] = embed;
+        if (maxHeightAttribute === undefined || maxHeightAttribute === '') {
+            // set to requested size
+            iframe.style.width = width;
+            iframe.style.height = height + 'px';
+            return;
         }
 
-        return embed;
-    }
-
-    this.resizeEmbeddedDiagrams = function () {
-        Object.keys(embeds).forEach(function(key) {
-            const embed = embeds[key];
-            const iframe = getElement(embed.elementId);
-            if (iframe) {
-                const parentNode = iframe.parentNode;
-                if (parentNode) {
-                    embed.width = parentNode.offsetWidth;
-                }
-            }
-
-            resize(embed);
-        });
-    };
-
-    var resizeHandler = function(embed) {
-        var iframe = getElement(embed.elementId);
-        var parentNode = iframe.parentNode;
-        if (parentNode) {
-            var width = embed.width;
-
-            var aspectRatio = embed.aspectRatio;
-            var addition = embed.addition;
-            var type = embed.type;
-
-            var height = Math.floor((width / aspectRatio) + addition);
-
-            if (type !== 'exploration') {
-                if (height > maxHeight) {
-                    width = Math.ceil((maxHeight - addition) * aspectRatio);
-                    height = maxHeight;
-                }
-            }
-
-            // enforce some minimum dimensions
-            width = Math.max(width, 200);
-            height = Math.max(height, 200);
-
-            iframe.width = width + "px";
-            iframe.height = height + "px";
+        var maxHeight;
+        if (maxHeightAttribute.indexOf('px') > 0) {
+            maxHeight = parseInt(maxHeightAttribute.substring(0, maxHeightAttribute.indexOf('px')));
         }
-    }
 
-    function getElement(id) {
-        var element = document.getElementById(id);
-
-        if (element) {
-            return element;
+        if (height <= maxHeight) {
+            // set to requested size
+            iframe.style.width = width;
+            iframe.style.height = height + 'px';
         } else {
-            return findElement(id, document);
+            // shrink width, and set height to max height
+            const aspectRatio = iframe.getAttribute(ASPECT_RATIO_ATTRIBUTE);
+            iframe.style.width = (maxHeight * aspectRatio) + 'px';
+            iframe.style.height = maxHeight + 'px';
         }
     }
 
-    function findElement(id, node) {
-        if (node.shadowRoot) {
-            const element = node.shadowRoot.getElementById(id);
-            if (element) {
-                return element;
+    this.resize = function () {
+        const iframes = document.getElementsByTagName('iframe');
+        for (var i = 0; i < iframes.length; i++) {
+            const iframe = iframes[i];
+            const parentNode = iframe.parentNode;
+            if (parentNode) {
+                iframe.width = parentNode.offsetWidth;
+
+                const aspectRatio = iframe.getAttribute(ASPECT_RATIO_ATTRIBUTE);
+
+                resize(iframe, parentNode.offsetWidth, parentNode.offsetWidth / aspectRatio);
             }
         }
-
-        for (const child of node.children) {
-            const element = findElement(id, child);
-            if (element) {
-                return element;
-            }
-        }
-
-        return null;
-    }
-
-    this.onResize = function(handler) {
-        resizeHandler = handler;
-    }
-
-    function resize(embed) {
-        resizeHandler(embed);
-    }
+    };
 };
 
 structurizr.embed = new structurizr.ui.Embed();
 window.addEventListener("message", structurizr.embed.receiveStructurizrResponsiveEmbedMessage, false);
-window.addEventListener("resize", structurizr.embed.resizeEmbeddedDiagrams, false);
+window.addEventListener("resize", structurizr.embed.resize, false);

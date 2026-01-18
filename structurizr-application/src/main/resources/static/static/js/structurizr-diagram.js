@@ -4426,8 +4426,13 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
     this.resize = function() {
         if (structurizr.ui.isFullScreen()) {
-            viewport.width($(window).width());
-            viewport.height($(window).height());
+            if (this.isEditable()) {
+                viewport.width($(window).width());
+                viewport.height($(window).height() - $('#diagramControls').height());
+            } else {
+                viewport.width($(window).width());
+                viewport.height($(window).height());
+            }
         } else {
             viewport.width(this.getPossibleViewportWidth());
 

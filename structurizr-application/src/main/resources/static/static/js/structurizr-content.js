@@ -99,11 +99,10 @@ structurizr.ui.ContentRenderer = function(workspace, host, urlPrefix, safeMode) 
 
         if (view) {
             // embed the specified diagram
-            var id = 'structurizrEmbed' + (++embedIndex);
             const urlParams = new URLSearchParams(window.location.search);
             const branch = urlParams.get('branch');
             const version = urlParams.get('version');
-            var embedUrl = '/embed' + '?workspace=' + workspace.id + '&view=' + encodeURIComponent(diagramIdentifier) + '&perspective=' + encodeURIComponent(perspective) + '&type=' + type + '&iframe=' + id + '&urlPrefix=' + urlPrefix;
+            var embedUrl = '/embed' + '?workspace=' + workspace.id + '&view=' + encodeURIComponent(diagramIdentifier) + '&perspective=' + encodeURIComponent(perspective) + '&type=' + type + '&urlPrefix=' + urlPrefix;
             if (branch) {
                 embedUrl += '&branch=' + branch;
             }
@@ -111,7 +110,7 @@ structurizr.ui.ContentRenderer = function(workspace, host, urlPrefix, safeMode) 
                 embedUrl += '&version=' + version;
             }
 
-            return '<div style="text-align: center"><iframe id="' + id + '" class="structurizrEmbed thumbnail" src="' + embedUrl + '" width="100%" height="' + (window.innerHeight * MAX_HEIGHT_PERCENTAGE) + 'px" marginwidth="0" marginheight="0" frameborder="0" scrolling="no" allowfullscreen="true"></iframe>' + '</div>';
+            return '<div style="text-align: center"><iframe class="structurizrEmbed thumbnail" src="' + embedUrl + '" style="width: 100%; border: none; overflow: hidden;" allow="fullscreen"></iframe>' + '</div>';
         } else {
             return '<div class="alert alert-danger" role="alert">Unable to embed view \'' + diagramIdentifier + '\' - there is no view with this key in the workspace.</div>';
         }

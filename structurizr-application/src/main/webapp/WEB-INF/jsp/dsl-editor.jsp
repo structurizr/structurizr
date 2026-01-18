@@ -45,10 +45,6 @@
                     <div class="btn-group">
                         <button id="themeBrowserButton" class="btn btn-default" title="Theme browser"><img src="/static/bootstrap-icons/palette.svg" class="icon-btn" /></button>
                     </div>
-                    <div class="btn-group">
-                        <button id="sourceButton" class="btn btn-default" title="Source"><img src="/static/bootstrap-icons/code-slash.svg" class="icon-btn" /></button>
-                        <button id="diagramsButton" class="btn btn-default" title="Diagrams"><img src="/static/bootstrap-icons/bounding-box.svg" class="icon-btn" /></button>
-                    </div>
                     <button id="saveButton" class="btn btn-default" title="Save workspace" disabled="disabled" style="text-shadow: none"><img src="/static/bootstrap-icons/folder-check.svg" class="icon-btn" /></button>
                     <button id="renderButton" class="btn btn-primary"><img src="/static/bootstrap-icons/play.svg" class="icon-btn icon-white" /></button>
                 </div>
@@ -96,16 +92,11 @@
     var editor;
     var editorRendered = false;
     var structurizrDiagramIframeRendered = false;
-    var sourceVisible = true;
-    var diagramsVisible = true;
     var unsavedChanges = false;
 
     $('#dashboardButton').click(function() { window.location.href='/'; });
     $('#workspaceSummaryButton').click(function() { window.location.href='${urlPrefix}${urlSuffix}'; });
     $('#themeBrowserButton').click(function(event) { openThemeBrowser(event); });
-    $('#sourceButton').click(function(event) { sourceButtonClicked(event); });
-    $('#diagramsButton').click(function(event) { diagramsButtonClicked(event); });
-    $('#viewSourceButton').click(function(event) { sourceButtonClicked(event); });
     $('#saveButton').click(function() { saveWorkspace(); });
     $('#renderButton').click(function() { refresh(); });
 
@@ -114,7 +105,6 @@
     function reloadWorkspace() {
         structurizrDiagramIframeRendered = false;
         hideError();
-        showSourceAndDiagrams();
 
         structurizrApiClient.getWorkspace(undefined,
             function(response) {
@@ -223,6 +213,10 @@
         progressMessage.hide();
     }
 
+    function getMaxHeightOfDiagramEditor() {
+        return window.innerHeight - $('#banner').outerHeight() - 80;
+    }
+
     function resize() {
         const sourceControlsHeight = $('#sourceControls').outerHeight();
         const bannerHeight = $('#banner').outerHeight();
@@ -232,8 +226,10 @@
         if (editor) {
             editor.resize(true);
         }
-        structurizr.embed.setMaxHeight(window.innerHeight - bannerHeight - verticalPadding - 20);
-        structurizr.embed.resizeEmbeddedDiagrams();
+
+        $('.structurizrEmbed').css('width', '100%');
+        $('.structurizrEmbed').css('max-height', getMaxHeightOfDiagramEditor() + 'px');
+        structurizr.embed.resize();
     }
 
     function renderStructurizrDiagram() {
@@ -242,9 +238,8 @@
             diagramEditorDiv.empty();
 
             var diagramIdentifier = viewInFocus;
-            var domId = 'diagramEditorIframe';
-            var embedUrl = '/embed?workspace=${workspace.id}&branch=${workspace.branch}&version=${param.version}&view=' + encodeURIComponent(diagramIdentifier) + '&editable=true&urlPrefix=${urlPrefix}&iframe=' + domId;
-            diagramEditorDiv.append('<div style="text-align: center"><iframe id="' + domId + '" class="structurizrEmbed thumbnail" src="' + embedUrl + '" width="100%" height="' + window.innerHeight + 'px" marginwidth="0" marginheight="0" frameborder="0" scrolling="no" allowfullscreen="true"></iframe></div>');
+            var embedUrl = '/embed?workspace=${workspace.id}&branch=${workspace.branch}&version=${param.version}&view=' + encodeURIComponent(diagramIdentifier) + '&editable=true&urlPrefix=${urlPrefix}';
+            diagramEditorDiv.append('<div style="text-align: center"><iframe class="structurizrEmbed thumbnail" src="' + embedUrl + '" style="width: 100%; max-height: ' + getMaxHeightOfDiagramEditor() + 'px; border: none; overflow: hidden;" allow="fullscreen"></iframe></div>');
 
             setTimeout(function () {
                 try {
@@ -324,7 +319,6 @@
             if (data.success === true) {
                 structurizrDiagramIframeRendered = false;
                 hideError();
-                showSourceAndDiagrams();
                 loadWorkspace(JSON.parse(data.workspace));
                 workspaceChanged();
             } else {
@@ -358,61 +352,6 @@
     function openThemeBrowser(e) {
         e.preventDefault();
         window.open('/theme-browser', "structurizrThemeBrowser", "top=100,left=300,width=800,height=800,location=no,menubar=no,status=no,toolbar=no");
-    }
-
-    function sourceButtonClicked(e) {
-        e.preventDefault();
-        if (sourceVisible === false || diagramsVisible === false) {
-            showSourceAndDiagrams();
-        } else {
-            hideDiagrams();
-        }
-
-        editor.focus();
-    }
-
-    function diagramsButtonClicked(e) {
-        e.preventDefault();
-        if (diagramsVisible === false || sourceVisible === false) {
-            showSourceAndDiagrams();
-        } else {
-            hideSource();
-        }
-
-        $('#diagramEditorIframe').focus();
-    }
-
-    function hideSource() {
-        $('#sourcePanel').addClass('hidden');
-        $('#diagramsPanel').removeClass('col-6');
-
-        sourceVisible = false;
-        $('#diagramNavButtons').removeClass('hidden');
-        resize();
-    }
-
-    function showSourceAndDiagrams() {
-        $('#sourcePanel').removeClass('hidden');
-        $('#sourcePanel').addClass('col-6');
-        $('#diagramsPanel').removeClass('hidden');
-        $('#diagramsPanel').addClass('col-6');
-
-        $('#diagramNavButtons').addClass('hidden');
-
-        sourceVisible = true;
-        diagramsVisible = true;
-
-        resize();
-    }
-
-    function hideDiagrams() {
-        $('#diagramsPanel').addClass('hidden');
-        $('#sourcePanel').removeClass('col-6');
-
-        diagramsVisible = false;
-        $('#sourceButton').addClass('hidden');
-        $('#diagramsButton').removeClass('hidden');
-        resize();
     }
 
     function saveWorkspace() {

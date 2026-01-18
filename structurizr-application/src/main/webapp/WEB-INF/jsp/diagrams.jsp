@@ -19,7 +19,7 @@
 <c:choose>
     <c:when test="${workspace.editable eq false && embed eq true && showDiagramSelector eq true}">
         <%-- embedded mode, with the diagram selector --%>
-        <div id="diagramControls" class="form-group centered" style="margin-bottom: 0px;">
+        <div id="diagramControls" class="form-group centered" style="margin-bottom: 0px; border: none;">
             <div class="btn-group">
                 <select id="viewType" class="form-control" style="font-size: 12px;"></select>
             </div>
@@ -944,14 +944,6 @@
                     setTimeout(function() {
                         changeView(view, function() {
                             progressMessage.hide();
-
-                            <c:if test="${not empty iframe}">
-                            postDiagramAspectRatioToParentWindow();
-                            </c:if>
-
-                            <c:if test="${embed eq true && empty iframe}">
-                            postDiagramAspectRatioToParentWindow();
-                            </c:if>
                         });
                     }, 10);
                 }
@@ -1345,36 +1337,19 @@
         return element.documentation && element.documentation.decisions && element.documentation.decisions.length > 0;
     }
 
-    <c:if test="${not empty iframe}">
     function postDiagramAspectRatioToParentWindow() {
-        const diagramAspectRatio = (structurizr.diagram.getWidth() / structurizr.diagram.getHeight());
+        var height = document.getElementById("diagram-canvas").offsetHeight;
         const diagramControls = document.getElementById("diagramControls");
-        var controlsHeight = 0;
         if (diagramControls) {
-            controlsHeight = diagramControls.offsetHeight;
+            height += diagramControls.offsetHeight;
         }
 
-        parent.postMessage({
-            iframe: '<c:out value="${iframe}" />',
-            aspectRatio: diagramAspectRatio,
-            controlsHeight: controlsHeight,
-            type: 'diagram',
-            view: structurizr.diagram.getCurrentViewOrFilter().key
-        }, '*');
-    }
-    </c:if>
-
-    <c:if test="${embed eq true && empty iframe}">
-    function postDiagramAspectRatioToParentWindow() {
-        var canvasHeight = document.getElementById("diagram-canvas").offsetHeight;
-
-        window.parent.postMessage(JSON.stringify({
+        window.parent.postMessage({
             src: window.location.toString(),
             context: 'iframe.resize',
-            height: canvasHeight // pixels
-        }), '*');
+            height: height // pixels
+        }, '*');
     }
-    </c:if>
 
     $('#embeddedControls').hover(
         function() {
@@ -1387,6 +1362,10 @@
 
     $(window).resize(function() {
         resize();
+
+        <c:if test="${embed eq true}">
+        postDiagramAspectRatioToParentWindow();
+        </c:if>
     });
 
     function resize() {
@@ -1401,14 +1380,6 @@
 
             structurizr.diagram.resize();
             structurizr.diagram.zoomToWidthOrHeight();
-
-            <c:if test="${not empty iframe}">
-            postDiagramAspectRatioToParentWindow();
-            </c:if>
-
-            <c:if test="${embed eq true && empty iframe}">
-            postDiagramAspectRatioToParentWindow();
-            </c:if>
         }
     }
 
@@ -1423,7 +1394,11 @@
         presentationMode = true;
 
         if (!structurizr.ui.isFullScreen()) {
-            structurizr.ui.enterFullScreen('diagram');
+            if (structurizr.diagram.isEditable()) {
+                structurizr.ui.enterFullScreen();
+            } else {
+                structurizr.ui.enterFullScreen('diagram');
+            }
         }
 
         $('#enterPresentationModeButton').addClass('hidden');

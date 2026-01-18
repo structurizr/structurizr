@@ -126,9 +126,8 @@
     });
 
     function init() {
+        const embed = getParameter('embed');
         structurizr.ui.initDarkMode('./css/structurizr-static-dark.css');
-
-        $('#diagram').height($(window).innerHeight());
 
         structurizr.diagram = new structurizr.ui.Diagram('diagram', false, function () {
             structurizr.diagram.setDarkMode(structurizr.ui.isDarkMode());
@@ -158,7 +157,32 @@
             }
         });
 
-        structurizr.diagram.resize();
+        structurizr.diagram.setEmbedded(embed);
+
+        structurizr.diagram.getPossibleViewportWidth = function() {
+            if (structurizr.ui.isFullScreen()) {
+                return screen.width;
+            } else {
+                if (embed) {
+                    return window.innerWidth;
+                } else {
+                    return $('#diagram').innerWidth();
+                }
+            }
+        };
+
+        structurizr.diagram.getPossibleViewportHeight = function() {
+            if (structurizr.ui.isFullScreen()) {
+                if (presentationMode) {
+                    return screen.availHeight;
+                } else {
+                    return screen.availHeight;
+                }
+            } else {
+                return window.innerHeight;
+            }
+        };
+
         structurizr.diagram.zoomToWidthOrHeight();
         structurizr.diagram.setNavigationEnabled(true);
         structurizr.diagram.onElementDoubleClicked(elementDoubleClicked);
@@ -271,11 +295,12 @@
             });
 
         $(window).resize(function () {
-            $('#diagram').height($(window).innerHeight());
             structurizr.diagram.resize();
             structurizr.diagram.zoomToWidthOrHeight();
 
-            postDiagramAspectRatioToParentWindow();
+            if (embed) {
+                postDiagramAspectRatioToParentWindow();
+            }
         });
 
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
@@ -297,15 +322,12 @@
     }
 
     function postDiagramAspectRatioToParentWindow() {
-        const diagramAspectRatio = (structurizr.diagram.getWidth() / structurizr.diagram.getHeight());
-        const iframe = getParameter('iframe');
+        var height = document.getElementById("diagram-canvas").offsetHeight;
 
-        parent.postMessage({
-            iframe: iframe,
-            aspectRatio: diagramAspectRatio,
-            controlsHeight: 0,
-            type: 'diagram',
-            view: structurizr.diagram.getCurrentViewOrFilter().key
+        window.parent.postMessage({
+            src: window.location.toString(),
+            context: 'iframe.resize',
+            height: height // pixels
         }, '*');
     }
 

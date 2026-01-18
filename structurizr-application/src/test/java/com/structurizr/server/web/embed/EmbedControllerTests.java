@@ -37,7 +37,7 @@ public class EmbedControllerTests extends ControllerTestsBase {
             }
         });
 
-        String view = controller.embedDiagrams(1, WorkspaceBranch.MAIN_BRANCH, "viewKey", false, "iframe", false, "perspective", model);
+        String view = controller.embedDiagrams(1, WorkspaceBranch.MAIN_BRANCH, "viewKey", false, false, "perspective", model);
         assertEquals("404", view);
     }
 
@@ -55,7 +55,7 @@ public class EmbedControllerTests extends ControllerTestsBase {
             }
         });
 
-        String view = controller.embedDiagrams(1, WorkspaceBranch.MAIN_BRANCH, "viewKey", false, "iframe", false, "perspective", model);
+        String view = controller.embedDiagrams(1, WorkspaceBranch.MAIN_BRANCH, "viewKey", false, false, "perspective", model);
         assertEquals("404", view);
     }
 
@@ -73,7 +73,7 @@ public class EmbedControllerTests extends ControllerTestsBase {
             }
         });
 
-        String view = controller.embedDiagrams(1, "branch", "viewKey", false, "iframe", false, "perspective", model);
+        String view = controller.embedDiagrams(1, "branch", "viewKey", false, false, "perspective", model);
         assertEquals("workspace-branches-not-enabled", view);
     }
 
@@ -92,7 +92,7 @@ public class EmbedControllerTests extends ControllerTestsBase {
             }
         });
 
-        String view = controller.embedDiagrams(1, "branch", "viewKey", false, "iframe", false, "perspective", model);
+        String view = controller.embedDiagrams(1, "branch", "viewKey", false, false, "perspective", model);
         assertEquals("404", view);
     }
 
@@ -115,7 +115,7 @@ public class EmbedControllerTests extends ControllerTestsBase {
             }
         });
 
-        String view = controller.embedDiagrams(1, WorkspaceBranch.MAIN_BRANCH, "viewKey", false, "iframe", false, "perspective", model);
+        String view = controller.embedDiagrams(1, WorkspaceBranch.MAIN_BRANCH, "viewKey", false, false, "perspective", model);
 
         assertEquals("diagrams", view);
         assertEquals("/share/1", model.get("urlPrefix"));
@@ -147,7 +147,7 @@ public class EmbedControllerTests extends ControllerTestsBase {
             }
         });
 
-        String view = controller.embedDiagrams(1, "branch1", "viewKey", false, "iframe", false, "perspective", model);
+        String view = controller.embedDiagrams(1, "branch1", "viewKey", false, false, "perspective", model);
 
         assertEquals("diagrams", view);
         assertEquals("/share/1", model.get("urlPrefix"));
@@ -170,7 +170,7 @@ public class EmbedControllerTests extends ControllerTestsBase {
             }
         });
 
-        String view = controller.embedDiagrams(1, WorkspaceBranch.MAIN_BRANCH, "viewKey", false, "iframe", false, "perspective", model);
+        String view = controller.embedDiagrams(1, WorkspaceBranch.MAIN_BRANCH, "viewKey", false, false, "perspective", model);
 
         assertEquals("diagrams", view);
         assertEquals("/workspace/1", model.get("urlPrefix"));

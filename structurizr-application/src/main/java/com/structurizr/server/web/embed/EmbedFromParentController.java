@@ -24,7 +24,6 @@ EmbedFromParentController extends AbstractWorkspaceController {
                                   @RequestParam(required = false) String view,
                                   @RequestParam(required = false) String perspective,
                                   @RequestParam(required = false, defaultValue = "false") boolean editable,
-                                  @RequestParam(required = false, defaultValue = "") String iframe,
                                   @RequestParam(required = false) String urlPrefix,
                                   ModelMap model) {
 
@@ -32,7 +31,6 @@ EmbedFromParentController extends AbstractWorkspaceController {
         view = HtmlUtils.filterHtml(view);
         view = HtmlUtils.escapeQuoteCharacters(view);
         perspective = HtmlUtils.filterHtml(perspective);
-        iframe = HtmlUtils.filterHtml(iframe);
         urlPrefix = HtmlUtils.filterHtml(urlPrefix);
 
         WorkspaceMetadata workspaceMetadata = new WorkspaceMetadata(workspace);
@@ -42,7 +40,6 @@ EmbedFromParentController extends AbstractWorkspaceController {
         model.addAttribute("workspace", workspaceMetadata);
         model.addAttribute("loadWorkspaceFromParent", true);
         model.addAttribute("embed", true);
-        model.addAttribute("iframe", iframe);
         addCommonAttributes(model, "", false);
 
         if (!StringUtils.isNullOrEmpty(urlPrefix)) {

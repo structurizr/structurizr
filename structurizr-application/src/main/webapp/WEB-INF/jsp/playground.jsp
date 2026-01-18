@@ -37,11 +37,6 @@
                             <button id="themeBrowserButton" class="btn btn-default" title="Theme browser"><img src="/static/bootstrap-icons/palette.svg" class="icon-btn" /></button>
                         </div>
 
-                        <div class="btn-group">
-                            <button id="sourceButton" class="btn btn-default" title="Source"><img src="/static/bootstrap-icons/code-slash.svg" class="icon-btn" /></button>
-                            <button id="diagramsButton" class="btn btn-default" title="Diagrams"><img src="/static/bootstrap-icons/bounding-box.svg" class="icon-btn" /></button>
-                        </div>
-
                         <button id="renderButton" class="btn btn-primary"><img src="/static/bootstrap-icons/play.svg" class="icon-btn icon-white" /></button>
                     </div>
 
@@ -74,9 +69,6 @@
 
             <div id="viewListPanel" style="margin-bottom: 10px">
                 <div class="form-inline">
-                    <span id="diagramNavButtons" class="hidden">
-                        <button id="viewSourceButton" class="btn btn-primary" title="Source" style="margin-top: -4px;"><img src="/static/bootstrap-icons/code-slash.svg" class="icon-btn icon-white" /> View source</button>
-                    </span>
                     <select id="viewsList" class="form-select" style="width: auto; display: inline-block;"></select>
                 </div>
             </div>
@@ -95,8 +87,6 @@
     const LOCAL_STORAGE_DSL = 'structurizr/playground/dsl';
     const LOCAL_STORAGE_JSON = 'structurizr/playground/json';
 
-    const EMBEDDED_DIAGRAM_DOM_ID = 'embeddedStructurizrDiagram';
-
     var viewInFocus = '<c:out value="${view}" />';
     var editor;
     var structurizrDiagramIframeRendered = false;
@@ -107,10 +97,7 @@
     $('#loadFromLocalStorageButton').click(function(event) { loadFromLocalStorage(event); });
     $('#saveToLocalStorageButton').click(function(event) { saveToLocalStorage(event); });
     $('#themeBrowserButton').click(function(event) { openThemeBrowser(event); });
-    $('#sourceButton').click(function(event) { sourceButtonClicked(event); });
-    $('#diagramsButton').click(function(event) { diagramsButtonClicked(event); });
-    $('#viewSourceButton').click(function(event) { sourceButtonClicked(event); });
-    $('#renderButton').click(function() { refresh(); });
+    //$('#renderButton').click(function(event) { refresh(event); });
 
     $('#uploadFileInput').on('change', function() { importSourceFile(this.files); });
 
@@ -170,7 +157,13 @@
 
         renderDiagram();
 
+        $('#dslForm').on('submit', function() { return refresh(); });
+
         progressMessage.hide();
+    }
+
+    function getMaxHeightOfDiagramEditor() {
+        return window.innerHeight - 80;
     }
 
     function resize() {
@@ -181,8 +174,10 @@
         if (editor) {
             editor.resize(true);
         }
-        structurizr.embed.setMaxHeight(window.innerHeight - verticalPadding - 20);
-        structurizr.embed.resizeEmbeddedDiagrams();
+
+        $('.structurizrEmbed').css('width', '100%');
+        $('.structurizrEmbed').css('max-height', getMaxHeightOfDiagramEditor() + 'px');
+        structurizr.embed.resize();
     }
 
     function renderDiagram() {
@@ -191,9 +186,8 @@
             diagramEditorDiv.empty();
 
             var diagramIdentifier = viewInFocus;
-            var embedUrl = '/embed?view=' + encodeURIComponent(diagramIdentifier) + '&editable=true&iframe=' + EMBEDDED_DIAGRAM_DOM_ID;
-            diagramEditorDiv.append('<div style="text-align: center"><iframe id="' + EMBEDDED_DIAGRAM_DOM_ID + '" class="structurizrEmbed thumbnail" src="' + embedUrl + '" width="100%" height="' + window.innerHeight + 'px" marginwidth="0" marginheight="0" frameborder="0" scrolling="no" allowfullscreen="true"></iframe></div>');
-
+            var embedUrl = '/embed?view=' + encodeURIComponent(diagramIdentifier) + '&editable=true';
+            diagramEditorDiv.append('<div style="text-align: center"><iframe class="structurizrEmbed thumbnail" src="' + embedUrl + '" style="width: 100%; max-height: ' + getMaxHeightOfDiagramEditor() + 'px; border: none; overflow: hidden;" allow="fullscreen"></iframe></div>');
             structurizrDiagramIframeRendered = true;
             setTimeout(registerCallback, 500);
         } else {
@@ -228,7 +222,7 @@
     }
 
     function getEmbeddedDiagram() {
-        return document.getElementById(EMBEDDED_DIAGRAM_DOM_ID);
+        return document.getElementsByClassName('structurizrEmbed')[0];
     }
 
     var unsavedChanges = false;
@@ -315,64 +309,6 @@
         window.open('/theme-browser', "structurizrThemeBrowser", "top=100,left=300,width=800,height=800,location=no,menubar=no,status=no,toolbar=no");
     }
 
-    function sourceButtonClicked(e) {
-        e.preventDefault();
-        if (sourceVisible === false || diagramsVisible === false) {
-            showSourceAndDiagrams();
-        } else {
-            hideDiagrams();
-        }
-
-        editor.focus();
-    }
-
-    function diagramsButtonClicked(e) {
-        e.preventDefault();
-        if (diagramsVisible === false || sourceVisible === false) {
-            showSourceAndDiagrams();
-        } else {
-            hideSource();
-        }
-
-        $('#diagramEditorIframe').focus();
-    }
-
-    function hideSource() {
-        $('#sourcePanel').addClass('hidden');
-        $('#diagramsPanel').removeClass('col-6');
-
-        sourceVisible = false;
-        $('#diagramNavButtons').removeClass('hidden');
-        resize();
-    }
-
-    function showSourceAndDiagrams() {
-        $('#sourcePanel').removeClass('hidden');
-        $('#sourcePanel').addClass('col-6');
-        $('#diagramsPanel').removeClass('hidden');
-        $('#diagramsPanel').addClass('col-6');
-
-        $('#diagramNavButtons').addClass('hidden');
-
-        sourceVisible = true;
-        diagramsVisible = true;
-
-        resize();
-    }
-
-    function hideDiagrams() {
-        $('#diagramsPanel').addClass('hidden');
-        $('#sourcePanel').removeClass('col-6');
-
-        diagramsVisible = false;
-        resize();
-    }
-
-    function hideSourceAndDiagrams(message) {
-        $('#sourcePanel').addClass('hidden');
-        $('#diagramsPanel').addClass('hidden');
-    }
-
     function importSourceFile(files) {
         if (files && files.length > 0) {
             var reader = new FileReader();
@@ -383,11 +319,6 @@
 
             reader.readAsText(files[0]);
         }
-    }
-
-    var searchParams = new URLSearchParams(window.location.search);
-    if (searchParams.get('src')) {
-        hideSource();
     }
 </script>
 

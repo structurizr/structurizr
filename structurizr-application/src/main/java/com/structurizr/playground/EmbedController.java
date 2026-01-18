@@ -15,18 +15,15 @@ class EmbedController extends AbstractController {
     String embedFromParent(@RequestParam(required = false) String view,
                                   @RequestParam(required = false) String perspective,
                                   @RequestParam(required = false, defaultValue = "false") boolean editable,
-                                  @RequestParam(required = false, defaultValue = "") String iframe,
                                   ModelMap model) {
 
         view = HtmlUtils.filterHtml(view);
         view = HtmlUtils.escapeQuoteCharacters(view);
         perspective = HtmlUtils.filterHtml(perspective);
-        iframe = HtmlUtils.filterHtml(iframe);
 
         model.addAttribute("workspace", new WorkspaceMetadata());
         model.addAttribute("loadWorkspaceFromParent", true);
         model.addAttribute("embed", true);
-        model.addAttribute("iframe", iframe);
 
         if (!StringUtils.isNullOrEmpty(view)) {
             model.addAttribute("diagramIdentifier", view);
