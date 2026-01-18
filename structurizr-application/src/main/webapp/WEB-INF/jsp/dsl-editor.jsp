@@ -135,10 +135,6 @@
         return beforeunload();
     });
 
-    $(window).on("unload", function() {
-        navigator.sendBeacon('/workspace/${workspace.id}/unlock?agent=${userAgent}');
-    });
-
     function workspaceLoaded() {
         init();
     }
@@ -482,9 +478,7 @@
         }
     }
 
-    <c:if test="${workspace.editable && not empty workspace.apiKey}">
     new structurizr.Lock(${workspace.id}, '${userAgent}');
-    </c:if>
 </script>
 
 <c:choose>

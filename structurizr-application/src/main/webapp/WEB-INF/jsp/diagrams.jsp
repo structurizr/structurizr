@@ -966,12 +966,6 @@
             }
         });
 
-        <c:if test="${retainWorkspaceLock}">
-        $(window).on("unload", function() {
-            navigator.sendBeacon('/workspace/${workspace.id}/unlock?agent=${userAgent}');
-        });
-        </c:if>
-
         document.getElementById('diagram-viewport').addEventListener('wheel', function(event) {
                 if (event.ctrlKey === true) {
                     if (event.wheelDelta > 0) {

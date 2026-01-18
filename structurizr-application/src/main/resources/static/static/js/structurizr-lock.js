@@ -1,14 +1,17 @@
 structurizr.Lock = function(workspaceId, agent) {
 
-    const url = '/workspace/' + workspaceId +'/lock';
     const interval = 1000 * 60; // one minute
 
     setTimeout(lock, interval);
 
+    $(window).on("unload", function() {
+        navigator.sendBeacon('/workspace/' + workspaceId + '/unlock?agent=' + agent);
+    });
+
     function lock() {
         $.ajax({
-            url: url,
-            type: "POST",
+            url: '/api/workspace/' + workspaceId +'/lock',
+            type: 'PUT',
             data: 'agent=' + encodeURIComponent(agent),
             cache: false
         })

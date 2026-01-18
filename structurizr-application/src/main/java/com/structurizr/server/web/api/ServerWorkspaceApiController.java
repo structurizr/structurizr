@@ -6,12 +6,16 @@ import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Features;
 import com.structurizr.server.component.workspace.WorkspaceBranch;
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
+import com.structurizr.server.domain.Permission;
+import com.structurizr.server.domain.User;
 import com.structurizr.server.domain.WorkspaceMetadata;
+import com.structurizr.util.DateUtils;
 import com.structurizr.util.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -128,26 +132,46 @@ public class ServerWorkspaceApiController extends AbstractWorkspaceApiController
 
     @RequestMapping(value = "/api/workspace/{workspaceId}/lock", method = RequestMethod.PUT, produces = "application/json; charset=UTF-8")
     public @ResponseBody ApiResponse lockWorkspace(@PathVariable("workspaceId") long workspaceId,
-                                                   @RequestParam(required = true) String user,
+                                                   @RequestParam(required = false) String username,
                                                    @RequestParam(required = true) String agent,
                                                    HttpServletRequest request, HttpServletResponse response) {
 
-        WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
-        authoriseRequest(workspaceMetadata, request);
+        User user = getUser();
+        if (StringUtils.isNullOrEmpty(username) && user != null) {
+            username = getUser().getUsername();
+        }
 
-        if (workspaceComponent.lockWorkspace(workspaceId, user, agent)) {
+        WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
+        if (workspaceMetadata == null) {
+            throw new ApiException("404");
+        }
+
+        if (user != null && !workspaceMetadata.getPermissions(user).isEmpty()) {
+            authoriseRequest(workspaceMetadata, user, Permission.Write);
+        } else {
+            authoriseRequest(workspaceMetadata, request);
+        }
+
+        if (workspaceComponent.lockWorkspace(workspaceId, username, agent)) {
             return new ApiResponse("OK");
         } else {
             workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId); // refresh metadata
-            return new ApiResponse(false, "The workspace is already locked by " + workspaceMetadata.getLockedUser() + " using " + workspaceMetadata.getLockedAgent() + ".");
+            SimpleDateFormat sdf = new SimpleDateFormat(DateUtils.USER_FRIENDLY_DATE_FORMAT);
+
+            return new ApiResponse(false, "The workspace could not be locked; it was locked by " + workspaceMetadata.getLockedUser() + " using " + workspaceMetadata.getLockedAgent() + " at " + sdf.format(workspaceMetadata.getLockedDate()));
         }
     }
 
     @RequestMapping(value = "/api/workspace/{workspaceId}/lock", method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
     public @ResponseBody ApiResponse unlockWorkspace(@PathVariable("workspaceId") long workspaceId,
-                                                     @RequestParam(required = true) String user,
+                                                     @RequestParam(required = false) String user,
                                                      @RequestParam(required = true) String agent,
                                                      HttpServletRequest request, HttpServletResponse response) {
+
+        if (StringUtils.isNullOrEmpty(user)) {
+            user = getUser().getUsername();
+        }
+
         WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
         authoriseRequest(workspaceMetadata, request);
 

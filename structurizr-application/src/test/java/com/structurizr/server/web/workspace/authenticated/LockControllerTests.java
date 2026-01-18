@@ -1,15 +1,11 @@
 package com.structurizr.server.web.workspace.authenticated;
 
-import com.structurizr.server.component.workspace.WorkspaceLockResponse;
 import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.ControllerTestsBase;
 import com.structurizr.server.web.MockWorkspaceComponent;
-import com.structurizr.util.DateUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.ui.ModelMap;
-
-import java.text.SimpleDateFormat;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,101 +19,6 @@ public class LockControllerTests extends ControllerTestsBase {
         controller = new LockController();
         model = new ModelMap();
         enableAuthentication();
-    }
-
-    @Test
-    void lockWorkspace_ReturnsAFailureResponse_WhenTheWorkspaceDoesNotExist() {
-        controller.setWorkspaceComponent(new MockWorkspaceComponent() {
-            @Override
-            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
-                return null;
-            }
-        });
-
-        setUser("user@example.com");
-        WorkspaceLockResponse response = controller.lockWorkspace(1, "agent");
-        assertFalse(response.isSuccess());
-        assertFalse(response.isLocked());
-    }
-
-    @Test
-    void lockWorkspace_LocksTheWorkspace_WhenTheWorkspaceIsNotLocked() {
-        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
-
-        controller.setWorkspaceComponent(new MockWorkspaceComponent() {
-            @Override
-            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
-                return workspaceMetaData;
-            }
-
-            @Override
-            public boolean lockWorkspace(long workspaceId, String username, String agent) {
-                workspaceMetaData.addLock(username, agent);
-                return true;
-            }
-        });
-
-        setUser("user@example.com");
-        WorkspaceLockResponse response = controller.lockWorkspace(1, "agent");
-        assertTrue(response.isSuccess());
-        assertTrue(response.isLocked());
-        assertTrue(workspaceMetaData.isLocked());
-        assertEquals("user@example.com", workspaceMetaData.getLockedUser());
-        assertEquals("agent", workspaceMetaData.getLockedAgent());
-    }
-
-    @Test
-    void lockWorkspace_ReturnsAFailureResponse_WhenTheWorkspaceIsAlreadyLockedByAnotherAgent() {
-        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
-        workspaceMetaData.addLock("user1@example.com", "agent1");
-
-        controller.setWorkspaceComponent(new MockWorkspaceComponent() {
-            @Override
-            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
-                return workspaceMetaData;
-            }
-
-            @Override
-            public boolean lockWorkspace(long workspaceId, String username, String agent) {
-                return false;
-            }
-        });
-
-        setUser("user1@example.com");
-        WorkspaceLockResponse response = controller.lockWorkspace(1, "agent2");
-        assertFalse(response.isSuccess());
-        assertTrue(response.isLocked());
-        assertEquals(String.format("The workspace could not be locked; it was locked by user1@example.com using agent1 at %s.", new SimpleDateFormat(DateUtils.USER_FRIENDLY_DATE_FORMAT).format(workspaceMetaData.getLockedDate())), response.getMessage());
-        assertTrue(workspaceMetaData.isLocked());
-        assertEquals("user1@example.com", workspaceMetaData.getLockedUser());
-        assertEquals("agent1", workspaceMetaData.getLockedAgent());
-    }
-
-    @Test
-    void lockWorkspace_ReturnsAFailureResponse_WhenTheWorkspaceIsAlreadyLockedBySomebodyElse() {
-        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
-        workspaceMetaData.addLock("user1@example.com", "agent");
-
-        controller.setWorkspaceComponent(new MockWorkspaceComponent() {
-            @Override
-            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
-                return workspaceMetaData;
-            }
-
-            @Override
-            public boolean lockWorkspace(long workspaceId, String username, String agent) {
-                return false;
-            }
-        });
-
-        setUser("user2@example.com");
-        WorkspaceLockResponse response = controller.lockWorkspace(1, "agent");
-        assertFalse(response.isSuccess());
-        assertTrue(response.isLocked());
-        assertEquals(String.format("The workspace could not be locked; it was locked by user1@example.com using agent at %s.", new SimpleDateFormat(DateUtils.USER_FRIENDLY_DATE_FORMAT).format(workspaceMetaData.getLockedDate())), response.getMessage());
-        assertTrue(workspaceMetaData.isLocked());
-        assertEquals("user1@example.com", workspaceMetaData.getLockedUser());
-        assertEquals("agent", workspaceMetaData.getLockedAgent());
     }
 
     @Test
@@ -215,6 +116,54 @@ public class LockControllerTests extends ControllerTestsBase {
         setUser("user@example.com");
         String view = controller.unlockWorkspace(1, model);
         assertEquals("404", view);
+    }
+
+    @Test
+    void unlockWorkspaceViaBeacon_UnlocksTheWorkspace_WhenTheWorkspaceIsLockedByTheSameAgent()  {
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
+        workspaceMetaData.addLock("user1@example.com", "agent");
+
+        controller.setWorkspaceComponent(new MockWorkspaceComponent() {
+            @Override
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                return workspaceMetaData;
+            }
+
+            @Override
+            public boolean unlockWorkspace(long workspaceId) {
+                workspaceMetaData.clearLock();
+                return true;
+            }
+        });
+
+        setUser("user1@example.com");
+        assertTrue(workspaceMetaData.isLocked());
+        controller.unlockWorkspaceViaBeacon(1, "agent");
+        assertFalse(workspaceMetaData.isLocked());
+    }
+
+    @Test
+    void unlockWorkspaceViaBeacon_DoesNotUnlockTheWorkspace_WhenTheWorkspaceIsLockedByADifferentAgent()  {
+        final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
+        workspaceMetaData.addLock("user1@example.com", "agent");
+
+        controller.setWorkspaceComponent(new MockWorkspaceComponent() {
+            @Override
+            public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
+                return workspaceMetaData;
+            }
+
+            @Override
+            public boolean unlockWorkspace(long workspaceId) {
+                workspaceMetaData.clearLock();
+                return true;
+            }
+        });
+
+        setUser("user2@example.com");
+        assertTrue(workspaceMetaData.isLocked());
+        controller.unlockWorkspaceViaBeacon(1, "agent");
+        assertTrue(workspaceMetaData.isLocked());
     }
 
 }
