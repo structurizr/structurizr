@@ -185,6 +185,22 @@
         </c:if>
 
         <c:if test="${showAdminFeatures}">
+        <c:if test="${workspace.locked eq true}">
+        <div class="row">
+            <div class="col-2">
+                <h4 style="margin-top: 0">Unlock workspace</h4>
+            </div>
+            <div class="col-10">
+                <p>
+                    Click the button below to unlock your workspace.
+                </p>
+                <form id="unlockWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/unlock" method="post">
+                    <button class="btn btn-warning small" type="submit" name="action" value="remove" title="Unlock workspace"><img src="/static/bootstrap-icons/unlock.svg" class="icon-btn" /> Unlock workspace</button>
+                </form>
+            </div>
+        </div>
+        </c:if>
+
         <div class="row">
             <div class="col-2">
                 <h4 style="margin-top: 0">Delete workspace</h4>
@@ -194,7 +210,6 @@
                     Click the button below to delete your workspace - this action cannot be undone, and your workspace data will be irretrievable.
                 </p>
                 <form id="deleteWorkspaceForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/delete" method="post">
-                    <input type="hidden" name="workspaceId" value="${workspace.id}" />
                     <button class="btn btn-danger small" type="submit" name="action" value="remove" title="Delete workspace"><img src="/static/bootstrap-icons/folder-x.svg" class="icon-white icon-btn" /> Delete workspace</button>
                 </form>
             </div>
@@ -223,11 +238,15 @@
     $('#shareWorkspaceForm').on('submit', function() { return confirm('Are you sure you want to share this workspace with a link?'); });
     $('#unshareWorkspaceForm').on('submit', function() { return confirm('Are you sure you want to stop sharing this workspace with a link?'); });
 
-
+    $('#unlockWorkspaceForm').on('submit', function() { return unlockWorkspace(); });
     $('#deleteWorkspaceForm').on('submit', function() { return deleteWorkspace(); });
 
     function workspaceLoaded() {
         $('.baseUrl').text(window.location.protocol + '//' + window.location.host);
+    }
+
+    function unlockWorkspace(e) {
+        return confirm('${workspace.lockedUser} will lose any unsaved changes - are you sure you want to unlock this workspace?');
     }
 
     function deleteWorkspace() {

@@ -22,7 +22,7 @@ public class LockControllerTests extends ControllerTestsBase {
     }
 
     @Test
-    void unlockWorkspace_ReturnsThe404Page_WhenTheWorkspaceDoesNotExist() {
+    void forceUnlockWorkspace_ReturnsThe404Page_WhenTheWorkspaceDoesNotExist() {
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
             public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
@@ -31,12 +31,12 @@ public class LockControllerTests extends ControllerTestsBase {
         });
 
         setUser("user@example.com");
-        String view = controller.unlockWorkspace(1, model);
+        String view = controller.forceUnlockWorkspace(1, model);
         assertEquals("404", view);
     }
 
     @Test
-    void unlockWorkspace_ReturnsThe404Page_WhenTheUserDoesNotHaveAccess() {
+    void forceUnlockWorkspace_ReturnsThe404Page_WhenTheUserDoesNotHaveAccess() {
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addWriteUser("user2@example.com");
 
@@ -48,12 +48,12 @@ public class LockControllerTests extends ControllerTestsBase {
         });
 
         setUser("user1@example.com");
-        String view = controller.unlockWorkspace(1, model);
+        String view = controller.forceUnlockWorkspace(1, model);
         assertEquals("404", view);
     }
 
     @Test
-    void unlockWorkspace_UnlocksTheWorkspace_WhenTheWorkspaceHasNoUsersConfigured()  {
+    void forceUnlockWorkspace_UnlocksTheWorkspace_WhenTheWorkspaceHasNoUsersConfigured()  {
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addLock("user@example.com", "agent");
 
@@ -71,13 +71,13 @@ public class LockControllerTests extends ControllerTestsBase {
         });
 
         setUser("user@example.com");
-        String view = controller.unlockWorkspace(1, model);
+        String view = controller.forceUnlockWorkspace(1, model);
         assertEquals("redirect:/workspace/1", view);
         assertFalse(workspaceMetaData.isLocked());
     }
 
     @Test
-    void unlockWorkspace_UnlocksTheWorkspace_WhenTheUserHasWriteAccess()  {
+    void forceUnlockWorkspace_UnlocksTheWorkspace_WhenTheUserHasAdminAccess()  {
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addWriteUser("user@example.com");
         workspaceMetaData.addLock("user@example.com", "agent");
@@ -96,13 +96,13 @@ public class LockControllerTests extends ControllerTestsBase {
         });
 
         setUser("user@example.com");
-        String view = controller.unlockWorkspace(1, model);
+        String view = controller.forceUnlockWorkspace(1, model);
         assertEquals("redirect:/workspace/1", view);
         assertFalse(workspaceMetaData.isLocked());
     }
 
     @Test
-    void unlockWorkspace_ReturnsThe404Page_WhenTheUserHasReadAccess()  {
+    void forceUnlockWorkspace_ReturnsThe404Page_WhenTheUserHasReadAccess()  {
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addReadUser("user@example.com");
 
@@ -114,7 +114,7 @@ public class LockControllerTests extends ControllerTestsBase {
         });
 
         setUser("user@example.com");
-        String view = controller.unlockWorkspace(1, model);
+        String view = controller.forceUnlockWorkspace(1, model);
         assertEquals("404", view);
     }
 

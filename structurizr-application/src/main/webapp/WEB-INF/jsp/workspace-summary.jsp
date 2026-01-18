@@ -142,12 +142,6 @@
                 <a href="<c:out value="${urlPrefix}" />/settings"><img src="/static/bootstrap-icons/gear.svg" class="icon-sm" /> Settings</a>
             </div>
 
-            <c:if test="${workspace.locked eq true}">
-            <div class="navigationItem">
-                <a id="unlockWorkspaceLink" href=""><img src="/static/bootstrap-icons/unlock.svg" class="icon-sm" /> Unlock</a>
-            </div>
-            </c:if>
-
             <c:if test="${authenticationEnabled}">
             <div class="navigationItem">
                 <a href="<c:out value="${urlPrefix}" />/users"><img src="/static/bootstrap-icons/people.svg" class="icon-sm" /> Users and roles</a>
@@ -279,10 +273,6 @@
 <script nonce="${scriptNonce}">
 
     progressMessage.show('<p>Loading workspace...</p>');
-
-    $('#unlockWorkspaceLink').click(function (event) {
-        unlockWorkspace(event);
-    });
 
     <c:if test="${not empty workspace.branch}">
     $('#workspaceBranch').val("<c:out value="${workspace.branch}" />");
@@ -513,18 +503,6 @@
     function deleteBranch() {
         return confirm('Are you sure you want to delete this branch?');
     }
-
-    <c:if test="${workspace.editable eq true and workspace.locked eq true}">
-
-    function unlockWorkspace(e) {
-        e.preventDefault();
-
-        if (confirm('${workspace.lockedUser} will lose any unsaved changes - are you sure you want to unlock this workspace?')) {
-            window.location.href = '/workspace/${workspace.id}/unlock';
-        }
-    }
-
-    </c:if>
 
     function importWorkspaceFromFile(file, workspaceId) {
         var reader = new FileReader();

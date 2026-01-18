@@ -1,11 +1,9 @@
 package com.structurizr.server.web.workspace.authenticated;
 
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
-import com.structurizr.server.component.workspace.WorkspaceLockResponse;
 import com.structurizr.server.domain.Permission;
 import com.structurizr.server.domain.User;
 import com.structurizr.server.domain.WorkspaceMetadata;
-import com.structurizr.util.DateUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.annotation.Profile;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
 import java.util.Set;
 
 @Controller
@@ -38,8 +35,8 @@ public class LockController extends AbstractWorkspaceController {
         }
     }
 
-    @RequestMapping(value = "/workspace/{workspaceId}/unlock", method = RequestMethod.GET)
-    String unlockWorkspace(@PathVariable("workspaceId") long workspaceId, ModelMap model) {
+    @RequestMapping(value = "/workspace/{workspaceId}/unlock", method = RequestMethod.POST)
+    String forceUnlockWorkspace(@PathVariable("workspaceId") long workspaceId, ModelMap model) {
         WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
         if (workspaceMetadata == null) {
             return show404Page(model);
@@ -47,7 +44,7 @@ public class LockController extends AbstractWorkspaceController {
 
         User user = getUser();
         Set<Permission> permissions = workspaceMetadata.getPermissions(user);
-        if (permissions.contains(Permission.Write)) {
+        if (permissions.contains(Permission.Admin)) {
             try {
                 workspaceComponent.unlockWorkspace(workspaceId);
             } catch (WorkspaceComponentException e) {
