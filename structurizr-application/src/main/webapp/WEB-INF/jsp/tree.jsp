@@ -287,14 +287,14 @@
 
     function setWidthAndHeight() {
         var navHeight = 0;
-
-        <c:if test="${empty iframe}">
         if (structurizr.ui.isFullScreen()) {
             navHeight = 0;
         } else {
-            navHeight = $('#topNavigation').outerHeight();
+            const nav = $('#topNavigation');
+            if (nav.length > 0) {
+                navHeight = nav.outerHeight();
+            }
         }
-        </c:if>
 
         var height = window.innerHeight - navHeight - margin;
 

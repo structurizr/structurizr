@@ -51,11 +51,11 @@ EmbedFromParentController extends AbstractWorkspaceController {
         if ("graph".equals(type)) {
             model.addAttribute("view", view);
 
-            return "graph";
+            return Views.GRAPH;
         } else if ("tree".equals(type)) {
             model.addAttribute("view", view);
 
-            return "tree";
+            return Views.TREE;
         } else {
             if (!StringUtils.isNullOrEmpty(view)) {
                 model.addAttribute("diagramIdentifier", view);

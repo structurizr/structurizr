@@ -64,6 +64,7 @@ structurizr.ui.ContentRenderer = function(workspace, host, urlPrefix, safeMode) 
     function renderEmbeddedDiagram(diagramIdentifier) {
         var type = 'diagram';
         var perspective = '';
+        var height = '';
 
         var view = workspace.findViewByKey(diagramIdentifier);
         if (!view) {
@@ -81,8 +82,10 @@ structurizr.ui.ContentRenderer = function(workspace, host, urlPrefix, safeMode) 
 
                             if (parameterName === 'type' && parameterValue === 'graph') {
                                 type = 'graph';
+                                height = 'height: 90vh; ';
                             } else if (parameterName === 'type' && parameterValue === 'tree') {
                                 type = 'tree';
+                                height = 'height: 90vh; ';
                             }
 
                             if (parameterName === 'perspective') {
@@ -110,7 +113,7 @@ structurizr.ui.ContentRenderer = function(workspace, host, urlPrefix, safeMode) 
                 embedUrl += '&version=' + version;
             }
 
-            return '<div style="text-align: center"><iframe class="structurizrEmbed thumbnail" src="' + embedUrl + '" style="width: 100%; border: none; overflow: hidden;" allow="fullscreen"></iframe>' + '</div>';
+            return '<div style="text-align: center"><iframe class="structurizrEmbed thumbnail" src="' + embedUrl + '" style="width: 100%; ' + height + 'border: none; overflow: hidden;" allow="fullscreen"></iframe>' + '</div>';
         } else {
             return '<div class="alert alert-danger" role="alert">Unable to embed view \'' + diagramIdentifier + '\' - there is no view with this key in the workspace.</div>';
         }
