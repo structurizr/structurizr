@@ -9,10 +9,6 @@ import java.util.Map;
 
 final class AutoLayoutParser extends AbstractParser {
 
-    private static final int DEFAULT_RANK_SEPARATION = 300;
-    private static final int DEFAULT_NODE_SEPARATION = 300;
-    private static final int DEFAULT_EDGE_SEPARATION = 300;
-
     private static final int RANK_DIRECTION_INDEX = 1;
     private static final int RANK_SEPARATION_INDEX = 2;
     private static final int NODE_SEPARATION_INDEX = 3;
@@ -30,13 +26,18 @@ final class AutoLayoutParser extends AbstractParser {
 
     void parse(ModelViewDslContext context, Tokens tokens) {
         // autoLayout [rankDirection] [rankSeparation] [nodeSeparation] [edgeSeparation] [vertices]
+
+        if (tokens.hasMoreThan(VERTICES_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: autoLayout [rankDirection] [rankSeparation] [nodeSeparation] [edgeSeparation] [vertices]");
+        }
+
         ModelView view = context.getView();
         if (view != null) {
-            AutomaticLayout.RankDirection rankDirection = AutomaticLayout.RankDirection.TopBottom;
-            int rankSeparation = DEFAULT_RANK_SEPARATION;
-            int nodeSeparation = DEFAULT_NODE_SEPARATION;
-            int edgeSeparation = DEFAULT_EDGE_SEPARATION;
-            boolean vertices = true;
+            AutomaticLayout.RankDirection rankDirection = AutomaticLayout.DEFAULT_RANK_DIRECTION;
+            int rankSeparation = AutomaticLayout.DEFAULT_RANK_SEPARATION;
+            int nodeSeparation = AutomaticLayout.DEFAULT_NODE_SEPARATION;
+            int edgeSeparation = AutomaticLayout.DEFAULT_EDGE_SEPARATION;
+            boolean vertices = AutomaticLayout.DEFAULT_VERTICES;
 
             if (tokens.includes(RANK_DIRECTION_INDEX)) {
                 String rankDirectionAsString = tokens.get(RANK_DIRECTION_INDEX);

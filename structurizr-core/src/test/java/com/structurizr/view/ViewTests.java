@@ -411,11 +411,11 @@ public class ViewTests extends AbstractWorkspaceTestBase {
         view.enableAutomaticLayout();
 
         assertNotNull(view.getAutomaticLayout());
-        assertEquals(AutomaticLayout.RankDirection.TopBottom, view.getAutomaticLayout().getRankDirection());
-        assertEquals(300, view.getAutomaticLayout().getRankSeparation());
-        assertEquals(600, view.getAutomaticLayout().getNodeSeparation());
-        assertEquals(200, view.getAutomaticLayout().getEdgeSeparation());
-        assertFalse(view.getAutomaticLayout().isVertices());
+        assertEquals(AutomaticLayout.RankDirection.LeftRight, view.getAutomaticLayout().getRankDirection());
+        assertEquals(100, view.getAutomaticLayout().getRankSeparation());
+        assertEquals(50, view.getAutomaticLayout().getNodeSeparation());
+        assertEquals(50, view.getAutomaticLayout().getEdgeSeparation());
+        assertTrue(view.getAutomaticLayout().isVertices());
     }
 
     @Test

@@ -1,5 +1,5 @@
 <div class="modal fade" id="autoLayoutModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -7,9 +7,10 @@
             <div class="modal-body">
 
                 <div class="form-horizontal">
-                    <div id="autoLayoutRankDirectionFormGroup" class="form-group row">
-                        <label class="control-label col-4" for="autoLayoutRankDirection">Direction</label>
+
+                    <div class="row">
                         <div class="col-8">
+                            <label class="control-label" for="autoLayoutRankDirection">Direction</label>
                             <select class="form-select" id="autoLayoutRankDirection">
                                 <option value="TopBottom">Top to bottom</option>
                                 <option value="BottomTop">Bottom to top</option>
@@ -17,68 +18,72 @@
                                 <option value="RightLeft">Right to left</option>
                             </select>
                         </div>
-                    </div>
-
-                    <div id="autoLayoutRankSeparationFormGroup" class="form-group row">
-                        <label class="control-label col-4" for="autoLayoutRankSeparation">Rank separation</label>
-                        <div class="col-8">
-                            <input type="number" id="autoLayoutRankSeparation" value="300" class="form-control" />
-                            <span class="form-text">(pixels)</span>
+                        <div class="col-4">
+                            <label class="control-label col-4" for="autoLayoutVertices">Vertices</label>
+                            <div>
+                                <input type="checkbox" id="autoLayoutVertices" class="form-check-input" />
+                            </div>
                         </div>
                     </div>
 
-                    <div id="autoLayoutNodeSeparationFormGroup" class="form-group row">
-                        <label class="control-label col-4" for="autoLayoutNodeSeparation">Node separation</label>
-                        <div class="col-8">
-                            <input type="number" id="autoLayoutNodeSeparation" value="300" class="form-control" />
-                            <span class="form-text">(pixels)</span>
+                    <div class="row">
+                        <div class="col-4">
+                            <label class="control-label" for="autoLayoutRankSeparation">Rank separation</label>
+                            <div>
+                                <input type="number" id="autoLayoutRankSeparation" value="" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label class="control-label" for="autoLayoutNodeSeparation">Node separation</label>
+                            <div>
+                                <input type="number" id="autoLayoutNodeSeparation" value="" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label class="control-label" for="autoLayoutEdgeSeparation">Edge separation</label>
+                            <div>
+                                <input type="number" id="autoLayoutEdgeSeparation" value="" class="form-control" />
+                            </div>
                         </div>
                     </div>
-
-                    <div id="autoLayoutEdgeSeparationFormGroup" class="form-group row">
-                        <label class="control-label col-4" for="autoLayoutEdgeSeparation">Edge separation</label>
-                        <div class="col-8">
-                            <input type="number" id="autoLayoutEdgeSeparation" value="300" class="form-control" />
-                            <span class="form-text">(pixels)</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="autoLayoutVerticesFormGroup" class="form-group row">
-                    <label class="control-label col-4" for="autoLayoutVertices">Vertices</label>
-                    <div class="col-8">
-                        <input type="checkbox" id="autoLayoutVertices" class="form-check-input" />
-                    </div>
-                </div>
-
-                <div class="form-group centered" style="margin-top: 40px">
-                    <button id="gatherElementsButton" class="btn btn-secondary" title="Bring elements back onto the diagram"><img src="/static/bootstrap-icons/magnet.svg" class="icon-btn icon-white" /> Bring elements back onto canvas</button>
-                    <button id="removeAllVerticesButton" class="btn btn-secondary" title="Remove all vertices"><img src="/static/bootstrap-icons/slash-lg.svg" class="icon-btn icon-white" /> Remove all vertices</button>
                 </div>
             </div>
 
             <div class="modal-footer">
-                <button id="runAutoLayoutButton" type="button" class="btn btn-primary">Auto layout</button>
+                <button id="gatherElementsButton" class="btn btn-secondary" title="Bring elements back onto the diagram"><img src="/static/bootstrap-icons/magnet.svg" class="icon-btn icon-white" /></button>
+                <button id="removeAllVerticesButton" class="btn btn-secondary" title="Remove all vertices"><img src="/static/bootstrap-icons/arrow-up-right.svg" class="icon-btn icon-white" /></button>
+                <button id="runAutoLayoutButton" type="button" class="btn btn-primary"><img src="/static/bootstrap-icons/magic.svg" class="icon-btn icon-white" /> Auto layout</button>
             </div>
         </div>
     </div>
 </div>
 
 <script nonce="${scriptNonce}">
+    const AUTOLAYOUT_RANK_DIRECTION = 'structurizr/autolayout/rank-direction';
+    const AUTOLAYOUT_RANK_SEPARATION = 'structurizr/autolayout/rank-separation';
+    const AUTOLAYOUT_NODE_SEPARATION = 'structurizr/autolayout/node-separation';
+    const AUTOLAYOUT_EDGE_SEPARATION = 'structurizr/autolayout/edge-separation';
+    const AUTOLAYOUT_VERTICES = 'structurizr/autolayout/vertices';
 
     $('#gatherElementsButton').click(function() { structurizr.diagram.gatherElementsOnCanvas(); closeAutoLayoutModal(); });
     $('#removeAllVerticesButton').click(function() { structurizr.diagram.removeAllVertices(); closeAutoLayoutModal(); });
     $('#runAutoLayoutButton').click(function() { runAutoLayout(); });
 
     function initAutoLayout() {
-        $('#autoLayoutImplementation').change(function () {
-            showOptionsForDagre();
-        });
-    }
+        const rankDir = structurizr.util.getItemFromLocalStorage(AUTOLAYOUT_RANK_DIRECTION, structurizr.ui.DEFAULT_AUTOLAYOUT_RANK_DIRECTION);
+        $('#autoLayoutRankDirection').val(rankDir);
 
-    function showOptionsForDagre() {
-        $('#autoLayoutVerticesFormGroup').removeClass('hidden');
-        $('#autoLayoutEdgeSeparationFormGroup').removeClass('hidden');
+        const rankSep = structurizr.util.getItemFromLocalStorage(AUTOLAYOUT_RANK_SEPARATION, '' + structurizr.ui.DEFAULT_AUTOLAYOUT_RANK_SEPARATION);
+        $('#autoLayoutRankSeparation').val(rankSep);
+
+        const nodeSep = structurizr.util.getItemFromLocalStorage(AUTOLAYOUT_NODE_SEPARATION, '' + structurizr.ui.DEFAULT_AUTOLAYOUT_NODE_SEPARATION);
+        $('#autoLayoutNodeSeparation').val(nodeSep);
+
+        const edgeSep = structurizr.util.getItemFromLocalStorage(AUTOLAYOUT_EDGE_SEPARATION, '' + structurizr.ui.DEFAULT_AUTOLAYOUT_EDGE_SEPARATION);
+        $('#autoLayoutEdgeSeparation').val(edgeSep);
+
+        const vertices = structurizr.util.getItemFromLocalStorage(AUTOLAYOUT_VERTICES, '' + structurizr.ui.DEFAULT_AUTOLAYOUT_VERTICES);
+        $('#autoLayoutVertices').prop('checked', vertices === 'true');
     }
 
     function openAutoLayoutModal() {
@@ -92,12 +97,26 @@
     function runAutoLayout() {
         closeAutoLayoutModal();
 
+        const rankDir = $('#autoLayoutRankDirection').val();
+        structurizr.util.setItemInLocalStorage(AUTOLAYOUT_RANK_DIRECTION, rankDir);
+
+        const rankSep = $('#autoLayoutRankSeparation').val();
+        structurizr.util.setItemInLocalStorage(AUTOLAYOUT_RANK_SEPARATION, rankSep);
+
+        const nodeSep = $('#autoLayoutNodeSeparation').val();
+        structurizr.util.setItemInLocalStorage(AUTOLAYOUT_NODE_SEPARATION, nodeSep);
+
+        const edgeSep = $('#autoLayoutEdgeSeparation').val();
+        structurizr.util.setItemInLocalStorage(AUTOLAYOUT_EDGE_SEPARATION, edgeSep);
+
+        const vertices = $('#autoLayoutVertices').is(':checked');
+        structurizr.util.setItemInLocalStorage(AUTOLAYOUT_VERTICES, vertices);
+
         structurizr.diagram.applyAutomaticLayout(
-            $('#autoLayoutRankDirection').val(),
-            parseInt($('#autoLayoutRankSeparation').val()),
-            parseInt($('#autoLayoutNodeSeparation').val()),
-            parseInt($('#autoLayoutEdgeSeparation').val()),
-            $('#autoLayoutVertices').is(':checked')
-        )
+            rankDir,
+            parseInt(rankSep),
+            parseInt(nodeSep),
+            parseInt(edgeSep),
+            vertices)
     }
 </script>

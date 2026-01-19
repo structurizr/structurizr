@@ -12,6 +12,8 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+import static com.structurizr.view.AutomaticLayout.*;
+
 /**
  * The superclass for all views that show elements/relationships from the model, namely:
  *
@@ -23,10 +25,6 @@ import java.util.stream.Collectors;
  * - Deployment views
  */
 public abstract class ModelView extends View {
-
-    private static final int DEFAULT_RANK_SEPARATION = 300;
-    private static final int DEFAULT_NODE_SEPARATION = 300;
-    private static final int DEFAULT_EDGE_SEPARATION = 300;
 
     private SoftwareSystem softwareSystem;
     private String softwareSystemId;
@@ -135,7 +133,7 @@ public abstract class ModelView extends View {
      * Enables automatic layout for this view, with some default settings.
      */
     public void enableAutomaticLayout() {
-        enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 600, 200, false);
+        enableAutomaticLayout(DEFAULT_RANK_DIRECTION, DEFAULT_RANK_SEPARATION, DEFAULT_NODE_SEPARATION, DEFAULT_EDGE_SEPARATION, DEFAULT_VERTICES);
     }
 
     /**
@@ -157,7 +155,7 @@ public abstract class ModelView extends View {
      * @param rankDirection     the rank direction
      */
     public void enableAutomaticLayout(AutomaticLayout.RankDirection rankDirection) {
-        enableAutomaticLayout(rankDirection, DEFAULT_RANK_SEPARATION, DEFAULT_NODE_SEPARATION, DEFAULT_EDGE_SEPARATION, true);
+        enableAutomaticLayout(rankDirection, DEFAULT_RANK_SEPARATION, DEFAULT_NODE_SEPARATION, DEFAULT_EDGE_SEPARATION, DEFAULT_VERTICES);
     }
 
     /**

@@ -991,7 +991,13 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                 );
             }
         } else if (forceApplyAutomaticLayout) {
-            structurizr.diagram.applyAutomaticLayout('LeftRight', 300, 300, 300, true);
+            structurizr.diagram.applyAutomaticLayout(
+                structurizr.ui.DEFAULT_AUTOLAYOUT_RANK_DIRECTION,
+                structurizr.ui.DEFAULT_AUTOLAYOUT_RANK_SEPARATION,
+                structurizr.ui.DEFAULT_AUTOLAYOUT_NODE_SEPARATION,
+                structurizr.ui.DEFAULT_AUTOLAYOUT_EDGE_SEPARATION,
+                structurizr.ui.DEFAULT_AUTOLAYOUT_VERTICES
+            );
         }
 
         if (callback !== undefined) {

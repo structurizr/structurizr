@@ -5,6 +5,12 @@ package com.structurizr.view;
  */
 public final class AutomaticLayout {
 
+    public static final RankDirection DEFAULT_RANK_DIRECTION = RankDirection.LeftRight;
+    public static final int DEFAULT_RANK_SEPARATION = 100;
+    public static final int DEFAULT_NODE_SEPARATION = 50;
+    public static final int DEFAULT_EDGE_SEPARATION = 50;
+    public static final boolean DEFAULT_VERTICES = true;
+
     private RankDirection rankDirection;
     private int rankSeparation;
     private int nodeSeparation;

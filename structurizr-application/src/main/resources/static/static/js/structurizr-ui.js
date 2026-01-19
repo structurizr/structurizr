@@ -5,6 +5,13 @@ structurizr.ui.RENDERING_MODE_SYSTEM = '';
 structurizr.ui.RENDERING_MODE_LIGHT = 'light';
 structurizr.ui.RENDERING_MODE_DARK = 'dark';
 
+structurizr.ui.DEFAULT_AUTOLAYOUT_RANK_DIRECTION = 'LeftRight';
+structurizr.ui.DEFAULT_AUTOLAYOUT_RANK_SEPARATION = 100;
+structurizr.ui.DEFAULT_AUTOLAYOUT_NODE_SEPARATION = 50;
+structurizr.ui.DEFAULT_AUTOLAYOUT_EDGE_SEPARATION = 50;
+structurizr.ui.DEFAULT_AUTOLAYOUT_VERTICES = true;
+
+
 structurizr.ui.LIGHT_MODE_DEFAULTS = {
     background: '#ffffff',
     color: '#444444',

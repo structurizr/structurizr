@@ -11,6 +11,16 @@ class AutoLayoutParserTests extends AbstractTests {
     private AutoLayoutParser parser = new AutoLayoutParser();
 
     @Test
+    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parse(null, tokens("autoLayout", "rankDirection", "rankSeparation", "nodeSeparation", "edgeSeparation", "vertices", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: autoLayout [rankDirection] [rankSeparation] [nodeSeparation] [edgeSeparation] [vertices]", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parse_EnablesAutoLayoutWithSomeDefaults() {
         SystemLandscapeView view = workspace.getViews().createSystemLandscapeView("key", "description");
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
@@ -18,9 +28,26 @@ class AutoLayoutParserTests extends AbstractTests {
 
         assertNull(view.getAutomaticLayout());
         parser.parse(context, tokens("autoLayout"));
-        assertEquals(AutomaticLayout.RankDirection.TopBottom, view.getAutomaticLayout().getRankDirection());
-        assertEquals(300, view.getAutomaticLayout().getRankSeparation());
-        assertEquals(300, view.getAutomaticLayout().getNodeSeparation());
+        assertEquals(AutomaticLayout.RankDirection.LeftRight, view.getAutomaticLayout().getRankDirection());
+        assertEquals(100, view.getAutomaticLayout().getRankSeparation());
+        assertEquals(50, view.getAutomaticLayout().getNodeSeparation());
+        assertEquals(50, view.getAutomaticLayout().getEdgeSeparation());
+        assertTrue(view.getAutomaticLayout().isVertices());
+    }
+
+    @Test
+    void test_parse_EnablesAutoLayoutWithAllSettings() {
+        SystemLandscapeView view = workspace.getViews().createSystemLandscapeView("key", "description");
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+        context.setWorkspace(workspace);
+
+        assertNull(view.getAutomaticLayout());
+        parser.parse(context, tokens("autoLayout", "lr", "111", "222", "333", "false"));
+        assertEquals(AutomaticLayout.RankDirection.LeftRight, view.getAutomaticLayout().getRankDirection());
+        assertEquals(111, view.getAutomaticLayout().getRankSeparation());
+        assertEquals(222, view.getAutomaticLayout().getNodeSeparation());
+        assertEquals(333, view.getAutomaticLayout().getEdgeSeparation());
+        assertFalse(view.getAutomaticLayout().isVertices());
     }
 
     @Test
@@ -32,8 +59,10 @@ class AutoLayoutParserTests extends AbstractTests {
         assertNull(view.getAutomaticLayout());
         parser.parse(context, tokens("autoLayout", "lr"));
         assertEquals(AutomaticLayout.RankDirection.LeftRight, view.getAutomaticLayout().getRankDirection());
-        assertEquals(300, view.getAutomaticLayout().getRankSeparation());
-        assertEquals(300, view.getAutomaticLayout().getNodeSeparation());
+        assertEquals(100, view.getAutomaticLayout().getRankSeparation());
+        assertEquals(50, view.getAutomaticLayout().getNodeSeparation());
+        assertEquals(50, view.getAutomaticLayout().getEdgeSeparation());
+        assertTrue(view.getAutomaticLayout().isVertices());
     }
 
     @Test
@@ -60,7 +89,9 @@ class AutoLayoutParserTests extends AbstractTests {
         parser.parse(context, tokens("autoLayout", "tb", "123"));
         assertEquals(AutomaticLayout.RankDirection.TopBottom, view.getAutomaticLayout().getRankDirection());
         assertEquals(123, view.getAutomaticLayout().getRankSeparation());
-        assertEquals(300, view.getAutomaticLayout().getNodeSeparation());
+        assertEquals(50, view.getAutomaticLayout().getNodeSeparation());
+        assertEquals(50, view.getAutomaticLayout().getEdgeSeparation());
+        assertTrue(view.getAutomaticLayout().isVertices());
     }
 
     @Test

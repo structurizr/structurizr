@@ -146,6 +146,20 @@ structurizr.util.sortStyles = function(a, b) {
     return (a.colorScheme + '/' + a.tag).localeCompare(b.colorScheme + '/' + b.tag);
 };
 
+structurizr.util.getItemFromLocalStorage = function(key, defaultValue) {
+    const value = localStorage.getItem(key);
+
+    if (value === undefined || value === null || value.length === 0) {
+        return defaultValue;
+    }
+
+    return value;
+};
+
+structurizr.util.setItemInLocalStorage = function(key, value) {
+    localStorage.setItem(key, value);
+};
+
 if (!String.prototype.startsWith) {
     String.prototype.startsWith = function(searchString, position){
         return this.substr(position || 0, searchString.length) === searchString;
