@@ -132,4 +132,31 @@ public class RelationshipTests extends AbstractWorkspaceTestBase {
         assertEquals(3, softwareSystem1.getRelationships().size());
     }
 
+    @Test
+    void setTechnology_ThrowsAnException_WhenTheTechnologyIsAlreadySetOnARelationshipeBetweenStaticStructureElements() {
+        Relationship relationship = softwareSystem1.uses(softwareSystem2, "Description", "HTTP");
+        try {
+            relationship.setTechnology("HTTPS");
+            fail();
+        } catch (Exception e) {
+            assertEquals("Technology cannot be modified", e.getMessage());
+        }
+    }
+
+    @Test
+    void setTechnology_OverridesTheTechnologyForARelationshipeBetweenStaticStructureElementInstancess() {
+        SoftwareSystem a = model.addSoftwareSystem("A");
+        SoftwareSystem b = model.addSoftwareSystem("B");
+        a.uses(b, "Description", "HTTP");
+
+        DeploymentNode node = model.addDeploymentNode("Node");
+        SoftwareSystemInstance aInstance = node.add(a);
+        SoftwareSystemInstance bInstance = node.add(b);
+        Relationship relationship = aInstance.getEfferentRelationshipWith(bInstance);
+
+        assertEquals("HTTP", relationship.getTechnology());
+        relationship.setTechnology("HTTPS");
+        assertEquals("HTTPS", relationship.getTechnology());
+    }
+
 }

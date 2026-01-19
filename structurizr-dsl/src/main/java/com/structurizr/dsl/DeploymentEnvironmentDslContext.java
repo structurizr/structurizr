@@ -1,5 +1,12 @@
 package com.structurizr.dsl;
 
+import com.structurizr.model.Element;
+import com.structurizr.model.StaticStructureElement;
+import com.structurizr.model.StaticStructureElementInstance;
+
+import java.util.Set;
+import java.util.stream.Collectors;
+
 class DeploymentEnvironmentDslContext extends DslContext implements GroupableDslContext {
 
     private final DeploymentEnvironment environment;
@@ -37,6 +44,14 @@ class DeploymentEnvironmentDslContext extends DslContext implements GroupableDsl
                 StructurizrDslTokens.DEPLOYMENT_NODE_TOKEN,
                 StructurizrDslTokens.RELATIONSHIP_TOKEN
         };
+    }
+
+    Set<Element> findInstancesOf(StaticStructureElement element) {
+        return getWorkspace().getModel().getElements().stream()
+                .filter(e -> e instanceof StaticStructureElementInstance)
+                .map(e -> (StaticStructureElementInstance)e)
+                .filter(e -> e.getEnvironment().equals(environment.getName()) && e.getElement().equals(element))
+                .collect(Collectors.toSet());
     }
 
 }

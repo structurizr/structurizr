@@ -636,6 +636,9 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     } else if (TECHNOLOGY_TOKEN.equalsIgnoreCase(firstToken) && inContext(ElementsDslContext.class)) {
                         new ElementsParser().parseTechnology(getContext(ElementsDslContext.class), tokens);
 
+                    } else if (TECHNOLOGY_TOKEN.equalsIgnoreCase(firstToken) && inContext(RelationshipsDslContext.class)) {
+                        new RelationshipsParser().parseTechnology(getContext(RelationshipsDslContext.class), tokens);
+
                     } else if (INSTANCES_TOKEN.equalsIgnoreCase(firstToken) && inContext(DeploymentNodeDslContext.class)) {
                         new DeploymentNodeParser().parseInstances(getContext(DeploymentNodeDslContext.class), tokens);
 

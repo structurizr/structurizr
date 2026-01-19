@@ -257,6 +257,12 @@ class ExpressionParser {
                 } else {
                     sourceElements.add(source);
                 }
+
+                // if inside a deployment environment, find all instances of the element too
+                if (source instanceof StaticStructureElement && context instanceof DeploymentEnvironmentDslContext) {
+                    DeploymentEnvironmentDslContext deploymentEnvironmentDslContext = (DeploymentEnvironmentDslContext)context;
+                    sourceElements.addAll(deploymentEnvironmentDslContext.findInstancesOf((StaticStructureElement)source));
+                }
             }
 
             context.getWorkspace().getModel().getRelationships().forEach(relationship -> {
@@ -285,6 +291,12 @@ class ExpressionParser {
                     destinationElements.addAll(((ElementGroup) destination).getElements());
                 } else {
                     destinationElements.add(destination);
+                }
+
+                // if inside a deployment environment, find all instances of the element too
+                if (destination instanceof StaticStructureElement && context instanceof DeploymentEnvironmentDslContext) {
+                    DeploymentEnvironmentDslContext deploymentEnvironmentDslContext = (DeploymentEnvironmentDslContext)context;
+                    destinationElements.addAll(deploymentEnvironmentDslContext.findInstancesOf((StaticStructureElement)destination));
                 }
             }
 

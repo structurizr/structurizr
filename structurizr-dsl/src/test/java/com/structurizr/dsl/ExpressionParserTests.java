@@ -584,4 +584,30 @@ class ExpressionParserTests extends AbstractTests {
         assertTrue(elements.contains(c));
     }
 
+    @Test
+    void test_parseExpression_ReturnsRelationshipsInDeploymentModel_WhenSpecifyingStaticStructureElements() {
+        SoftwareSystem a = model.addSoftwareSystem("A");
+        SoftwareSystem b = model.addSoftwareSystem("B");
+        Relationship aToB = a.uses(b, "Uses");
+
+        DeploymentNode deploymentNode = model.addDeploymentNode("DeploymentNode");
+        SoftwareSystemInstance aInstance = deploymentNode.add(a);
+        SoftwareSystemInstance bInstance = deploymentNode.add(b);
+
+        assertEquals(2, model.getRelationships().size());
+
+        DeploymentEnvironmentDslContext context = new DeploymentEnvironmentDslContext(DeploymentNode.DEFAULT_DEPLOYMENT_GROUP);
+        context.setWorkspace(workspace);
+
+        IdentifiersRegister map = new IdentifiersRegister();
+        map.register("a", a);
+        map.register("b", b);
+        context.setIdentifierRegister(map);
+
+        Set<ModelItem> relationships = parser.parseExpression("a->b", context);
+        assertEquals(2, relationships.size());
+        assertTrue(relationships.contains(aToB));
+        assertTrue(relationships.contains(aInstance.getEfferentRelationshipWith(bInstance)));
+    }
+
 }

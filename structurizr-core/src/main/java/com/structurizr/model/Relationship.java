@@ -122,8 +122,17 @@ public final class Relationship extends ModelItem {
         return technology;
     }
 
-    void setTechnology(String technology) {
-        this.technology = technology;
+    public void setTechnology(String technology) {
+        if (this.technology == null) {
+            this.technology = technology;
+        } else {
+            if (source instanceof StaticStructureElementInstance && destination instanceof StaticStructureElementInstance) {
+                // allow technology to be overridden for relationships in deployment environments (e.g. HTTP -> HTTPS)
+                this.technology = technology;
+            } else {
+                throw new UnsupportedOperationException("Technology cannot be modified");
+            }
+        }
     }
 
     /**
