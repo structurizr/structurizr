@@ -633,8 +633,6 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                     box = createBox(view, element, elementStyle, positionX, positionY, 1);
                 }
 
-                box.set('size', { width: elementStyle.width, height: elementStyle.height });
-
                 cells.push(box);
                 cellsByElementId[element.id] = box;
 
@@ -1943,7 +1941,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
     }
 
     function createHexagon(view, element, configuration, x, y) {
-        var width = Math.floor((configuration.width/2) * Math.sqrt(3));
+        var width = configuration.width;
         var height = Math.floor((configuration.width/2) * Math.sqrt(3));
 
         var points =    (configuration.width/4) + ",0 " +
@@ -1962,7 +1960,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                 y: y
             },
             size: {
-                width: configuration.width,
+                width: width,
                 height: height
             },
             attrs: {
@@ -1987,7 +1985,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
     function createDiamond(view, element, configuration, x, y) {
         var width = configuration.width;
-        var height = configuration.height;
+        var height = configuration.width;
 
         var points =
             (width/2) + ",0 " +
@@ -2004,7 +2002,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                 y: y
             },
             size: {
-                width: configuration.width,
+                width: width,
                 height: height
             },
             attrs: {
