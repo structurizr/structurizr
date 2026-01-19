@@ -23,7 +23,6 @@ public abstract class AbstractCommand {
     private static final Log log = LogFactory.getLog(AbstractCommand.class);
 
     private static final String PLUGINS_DIRECTORY_NAME = "plugins";
-    private static final int HTTP_OK_STATUS = 200;
 
     protected AbstractCommand() {
     }
@@ -38,7 +37,7 @@ public abstract class AbstractCommand {
     protected Workspace loadWorkspace(String workspacePathAsString) throws Exception {
         Workspace workspace;
 
-        if (workspacePathAsString.endsWith(".json")) {
+        if (workspacePathAsString.endsWith("json")) {
             if (workspacePathAsString.startsWith("http://") || workspacePathAsString.startsWith("https")) {
                 String json = readFromUrl(workspacePathAsString);
                 workspace = WorkspaceUtils.fromJson(json);
@@ -103,6 +102,7 @@ public abstract class AbstractCommand {
 
     protected String readFromUrl(String url) {
         HttpClient httpClient = new HttpClient();
+        httpClient.allow(".*");
         return httpClient.get(url).getContentAsString();
     }
 

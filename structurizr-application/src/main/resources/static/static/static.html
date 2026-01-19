@@ -142,19 +142,16 @@
                 }
             });
 
-            const hash = window.location.hash;
-            if (hash && hash.length > 1) {
-                const diagramIdentifier = decodeURIComponent(hash.substring(1)); // remove the # symbol
-                structurizr.diagram.changeView(diagramIdentifier);
-            } else {
-                var diagramIdentifier = structurizr.workspace.views.configuration.defaultView;
+            var diagramIdentifier = getParameter('diagram');
+            if (!diagramIdentifier || diagramIdentifier.length === 0) {
+                diagramIdentifier = structurizr.workspace.views.configuration.defaultView;
 
-                if (diagramIdentifier === undefined || diagramIdentifier === '') {
+                if (!diagramIdentifier || diagramIdentifier.length === 0) {
                     diagramIdentifier = structurizr.workspace.getViews()[0].key;
                 }
-
-                window.location.hash = '#' + diagramIdentifier;
             }
+
+            structurizr.diagram.changeView(diagramIdentifier);
         });
 
         structurizr.diagram.setEmbedded(embed);

@@ -18,7 +18,7 @@ structurizr.ui.Embed = function() {
             for (var i = 0; i < iframes.length; i++) {
                 const iframe = iframes[i];
 
-                // find iframe (the hash needs to be removed if present)
+                // find iframe (the hash needs to be removed if present because this isn't available to access)
                 var eventSrc = event.data.src;
                 if (eventSrc.indexOf('#') > 0) {
                     eventSrc = eventSrc.substring(0, eventSrc.indexOf('#'));

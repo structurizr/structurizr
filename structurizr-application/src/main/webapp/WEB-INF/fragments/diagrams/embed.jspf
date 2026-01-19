@@ -5,6 +5,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
+            <c:if test="${not empty workspace.branch}">
+            <c:set var="branch" value="&branch=${workspace.branch}" />
+            </c:if>
+
             <div id="diagramEmbed" class="modal-body">
                 <c:choose>
                     <c:when test="${structurizrConfiguration.authenticationEnabled && not workspace.publicWorkspace && not workspace.shareable}">
@@ -18,11 +22,11 @@
 
                 <c:choose>
                     <c:when test="${not structurizrConfiguration.authenticationEnabled || workspace.publicWorkspace}">
-                    <pre class="embedCode"><code id="embedCodeFragment">&lt;iframe src="<span class="baseUrl"></span>/embed/${workspace.id}?diagram=<span class="diagramEmbedDiagramId"></span>&branch=${workspace.branch}" style="width: 100%; border: none; overflow: hidden;" allow="fullscreen"&gt;&lt;/iframe&gt;
+                    <pre class="embedCode"><code id="embedCodeFragment">&lt;iframe src="<span class="baseUrl"></span>/embed/${workspace.id}?diagram=<span class="diagramEmbedDiagramId"></span>${branch}" style="width: 100%; border: none; overflow: hidden;" allow="fullscreen"&gt;&lt;/iframe&gt;
 &lt;script type="text/javascript" src="<span class="baseUrl"></span>/static/js/structurizr-embed.js"&gt;&lt;/script&gt;</code></pre>
                     </c:when>
                     <c:when test="${workspace.shareable}">
-                <pre class="embedCode"><code id="embedCodeFragment">&lt;iframe src="<span class="baseUrl"></span>/embed/${workspace.id}/${workspace.sharingToken}?&diagram=<span class="diagramEmbedDiagramId"></span>&branch=${workspace.branch}" style="width: 100%; border: none; overflow: hidden;" allow="fullscreen"&gt;&lt;/iframe&gt;
+                <pre class="embedCode"><code id="embedCodeFragment">&lt;iframe src="<span class="baseUrl"></span>/embed/${workspace.id}/${workspace.sharingToken}?&diagram=<span class="diagramEmbedDiagramId"></span>${branch}" style="width: 100%; border: none; overflow: hidden;" allow="fullscreen"&gt;&lt;/iframe&gt;
 &lt;script type="text/javascript" src="<span class="baseUrl"></span>/static/js/structurizr-embed.js"&gt;&lt;/script&gt;</code></pre>
                     </c:when>
                 </c:choose>
