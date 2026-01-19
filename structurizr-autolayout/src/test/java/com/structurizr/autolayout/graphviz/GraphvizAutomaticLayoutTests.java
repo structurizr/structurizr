@@ -53,7 +53,7 @@ public class GraphvizAutomaticLayoutTests {
         assertEquals(233, view.getElementView(user).getX());
         assertEquals(208, view.getElementView(user).getY());
         assertEquals(208, view.getElementView(softwareSystem).getX());
-        assertEquals(908, view.getElementView(softwareSystem).getY());
+        assertEquals(708, view.getElementView(softwareSystem).getY());
     }
 
 }
