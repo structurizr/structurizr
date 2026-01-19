@@ -13,6 +13,7 @@
 
     #elementStyles {
         text-align: center;
+        margin-top: 20px;
     }
 
     .elementStyle {
@@ -39,6 +40,10 @@
     .selected {
         border: solid 1px #777777;
     }
+
+    #themeName {
+        font-size: 20px;
+    }
 </style>
 
 <div class="section centered">
@@ -49,8 +54,10 @@
             <option value="${theme}">${theme}</option>
             </c:forEach>
         </select>
-        <span class="smaller">(press <code>Space</code> to search)</span>
     </div>
+
+    <div id="themeName">Hello</div>
+    <span class="smaller">(press <code>Space</code> to search)</span>
 
     <div id="elementStyles"></div>
 </div>
@@ -77,12 +84,17 @@
         if (theme && theme.length > 0) {
             loadTheme('${structurizrConfiguration.webUrl}/static/themes/' + theme + '/theme.json');
             localStorage.setItem(LOCAL_STORAGE_THEME_KEY, theme);
+
+            $('#themeName').html(theme);
         } else {
             if (externalTheme.length > 0) {
                 loadTheme(externalTheme);
                 localStorage.setItem(LOCAL_STORAGE_THEME_KEY, '');
+
+                $('#themeName').html(externalTheme);
             } else {
                 reset();
+                $('#themeName').html('');
             }
         }
     }
