@@ -307,40 +307,40 @@ public class ModelTests extends AbstractWorkspaceTestBase {
         }
     }
 
-    @Test
-    void modifyRelationship_ThrowsAnException_WhenARelationshipIsNotSpecified() {
-        try {
-            model.modifyRelationship(null, "Uses", "Technology");
-            fail();
-        } catch (IllegalArgumentException iae) {
-            assertEquals("A relationship must be specified.", iae.getMessage());
-        }
-    }
-
-    @Test
-    void modifyRelationship_ModifiesAnExistingRelationship_WhenThatRelationshipDoesNotAlreadyExist() {
-        SoftwareSystem element1 = model.addSoftwareSystem("Element 1", "Description");
-        SoftwareSystem element2 = model.addSoftwareSystem("Element 2", "Description");
-        Relationship relationship = element1.uses(element2, "", "");
-
-        model.modifyRelationship(relationship, "Uses", "Technology");
-        assertEquals("Uses", relationship.getDescription());
-        assertEquals("Technology", relationship.getTechnology());
-    }
-
-    @Test
-    void modifyRelationship_ThrowsAnException_WhenThatRelationshipDoesAlreadyExist() {
-        SoftwareSystem element1 = model.addSoftwareSystem("Element 1", "Description");
-        SoftwareSystem element2 = model.addSoftwareSystem("Element 2", "Description");
-        Relationship relationship = element1.uses(element2, "Uses", "Technology");
-
-        try {
-            model.modifyRelationship(relationship, "Uses", "Technology");
-            fail();
-        } catch (IllegalArgumentException iae) {
-            assertEquals("A relationship named \"Uses\" between \"Element 1\" and \"Element 2\" already exists.", iae.getMessage());
-        }
-    }
+//    @Test
+//    void modifyRelationship_ThrowsAnException_WhenARelationshipIsNotSpecified() {
+//        try {
+//            model.modifyRelationship(null, "Uses", "Technology");
+//            fail();
+//        } catch (IllegalArgumentException iae) {
+//            assertEquals("A relationship must be specified.", iae.getMessage());
+//        }
+//    }
+//
+//    @Test
+//    void modifyRelationship_ModifiesAnExistingRelationship_WhenThatRelationshipDoesNotAlreadyExist() {
+//        SoftwareSystem element1 = model.addSoftwareSystem("Element 1", "Description");
+//        SoftwareSystem element2 = model.addSoftwareSystem("Element 2", "Description");
+//        Relationship relationship = element1.uses(element2, "", "");
+//
+//        model.modifyRelationship(relationship, "Uses", "Technology");
+//        assertEquals("Uses", relationship.getDescription());
+//        assertEquals("Technology", relationship.getTechnology());
+//    }
+//
+//    @Test
+//    void modifyRelationship_ThrowsAnException_WhenThatRelationshipDoesAlreadyExist() {
+//        SoftwareSystem element1 = model.addSoftwareSystem("Element 1", "Description");
+//        SoftwareSystem element2 = model.addSoftwareSystem("Element 2", "Description");
+//        Relationship relationship = element1.uses(element2, "Uses", "Technology");
+//
+//        try {
+//            model.modifyRelationship(relationship, "Uses", "Technology");
+//            fail();
+//        } catch (IllegalArgumentException iae) {
+//            assertEquals("A relationship named \"Uses\" between \"Element 1\" and \"Element 2\" already exists.", iae.getMessage());
+//        }
+//    }
 
     @Test
     void addSoftwareSystemInstance_ThrowsAnException_WhenANullSoftwareSystemIsSpecified() {

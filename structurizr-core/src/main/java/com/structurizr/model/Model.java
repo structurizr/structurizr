@@ -985,22 +985,22 @@ public final class Model implements PropertyHolder {
      * @param description   the new description
      * @param technology    the new technology
      */
-    public void modifyRelationship(Relationship relationship, String description, String technology) {
-        if (relationship == null) {
-            throw new IllegalArgumentException("A relationship must be specified.");
-        }
-
-        if (!relationship.getSource().hasEfferentRelationshipWith(relationship.getDestination(), description)) {
-            relationship.setDescription(description);
-            relationship.setTechnology(technology);
-        } else {
-            throw new IllegalArgumentException(
-                    String.format("A relationship named \"%s\" between \"%s\" and \"%s\" already exists.",
-                            description,
-                            relationship.getSource().getName(),
-                            relationship.getDestination().getName()));
-        }
-    }
+//    public void modifyRelationship(Relationship relationship, String description, String technology) {
+//        if (relationship == null) {
+//            throw new IllegalArgumentException("A relationship must be specified.");
+//        }
+//
+//        if (!relationship.getSource().hasEfferentRelationshipWith(relationship.getDestination(), description)) {
+//            relationship.setDescription(description);
+//            relationship.setTechnology(technology);
+//        } else {
+//            throw new IllegalArgumentException(
+//                    String.format("A relationship named \"%s\" between \"%s\" and \"%s\" already exists.",
+//                            description,
+//                            relationship.getSource().getName(),
+//                            relationship.getDestination().getName()));
+//        }
+//    }
 
     /**
      * Gets the strategy in use for creating implied relationships.
