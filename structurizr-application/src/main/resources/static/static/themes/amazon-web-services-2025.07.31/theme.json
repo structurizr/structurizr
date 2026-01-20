@@ -1,0 +1,1039 @@
+{
+  "name" : "Amazon Web Services",
+  "elements" : [ {
+    "tag" : "Amazon Web Services - AWS Account",
+    "icon" : "aws-account.png"
+  }, {
+    "tag" : "Amazon Web Services - AWS Cloud",
+    "icon" : "aws-cloud.png"
+  }, {
+    "tag" : "Amazon Web Services - AWS Cloud logo",
+    "icon" : "aws-cloud-logo.png"
+  }, {
+    "tag" : "Amazon Web Services - AWS IoT Greengrass Deployment",
+    "icon" : "aws-iot-greengrass-deployment.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Activate",
+    "icon" : "arch-aws-activate.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Amplify",
+    "icon" : "arch-aws-amplify.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS App Mesh",
+    "icon" : "arch-aws-app-mesh.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS App Runner",
+    "icon" : "arch-aws-app-runner.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS App Studio",
+    "icon" : "arch-aws-app-studio.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS AppConfig",
+    "icon" : "arch-aws-appconfig.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS AppFabric",
+    "icon" : "arch-aws-appfabric.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS AppSync",
+    "icon" : "arch-aws-appsync.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Application Auto Scaling",
+    "icon" : "arch-aws-application-auto-scaling.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Application Discovery Service",
+    "icon" : "arch-aws-application-discovery-service.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Application Migration Service",
+    "icon" : "arch-aws-application-migration-service.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Artifact",
+    "icon" : "arch-aws-artifact.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Audit Manager",
+    "icon" : "arch-aws-audit-manager.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Auto Scaling",
+    "icon" : "arch-aws-auto-scaling.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS B2B Data Interchange",
+    "icon" : "arch-aws-b2b-data-interchange.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Backint Agent",
+    "icon" : "arch-aws-backint-agent.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Backup",
+    "icon" : "arch-aws-backup.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Batch",
+    "icon" : "arch-aws-batch.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Billing Conductor",
+    "icon" : "arch-aws-billing-conductor.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Budgets",
+    "icon" : "arch-aws-budgets.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Certificate Manager",
+    "icon" : "arch-aws-certificate-manager.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Chatbot",
+    "icon" : "arch-aws-chatbot.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Clean Rooms",
+    "icon" : "arch-aws-clean-rooms.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Client VPN",
+    "icon" : "arch-aws-client-vpn.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Cloud Control API",
+    "icon" : "arch-aws-cloud-control-api.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Cloud Development Kit",
+    "icon" : "arch-aws-cloud-development-kit.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Cloud Map",
+    "icon" : "arch-aws-cloud-map.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Cloud WAN",
+    "icon" : "arch-aws-cloud-wan.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Cloud9",
+    "icon" : "arch-aws-cloud9.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS CloudFormation",
+    "icon" : "arch-aws-cloudformation.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS CloudHSM",
+    "icon" : "arch-aws-cloudhsm.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS CloudShell",
+    "icon" : "arch-aws-cloudshell.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS CloudTrail",
+    "icon" : "arch-aws-cloudtrail.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS CodeArtifact",
+    "icon" : "arch-aws-codeartifact.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS CodeBuild",
+    "icon" : "arch-aws-codebuild.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS CodeCommit",
+    "icon" : "arch-aws-codecommit.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS CodeDeploy",
+    "icon" : "arch-aws-codedeploy.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS CodePipeline",
+    "icon" : "arch-aws-codepipeline.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Command Line Interface",
+    "icon" : "arch-aws-command-line-interface.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Compute Optimizer",
+    "icon" : "arch-aws-compute-optimizer.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Config",
+    "icon" : "arch-aws-config.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Console Mobile Application",
+    "icon" : "arch-aws-console-mobile-application.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Control Tower",
+    "icon" : "arch-aws-control-tower.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Cost Explorer",
+    "icon" : "arch-aws-cost-explorer.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Cost and Usage Report",
+    "icon" : "arch-aws-cost-and-usage-report.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Data Exchange",
+    "icon" : "arch-aws-data-exchange.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Data Transfer Terminal",
+    "icon" : "arch-aws-data-transfer-terminal.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS DataSync",
+    "icon" : "arch-aws-datasync.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Database Migration Service",
+    "icon" : "arch-aws-database-migration-service.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Deadline Cloud",
+    "icon" : "arch-aws-deadline-cloud.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Deep Learning AMIs",
+    "icon" : "arch-aws-deep-learning-amis.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Deep Learning Containers",
+    "icon" : "arch-aws-deep-learning-containers.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS DeepComposer",
+    "icon" : "arch-aws-deepcomposer.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS DeepRacer",
+    "icon" : "arch-aws-deepracer.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Device Farm",
+    "icon" : "arch-aws-device-farm.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Direct Connect",
+    "icon" : "arch-aws-direct-connect.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Directory Service",
+    "icon" : "arch-aws-directory-service.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Distro for OpenTelemetry",
+    "icon" : "arch-aws-distro-for-opentelemetry.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Elastic Beanstalk",
+    "icon" : "arch-aws-elastic-beanstalk.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Elastic Disaster Recovery",
+    "icon" : "arch-aws-elastic-disaster-recovery.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Elemental Appliances and Software",
+    "icon" : "arch-aws-elemental-appliances-and-software.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Elemental Conductor",
+    "icon" : "arch-aws-elemental-conductor.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Elemental Delta",
+    "icon" : "arch-aws-elemental-delta.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Elemental Link",
+    "icon" : "arch-aws-elemental-link.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Elemental Live",
+    "icon" : "arch-aws-elemental-live.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Elemental MediaConnect",
+    "icon" : "arch-aws-elemental-mediaconnect.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Elemental MediaConvert",
+    "icon" : "arch-aws-elemental-mediaconvert.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Elemental MediaLive",
+    "icon" : "arch-aws-elemental-medialive.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Elemental MediaPackage",
+    "icon" : "arch-aws-elemental-mediapackage.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Elemental MediaStore",
+    "icon" : "arch-aws-elemental-mediastore.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Elemental MediaTailor",
+    "icon" : "arch-aws-elemental-mediatailor.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Elemental Server",
+    "icon" : "arch-aws-elemental-server.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS End User Messaging",
+    "icon" : "arch-aws-end-user-messaging.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Entity Resolution",
+    "icon" : "arch-aws-entity-resolution.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Express Workflows",
+    "icon" : "arch-aws-express-workflows.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Fargate",
+    "icon" : "arch-aws-fargate.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Fault Injection Service",
+    "icon" : "arch-aws-fault-injection-service.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Firewall Manager",
+    "icon" : "arch-aws-firewall-manager.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Global Accelerator",
+    "icon" : "arch-aws-global-accelerator.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Glue",
+    "icon" : "arch-aws-glue.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Glue DataBrew",
+    "icon" : "arch-aws-glue-databrew.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Ground Station",
+    "icon" : "arch-aws-ground-station.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Health Dashboard",
+    "icon" : "arch-aws-health-dashboard.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS HealthImaging",
+    "icon" : "arch-aws-healthimaging.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS HealthLake",
+    "icon" : "arch-aws-healthlake.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS HealthOmics",
+    "icon" : "arch-aws-healthomics.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS HealthScribe",
+    "icon" : "arch-aws-healthscribe.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS IAM Identity Center",
+    "icon" : "arch-aws-iam-identity-center.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS IQ",
+    "icon" : "arch-aws-iq.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Identity and Access Management",
+    "icon" : "arch-aws-identity-and-access-management.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Infrastructure Composer",
+    "icon" : "arch-aws-infrastructure-composer.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS IoT Analytics",
+    "icon" : "arch-aws-iot-analytics.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS IoT Button",
+    "icon" : "arch-aws-iot-button.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS IoT Core",
+    "icon" : "arch-aws-iot-core.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS IoT Device Defender",
+    "icon" : "arch-aws-iot-device-defender.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS IoT Device Management",
+    "icon" : "arch-aws-iot-device-management.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS IoT Events",
+    "icon" : "arch-aws-iot-events.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS IoT ExpressLink",
+    "icon" : "arch-aws-iot-expresslink.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS IoT FleetWise",
+    "icon" : "arch-aws-iot-fleetwise.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS IoT Greengrass",
+    "icon" : "arch-aws-iot-greengrass.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS IoT SiteWise",
+    "icon" : "arch-aws-iot-sitewise.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS IoT TwinMaker",
+    "icon" : "arch-aws-iot-twinmaker.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Key Management Service",
+    "icon" : "arch-aws-key-management-service.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Lake Formation",
+    "icon" : "arch-aws-lake-formation.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Lambda",
+    "icon" : "arch-aws-lambda.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Launch Wizard",
+    "icon" : "arch-aws-launch-wizard.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS License Manager",
+    "icon" : "arch-aws-license-manager.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Local Zones",
+    "icon" : "arch-aws-local-zones.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Mainframe Modernization",
+    "icon" : "arch-aws-mainframe-modernization.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Managed Services",
+    "icon" : "arch-aws-managed-services.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Management Console",
+    "icon" : "arch-aws-management-console.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Marketplace Dark",
+    "icon" : "arch-aws-marketplace-dark.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Marketplace Light",
+    "icon" : "arch-aws-marketplace-light.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Migration Evaluator",
+    "icon" : "arch-aws-migration-evaluator.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Migration Hub",
+    "icon" : "arch-aws-migration-hub.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Network Firewall",
+    "icon" : "arch-aws-network-firewall.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Neuron",
+    "icon" : "arch-aws-neuron.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Nitro Enclaves",
+    "icon" : "arch-aws-nitro-enclaves.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Organizations",
+    "icon" : "arch-aws-organizations.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Outposts family",
+    "icon" : "arch-aws-outposts-family.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Outposts rack",
+    "icon" : "arch-aws-outposts-rack.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Outposts servers",
+    "icon" : "arch-aws-outposts-servers.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Panorama",
+    "icon" : "arch-aws-panorama.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Parallel Cluster",
+    "icon" : "arch-aws-parallel-cluster.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Parallel Computing Service",
+    "icon" : "arch-aws-parallel-computing-service.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Payment Cryptography",
+    "icon" : "arch-aws-payment-cryptography.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Private 5G",
+    "icon" : "arch-aws-private-5g.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Private Certificate Authority",
+    "icon" : "arch-aws-private-certificate-authority.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS PrivateLink",
+    "icon" : "arch-aws-privatelink.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Professional Services",
+    "icon" : "arch-aws-professional-services.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Proton",
+    "icon" : "arch-aws-proton.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Resilience Hub",
+    "icon" : "arch-aws-resilience-hub.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Resource Access Manager",
+    "icon" : "arch-aws-resource-access-manager.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Resource Explorer",
+    "icon" : "arch-aws-resource-explorer.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Secrets Manager",
+    "icon" : "arch-aws-secrets-manager.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Security Hub",
+    "icon" : "arch-aws-security-hub.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Security Incident Response",
+    "icon" : "arch-aws-security-incident-response.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Serverless Application Repository",
+    "icon" : "arch-aws-serverless-application-repository.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Service Catalog",
+    "icon" : "arch-aws-service-catalog.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Service Management Connector",
+    "icon" : "arch-aws-service-management-connector.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Shield",
+    "icon" : "arch-aws-shield.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Signer",
+    "icon" : "arch-aws-signer.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS SimSpace Weaver",
+    "icon" : "arch-aws-simspace-weaver.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Site to Site VPN",
+    "icon" : "arch-aws-site-to-site-vpn.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Snowball",
+    "icon" : "arch-aws-snowball.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Snowball Edge",
+    "icon" : "arch-aws-snowball-edge.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Step Functions",
+    "icon" : "arch-aws-step-functions.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Storage Gateway",
+    "icon" : "arch-aws-storage-gateway.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Supply Chain",
+    "icon" : "arch-aws-supply-chain.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Support",
+    "icon" : "arch-aws-support.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Systems Manager",
+    "icon" : "arch-aws-systems-manager.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Telco Network Builder",
+    "icon" : "arch-aws-telco-network-builder.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Thinkbox Deadline",
+    "icon" : "arch-aws-thinkbox-deadline.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Thinkbox Frost",
+    "icon" : "arch-aws-thinkbox-frost.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Thinkbox Krakatoa",
+    "icon" : "arch-aws-thinkbox-krakatoa.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Thinkbox Sequoia",
+    "icon" : "arch-aws-thinkbox-sequoia.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Thinkbox Stoke",
+    "icon" : "arch-aws-thinkbox-stoke.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Thinkbox XMesh",
+    "icon" : "arch-aws-thinkbox-xmesh.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Tools and SDKs",
+    "icon" : "arch-aws-tools-and-sdks.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Training Certification",
+    "icon" : "arch-aws-training-certification.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Transfer Family",
+    "icon" : "arch-aws-transfer-family.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Transform",
+    "icon" : "arch-aws-transform.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Transit Gateway",
+    "icon" : "arch-aws-transit-gateway.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Trusted Advisor",
+    "icon" : "arch-aws-trusted-advisor.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS User Notifications",
+    "icon" : "arch-aws-user-notifications.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Verified Access",
+    "icon" : "arch-aws-verified-access.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS WAF",
+    "icon" : "arch-aws-waf.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Wavelength",
+    "icon" : "arch-aws-wavelength.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Well Architected Tool",
+    "icon" : "arch-aws-well-architected-tool.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS Wickr",
+    "icon" : "arch-aws-wickr.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS X Ray",
+    "icon" : "arch-aws-x-ray.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS rePost",
+    "icon" : "arch-aws-repost.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch AWS rePost Private",
+    "icon" : "arch-aws-repost-private.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Alexa For Business",
+    "icon" : "arch-alexa-for-business.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon API Gateway",
+    "icon" : "arch-amazon-api-gateway.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon AppFlow",
+    "icon" : "arch-amazon-appflow.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon AppStream 2",
+    "icon" : "arch-amazon-appstream-2.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Application Recovery Controller",
+    "icon" : "arch-amazon-application-recovery-controller.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Athena",
+    "icon" : "arch-amazon-athena.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Augmented AI A2I",
+    "icon" : "arch-amazon-augmented-ai-a2i.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Aurora",
+    "icon" : "arch-amazon-aurora.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Bedrock",
+    "icon" : "arch-amazon-bedrock.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Braket",
+    "icon" : "arch-amazon-braket.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Chime",
+    "icon" : "arch-amazon-chime.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Chime SDK",
+    "icon" : "arch-amazon-chime-sdk.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Cloud Directory",
+    "icon" : "arch-amazon-cloud-directory.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon CloudFront",
+    "icon" : "arch-amazon-cloudfront.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon CloudSearch",
+    "icon" : "arch-amazon-cloudsearch.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon CloudWatch",
+    "icon" : "arch-amazon-cloudwatch.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon CodeCatalyst",
+    "icon" : "arch-amazon-codecatalyst.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon CodeGuru",
+    "icon" : "arch-amazon-codeguru.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon CodeWhisperer",
+    "icon" : "arch-amazon-codewhisperer.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Cognito",
+    "icon" : "arch-amazon-cognito.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Comprehend",
+    "icon" : "arch-amazon-comprehend.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Comprehend Medical",
+    "icon" : "arch-amazon-comprehend-medical.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Connect",
+    "icon" : "arch-amazon-connect.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Corretto",
+    "icon" : "arch-amazon-corretto.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon DCV",
+    "icon" : "arch-amazon-dcv.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Data Firehose",
+    "icon" : "arch-amazon-data-firehose.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon DataZone",
+    "icon" : "arch-amazon-datazone.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Detective",
+    "icon" : "arch-amazon-detective.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon DevOps Guru",
+    "icon" : "arch-amazon-devops-guru.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon DocumentDB",
+    "icon" : "arch-amazon-documentdb.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon DynamoDB",
+    "icon" : "arch-amazon-dynamodb.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon EC2",
+    "icon" : "arch-amazon-ec2.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon EC2 Auto Scaling",
+    "icon" : "arch-amazon-ec2-auto-scaling.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon EC2 Image Builder",
+    "icon" : "arch-amazon-ec2-image-builder.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon ECS Anywhere",
+    "icon" : "arch-amazon-ecs-anywhere.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon EFS",
+    "icon" : "arch-amazon-efs.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon EKS Anywhere",
+    "icon" : "arch-amazon-eks-anywhere.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon EKS Cloud",
+    "icon" : "arch-amazon-eks-cloud.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon EKS Distro",
+    "icon" : "arch-amazon-eks-distro.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon EMR",
+    "icon" : "arch-amazon-emr.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon ElastiCache",
+    "icon" : "arch-amazon-elasticache.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Elastic Block Store",
+    "icon" : "arch-amazon-elastic-block-store.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Elastic Container Registry",
+    "icon" : "arch-amazon-elastic-container-registry.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Elastic Container Service",
+    "icon" : "arch-amazon-elastic-container-service.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Elastic Inference",
+    "icon" : "arch-amazon-elastic-inference.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Elastic Kubernetes Service",
+    "icon" : "arch-amazon-elastic-kubernetes-service.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Elastic Transcoder",
+    "icon" : "arch-amazon-elastic-transcoder.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Elastic VMware Service",
+    "icon" : "arch-amazon-elastic-vmware-service.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon EventBridge",
+    "icon" : "arch-amazon-eventbridge.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon FSx",
+    "icon" : "arch-amazon-fsx.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon FSx for Lustre",
+    "icon" : "arch-amazon-fsx-for-lustre.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon FSx for NetApp ONTAP",
+    "icon" : "arch-amazon-fsx-for-netapp-ontap.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon FSx for OpenZFS",
+    "icon" : "arch-amazon-fsx-for-openzfs.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon FSx for WFS",
+    "icon" : "arch-amazon-fsx-for-wfs.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon File Cache",
+    "icon" : "arch-amazon-file-cache.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon FinSpace",
+    "icon" : "arch-amazon-finspace.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Forecast",
+    "icon" : "arch-amazon-forecast.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Fraud Detector",
+    "icon" : "arch-amazon-fraud-detector.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon GameLift Servers",
+    "icon" : "arch-amazon-gamelift-servers.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon GameLift Streams",
+    "icon" : "arch-amazon-gamelift-streams.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon GuardDuty",
+    "icon" : "arch-amazon-guardduty.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Inspector",
+    "icon" : "arch-amazon-inspector.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Interactive Video Service",
+    "icon" : "arch-amazon-interactive-video-service.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Kendra",
+    "icon" : "arch-amazon-kendra.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Keyspaces",
+    "icon" : "arch-amazon-keyspaces.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Kinesis",
+    "icon" : "arch-amazon-kinesis.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Kinesis Data Streams",
+    "icon" : "arch-amazon-kinesis-data-streams.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Kinesis Video Streams",
+    "icon" : "arch-amazon-kinesis-video-streams.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Lex",
+    "icon" : "arch-amazon-lex.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Lightsail",
+    "icon" : "arch-amazon-lightsail.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Lightsail for Research",
+    "icon" : "arch-amazon-lightsail-for-research.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Location Service",
+    "icon" : "arch-amazon-location-service.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Lookout for Equipment",
+    "icon" : "arch-amazon-lookout-for-equipment.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Lookout for Metrics",
+    "icon" : "arch-amazon-lookout-for-metrics.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Lookout for Vision",
+    "icon" : "arch-amazon-lookout-for-vision.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon MQ",
+    "icon" : "arch-amazon-mq.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Macie",
+    "icon" : "arch-amazon-macie.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Managed Blockchain",
+    "icon" : "arch-amazon-managed-blockchain.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Managed Grafana",
+    "icon" : "arch-amazon-managed-grafana.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Managed Service for Apache Flink",
+    "icon" : "arch-amazon-managed-service-for-apache-flink.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Managed Service for Prometheus",
+    "icon" : "arch-amazon-managed-service-for-prometheus.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Managed Streaming for Apache Kafka",
+    "icon" : "arch-amazon-managed-streaming-for-apache-kafka.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Managed Workflows for Apache Airflow",
+    "icon" : "arch-amazon-managed-workflows-for-apache-airflow.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon MemoryDB",
+    "icon" : "arch-amazon-memorydb.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Monitron",
+    "icon" : "arch-amazon-monitron.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Neptune",
+    "icon" : "arch-amazon-neptune.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Nova",
+    "icon" : "arch-amazon-nova.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon OpenSearch Service",
+    "icon" : "arch-amazon-opensearch-service.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Personalize",
+    "icon" : "arch-amazon-personalize.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Pinpoint",
+    "icon" : "arch-amazon-pinpoint.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Pinpoint APIs",
+    "icon" : "arch-amazon-pinpoint-apis.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Polly",
+    "icon" : "arch-amazon-polly.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Q",
+    "icon" : "arch-amazon-q.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Quantum Ledger Database",
+    "icon" : "arch-amazon-quantum-ledger-database.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon QuickSight",
+    "icon" : "arch-amazon-quicksight.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon RDS",
+    "icon" : "arch-amazon-rds.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Redshift",
+    "icon" : "arch-amazon-redshift.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Rekognition",
+    "icon" : "arch-amazon-rekognition.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Route 53",
+    "icon" : "arch-amazon-route-53.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon S3 on Outposts",
+    "icon" : "arch-amazon-s3-on-outposts.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon SageMaker",
+    "icon" : "arch-amazon-sagemaker.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon SageMaker AI",
+    "icon" : "arch-amazon-sagemaker-ai.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon SageMaker Ground Truth",
+    "icon" : "arch-amazon-sagemaker-ground-truth.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon SageMaker Studio Lab",
+    "icon" : "arch-amazon-sagemaker-studio-lab.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Security Lake",
+    "icon" : "arch-amazon-security-lake.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Simple Email Service",
+    "icon" : "arch-amazon-simple-email-service.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Simple Notification Service",
+    "icon" : "arch-amazon-simple-notification-service.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Simple Queue Service",
+    "icon" : "arch-amazon-simple-queue-service.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Simple Storage Service",
+    "icon" : "arch-amazon-simple-storage-service.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Simple Storage Service Glacier",
+    "icon" : "arch-amazon-simple-storage-service-glacier.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Textract",
+    "icon" : "arch-amazon-textract.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Timestream",
+    "icon" : "arch-amazon-timestream.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Transcribe",
+    "icon" : "arch-amazon-transcribe.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Translate",
+    "icon" : "arch-amazon-translate.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon VPC Lattice",
+    "icon" : "arch-amazon-vpc-lattice.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Verified Permissions",
+    "icon" : "arch-amazon-verified-permissions.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon Virtual Private Cloud",
+    "icon" : "arch-amazon-virtual-private-cloud.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon WorkDocs",
+    "icon" : "arch-amazon-workdocs.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon WorkDocs SDK",
+    "icon" : "arch-amazon-workdocs-sdk.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon WorkMail",
+    "icon" : "arch-amazon-workmail.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Amazon WorkSpaces Family",
+    "icon" : "arch-amazon-workspaces-family.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Apache MXNet on AWS",
+    "icon" : "arch-apache-mxnet-on-aws.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Bottlerocket",
+    "icon" : "arch-bottlerocket.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Category Analytics",
+    "icon" : "arch-category-analytics.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Category Application Integration",
+    "icon" : "arch-category-application-integration.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Category Artificial Intelligence",
+    "icon" : "arch-category-artificial-intelligence.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Category Blockchain",
+    "icon" : "arch-category-blockchain.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Category Business Applications",
+    "icon" : "arch-category-business-applications.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Category Cloud Financial Management",
+    "icon" : "arch-category-cloud-financial-management.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Category Compute",
+    "icon" : "arch-category-compute.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Category Contact Center",
+    "icon" : "arch-category-contact-center.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Category Containers",
+    "icon" : "arch-category-containers.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Category Customer Enablement",
+    "icon" : "arch-category-customer-enablement.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Category Database",
+    "icon" : "arch-category-database.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Category Developer Tools",
+    "icon" : "arch-category-developer-tools.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Category End User Computing",
+    "icon" : "arch-category-end-user-computing.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Category Front End Web Mobile",
+    "icon" : "arch-category-front-end-web-mobile.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Category Games",
+    "icon" : "arch-category-games.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Category Internet of Things",
+    "icon" : "arch-category-internet-of-things.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Category Management Governance",
+    "icon" : "arch-category-management-governance.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Category Media Services",
+    "icon" : "arch-category-media-services.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Category Migration Modernization",
+    "icon" : "arch-category-migration-modernization.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Category Networking Content Delivery",
+    "icon" : "arch-category-networking-content-delivery.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Category Quantum Technologies",
+    "icon" : "arch-category-quantum-technologies.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Category Satellite",
+    "icon" : "arch-category-satellite.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Category Security Identity Compliance",
+    "icon" : "arch-category-security-identity-compliance.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Category Serverless",
+    "icon" : "arch-category-serverless.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Category Storage",
+    "icon" : "arch-category-storage.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Elastic Fabric Adapter",
+    "icon" : "arch-elastic-fabric-adapter.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Elastic Load Balancing",
+    "icon" : "arch-elastic-load-balancing.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch FreeRTOS",
+    "icon" : "arch-freertos.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch NICE EnginFrame",
+    "icon" : "arch-nice-enginframe.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Open 3D Engine",
+    "icon" : "arch-open-3d-engine.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Oracle Database at AWS",
+    "icon" : "arch-oracle-database-at-aws.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch PyTorch on AWS",
+    "icon" : "arch-pytorch-on-aws.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Red Hat OpenShift Service on AWS",
+    "icon" : "arch-red-hat-openshift-service-on-aws.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Reserved Instance Reporting",
+    "icon" : "arch-reserved-instance-reporting.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch Savings Plans",
+    "icon" : "arch-savings-plans.png"
+  }, {
+    "tag" : "Amazon Web Services - Arch TensorFlow on AWS",
+    "icon" : "arch-tensorflow-on-aws.png"
+  }, {
+    "tag" : "Amazon Web Services - Auto Scaling group",
+    "icon" : "auto-scaling-group.png"
+  }, {
+    "tag" : "Amazon Web Services - Corporate data center",
+    "icon" : "corporate-data-center.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 instance contents",
+    "icon" : "ec2-instance-contents.png"
+  }, {
+    "tag" : "Amazon Web Services - Private subnet",
+    "icon" : "private-subnet.png"
+  }, {
+    "tag" : "Amazon Web Services - Public subnet",
+    "icon" : "public-subnet.png"
+  }, {
+    "tag" : "Amazon Web Services - Region",
+    "icon" : "region.png"
+  }, {
+    "tag" : "Amazon Web Services - Server contents",
+    "icon" : "server-contents.png"
+  }, {
+    "tag" : "Amazon Web Services - Spot Fleet",
+    "icon" : "spot-fleet.png"
+  }, {
+    "tag" : "Amazon Web Services - Virtual private cloud VPC",
+    "icon" : "virtual-private-cloud-vpc.png"
+  } ]
+}
