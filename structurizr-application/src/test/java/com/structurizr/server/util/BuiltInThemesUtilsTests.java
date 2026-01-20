@@ -4,7 +4,10 @@ import com.structurizr.Workspace;
 import com.structurizr.util.BuiltInThemes;
 import com.structurizr.view.ElementStyle;
 import com.structurizr.view.Shape;
+import com.structurizr.view.Themes;
 import org.junit.jupiter.api.Test;
+
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -13,6 +16,7 @@ public class BuiltInThemesUtilsTests {
 
     @Test
     void inlineBuiltInThemes_WhenTheElementStyleDoesNotExist() {
+        Themes.setBuiltInThemes(Set.of("amazon-web-services-2023.01.31"));
         Workspace workspace = new Workspace("Name", "Description");
         workspace.getModel().addSoftwareSystem("Name").addTags("Amazon Web Services - Fargate");
         workspace.getViews().getConfiguration().addTheme("amazon-web-services-2023.01.31");
@@ -26,6 +30,7 @@ public class BuiltInThemesUtilsTests {
 
     @Test
     void inlineBuiltInThemes_WhenTheElementStyleDoeExist() {
+        Themes.setBuiltInThemes(Set.of("amazon-web-services-2023.01.31"));
         Workspace workspace = new Workspace("Name", "Description");
         workspace.getModel().addSoftwareSystem("Name").addTags("Amazon Web Services - Fargate");
         workspace.getViews().getConfiguration().getStyles().addElementStyle("Amazon Web Services - Fargate").shape(Shape.RoundedBox);
