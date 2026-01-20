@@ -2,123 +2,123 @@
   "name" : "Kubernetes",
   "elements" : [ {
     "tag" : "Kubernetes - api",
-    "icon" : "api-256.png"
+    "icon" : "api.png"
   }, {
     "tag" : "Kubernetes - c-c-m",
-    "icon" : "c-c-m-256.png"
+    "icon" : "c-c-m.png"
   }, {
     "tag" : "Kubernetes - c-m",
-    "icon" : "c-m-256.png"
+    "icon" : "c-m.png"
   }, {
     "tag" : "Kubernetes - c-role",
-    "icon" : "c-role-256.png"
+    "icon" : "c-role.png"
   }, {
     "tag" : "Kubernetes - cm",
-    "icon" : "cm-256.png"
+    "icon" : "cm.png"
   }, {
     "tag" : "Kubernetes - control-plane",
-    "icon" : "control-plane-256.png"
+    "icon" : "control-plane.png"
   }, {
     "tag" : "Kubernetes - crb",
-    "icon" : "crb-256.png"
+    "icon" : "crb.png"
   }, {
     "tag" : "Kubernetes - crd",
-    "icon" : "crd-256.png"
+    "icon" : "crd.png"
   }, {
     "tag" : "Kubernetes - cronjob",
-    "icon" : "cronjob-256.png"
+    "icon" : "cronjob.png"
   }, {
     "tag" : "Kubernetes - deploy",
-    "icon" : "deploy-256.png"
+    "icon" : "deploy.png"
   }, {
     "tag" : "Kubernetes - ds",
-    "icon" : "ds-256.png"
+    "icon" : "ds.png"
   }, {
     "tag" : "Kubernetes - ep",
-    "icon" : "ep-256.png"
+    "icon" : "ep.png"
   }, {
     "tag" : "Kubernetes - etcd",
-    "icon" : "etcd-256.png"
+    "icon" : "etcd.png"
   }, {
     "tag" : "Kubernetes - group",
-    "icon" : "group-256.png"
+    "icon" : "group.png"
   }, {
     "tag" : "Kubernetes - hpa",
-    "icon" : "hpa-256.png"
+    "icon" : "hpa.png"
   }, {
     "tag" : "Kubernetes - ing",
-    "icon" : "ing-256.png"
+    "icon" : "ing.png"
   }, {
     "tag" : "Kubernetes - job",
-    "icon" : "job-256.png"
+    "icon" : "job.png"
   }, {
     "tag" : "Kubernetes - k-proxy",
-    "icon" : "k-proxy-256.png"
+    "icon" : "k-proxy.png"
   }, {
     "tag" : "Kubernetes - kubelet",
-    "icon" : "kubelet-256.png"
+    "icon" : "kubelet.png"
   }, {
     "tag" : "Kubernetes - limits",
-    "icon" : "limits-256.png"
+    "icon" : "limits.png"
   }, {
     "tag" : "Kubernetes - master",
-    "icon" : "master-256.png"
+    "icon" : "master.png"
   }, {
     "tag" : "Kubernetes - netpol",
-    "icon" : "netpol-256.png"
+    "icon" : "netpol.png"
   }, {
     "tag" : "Kubernetes - node",
-    "icon" : "node-256.png"
+    "icon" : "node.png"
   }, {
     "tag" : "Kubernetes - ns",
-    "icon" : "ns-256.png"
+    "icon" : "ns.png"
   }, {
     "tag" : "Kubernetes - pod",
-    "icon" : "pod-256.png"
+    "icon" : "pod.png"
   }, {
     "tag" : "Kubernetes - psp",
-    "icon" : "psp-256.png"
+    "icon" : "psp.png"
   }, {
     "tag" : "Kubernetes - pv",
-    "icon" : "pv-256.png"
+    "icon" : "pv.png"
   }, {
     "tag" : "Kubernetes - pvc",
-    "icon" : "pvc-256.png"
+    "icon" : "pvc.png"
   }, {
     "tag" : "Kubernetes - quota",
-    "icon" : "quota-256.png"
+    "icon" : "quota.png"
   }, {
     "tag" : "Kubernetes - rb",
-    "icon" : "rb-256.png"
+    "icon" : "rb.png"
   }, {
     "tag" : "Kubernetes - role",
-    "icon" : "role-256.png"
+    "icon" : "role.png"
   }, {
     "tag" : "Kubernetes - rs",
-    "icon" : "rs-256.png"
+    "icon" : "rs.png"
   }, {
     "tag" : "Kubernetes - sa",
-    "icon" : "sa-256.png"
+    "icon" : "sa.png"
   }, {
     "tag" : "Kubernetes - sc",
-    "icon" : "sc-256.png"
+    "icon" : "sc.png"
   }, {
     "tag" : "Kubernetes - sched",
-    "icon" : "sched-256.png"
+    "icon" : "sched.png"
   }, {
     "tag" : "Kubernetes - secret",
-    "icon" : "secret-256.png"
+    "icon" : "secret.png"
   }, {
     "tag" : "Kubernetes - sts",
-    "icon" : "sts-256.png"
+    "icon" : "sts.png"
   }, {
     "tag" : "Kubernetes - svc",
-    "icon" : "svc-256.png"
+    "icon" : "svc.png"
   }, {
     "tag" : "Kubernetes - user",
-    "icon" : "user-256.png"
+    "icon" : "user.png"
   }, {
     "tag" : "Kubernetes - vol",
-    "icon" : "vol-256.png"
+    "icon" : "vol.png"
   } ]
 }
