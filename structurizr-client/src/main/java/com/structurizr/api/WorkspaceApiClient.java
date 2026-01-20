@@ -357,7 +357,10 @@ public class WorkspaceApiClient extends AbstractApiClient {
         String httpMethod = httpRequest.getMethod();
 
         httpRequest.addHeader(HttpHeaders.USER_AGENT, agent);
-        httpRequest.addHeader(HttpHeaders.AUTHORIZATION, apiKey);
+
+        if (!StringUtils.isNullOrEmpty(apiKey)) {
+            httpRequest.addHeader(HttpHeaders.AUTHORIZATION, apiKey);
+        }
 
         if (httpMethod.equals("PUT")) {
             httpRequest.addHeader(HttpHeaders.CONTENT_TYPE, contentType);

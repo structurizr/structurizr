@@ -2,7 +2,6 @@ package com.structurizr.api;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.structurizr.util.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hc.core5.http.HttpStatus;
@@ -30,10 +29,6 @@ public class AdminApiClient extends AbstractApiClient {
      */
     public AdminApiClient(String url, String apiKey) {
         super(url);
-
-        if (StringUtils.isNullOrEmpty(apiKey)) {
-            throw new IllegalArgumentException("The API key must not be null or empty.");
-        }
 
         this.apiKey = apiKey;
     }
@@ -142,7 +137,7 @@ public class AdminApiClient extends AbstractApiClient {
     }
 
     private String createAuthorizationHeader() {
-        return apiKey;
+        return apiKey != null ? apiKey : "";
     }
 
 }

@@ -1,7 +1,9 @@
 package com.structurizr.command;
 
 import com.structurizr.Workspace;
+import com.structurizr.api.AdminApiClient;
 import com.structurizr.api.WorkspaceApiClient;
+import com.structurizr.api.WorkspaceMetadata;
 import com.structurizr.encryption.AesEncryptionStrategy;
 import com.structurizr.util.StringUtils;
 import com.structurizr.util.WorkspaceUtils;
@@ -10,10 +12,21 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.File;
+import java.util.Collection;
 
 public class PullCommand extends AbstractCommand {
 
+    private static final String ALL_WORKSPACES = "*";
+
     private static final Log log = LogFactory.getLog(PullCommand.class);
+
+    private String apiUrl = "";
+    private String workspaceId = "";
+    private String apiKey = "";
+    private String branch = "";
+    private String passphrase = "";
+    private File outputDir;
+    private boolean debug = false;
 
     public PullCommand() {
     }
@@ -41,6 +54,10 @@ public class PullCommand extends AbstractCommand {
         option.setRequired(false);
         options.addOption(option);
 
+        option = new Option("o", "output", true, "Path to an output directory");
+        option.setRequired(false);
+        options.addOption(option);
+
         option = new Option("debug", "debug", false, "Enable debug logging");
         option.setRequired(false);
         options.addOption(option);
@@ -48,21 +65,17 @@ public class PullCommand extends AbstractCommand {
         CommandLineParser commandLineParser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();
 
-        String apiUrl = "";
-        long workspaceId = 1;
-        String apiKey = "";
-        String branch = "";
-        String passphrase = "";
-        boolean debug = false;
+        String outputPath = null;
 
         try {
             CommandLine cmd = commandLineParser.parse(options, args);
 
-            apiUrl = cmd.getOptionValue("structurizrApiUrl", "https://api.structurizr.com");
-            workspaceId = Long.parseLong(cmd.getOptionValue("workspaceId"));
+            apiUrl = cmd.getOptionValue("structurizrApiUrl");
+            workspaceId = cmd.getOptionValue("workspaceId");
             apiKey = cmd.getOptionValue("apiKey");
             branch = cmd.getOptionValue("branch");
             passphrase = cmd.getOptionValue("passphrase");
+            outputPath = cmd.getOptionValue("output");
             debug = cmd.hasOption("debug");
         } catch (ParseException e) {
             log.error(e.getMessage());
@@ -71,17 +84,38 @@ public class PullCommand extends AbstractCommand {
             System.exit(1);
         }
 
+        if (StringUtils.isNullOrEmpty(outputPath)) {
+            outputPath = ".";
+        }
+
+        outputDir = new File(outputPath);
+        outputDir.mkdirs();
+
         if (debug) {
             configureDebugLogging();
         }
 
+        if (ALL_WORKSPACES.equals(workspaceId)) {
+            log.info("Pulling all workspaces " + workspaceId + " from " + apiUrl);
+            AdminApiClient adminApiClient = new AdminApiClient(apiUrl, apiKey);
+            Collection<WorkspaceMetadata> workspaces = adminApiClient.getWorkspaces();
+            for (WorkspaceMetadata workspace : workspaces) {
+                pullWorkspace(workspace.getId());
+            }
+        } else {
+            pullWorkspace(Long.parseLong(workspaceId));
+        }
+        log.info(" - finished");
+    }
+
+    private void pullWorkspace(long workspaceId) throws Exception {
         File file;
         if (StringUtils.isNullOrEmpty(branch)) {
             log.info("Pulling workspace " + workspaceId + " from " + apiUrl);
-            file = new File("structurizr-" + workspaceId + "-workspace.json");
+            file = new File(outputDir, "structurizr-" + workspaceId + "-workspace.json");
         } else {
             log.info("Pulling workspace " + workspaceId + " from " + apiUrl + " (branch=" + branch + ")");
-            file = new File("structurizr-" + workspaceId + "-" + branch + "-workspace.json");
+            file = new File(outputDir, "structurizr-" + workspaceId + "-" + branch + "-workspace.json");
         }
 
         WorkspaceApiClient client = new WorkspaceApiClient(apiUrl, workspaceId, apiKey);
@@ -97,7 +131,6 @@ public class PullCommand extends AbstractCommand {
 
         WorkspaceUtils.saveWorkspaceToJson(workspace, file);
         log.info(" - workspace saved as " + file.getCanonicalPath());
-        log.info(" - finished");
     }
 
 }
