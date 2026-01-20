@@ -14,6 +14,7 @@ public final class Theme {
     private Collection<ElementStyle> elements = new LinkedList<>();
     private Collection<RelationshipStyle> relationships = new LinkedList<>();
     private String logo;
+    private String license;
 
     Theme() {
     }
@@ -80,6 +81,14 @@ public final class Theme {
             ImageUtils.validateImage(logo);
             this.logo = logo.trim();
         }
+    }
+
+    public String getLicense() {
+        return license;
+    }
+
+    public void setLicense(String license) {
+        this.license = license;
     }
 
 }
