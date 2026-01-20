@@ -1,8 +1,10 @@
 package com.structurizr.dsl;
 
+import com.structurizr.view.Themes;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -48,6 +50,7 @@ class ThemeParserTests extends AbstractTests {
 
     @Test
     void test_parseTheme_AddsTheTheme_WhenBuiltInThemeIsSpecified() {
+        Themes.setBuiltInThemes(Set.of("amazon-web-services-2023.01.31"));
         parser.parseTheme(context(), null, tokens("theme", "amazon-web-services-2023.01.31"));
 
         assertEquals(1, workspace.getViews().getConfiguration().getThemes().length);
@@ -92,6 +95,7 @@ class ThemeParserTests extends AbstractTests {
 
     @Test
     void test_parseThemes_AddsTheTheme_WhenBuiltInThemeIsSpecified() {
+        Themes.setBuiltInThemes(Set.of("amazon-web-services-2023.01.31"));
         parser.parseThemes(context(), null, tokens("themes", "amazon-web-services-2023.01.31"));
 
         assertEquals(1, workspace.getViews().getConfiguration().getThemes().length);
