@@ -47,11 +47,9 @@ public class ConfigurationTests extends AbstractWorkspaceTestBase {
     }
 
     @Test
-    void setTheme_ThrowsAnIllegalArgumentException_WhenAnInvalidUrlIsSpecified() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            Configuration configuration = new Configuration();
-            configuration.setTheme("htt://blah");
-        });
+    void setTheme_DoeNotThrowAnIllegalArgumentException_WhenAnInvalidThemeIsSpecified() {
+        Configuration configuration = new Configuration();
+        configuration.setTheme("some-theme"); // built-in themes may be different based upon where the code is run
     }
 
     @Test

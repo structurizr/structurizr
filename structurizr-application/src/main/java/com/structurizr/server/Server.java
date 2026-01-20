@@ -3,6 +3,8 @@ package com.structurizr.server;
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Profile;
 import com.structurizr.configuration.StructurizrProperties;
+import com.structurizr.util.BuiltInThemes;
+import com.structurizr.view.Themes;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEvent;
 import org.springframework.context.ApplicationListener;
@@ -24,6 +26,7 @@ public class Server extends AbstractServer {
 		}
 
 		Configuration.init(Profile.Server, properties);
+		Themes.setBuiltInThemes(BuiltInThemes.getThemes());
 
 		SpringApplication app = new SpringApplication(Server.class);
 		app.setAdditionalProfiles(

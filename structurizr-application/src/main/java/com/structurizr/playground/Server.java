@@ -2,6 +2,8 @@ package com.structurizr.playground;
 
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Profile;
+import com.structurizr.util.BuiltInThemes;
+import com.structurizr.view.Themes;
 import jakarta.annotation.PreDestroy;
 import jakarta.servlet.Filter;
 import org.apache.catalina.Context;
@@ -48,6 +50,7 @@ public class Server extends SpringBootServletInitializer {
 		properties.setProperty(DATA_DIRECTORY, structurizrDataDirectory.getAbsolutePath());
 
 		Configuration.init(Profile.Playground, properties);
+		Themes.setBuiltInThemes(BuiltInThemes.getThemes());
 
 		SpringApplication app = new SpringApplication(Server.class);
 		app.addListeners((ApplicationListener<ApplicationEnvironmentPreparedEvent>) event -> Configuration.getInstance().banner(Server.class));
