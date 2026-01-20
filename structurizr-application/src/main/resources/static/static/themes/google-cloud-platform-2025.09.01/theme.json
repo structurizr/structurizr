@@ -1,0 +1,133 @@
+{
+  "name" : "Google Cloud Platform",
+  "elements" : [ {
+    "tag" : "Google Cloud Platform - AIHypercomputer",
+    "icon" : "aihypercomputer.png"
+  }, {
+    "tag" : "Google Cloud Platform - AIMachineLearning",
+    "icon" : "aimachinelearning.png"
+  }, {
+    "tag" : "Google Cloud Platform - Agents",
+    "icon" : "agents.png"
+  }, {
+    "tag" : "Google Cloud Platform - AlloyDB",
+    "icon" : "alloydb.png"
+  }, {
+    "tag" : "Google Cloud Platform - Anthos",
+    "icon" : "anthos.png"
+  }, {
+    "tag" : "Google Cloud Platform - Apigee",
+    "icon" : "apigee.png"
+  }, {
+    "tag" : "Google Cloud Platform - BigQuery",
+    "icon" : "bigquery.png"
+  }, {
+    "tag" : "Google Cloud Platform - BusinessIntelligence",
+    "icon" : "businessintelligence.png"
+  }, {
+    "tag" : "Google Cloud Platform - Cloud Storage",
+    "icon" : "cloud-storage.png"
+  }, {
+    "tag" : "Google Cloud Platform - CloudSQL",
+    "icon" : "cloudsql.png"
+  }, {
+    "tag" : "Google Cloud Platform - CloudSpanner",
+    "icon" : "cloudspanner.png"
+  }, {
+    "tag" : "Google Cloud Platform - Collaboration",
+    "icon" : "collaboration.png"
+  }, {
+    "tag" : "Google Cloud Platform - Compute",
+    "icon" : "compute.png"
+  }, {
+    "tag" : "Google Cloud Platform - ComputeEngine",
+    "icon" : "computeengine.png"
+  }, {
+    "tag" : "Google Cloud Platform - Containers",
+    "icon" : "containers.png"
+  }, {
+    "tag" : "Google Cloud Platform - DataAnalytics",
+    "icon" : "dataanalytics.png"
+  }, {
+    "tag" : "Google Cloud Platform - Databases",
+    "icon" : "databases.png"
+  }, {
+    "tag" : "Google Cloud Platform - DevOps",
+    "icon" : "devops.png"
+  }, {
+    "tag" : "Google Cloud Platform - Developer Tools",
+    "icon" : "developer-tools.png"
+  }, {
+    "tag" : "Google Cloud Platform - DistributedCloud",
+    "icon" : "distributedcloud.png"
+  }, {
+    "tag" : "Google Cloud Platform - GKE",
+    "icon" : "gke.png"
+  }, {
+    "tag" : "Google Cloud Platform - HybridMulticloud",
+    "icon" : "hybridmulticloud.png"
+  }, {
+    "tag" : "Google Cloud Platform - Hyperdisk",
+    "icon" : "hyperdisk.png"
+  }, {
+    "tag" : "Google Cloud Platform - IntegrationServices",
+    "icon" : "integrationservices.png"
+  }, {
+    "tag" : "Google Cloud Platform - Looker",
+    "icon" : "looker.png"
+  }, {
+    "tag" : "Google Cloud Platform - ManagementTools",
+    "icon" : "managementtools.png"
+  }, {
+    "tag" : "Google Cloud Platform - Mandiant",
+    "icon" : "mandiant.png"
+  }, {
+    "tag" : "Google Cloud Platform - MapsGeospatial",
+    "icon" : "mapsgeospatial.png"
+  }, {
+    "tag" : "Google Cloud Platform - Marketplace",
+    "icon" : "marketplace.png"
+  }, {
+    "tag" : "Google Cloud Platform - MediaServices",
+    "icon" : "mediaservices.png"
+  }, {
+    "tag" : "Google Cloud Platform - Migration",
+    "icon" : "migration.png"
+  }, {
+    "tag" : "Google Cloud Platform - MixedReality",
+    "icon" : "mixedreality.png"
+  }, {
+    "tag" : "Google Cloud Platform - Networking",
+    "icon" : "networking.png"
+  }, {
+    "tag" : "Google Cloud Platform - Observability",
+    "icon" : "observability.png"
+  }, {
+    "tag" : "Google Cloud Platform - Operations",
+    "icon" : "operations.png"
+  }, {
+    "tag" : "Google Cloud Platform - SecurityCommandCenter",
+    "icon" : "securitycommandcenter.png"
+  }, {
+    "tag" : "Google Cloud Platform - SecurityIdentity",
+    "icon" : "securityidentity.png"
+  }, {
+    "tag" : "Google Cloud Platform - ServerlessComputing",
+    "icon" : "serverlesscomputing.png"
+  }, {
+    "tag" : "Google Cloud Platform - Storage",
+    "icon" : "storage.png"
+  }, {
+    "tag" : "Google Cloud Platform - ThreatIntelligence",
+    "icon" : "threatintelligence.png"
+  }, {
+    "tag" : "Google Cloud Platform - VertexAI",
+    "icon" : "vertexai.png"
+  }, {
+    "tag" : "Google Cloud Platform - Web3",
+    "icon" : "web3.png"
+  }, {
+    "tag" : "Google Cloud Platform - WebMobile",
+    "icon" : "webmobile.png"
+  } ]
+}
