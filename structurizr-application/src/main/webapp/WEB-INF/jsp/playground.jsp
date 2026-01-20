@@ -308,7 +308,7 @@
 
     function openThemeBrowser(e) {
         e.preventDefault();
-        window.open('/theme-browser', "structurizrThemeBrowser", "top=100,left=300,width=800,height=800,location=no,menubar=no,status=no,toolbar=no");
+        window.open('/theme-browser', "structurizrThemeBrowser", "top=100,left=300,width=900,height=600,location=no,menubar=no,status=no,toolbar=no");
     }
 
     function importSourceFile(files) {

@@ -19,12 +19,12 @@
     .elementStyle {
         position: relative;
         display: inline-block;
-        width: 100px;
+        width: 120px;
         text-align: center;
         margin: 0px 10px 0px 10px;
-        min-height: 200px;
-        max-height: 200px;
-        height: 200px;
+        min-height: 180px;
+        max-height: 180px;
+        height: 180px;
         padding: 10px;
         border-radius: 4px;
         overflow-y: hidden;
