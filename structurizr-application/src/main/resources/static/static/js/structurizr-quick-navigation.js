@@ -5,7 +5,7 @@ structurizr.ui.QuickNavigation = class QuickNavigation {
     #navigationLinksClass = '.quickNavigationItem';
 
     #selectedIndex = -1;
-    #maxItems = 20;
+    #maxItems = 10;
     #enabled = true;
 
     #onOpenCallback;
