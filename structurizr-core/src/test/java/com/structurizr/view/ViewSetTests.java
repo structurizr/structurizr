@@ -979,6 +979,7 @@ public class ViewSetTests {
         DeploymentNode liveEc2 = live.addDeploymentNode("EC2");
 
         views.createDefaultViews();
+        views.createImageView("imageView");
 
         assertEquals(1, views.getSystemLandscapeViews().size());
         assertEquals("SystemLandscape-001", views.getSystemLandscapeViews().iterator().next().getKey());
@@ -1000,7 +1001,11 @@ public class ViewSetTests {
 
         live.addInfrastructureNode("Route 53");
 
+        assertEquals(1, views.getImageViews().size());
+
         views.clear();
+        assertEquals(0, views.getViews().size());
+
         views.createDefaultViews();
 
         assertEquals(1, views.getDeploymentViews().size());

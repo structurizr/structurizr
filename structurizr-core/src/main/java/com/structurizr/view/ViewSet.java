@@ -1303,6 +1303,7 @@ public final class ViewSet {
         dynamicViews = new TreeSet<>();
         deploymentViews = new TreeSet<>();
         filteredViews = new TreeSet<>();
+        imageViews = new TreeSet<>();
         configuration = new Configuration();
     }
 
