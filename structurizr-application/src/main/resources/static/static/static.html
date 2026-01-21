@@ -25,8 +25,8 @@
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <img src="./img/structurizr-banner-light.png" width="200" class="img-light" />
-                        <img src="./img/structurizr-banner-dark.png" width="200" class="img-dark" />
+                        <img src="./img/structurizr-banner-light.png" class="img-light img-responsive workspaceLogo" />
+                        <img src="./img/structurizr-banner-dark.png" class="img-dark img-responsive workspaceLogo" />
                     </div>
                     <div class="modal-body">
                         <p>
@@ -300,7 +300,8 @@
             structurizr.diagram.setDarkMode(structurizr.ui.isDarkMode());
         });
 
-        const hideIntroductionModal = true; // document.cookie.indexOf(INTRODUCTION_MODAL_COOKIE_NAME + '=false') > -1;
+        structurizr.ui.applyWorkspaceLogo();
+        const hideIntroductionModal = document.cookie.indexOf(INTRODUCTION_MODAL_COOKIE_NAME + '=false') > -1;
         if (!hideIntroductionModal) {
             $('#introductionModal').modal('show');
 
