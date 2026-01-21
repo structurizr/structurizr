@@ -1292,9 +1292,9 @@ public final class ViewSet {
     }
 
     /**
-     * Removes all views and configuration.
+     * Removes all views.
      */
-    public void clear() {
+    public void clearViews() {
         customViews = new TreeSet<>();
         systemLandscapeViews = new TreeSet<>();
         systemContextViews = new TreeSet<>();
@@ -1304,6 +1304,13 @@ public final class ViewSet {
         deploymentViews = new TreeSet<>();
         filteredViews = new TreeSet<>();
         imageViews = new TreeSet<>();
+    }
+
+    /**
+     * Removes all views and configuration.
+     */
+    public void clear() {
+        clearViews();
         configuration = new Configuration();
     }
 
