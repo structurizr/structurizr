@@ -20,6 +20,7 @@ class GraphController extends AbstractWorkspaceController {
             ModelMap model
     ) {
         model.addAttribute("view", view);
+        model.addAttribute("showFooter", false);
 
         return showAuthenticatedView(Views.GRAPH, workspaceId, branch, version, model, true, false);
     }

@@ -45,6 +45,7 @@ public class GraphControllerTests extends ControllerTestsBase {
         assertSame(workspaceMetaData, model.getAttribute("workspace"));
         assertEquals("anNvbg==", model.getAttribute("workspaceAsJson"));
         assertEquals("/workspace/1", model.getAttribute("urlPrefix"));
+        assertEquals(false, model.getAttribute("showFooter"));
         assertSame("view", model.getAttribute("view"));
     }
 

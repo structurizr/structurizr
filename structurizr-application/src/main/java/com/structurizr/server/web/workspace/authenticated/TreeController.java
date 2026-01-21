@@ -20,6 +20,7 @@ class TreeController extends AbstractWorkspaceController {
             ModelMap model
     ) {
         model.addAttribute("view", view);
+        model.addAttribute("showFooter", false);
 
         return showAuthenticatedView(Views.TREE, workspaceId, branch, version, model, true, false);
     }
