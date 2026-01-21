@@ -14,11 +14,9 @@
             <p>
                 <c:out value="${workspace.description}" escapeXml="true" />
             </p>
-            <p class="smaller">
-                (<a href="/workspace/${workspaceId}">back to workspace summary</a>)
-            </p>
         </div>
 
+        <br />
         <br />
 
         <c:if test="${workspace.editable}">
@@ -243,6 +241,7 @@
 
     function workspaceLoaded() {
         $('.baseUrl').text(window.location.protocol + '//' + window.location.host);
+        structurizr.ui.applyWorkspaceLogo();
     }
 
     function unlockWorkspace(e) {

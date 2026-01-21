@@ -6,6 +6,8 @@
 
 workspace "Name" "Description" {
 
+    name "Name"
+    description "Description"
     /*
         multi-line comment
     */
@@ -402,10 +404,6 @@ workspace "Name" "Description" {
 
         theme https://example.com/theme1
         themes https://example.com/theme2 https://example.com/theme3
-
-        branding {
-            logo logo.png
-        }
 
         terminology {
             person "Person"

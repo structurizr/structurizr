@@ -5,6 +5,7 @@
 - local+server: Upgrades JointJS from 3.x to 4.x
 - local+server: Removes Graphviz integration from the diagram viewer/editor; uses browser-based Dagre instead.
 - local+server: Removes font configuration.
+- local+server: Workspace logo now sourced from an element style named `Workspace:Logo`.
 - local: Diagrams are now editable after clicking the "edit" button on the diagram viewer.
 - local: Removes support for Lite's `STRUCTURIZR_WORKSPACE_PATH` and `STRUCTURIZR_WORKSPACE_FILENAME` (use multi-workspace mode instead).
 - local: Removes support for Lite's auto-sync.

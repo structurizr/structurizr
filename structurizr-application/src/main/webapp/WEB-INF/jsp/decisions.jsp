@@ -158,8 +158,7 @@
             showNoDecisionsPage();
         }
 
-        structurizr.ui.applyBranding();
-        $('#brandingLogoAnchor').attr('href', '<c:out value="${urlPrefix}" /><c:out value="${urSuffix}" />');
+        structurizr.ui.applyWorkspaceLogo();
         resize();
         progressMessage.hide();
     }

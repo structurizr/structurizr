@@ -27,7 +27,7 @@ class BackwardsCompatibilityTests {
         workspace.getDocumentation().addSection(new Section(Format.Markdown, "## Heading 1"));
 
         assertEquals("""
-                {"configuration":{},"description":"Description","documentation":{"sections":[{"content":"## Heading 1","format":"Markdown","order":1,"title":""}]},"id":0,"model":{},"name":"Name","views":{"configuration":{"branding":{},"styles":{},"terminology":{}}}}""", WorkspaceUtils.toJson(workspace, false));
+                {"configuration":{},"description":"Description","documentation":{"sections":[{"content":"## Heading 1","format":"Markdown","order":1,"title":""}]},"id":0,"model":{},"name":"Name","views":{"configuration":{"styles":{},"terminology":{}}}}""", WorkspaceUtils.toJson(workspace, false));
     }
 
     @Test

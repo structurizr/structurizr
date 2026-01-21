@@ -1,6 +1,22 @@
 package com.structurizr.dsl;
 
+import java.io.File;
+
 final class WorkspaceDslContext extends DslContext {
+
+    private final File file;
+
+    WorkspaceDslContext() {
+        this.file = null;
+    }
+
+    WorkspaceDslContext(File file) {
+        this.file = file;
+    }
+
+    File getFile() {
+        return file;
+    }
 
     @Override
     protected String[] getPermittedTokens() {

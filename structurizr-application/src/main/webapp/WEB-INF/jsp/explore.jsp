@@ -90,10 +90,10 @@
                 $(this).attr('src', '/static/img/thumbnail-not-available.png');
             });
         }
-    }
 
-    $('#brandingLogoAnchor').attr('href', '<c:out value="${urlPrefix}" />');
-    progressMessage.hide();
+        structurizr.ui.applyWorkspaceLogo();
+        progressMessage.hide();
+    }
 </script>
 
 <c:choose>

@@ -145,6 +145,7 @@
 
         highlightModelItem();
 
+        structurizr.ui.applyWorkspaceLogo();
         progressMessage.hide();
     }
 

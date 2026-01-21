@@ -64,8 +64,6 @@ class StructurizrDslTokens {
     static final String STYLES_TOKEN = "styles";
     static final String LIGHT_COLOR_SCHEME_TOKEN = "light";
     static final String DARK_COLOR_SCHEME_TOKEN = "dark";
-    static final String BRANDING_TOKEN = "branding";
-    static final String BRANDING_LOGO_TOKEN = "logo";
     static final String ELEMENT_STYLE_TOKEN = "element";
     static final String ELEMENT_STYLE_SHAPE_TOKEN = "shape";
     static final String ELEMENT_STYLE_BACKGROUND_TOKEN = "background";

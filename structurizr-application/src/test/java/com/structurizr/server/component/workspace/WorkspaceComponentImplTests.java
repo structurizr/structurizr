@@ -433,7 +433,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
 
         String json = workspaceComponent.getWorkspace(1, "", "");
         assertEquals("""
-                {"configuration":{},"description":"Description","documentation":{},"id":1,"model":{},"name":"Name","views":{"configuration":{"branding":{},"styles":{},"terminology":{}}}}""", json);
+                {"configuration":{},"description":"Description","documentation":{},"id":1,"model":{},"name":"Name","views":{"configuration":{"styles":{},"terminology":{}}}}""", json);
     }
 
     @Test
@@ -480,7 +480,6 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
                   "name" : "Name",
                   "views" : {
                     "configuration" : {
-                      "branding" : { },
                       "styles" : { },
                       "terminology" : { }
                     }
@@ -834,7 +833,6 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
                   "name" : "Workspace 0001",
                   "views" : {
                     "configuration" : {
-                      "branding" : { },
                       "styles" : { },
                       "terminology" : { }
                     }

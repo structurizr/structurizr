@@ -48,7 +48,7 @@ public class InspectionsControllerTests extends ControllerTestsBase {
         String view = controller.showAuthenticatedInspections(1, "main", "version", model);
         assertEquals("inspections", view);
         assertSame(workspaceMetaData, model.getAttribute("workspace"));
-        assertEquals("eyJjb25maWd1cmF0aW9uIjp7fSwiZGVzY3JpcHRpb24iOiJEZXNjcmlwdGlvbiIsImRvY3VtZW50YXRpb24iOnt9LCJpZCI6MCwibW9kZWwiOnsic29mdHdhcmVTeXN0ZW1zIjpbeyJkb2N1bWVudGF0aW9uIjp7fSwiaWQiOiIxIiwibmFtZSI6IlNvZnR3YXJlIFN5c3RlbSIsInRhZ3MiOiJFbGVtZW50LFNvZnR3YXJlIFN5c3RlbSJ9XX0sIm5hbWUiOiJOYW1lIiwidmlld3MiOnsiY29uZmlndXJhdGlvbiI6eyJicmFuZGluZyI6e30sInN0eWxlcyI6e30sInRlcm1pbm9sb2d5Ijp7fX19fQ==", model.getAttribute("workspaceAsJson"));
+        assertEquals("eyJjb25maWd1cmF0aW9uIjp7fSwiZGVzY3JpcHRpb24iOiJEZXNjcmlwdGlvbiIsImRvY3VtZW50YXRpb24iOnt9LCJpZCI6MCwibW9kZWwiOnsic29mdHdhcmVTeXN0ZW1zIjpbeyJkb2N1bWVudGF0aW9uIjp7fSwiaWQiOiIxIiwibmFtZSI6IlNvZnR3YXJlIFN5c3RlbSIsInRhZ3MiOiJFbGVtZW50LFNvZnR3YXJlIFN5c3RlbSJ9XX0sIm5hbWUiOiJOYW1lIiwidmlld3MiOnsiY29uZmlndXJhdGlvbiI6eyJzdHlsZXMiOnt9LCJ0ZXJtaW5vbG9neSI6e319fX0=", model.getAttribute("workspaceAsJson"));
         assertEquals("/workspace/1", model.getAttribute("urlPrefix"));
 
         assertEquals(16, model.getAttribute("numberOfInspections"));
@@ -88,7 +88,7 @@ public class InspectionsControllerTests extends ControllerTestsBase {
         String view = controller.showAuthenticatedInspections(1, "main", "version", model);
         assertEquals("inspections", view);
         assertSame(workspaceMetaData, model.getAttribute("workspace"));
-        assertEquals("eyJjb25maWd1cmF0aW9uIjp7fSwiZGVzY3JpcHRpb24iOiJEZXNjcmlwdGlvbiIsImRvY3VtZW50YXRpb24iOnt9LCJpZCI6MCwibW9kZWwiOnsic29mdHdhcmVTeXN0ZW1zIjpbeyJkb2N1bWVudGF0aW9uIjp7fSwiaWQiOiIxIiwibmFtZSI6IlNvZnR3YXJlIFN5c3RlbSIsInRhZ3MiOiJFbGVtZW50LFNvZnR3YXJlIFN5c3RlbSJ9XX0sIm5hbWUiOiJOYW1lIiwidmlld3MiOnsiY29uZmlndXJhdGlvbiI6eyJicmFuZGluZyI6e30sInN0eWxlcyI6e30sInRlcm1pbm9sb2d5Ijp7fX19fQ==", model.getAttribute("workspaceAsJson"));
+        assertEquals("eyJjb25maWd1cmF0aW9uIjp7fSwiZGVzY3JpcHRpb24iOiJEZXNjcmlwdGlvbiIsImRvY3VtZW50YXRpb24iOnt9LCJpZCI6MCwibW9kZWwiOnsic29mdHdhcmVTeXN0ZW1zIjpbeyJkb2N1bWVudGF0aW9uIjp7fSwiaWQiOiIxIiwibmFtZSI6IlNvZnR3YXJlIFN5c3RlbSIsInRhZ3MiOiJFbGVtZW50LFNvZnR3YXJlIFN5c3RlbSJ9XX0sIm5hbWUiOiJOYW1lIiwidmlld3MiOnsiY29uZmlndXJhdGlvbiI6eyJzdHlsZXMiOnt9LCJ0ZXJtaW5vbG9neSI6e319fX0=", model.getAttribute("workspaceAsJson"));
         assertEquals("/workspace/1", model.getAttribute("urlPrefix"));
 
         assertEquals(16, model.getAttribute("numberOfInspections"));

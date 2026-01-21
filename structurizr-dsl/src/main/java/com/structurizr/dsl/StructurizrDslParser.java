@@ -704,7 +704,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                         workspace = new WorkspaceParser().parse(dslParserContext, tokens.withoutContextStartToken());
                         extendingWorkspace = !workspace.getModel().isEmpty();
-                        WorkspaceDslContext context = new WorkspaceDslContext();
+                        WorkspaceDslContext context = new WorkspaceDslContext(dslFile);
                         context.setDslPortable(dslParserContext.isDslPortable());
                         startContext(context);
                         parsedTokens.add(WORKSPACE_TOKEN);
@@ -837,12 +837,6 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                         startContext(new ViewsDslContext());
                         parsedTokens.add(VIEWS_TOKEN);
-
-                    } else if (BRANDING_TOKEN.equalsIgnoreCase(firstToken) && inContext(ViewsDslContext.class)) {
-                        startContext(new BrandingDslContext(dslFile));
-
-                    } else if (BRANDING_LOGO_TOKEN.equalsIgnoreCase(firstToken) && inContext(BrandingDslContext.class)) {
-                        new BrandingParser().parseLogo(getContext(BrandingDslContext.class), tokens);
 
                     } else if (STYLES_TOKEN.equalsIgnoreCase(firstToken) && inContext(ViewsDslContext.class)) {
                         startContext(new StylesDslContext());

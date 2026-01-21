@@ -80,20 +80,19 @@ public class ThemeUtilsTests {
 
         workspace.getViews().getConfiguration().getStyles().addElementStyle(Tags.ELEMENT).background("#ff0000");
         workspace.getViews().getConfiguration().getStyles().addRelationshipStyle(Tags.RELATIONSHIP).color("#ff0000");
-        workspace.getViews().getConfiguration().getBranding().setLogo("https://structurizr.com/static/img/structurizr-logo.png");
-        assertEquals("{\n" +
-                "  \"name\" : \"Name\",\n" +
-                "  \"description\" : \"Description\",\n" +
-                "  \"elements\" : [ {\n" +
-                "    \"tag\" : \"Element\",\n" +
-                "    \"background\" : \"#ff0000\"\n" +
-                "  } ],\n" +
-                "  \"relationships\" : [ {\n" +
-                "    \"tag\" : \"Relationship\",\n" +
-                "    \"color\" : \"#ff0000\"\n" +
-                "  } ],\n" +
-                "  \"logo\" : \"https://structurizr.com/static/img/structurizr-logo.png\"\n" +
-                "}", ThemeUtils.toJson(workspace));
+        assertEquals("""
+                {
+                  "name" : "Name",
+                  "description" : "Description",
+                  "elements" : [ {
+                    "tag" : "Element",
+                    "background" : "#ff0000"
+                  } ],
+                  "relationships" : [ {
+                    "tag" : "Relationship",
+                    "color" : "#ff0000"
+                  } ]
+                }""", ThemeUtils.toJson(workspace));
     }
 
     @Test

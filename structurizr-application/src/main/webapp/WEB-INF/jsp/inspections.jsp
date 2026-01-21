@@ -97,6 +97,14 @@
     </div>
 </div>
 
+<script nonce="${scriptNonce}">
+    function workspaceLoaded() {
+        structurizr.ui.applyWorkspaceLogo();
+    }
+</script>
+
+<%@ include file="/WEB-INF/fragments/workspace/load-via-inline.jspf" %>
+
 <c:if test="${structurizrConfiguration.profile eq 'Local'}">
     <%@ include file="/WEB-INF/fragments/workspace/auto-refresh.jspf" %>
 </c:if>

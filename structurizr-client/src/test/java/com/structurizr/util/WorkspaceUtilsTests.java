@@ -93,7 +93,6 @@ public class WorkspaceUtilsTests {
                   "name" : "Name",
                   "views" : {
                     "configuration" : {
-                      "branding" : { },
                       "styles" : { },
                       "terminology" : { }
                     }
@@ -101,7 +100,7 @@ public class WorkspaceUtilsTests {
                 }""", indentedOutput);
 
         assertEquals("""
-                {"configuration":{},"description":"Description","documentation":{},"id":0,"model":{},"name":"Name","views":{"configuration":{"branding":{},"styles":{},"terminology":{}}}}""", unindentedOutput);
+                {"configuration":{},"description":"Description","documentation":{},"id":0,"model":{},"name":"Name","views":{"configuration":{"styles":{},"terminology":{}}}}""", unindentedOutput);
     }
 
     @Test

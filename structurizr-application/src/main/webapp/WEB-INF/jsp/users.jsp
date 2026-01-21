@@ -1,3 +1,5 @@
+<%@ include file="/WEB-INF/fragments/workspace/javascript.jspf" %>
+
 <div class="section">
     <div class="container centered">
         <h1><c:out value="${workspace.name}" escapeXml="true" /></h1>
@@ -70,3 +72,19 @@
         </c:choose>
     </div>
 </div>
+
+
+<script nonce="${scriptNonce}">
+    function workspaceLoaded() {
+        structurizr.ui.applyWorkspaceLogo();
+    }
+</script>
+
+<c:choose>
+    <c:when test="${not empty workspaceAsJson}">
+<%@ include file="/WEB-INF/fragments/workspace/load-via-inline.jspf" %>
+    </c:when>
+    <c:otherwise>
+<%@ include file="/WEB-INF/fragments/workspace/load-via-api.jspf" %>
+    </c:otherwise>
+</c:choose>

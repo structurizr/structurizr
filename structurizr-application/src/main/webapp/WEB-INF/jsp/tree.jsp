@@ -98,7 +98,7 @@
         </c:otherwise>
         </c:choose>
 
-        $('#brandingLogoAnchor').attr('href', '<c:out value="${urlPrefix}" />');
+        structurizr.ui.applyWorkspaceLogo();
         progressMessage.hide();
     }
 

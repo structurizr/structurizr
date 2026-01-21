@@ -70,7 +70,7 @@
         <div id="documentationPanel">
             <div id="documentationHeader">
                 <div class="centered">
-                    <img src="" class="brandingLogo hidden" alt="Branding logo" />
+                    <img src="" class="workspaceLogo hidden" alt="Branding logo" />
                 </div>
                 <h1><span id="documentationScopeName"></span></h1>
             </div>
@@ -173,8 +173,7 @@
             showNoDocumentationPage();
         }
 
-        structurizr.ui.applyBranding();
-        $('#brandingLogoAnchor').attr('href', '<c:out value="${urlPrefix}" /><c:out value="${urSuffix}" />');
+        structurizr.ui.applyWorkspaceLogo();
         resize();
         progressMessage.hide();
     }

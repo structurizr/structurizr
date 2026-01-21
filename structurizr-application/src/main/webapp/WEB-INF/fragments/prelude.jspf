@@ -57,7 +57,15 @@
         
         <div class="row">
             <div class="col-2" style="padding: 18px 20px 10px 20px">
-                <a id="brandingLogoAnchor" href="/"><img src="/static/img/structurizr-banner-light.png" alt="Structurizr" class="img-light img-responsive brandingLogo" /><img src="/static/img/structurizr-banner-dark.png" alt="Structurizr" class="img-dark img-responsive brandingLogo" /></a>
+                <c:choose>
+                    <c:when test="${not empty workspace}">
+                    <a id="workspaceLogoAnchor" class="hidden" href="<c:out value="${urlPrefix}" /><c:out value="${urSuffix}" />">
+                    </c:when>
+                    <c:otherwise>
+                    <a id="workspaceLogoAnchor" href="/">
+                    </c:otherwise>
+                </c:choose>
+                <img src="/static/img/structurizr-banner-light.png" alt="Structurizr" class="img-light img-responsive workspaceLogo" /><img src="/static/img/structurizr-banner-dark.png" alt="Structurizr" class="img-dark img-responsive workspaceLogo" /></a>
             </div>
             <div class="col-10 centered" style="padding: 20px 20px 10px 20px; text-align: right;">
                 <c:if test="${searchEnabled}">

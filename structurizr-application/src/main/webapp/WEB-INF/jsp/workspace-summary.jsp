@@ -339,8 +339,6 @@
         $('#workspaceDescription').html(structurizr.util.escapeHtml(structurizr.workspace.description));
         var diagramsDiv = $('#diagrams');
 
-        structurizr.ui.applyBranding();
-
         if (structurizr.workspace.hasViews()) {
             var maxNumberOfViews = 10;
             var count = 1;
@@ -421,6 +419,9 @@
         }
 
         initInspectionSummary();
+
+        structurizr.ui.applyWorkspaceLogo();
+        $('#workspaceLogoAnchor').attr('href', '/');
 
         progressMessage.hide();
     }

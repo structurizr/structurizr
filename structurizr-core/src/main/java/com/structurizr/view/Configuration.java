@@ -21,7 +21,6 @@ public final class Configuration implements PropertyHolder {
     private static final String THEME_JSON = "/theme.json";
     private static final String ICON_JSON = "/icons.json";
 
-    private Branding branding = new Branding();
     private final Styles styles = new Styles();
     private final List<String> themes = new ArrayList<>();
     private Terminology terminology = new Terminology();
@@ -137,24 +136,6 @@ public final class Configuration implements PropertyHolder {
 
     public void copyConfigurationFrom(Configuration configuration) {
         setLastSavedView(configuration.getLastSavedView());
-    }
-
-    /**
-     * Gets the Branding object associated with this workspace.
-     *
-     * @return  a Branding object
-     */
-    public Branding getBranding() {
-        return branding;
-    }
-
-    /**
-     * Sets the Branding object associated with this workspace.
-     *
-     * @param branding      a Branding object
-     */
-    void setBranding(Branding branding) {
-        this.branding = branding;
     }
 
     /**

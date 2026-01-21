@@ -33,7 +33,7 @@
                     <div id="banner"></div>
                     <div class="row">
                         <div class="col-2" style="padding: 18px 20px 10px 20px">
-                            <a href="<c:out value="${urlPrefix}" /><c:out value="${urlSuffix}" escapeXml="false" />"><img src="/static/img/structurizr-banner-light.png" alt="Structurizr" class="img-light img-responsive brandingLogo" /><img src="/static/img/structurizr-banner-dark.png" alt="Structurizr" class="img-dark img-responsive brandingLogo" /></a>
+                            <a href="<c:out value="${urlPrefix}" /><c:out value="${urlSuffix}" escapeXml="false" />"><img src="/static/img/structurizr-banner-light.png" alt="Structurizr" class="img-light img-responsive workspaceLogo" /><img src="/static/img/structurizr-banner-dark.png" alt="Structurizr" class="img-dark img-responsive workspaceLogo" /></a>
                         </div>
                         <div class="col-10 centered" style="padding: 20px 30px 0px 30px">
                             <div class="centered">
@@ -219,7 +219,7 @@
     }
 
     function init() {
-        structurizr.ui.applyBranding();
+        structurizr.ui.applyWorkspaceLogo();
 
         structurizr.diagram = new structurizr.ui.Diagram('diagram', ${workspace.editable}, diagramCreated);
         structurizr.diagram.setEmbedded(${embed});

@@ -42,13 +42,21 @@ structurizr.ui.getBranding = function() {
     return branding;
 }
 
-structurizr.ui.applyBranding = function() {
-    var branding = structurizr.ui.getBranding();
-    if (branding.logo) {
-        const brandingLogo = $('.brandingLogo');
-        brandingLogo.attr('src', branding.logo);
-        brandingLogo.removeClass('hidden');
+structurizr.ui.applyWorkspaceLogo = function() {
+    const logoLight = structurizr.ui.findElementStyle( { type: undefined, tags: 'Workspace:Logo' }, false).icon;
+    const logoDark = structurizr.ui.findElementStyle( { type: undefined, tags: 'Workspace:Logo' }, true).icon;
+
+    if (logoLight) {
+        const workspaceLogo = $('.img-light.workspaceLogo');
+        workspaceLogo.attr('src', logoLight);
     }
+
+    if (logoDark) {
+        const workspaceLogo = $('.img-dark.workspaceLogo');
+        workspaceLogo.attr('src', logoDark);
+    }
+
+    $('#workspaceLogoAnchor').removeClass('hidden');
 }
 
 structurizr.ui.loadThemes = function(callback) {

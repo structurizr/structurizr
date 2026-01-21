@@ -1,3 +1,5 @@
+<%@ include file="/WEB-INF/fragments/workspace/javascript.jspf" %>
+
 <div class="section">
     <div class="container centered">
         <h1>Images</h1>
@@ -6,10 +8,8 @@
             <br />
             See <a href="https://docs.structurizr.com/server/embed" target="_blank">Structurizr server - Embedding diagrams</a> for more details.
         </p>
-        <p class="smaller">
-            (<a href="${urlPrefix}">back to workspace summary</a>)
-        </p>
 
+        <br />
         <br />
 
         <c:choose>
@@ -39,7 +39,8 @@
 
         </c:when>
             <c:otherwise>
-        <p class="centered smaller" style="margin-top: 40px">
+        <p class="centered" style="margin-top: 40px">
+            <img src="/static/bootstrap-icons/info-circle.svg" class="icon-md" />
             No images have been published for this workspace.
         </p>
             </c:otherwise>
@@ -48,6 +49,10 @@
 </div>
 
 <script nonce="${scriptNonce}">
+    function workspaceLoaded() {
+        structurizr.ui.applyWorkspaceLogo();
+    }
+
     $('.viewThumbnail').on('error', function() {
         $(this).on('error', undefined);
         $(this).attr('src', '/static/img/thumbnail-not-available.png');
@@ -57,3 +62,12 @@
         return confirm('Are you sure you want to delete the published images?');
     });
 </script>
+
+<c:choose>
+    <c:when test="${not empty workspaceAsJson}">
+<%@ include file="/WEB-INF/fragments/workspace/load-via-inline.jspf" %>
+    </c:when>
+    <c:otherwise>
+<%@ include file="/WEB-INF/fragments/workspace/load-via-api.jspf" %>
+    </c:otherwise>
+</c:choose>

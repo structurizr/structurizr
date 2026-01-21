@@ -16,7 +16,6 @@ final class ViewsDslContext extends DslContext {
                 StructurizrDslTokens.STYLES_TOKEN,
                 StructurizrDslTokens.THEME_TOKEN,
                 StructurizrDslTokens.THEMES_TOKEN,
-                StructurizrDslTokens.BRANDING_TOKEN,
                 StructurizrDslTokens.TERMINOLOGY_TOKEN,
                 StructurizrDslTokens.PROPERTIES_TOKEN
         };

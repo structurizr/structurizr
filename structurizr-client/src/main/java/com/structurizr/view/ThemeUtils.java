@@ -167,7 +167,6 @@ public final class ThemeUtils {
                     workspace.getViews().getConfiguration().getStyles().getElements(),
                     workspace.getViews().getConfiguration().getStyles().getRelationships()
             );
-            theme.setLogo(workspace.getViews().getConfiguration().getBranding().getLogo());
 
             writer.write(objectMapper.writeValueAsString(theme));
         } catch (IOException ioe) {
