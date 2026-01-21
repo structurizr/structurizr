@@ -3799,6 +3799,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                 '.structurizrBoundary': {
                     stroke: stroke,
                     fill: fill,
+                    opacity: editable ? 0.6 : 1.0,
                     'stroke-width': strokeWidth,
                     'stroke-dasharray': dashArrayForElement(elementStyle),
                     rx: cornerRadius,
@@ -3893,7 +3894,8 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                     stroke: stroke,
                     'stroke-width': strokeWidth,
                     'stroke-dasharray': dashArrayForElement(configuration),
-                    fill: fill
+                    fill: fill,
+                    opacity: editable ? 0.6 : 1.0
                 },
                 '.structurizrName': {
                     text: element.name,
