@@ -27,6 +27,8 @@
                     <div class="modal-header">
                         <img src="./img/structurizr-banner-light.png" class="img-light img-responsive workspaceLogo" />
                         <img src="./img/structurizr-banner-dark.png" class="img-dark img-responsive workspaceLogo" />
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
                         <p>
@@ -45,16 +47,13 @@
                             <li>Toggle element/relationship metadata (<code>m</code>).</li>
                             <li>Quick navigation (<code>Space</code>).</li>
                             <li>Full screen (<code>f</code>).</li>
+                            <li>Show this information (<code>?</code>).</li>
                         </ul>
-                    </div>
-                    <div class="modal-footer">
+
                         <div>
                             <input class="form-check-input" type="checkbox" id="hideIntroductionModalCheckbox">
-                            <label class="form-check-label" for="hideIntroductionModalCheckbox">
-                                Don't show again
-                            </label>
+                            <label class="form-check-label" for="hideIntroductionModalCheckbox">Don't show again</label>
                         </div>
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -132,10 +131,6 @@
         structurizr.diagram = new structurizr.ui.Diagram('diagram', false, function () {
             structurizr.diagram.setDarkMode(structurizr.ui.isDarkMode());
 
-            window.onhashchange = function () {
-                hashChanged();
-            };
-
             window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
                 if (structurizr.ui.getRenderingMode() === structurizr.ui.RENDERING_MODE_SYSTEM) {
                     structurizr.diagram.setDarkMode(structurizr.ui.isDarkMode());
@@ -151,7 +146,12 @@
                 }
             }
 
-            structurizr.diagram.changeView(diagramIdentifier);
+            window.location.hash = diagramIdentifier;
+            hashChanged();
+
+            window.onhashchange = function () {
+                hashChanged();
+            };
         });
 
         structurizr.diagram.setEmbedded(embed);
@@ -215,6 +215,7 @@
             const minus = 45;
             const comma = 44;
             const dot = 46;
+            const questionMark = 63;
             const c = 99;
             const d = 100;
             const f = 102;
@@ -268,6 +269,8 @@
                 toggleTooltip();
             } else if (e.which === f) {
                 structurizr.ui.enterFullScreen('diagram');
+            } else if (e.which === questionMark) {
+                $('#introductionModal').modal('show');
             }
         });
 
@@ -301,17 +304,20 @@
         });
 
         structurizr.ui.applyWorkspaceLogo();
-        const hideIntroductionModal = document.cookie.indexOf(INTRODUCTION_MODAL_COOKIE_NAME + '=false') > -1;
-        if (!hideIntroductionModal) {
-            $('#introductionModal').modal('show');
 
-            var modal = document.getElementById('introductionModal')
-            modal.addEventListener('hidden.bs.modal', function (event) {
-                const checked = $('#hideIntroductionModalCheckbox').is(':checked');
-                if (checked) {
-                    document.cookie = INTRODUCTION_MODAL_COOKIE_NAME + '=false'
-                }
-            })
+        const modal = document.getElementById('introductionModal')
+        modal.addEventListener('hidden.bs.modal', function (event) {
+            const checked = $('#hideIntroductionModalCheckbox').is(':checked');
+            if (checked) {
+                document.cookie = INTRODUCTION_MODAL_COOKIE_NAME + '=false'
+            }
+        })
+
+        if (structurizr.workspace.getProperty('structurizr.introduction') !== 'false') {
+            const hideIntroductionModal = document.cookie.indexOf(INTRODUCTION_MODAL_COOKIE_NAME + '=false') > -1;
+            if (!hideIntroductionModal) {
+                $('#introductionModal').modal('show');
+            }
         }
     }
 
