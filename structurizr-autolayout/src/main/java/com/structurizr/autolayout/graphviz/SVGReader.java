@@ -147,14 +147,6 @@ class SVGReader {
             if (changePaperSize) {
                 view.setPaperSize(null);
                 view.setDimensions(new Dimensions(pageWidth, pageHeight));
-
-                PaperSize.Orientation orientation = (pageWidth > pageHeight) ? PaperSize.Orientation.Landscape : PaperSize.Orientation.Portrait;
-                for (PaperSize paperSize : PaperSize.getOrderedPaperSizes(orientation)) {
-                    if (paperSize.getWidth() > (pageWidth) && paperSize.getHeight() > (pageHeight)) {
-                        view.setPaperSize(paperSize);
-                        break;
-                    }
-                }
             }
 
             int deltaX = (pageWidth - maximumX + minimumX) / 2;

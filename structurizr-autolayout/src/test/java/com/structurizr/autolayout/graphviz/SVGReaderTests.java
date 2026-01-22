@@ -37,8 +37,6 @@ public class SVGReaderTests {
         SVGReader svgReader = new SVGReader(PATH, 200, true);
         svgReader.parseAndApplyLayout(view);
 
-        assertEquals(PaperSize.A6_Portrait, view.getPaperSize());
-
         assertEquals(254, view.getElementView(user).getX());
         assertEquals(108, view.getElementView(user).getY());
 

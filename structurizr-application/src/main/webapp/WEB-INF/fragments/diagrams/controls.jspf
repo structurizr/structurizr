@@ -70,13 +70,6 @@
     <div class="form-group">
         <span id="diagramEditButtons">
 
-<%--        <select id="pageSize" class="form-control" style="font-size: 12px; width: auto; display: inline-block;">--%>
-<%--            <option id="none" value="none">Canvas size - Custom</option>--%>
-<%--            <c:forEach var="paperSize" items="${paperSizes}">--%>
-<%--            <option id="${paperSize}" value="${paperSize.width}x${paperSize.height} %>">${paperSize.name} - ${paperSize.orientation}</option>--%>
-<%--            </c:forEach>--%>
-<%--        </select>--%>
-
         <div class="btn-group">
             <button id="pageSizeDecreaseButton" class="btn btn-default" title="Decrease canvas size"><img src="/static/bootstrap-icons/file-earmark-minus.svg" class="icon-btn" /></button>
             <button id="pageSizeAutoButton" class="btn btn-default" title="Auto canvas size"><img src="/static/bootstrap-icons/file-earmark-diff.svg" class="icon-btn" /></button>

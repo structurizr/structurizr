@@ -388,7 +388,6 @@
 
         // disable some UI elements based upon whether the diagram is editable
         $('#autoLayoutButton').prop('disabled', !editable);
-        // getPageSizeDropDown().prop('disabled', !editable);
 
         $('.multipleElementsSelectedButton').prop('disabled', true);
 
@@ -1412,21 +1411,6 @@
             $('.diagramTooltipOffButton').removeClass('hidden');
         }
     }
-
-    // function getPageSizeDropDown() {
-    //     return $("#pageSize");
-    // }
-
-    // getPageSizeDropDown().change(function() {
-    //     var pageSize = getPageSizeDropDown().val();
-    //     if (pageSize === 'none') {
-    //         structurizr.diagram.getCurrentView().paperSize = undefined;
-    //     } else {
-    //         var dimensions = pageSize.split("x");
-    //         structurizr.diagram.setPageSize(parseInt(dimensions[0]), parseInt(dimensions[1]));
-    //         structurizr.diagram.getCurrentView().paperSize = $('#pageSize option:selected').attr('id');
-    //     }
-    // });
 
     function animationStarted() {
         $('.stepBackwardAnimationButton').prop("disabled", false);

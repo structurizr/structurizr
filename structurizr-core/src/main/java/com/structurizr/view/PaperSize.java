@@ -39,12 +39,12 @@ public enum PaperSize {
     Slide_16_9("Slide 16:9", Orientation.Landscape, 3508, 1973),
     Slide_16_10("Slide 16:10", Orientation.Landscape, 3508, 2193);
 
-    private String name;
-    private Orientation orientation;
-    private int width;
-    private int height;
+    private final String name;
+    private final Orientation orientation;
+    private final int width;
+    private final int height;
 
-    private PaperSize(String name, Orientation orientation, int width, int height) {
+    PaperSize(String name, Orientation orientation, int width, int height) {
         this.name = name;
         this.orientation = orientation;
         this.width = width;

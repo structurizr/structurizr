@@ -67,10 +67,6 @@ EmbedFromParentController extends AbstractWorkspaceController {
                 model.addAttribute("publishThumbnails", false);
             }
 
-            if (workspaceMetadata.isEditable()) {
-                model.addAttribute("paperSizes", PaperSize.getOrderedPaperSizes());
-            }
-
             model.addAttribute("showToolbar", editable);
             model.addAttribute("perspective", perspective);
 

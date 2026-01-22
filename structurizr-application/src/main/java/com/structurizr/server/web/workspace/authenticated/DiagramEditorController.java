@@ -54,7 +54,6 @@ public class DiagramEditorController extends AbstractWorkspaceController {
         model.addAttribute("publishThumbnails", StringUtils.isNullOrEmpty(version));
         model.addAttribute("createReviews", true);
         model.addAttribute("quickNavigationPath", "diagram-editor");
-        model.addAttribute("paperSizes", PaperSize.getOrderedPaperSizes());
 
         return lockWorkspaceAndShowAuthenticatedView(Views.DIAGRAMS, workspaceMetadata, branch, version, model, false);
     }
