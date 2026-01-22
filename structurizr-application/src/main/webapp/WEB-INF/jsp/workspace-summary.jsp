@@ -90,7 +90,7 @@
                 <a href="<c:out value="${urlPrefix}" />/explore<c:out value="${urlSuffix}" escapeXml="false" />"><img src="/static/bootstrap-icons/diagram-3.svg" class="icon-sm" /> Explore</a>
             </div>
             <c:if test="${fn:startsWith(urlPrefix, '/workspace')}">
-            <div class="navigationItem">
+            <div id="inspectionsLink" class="navigationItem">
                 <a href="<c:out value="${urlPrefix}" />/inspections<c:out value="${urlSuffix}" escapeXml="false" />"><img src="/static/bootstrap-icons/clipboard-pulse.svg" class="icon-sm" /> Inspections</a>
 
                 <div id="inspectionSummary" class="hidden" style="margin-bottom: 5px">
@@ -117,11 +117,11 @@
             </div>
             </c:if>
 
-            <div id="exportDslLinkNavItem" class="navigationItem">
+            <div id="exportDslLink" class="navigationItem">
                 <img src="/static/bootstrap-icons/filetype-txt.svg" class="icon-sm" /> <a href="${urlPrefix}/dsl${urlSuffix}" target="_blank">DSL</a>
             </div>
 
-            <div class="navigationItem">
+            <div id="exportJsonLink" class="navigationItem">
                 <img src="/static/bootstrap-icons/filetype-json.svg" class="icon-sm" /> <a href="${urlPrefix}/json${urlSuffix}" target="_blank">JSON</a>
             </div>
 
@@ -213,44 +213,29 @@
                     <c:if test="${workspace.editable && not workspace.locked}">
                     <br />
                     <p>
-                        This is your workspace summary page, and from here you can access your diagrams, documentation, and architecture decision records.
+                        This is your workspace summary page from where you can access your diagrams, documentation, and architecture decision records.
                         We recommend that a workspace contains the model, views, and documentation for a single software system
-                        - see <a href="https://structurizr.com/help/usage-recommendations" target="_blank">usage recommendations</a> for more details.
-                        This workspace is empty, and you can use one of the following authoring options to create content.
+                        - see <a href="https://docs.structurizr.com/basics" target="_blank">usage recommendations</a> for more details.
                     </p>
 
                     <div class="row" style="margin-top: 20px; margin-bottom: 20px">
-                        <div class="col-4 centered">
+                        <div class="col-6 centered">
                             <div style="padding: 10px; margin: 10px">
                                 <div style="margin-top: 5px; font-size: 20px">
-                                    <a href="<c:out value="${urlPrefix}" />/dsl-editor"><img src="/static/bootstrap-icons/code-slash.svg" class="icon-lg"/> DSL editor</a>
-                                </div>
-                                <div class="small">
-                                    Open the online DSL editor, and create your workspace using the Structurizr DSL.
-                                    <c:if test="${not dslEditorEnabled}">
-                                    <br /><br />
-                                    (not available on this installation)
-                                    </c:if>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4 centered">
-                            <div style="padding: 10px; margin: 10px">
-                                <div style="margin-top: 5px; font-size: 20px">
-                                    <a id="importJsonLink2" href=""><img src="/static/bootstrap-icons/upload.svg" class="icon-lg" /> Import JSON</a>
+                                    <a id="importJsonLink2" href=""><img src="/static/bootstrap-icons/cloud-upload.svg" class="icon-lg" /> Import JSON</a>
                                 </div>
                                 <div class="small">
                                     Import an existing workspace from a JSON file.
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4 centered">
+                        <div class="col-6 centered">
                             <div style="padding: 10px; margin: 10px">
                                 <div style="margin-top: 5px; font-size: 20px">
                                     <a href="<c:out value="${urlPrefix}" />/settings"><img src="/static/bootstrap-icons/gear.svg" class="icon-lg" /> Settings</a>
                                 </div>
                                 <div class="small">
-                                    Use the workspace settings page to find your API key/secret, for uploading your workspace with the Structurizr <code>push</code> command, the <a href="https://docs.structurizr.com/java" target="_blank">Structurizr Java library</a>, or other compatible tools.
+                                    Use the workspace settings page to generate an API key to upload your workspace with the Structurizr <a href="https://docs.structurizr.com/push" target="_blank">push</a> command, the <a href="https://docs.structurizr.com/java" target="_blank">Structurizr Java library</a>, or other compatible tools.
                                 </div>
                             </div>
                         </div>
@@ -411,11 +396,14 @@
             $('#gettingStarted').removeClass('hidden');
             </c:if>
             $('.workspaceContent').addClass('hidden');
-            $('#exportJsonLinkNavItem').addClass('hidden');
+            $('#inspectionsLink').addClass('hidden');
+            $('#exportJsonLink').addClass('hidden');
+            $('#copyToBranchButton').addClass('hidden');
+
         }
 
         if (structurizr.workspace.getProperty('structurizr.dsl') === undefined) {
-            $('#exportDslLinkNavItem').addClass('hidden');
+            $('#exportDslLink').addClass('hidden');
         }
 
         initInspectionSummary();
