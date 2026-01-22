@@ -10,6 +10,7 @@ public class VersionCommand extends AbstractCommand {
     private static final Log log = LogFactory.getLog(VersionCommand.class);
 
     public VersionCommand() {
+        super("version");
     }
 
     public void run(String... args) throws Exception {

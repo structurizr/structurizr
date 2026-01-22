@@ -18,6 +18,7 @@ public class ListCommand extends AbstractCommand {
     private static final Comparator<Element> ELEMENT_COMPARATOR = Comparator.comparing(Element::getName);
 
     public ListCommand() {
+        super("list");
     }
 
     public void run(String... args) throws Exception {
@@ -27,12 +28,7 @@ public class ListCommand extends AbstractCommand {
         option.setRequired(true);
         options.addOption(option);
 
-//        option = new Option("t", "type", true, "The type of items to list");
-//        option.setRequired(false);
-//        options.addOption(option);
-
         CommandLineParser commandLineParser = new DefaultParser();
-        HelpFormatter formatter = new HelpFormatter();
 
         String workspacePathAsString = null;
         String type = null;
@@ -44,8 +40,7 @@ public class ListCommand extends AbstractCommand {
             type = ELEMENT_TYPE; // cmd.getOptionValue("type", "element");
         } catch (ParseException e) {
             log.error(e.getMessage());
-            formatter.printHelp("list", options);
-
+            showHelp(options);
             System.exit(1);
         }
 

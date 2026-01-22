@@ -10,12 +10,13 @@ public class UnlockCommand extends AbstractCommand {
     private static final Log log = LogFactory.getLog(UnlockCommand.class);
 
     public UnlockCommand() {
+        super("unlock");
     }
 
     public void run(String... args) throws Exception {
         Options options = new Options();
 
-        Option option = new Option("url", "structurizrApiUrl", true, "Structurizr API URL");
+        Option option = new Option("url", "apiUrl", true, "Structurizr API URL");
         option.setRequired(true);
         options.addOption(option);
 
@@ -28,7 +29,6 @@ public class UnlockCommand extends AbstractCommand {
         options.addOption(option);
 
         CommandLineParser commandLineParser = new DefaultParser();
-        HelpFormatter formatter = new HelpFormatter();
 
         String apiUrl = "";
         long workspaceId = 1;
@@ -37,13 +37,12 @@ public class UnlockCommand extends AbstractCommand {
         try {
             CommandLine cmd = commandLineParser.parse(options, args);
 
-            apiUrl = cmd.getOptionValue("structurizrApiUrl", "https://api.structurizr.com");
+            apiUrl = cmd.getOptionValue("apiUrl");
             workspaceId = Long.parseLong(cmd.getOptionValue("workspaceId"));
             apiKey = cmd.getOptionValue("apiKey");
         } catch (ParseException e) {
             log.error(e.getMessage());
-            formatter.printHelp("unlock", options);
-
+            showHelp(options);
             System.exit(1);
         }
 

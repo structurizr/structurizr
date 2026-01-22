@@ -16,6 +16,7 @@ public class MergeCommand extends AbstractCommand {
     private static final Log log = LogFactory.getLog(MergeCommand.class);
 
     public MergeCommand() {
+        super("merge");
     }
 
     public void run(String... args) throws Exception {
@@ -38,7 +39,6 @@ public class MergeCommand extends AbstractCommand {
         options.addOption(option);
 
         CommandLineParser commandLineParser = new DefaultParser();
-        HelpFormatter formatter = new HelpFormatter();
 
         String workspaceWithLayoutPath = null;
         String workspaceWithoutLayoutPath = null;
@@ -55,9 +55,7 @@ public class MergeCommand extends AbstractCommand {
 
         } catch (ParseException e) {
             log.error(e.getMessage());
-            formatter.setWidth(150);
-            formatter.printHelp("merge", options);
-
+            showHelp(options);
             System.exit(1);
         }
 

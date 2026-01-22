@@ -5,6 +5,7 @@ import com.structurizr.playground.Server;
 public class PlaygroundCommand extends AbstractCommand {
 
     public PlaygroundCommand() {
+        super("playground");
     }
 
     public void run(String... args) throws Exception {

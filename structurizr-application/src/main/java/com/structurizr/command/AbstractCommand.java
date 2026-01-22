@@ -7,8 +7,11 @@ import com.structurizr.dsl.StructurizrDslParser;
 import com.structurizr.http.HttpClient;
 import com.structurizr.inspection.DefaultInspector;
 import com.structurizr.util.BuiltInThemes;
+import com.structurizr.util.Version;
 import com.structurizr.util.WorkspaceUtils;
 import com.structurizr.validation.WorkspaceScopeValidatorFactory;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.help.HelpFormatter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.slf4j.LoggerFactory;
@@ -24,7 +27,14 @@ public abstract class AbstractCommand {
 
     private static final String PLUGINS_DIRECTORY_NAME = "plugins";
 
-    protected AbstractCommand() {
+    private final String name;
+
+    protected AbstractCommand(String name) {
+        this.name = name;
+    }
+
+    public final String getName() {
+        return name;
     }
 
     public abstract void run(String... args) throws Exception;
@@ -132,6 +142,11 @@ public abstract class AbstractCommand {
     protected void configureDebugLogging() {
         Logger root = (Logger) LoggerFactory.getLogger("com.structurizr");
         root.setLevel(Level.DEBUG);
+    }
+
+    protected void showHelp(Options options) throws Exception {
+        HelpFormatter formatter = HelpFormatter.builder().setShowSince(false).get();
+        formatter.printHelp(getName(), "Structurizr v" + new Version().getBuildNumber(), options, "", true);
     }
 
 }

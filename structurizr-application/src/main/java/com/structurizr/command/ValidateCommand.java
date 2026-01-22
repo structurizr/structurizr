@@ -13,6 +13,7 @@ public class ValidateCommand extends AbstractCommand {
     private static final Log log = LogFactory.getLog(ValidateCommand.class);
 
     public ValidateCommand() {
+        super("validate");
     }
 
     public void run(String... args) throws Exception {
@@ -23,7 +24,6 @@ public class ValidateCommand extends AbstractCommand {
         options.addOption(option);
 
         CommandLineParser commandLineParser = new DefaultParser();
-        HelpFormatter formatter = new HelpFormatter();
 
         String workspacePathAsString = null;
 
@@ -33,8 +33,7 @@ public class ValidateCommand extends AbstractCommand {
             workspacePathAsString = cmd.getOptionValue("workspace");
         } catch (ParseException e) {
             log.error(e.getMessage());
-            formatter.printHelp("validate", options);
-
+            showHelp(options);
             System.exit(1);
         }
 

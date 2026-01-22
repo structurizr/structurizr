@@ -29,12 +29,13 @@ public class PullCommand extends AbstractCommand {
     private boolean debug = false;
 
     public PullCommand() {
+        super("pull");
     }
 
     public void run(String... args) throws Exception {
         Options options = new Options();
 
-        Option option = new Option("url", "structurizrApiUrl", true, "Structurizr API URL");
+        Option option = new Option("url", "apiUrl", true, "Structurizr API URL");
         option.setRequired(true);
         options.addOption(option);
 
@@ -63,14 +64,13 @@ public class PullCommand extends AbstractCommand {
         options.addOption(option);
 
         CommandLineParser commandLineParser = new DefaultParser();
-        HelpFormatter formatter = new HelpFormatter();
 
         String outputPath = null;
 
         try {
             CommandLine cmd = commandLineParser.parse(options, args);
 
-            apiUrl = cmd.getOptionValue("structurizrApiUrl");
+            apiUrl = cmd.getOptionValue("apiUrl");
             workspaceId = cmd.getOptionValue("workspaceId");
             apiKey = cmd.getOptionValue("apiKey");
             branch = cmd.getOptionValue("branch");
@@ -79,8 +79,7 @@ public class PullCommand extends AbstractCommand {
             debug = cmd.hasOption("debug");
         } catch (ParseException e) {
             log.error(e.getMessage());
-            formatter.printHelp("pull", options);
-
+            showHelp(options);
             System.exit(1);
         }
 

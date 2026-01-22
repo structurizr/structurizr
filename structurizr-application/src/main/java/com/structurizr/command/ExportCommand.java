@@ -70,6 +70,7 @@ public class ExportCommand extends AbstractCommand {
     }
 
     public ExportCommand() {
+        super("export");
     }
 
     public void run(String... args) throws Exception {
@@ -88,7 +89,6 @@ public class ExportCommand extends AbstractCommand {
         options.addOption(option);
 
         CommandLineParser commandLineParser = new DefaultParser();
-        HelpFormatter formatter = new HelpFormatter();
 
         String workspacePathAsString = null;
         File workspacePath = null;
@@ -105,9 +105,7 @@ public class ExportCommand extends AbstractCommand {
 
         } catch (ParseException e) {
             log.error(e.getMessage());
-            formatter.setWidth(150);
-            formatter.printHelp("export", options);
-
+            showHelp(options);
             System.exit(1);
         }
 

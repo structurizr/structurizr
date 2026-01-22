@@ -23,6 +23,7 @@ public class InspectCommand extends AbstractCommand {
     private static final String DEFAULT_INSPECTOR = "com.structurizr.inspection.DefaultInspector";
 
     public InspectCommand() {
+        super("inspect");
     }
 
     public void run(String... args) throws Exception {
@@ -41,7 +42,6 @@ public class InspectCommand extends AbstractCommand {
         options.addOption(option);
 
         CommandLineParser commandLineParser = new DefaultParser();
-        HelpFormatter formatter = new HelpFormatter();
 
         String workspacePathAsString = null;
         String inspectorName = null;
@@ -55,8 +55,7 @@ public class InspectCommand extends AbstractCommand {
             severitiesAsString = cmd.getOptionValue("severity");
         } catch (ParseException e) {
             log.error(e.getMessage());
-            formatter.printHelp("inspect", options);
-
+            showHelp(options);
             System.exit(1);
         }
 

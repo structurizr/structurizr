@@ -3,7 +3,6 @@ package com.structurizr.command;
 import com.structurizr.Workspace;
 import com.structurizr.api.WorkspaceApiClient;
 import com.structurizr.encryption.AesEncryptionStrategy;
-import com.structurizr.util.BuiltInThemes;
 import com.structurizr.util.StringUtils;
 import org.apache.commons.cli.*;
 import org.apache.commons.logging.Log;
@@ -16,12 +15,13 @@ public class PushCommand extends AbstractCommand {
     private static final Log log = LogFactory.getLog(PushCommand.class);
 
     public PushCommand() {
+        super("push");
     }
 
     public void run(String... args) throws Exception {
         Options options = new Options();
 
-        Option option = new Option("url", "structurizrApiUrl", true, "Structurizr API URL");
+        Option option = new Option("url", "apiUrl", true, "Structurizr API URL");
         option.setRequired(true);
         options.addOption(option);
 
@@ -38,7 +38,7 @@ public class PushCommand extends AbstractCommand {
         options.addOption(option);
 
         option = new Option("w", "workspace", true, "Path or URL to the workspace JSON/DSL file");
-        option.setRequired(false);
+        option.setRequired(true);
         options.addOption(option);
 
         option = new Option("passphrase", "passphrase", true, "Client-side encryption passphrase");
@@ -58,7 +58,6 @@ public class PushCommand extends AbstractCommand {
         options.addOption(option);
 
         CommandLineParser commandLineParser = new DefaultParser();
-        HelpFormatter formatter = new HelpFormatter();
 
         String apiUrl = "";
         long workspaceId = 1;
@@ -73,7 +72,7 @@ public class PushCommand extends AbstractCommand {
         try {
             CommandLine cmd = commandLineParser.parse(options, args);
 
-            apiUrl = cmd.getOptionValue("structurizrApiUrl", "https://api.structurizr.com");
+            apiUrl = cmd.getOptionValue("apiUrl");
             workspaceId = Long.parseLong(cmd.getOptionValue("workspaceId"));
             apiKey = cmd.getOptionValue("apiKey");
             branch = cmd.getOptionValue("branch");
@@ -82,15 +81,9 @@ public class PushCommand extends AbstractCommand {
             mergeFromRemote = Boolean.parseBoolean(cmd.getOptionValue("merge", "true"));
             archive = Boolean.parseBoolean(cmd.getOptionValue("archive", "true"));
             debug = cmd.hasOption("debug");
-
-            if (StringUtils.isNullOrEmpty(workspacePath)) {
-                log.error("-workspace must be specified");
-                formatter.printHelp("push", options);
-                System.exit(1);
-            }
         } catch (ParseException e) {
             log.error(e.getMessage());
-            formatter.printHelp("push", options);
+            showHelp(options);
             System.exit(1);
         }
 
