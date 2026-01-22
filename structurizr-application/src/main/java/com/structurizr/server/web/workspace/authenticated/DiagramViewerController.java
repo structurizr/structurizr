@@ -24,12 +24,10 @@ class DiagramViewerController extends AbstractWorkspaceController {
             @PathVariable("workspaceId") long workspaceId,
             @RequestParam(required = false, defaultValue = "") String branch,
             @RequestParam(required = false) String version,
-            @RequestParam(required = false) String perspective,
             ModelMap model
     ) {
         model.addAttribute("publishThumbnails", StringUtils.isNullOrEmpty(version));
         model.addAttribute("quickNavigationPath", "diagrams");
-        model.addAttribute("perspective", HtmlUtils.filterHtml(perspective));
 
         if (Configuration.getInstance().getProfile() == com.structurizr.configuration.Profile.Local) {
             enableLocalRefresh(model);

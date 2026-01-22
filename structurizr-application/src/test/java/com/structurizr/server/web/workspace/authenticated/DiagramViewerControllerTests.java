@@ -42,7 +42,7 @@ public class DiagramViewerControllerTests extends ControllerTestsBase {
             }
         });
 
-        String view = controller.showAuthenticatedDiagramViewer(1, "main", "version", "perspective", model);
+        String view = controller.showAuthenticatedDiagramViewer(1, "main", "version", model);
         assertEquals("diagrams", view);
         assertSame(workspaceMetaData, model.getAttribute("workspace"));
         assertEquals("anNvbg==", model.getAttribute("workspaceAsJson"));
@@ -69,7 +69,7 @@ public class DiagramViewerControllerTests extends ControllerTestsBase {
         });
 
         setUser("user@example.com");
-        String view = controller.showAuthenticatedDiagramViewer(1, "main", "version", "perspective", model);
+        String view = controller.showAuthenticatedDiagramViewer(1, "main", "version", model);
         assertEquals("diagrams", view);
         assertSame(workspaceMetaData, model.getAttribute("workspace"));
         assertEquals("anNvbg==", model.getAttribute("workspaceAsJson"));
@@ -98,7 +98,7 @@ public class DiagramViewerControllerTests extends ControllerTestsBase {
         });
 
         setUser("user1@example.com");
-        String view = controller.showAuthenticatedDiagramViewer(1, "main", "version", "perspective", model);
+        String view = controller.showAuthenticatedDiagramViewer(1, "main", "version", model);
         assertEquals("diagrams", view);
         assertSame(workspaceMetaData, model.getAttribute("workspace"));
         assertEquals("anNvbg==", model.getAttribute("workspaceAsJson"));
@@ -127,7 +127,7 @@ public class DiagramViewerControllerTests extends ControllerTestsBase {
         });
 
         setUser("user1@example.com");
-        String view = controller.showAuthenticatedDiagramViewer(1, "main", "version", "perspective", model);
+        String view = controller.showAuthenticatedDiagramViewer(1, "main", "version", model);
         assertEquals("diagrams", view);
         assertSame(workspaceMetaData, model.getAttribute("workspace"));
         assertEquals("anNvbg==", model.getAttribute("workspaceAsJson"));
@@ -158,7 +158,7 @@ public class DiagramViewerControllerTests extends ControllerTestsBase {
             }
         });
 
-        String view = controller.showAuthenticatedDiagramViewer(1, "main", "version", "perspective", model);
+        String view = controller.showAuthenticatedDiagramViewer(1, "main", "version", model);
         assertEquals("diagrams", view);
         assertSame(workspaceMetaData, model.getAttribute("workspace"));
         assertEquals("anNvbg==", model.getAttribute("workspaceAsJson"));
@@ -194,7 +194,7 @@ public class DiagramViewerControllerTests extends ControllerTestsBase {
             }
         });
 
-        String view = controller.showAuthenticatedDiagramViewer(1, "main", "version", "perspective", model);
+        String view = controller.showAuthenticatedDiagramViewer(1, "main", "version", model);
         assertEquals("diagrams", view);
         assertSame(workspaceMetaData, model.getAttribute("workspace"));
         assertEquals("anNvbg==", model.getAttribute("workspaceAsJson"));

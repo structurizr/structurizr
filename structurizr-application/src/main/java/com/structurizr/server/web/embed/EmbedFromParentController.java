@@ -22,7 +22,6 @@ EmbedFromParentController extends AbstractWorkspaceController {
                                   @RequestParam(required = false) String version,
                                   @RequestParam(required = false) String type,
                                   @RequestParam(required = false) String view,
-                                  @RequestParam(required = false) String perspective,
                                   @RequestParam(required = false, defaultValue = "false") boolean editable,
                                   @RequestParam(required = false) String urlPrefix,
                                   ModelMap model) {
@@ -30,7 +29,6 @@ EmbedFromParentController extends AbstractWorkspaceController {
         type = HtmlUtils.filterHtml(type);
         view = HtmlUtils.filterHtml(view);
         view = HtmlUtils.escapeQuoteCharacters(view);
-        perspective = HtmlUtils.filterHtml(perspective);
         urlPrefix = HtmlUtils.filterHtml(urlPrefix);
 
         WorkspaceMetadata workspaceMetadata = new WorkspaceMetadata(workspace);
@@ -68,7 +66,6 @@ EmbedFromParentController extends AbstractWorkspaceController {
             }
 
             model.addAttribute("showToolbar", editable);
-            model.addAttribute("perspective", perspective);
 
             return Views.DIAGRAMS;
         }

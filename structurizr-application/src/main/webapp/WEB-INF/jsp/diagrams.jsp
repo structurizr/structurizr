@@ -194,6 +194,10 @@
     var presentationMode = false;
     var healthCheck;
 
+    function getParameter(name) {
+        return new URLSearchParams(window.location.search).get(name);
+    }
+
     function workspaceLoaded() {
         if (!structurizr.workspace.hasViews()) {
             openNoViewsModal();
@@ -321,11 +325,15 @@
         initAutoLayout();
         healthCheck = new structurizr.HealthCheck(updateHealth);
 
-        <c:if test="${not empty perspective}">
-        structurizr.diagram.setPerspective('<c:out value="${perspective}" />');
-        tooltip.disable();
-        toggleTooltip();
-        </c:if>
+        const perspective = getParameter('perspective');
+        if (perspective && perspective.length > 0) {
+            structurizr.diagram.setPerspective(perspective);
+            $('#perspectivesOnButton').addClass('hidden');
+            $('#perspectivesOffButton').removeClass('hidden');
+            $('#perspectivesOffButton').attr('title', 'Perspective: ' + perspective);
+            tooltip.disable();
+            toggleTooltip();
+        }
 
         initQuickNavigation();
         initExports();
@@ -628,7 +636,6 @@
         const hash = window.location.hash;
         var url = '<c:out value="${urlPrefix}" />/diagrams<c:out value="${urlSuffix}" escapeXml="false" />';
         var diagramIdentifier = '';
-        const perspective = '<c:out value="${perspective}" />';
 
         if (hash === undefined || hash.trim().length === 0) {
             diagramIdentifier = '<c:out value="${diagramIdentifier}" />';
@@ -636,11 +643,21 @@
             diagramIdentifier = window.location.hash.substring(1);
         }
 
+        const perspective = structurizr.diagram.getPerspective();
         if (perspective.length > 0) {
             if (url.indexOf('?') === -1) {
                 url = url + '?perspective=' + perspective;
             } else {
                 url = url + '&perspective=' + perspective;
+            }
+        }
+
+        const tags = structurizr.diagram.getFilter().tags;
+        if (tags.length > 0) {
+            if (url.indexOf('?') === -1) {
+                url = url + '?tags=' + tags.join(',');
+            } else {
+                url = url + '&tags=' + tags.join(',');
             }
         }
 
@@ -725,6 +742,7 @@
             const c = 99;
             const d = 100;
             const f = 102;
+            const g = 103;
             const h = 104;
             const i = 105;
             const j = 106;
@@ -832,6 +850,9 @@
                 }
             } else if (e.which === f) {
                 enterPresentationMode();
+                return;
+            } else if (e.which === g) {
+                openFilterModal();
                 return;
             } else if (e.which === p && !e.metaKey) {
                 openPerspectivesModal();

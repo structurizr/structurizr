@@ -27,12 +27,10 @@ abstract class AbstractEmbedController extends AbstractWorkspaceController {
             String branch,
             String diagramIdentifier,
             boolean health,
-            String perspective,
             ModelMap model) {
 
         diagramIdentifier = HtmlUtils.filterHtml(diagramIdentifier);
         diagramIdentifier = HtmlUtils.escapeQuoteCharacters(diagramIdentifier);
-        perspective = HtmlUtils.filterHtml(perspective);
 
         if (!StringUtils.isNullOrEmpty(diagramIdentifier)) {
             model.addAttribute("diagramIdentifier", diagramIdentifier);
@@ -69,7 +67,6 @@ abstract class AbstractEmbedController extends AbstractWorkspaceController {
         model.addAttribute("workspaceAsJson", JsonUtils.base64(json));
         model.addAttribute("embed", true);
         model.addAttribute("health", health);
-        model.addAttribute("perspective", perspective);
         model.addAttribute("publishThumbnails", false);
 
         return Views.DIAGRAMS;

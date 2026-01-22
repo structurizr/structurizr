@@ -12,14 +12,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 class EmbedController extends AbstractController {
 
     @RequestMapping(value = "/embed", method = RequestMethod.GET)
-    String embedFromParent(@RequestParam(required = false) String view,
-                                  @RequestParam(required = false) String perspective,
-                                  @RequestParam(required = false, defaultValue = "false") boolean editable,
-                                  ModelMap model) {
+    String embedFromParent(
+            @RequestParam(required = false) String view,
+            @RequestParam(required = false, defaultValue = "false") boolean editable,
+            ModelMap model) {
 
         view = HtmlUtils.filterHtml(view);
         view = HtmlUtils.escapeQuoteCharacters(view);
-        perspective = HtmlUtils.filterHtml(perspective);
 
         model.addAttribute("workspace", new WorkspaceMetadata());
         model.addAttribute("loadWorkspaceFromParent", true);
@@ -31,7 +30,6 @@ class EmbedController extends AbstractController {
 
         model.addAttribute("publishThumbnails", false);
         model.addAttribute("showToolbar", editable);
-        model.addAttribute("perspective", perspective);
 
         return "diagrams";
     }

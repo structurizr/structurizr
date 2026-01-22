@@ -1,9 +1,6 @@
 <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content centered">
-            <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
             <div class="modal-body">
                 <span id="tagSelector"></span>
                 <span>
@@ -20,15 +17,25 @@
 <script nonce="${scriptNonce}">
 
     function initFilter() {
-        const tags = structurizr.workspace.getUserDefinedTags();
+        const userDefinedTags = structurizr.workspace.getUserDefinedTags();
 
-        if (tags.length === 0) {
+        if (userDefinedTags.length === 0) {
             $('#filterOnButton').addClass('hidden');
             return;
         }
 
         const filter = structurizr.diagram.getFilter();
-        filter.tags = tags;
+
+        const tags = getParameter('tags');
+        if (tags && tags.length > 0) {
+            filter.tags = tags.split(',');
+            filter.active = true;
+            $('#filterOnButton').addClass('hidden');
+            $('#filterOffButton').removeClass('hidden');
+        } else {
+            filter.tags = userDefinedTags;
+        }
+
         structurizr.diagram.setFilter(filter);
 
         const tagSelector = $('#tagSelector');
@@ -59,10 +66,14 @@
             closeFilterModal();
         });
 
-        tags.forEach(function(tag) {
+        userDefinedTags.forEach(function(tag) {
             const span = document.createElement('span');
             span.classList.add('tag');
-            span.classList.add('tagOn');
+            if (filter.tags.indexOf(tag) > -1) {
+                span.classList.add('tagOn');
+            } else {
+                span.classList.add('tagOff');
+            }
             span.innerHTML = structurizr.util.escapeHtml(tag);
 
             span.onclick = function() {
@@ -92,7 +103,6 @@
             structurizr.diagram.setFilter(filter);
         }
 
-        // $('#filterModal').modal({ backdrop: false });
         $('#filterModal').modal('show');
     }
 
