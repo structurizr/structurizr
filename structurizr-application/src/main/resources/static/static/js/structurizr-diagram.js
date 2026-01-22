@@ -136,19 +136,6 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         gridSize: gridSize,
         scale: scale,
         interactive: editable,
-        // linkView: joint.dia.LinkView.extend({
-        //     pointerclick: function(evt, x, y) {
-        //         if (editable) {
-        //             if (evt.altKey) {
-        //                 // do nothing
-        //             } else {
-        //                 if (V(evt.target).hasClass('connection') || V(evt.target).hasClass('connection-wrap')) {
-        //                     self.addVertex({x: x, y: y});
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }),
         defaultConnectionPoint: { name: 'bbox' },
         clickThreshold: 1,
         sorting: joint.dia.Paper.sorting.APPROX
