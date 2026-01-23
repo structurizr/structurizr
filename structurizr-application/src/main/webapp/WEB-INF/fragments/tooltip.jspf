@@ -4,8 +4,8 @@
         color: #000000;
         background: #eeeeee;
         padding: 10px;
-        margin: 20px;
-        position: absolute;
+        margin: 10px;
+        position: fixed;
         z-index: 10;
         opacity: 0.98;
         border: 2px #666666 solid;

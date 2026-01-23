@@ -6132,9 +6132,8 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                 highlightRelationship(cell);
             }
 
-            const offset = parentElement.offset();
-            const x = evt.clientX - offset.left;
-            const y = evt.clientY - offset.top;
+            const x = evt.clientX;
+            const y = evt.clientY;
 
             if (evt.altKey && tooltip.isVisible()) {
                 // do nothing ... sticky tooltip mode
