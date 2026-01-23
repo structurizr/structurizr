@@ -976,7 +976,6 @@ public class ViewSetTests {
 
         DeploymentNode dev = model.addDeploymentNode("Development", "Developer Laptop", "", "");
         DeploymentNode live = model.addDeploymentNode("Live", "Amazon Web Services", "", "");
-        DeploymentNode liveEc2 = live.addDeploymentNode("EC2");
 
         views.createDefaultViews();
         views.createImageView("imageView");
@@ -999,7 +998,7 @@ public class ViewSetTests {
         assertEquals(0, views.getDynamicViews().size());
         assertEquals(0, views.getDeploymentViews().size());
 
-        live.addInfrastructureNode("Route 53");
+        InfrastructureNode infrastructureNode = live.addInfrastructureNode("Route 53");
 
         assertEquals(1, views.getImageViews().size());
 
@@ -1011,20 +1010,29 @@ public class ViewSetTests {
         assertEquals(1, views.getDeploymentViews().size());
         assertSame("Live", views.getDeploymentViews().stream().filter(v -> v.getKey().equals("Deployment-001")).findFirst().get().getEnvironment());
 
-        dev.add(ss1);
-        liveEc2.add(c1);
-        liveEc2.add(c2);
+        dev.add(ss1); // this won't trigger the creation of a deployment view because it has no containers
+        ContainerInstance c1Instance = live.add(c1);
+        ContainerInstance c2Instance = live.add(c2);
 
         views.clear();
         views.createDefaultViews();
 
-        assertEquals(3, views.getDeploymentViews().size());
-        assertSame(ss1, views.getDeploymentViews().stream().filter(v -> v.getKey().equals("Deployment-001")).findFirst().get().getSoftwareSystem());
-        assertSame("Development", views.getDeploymentViews().stream().filter(v -> v.getKey().equals("Deployment-001")).findFirst().get().getEnvironment());
-        assertSame(ss1, views.getDeploymentViews().stream().filter(v -> v.getKey().equals("Deployment-002")).findFirst().get().getSoftwareSystem());
-        assertSame("Live", views.getDeploymentViews().stream().filter(v -> v.getKey().equals("Deployment-002")).findFirst().get().getEnvironment());
-        assertSame(ss2, views.getDeploymentViews().stream().filter(v -> v.getKey().equals("Deployment-003")).findFirst().get().getSoftwareSystem());
-        assertSame("Live", views.getDeploymentViews().stream().filter(v -> v.getKey().equals("Deployment-003")).findFirst().get().getEnvironment());
+        assertEquals(2, views.getDeploymentViews().size());
+        DeploymentView dv1 = views.getDeploymentViews().stream().filter(v -> v.getKey().equals("Deployment-001")).findFirst().get();
+        assertEquals("Live", dv1.getEnvironment());
+        assertSame(ss1, dv1.getSoftwareSystem());
+        assertEquals(3, dv1.getElements().size());
+        assertTrue(dv1.isElementInView(live));
+        assertTrue(dv1.isElementInView(c1Instance));
+        assertTrue(dv1.isElementInView(infrastructureNode));
+
+        DeploymentView dv2 = views.getDeploymentViews().stream().filter(v -> v.getKey().equals("Deployment-002")).findFirst().get();
+        assertEquals("Live", dv2.getEnvironment());
+        assertSame(ss2, dv2.getSoftwareSystem());
+        assertEquals(3, dv2.getElements().size());
+        assertTrue(dv2.isElementInView(live));
+        assertTrue(dv2.isElementInView(c2Instance));
+        assertTrue(dv2.isElementInView(infrastructureNode));
     }
 
     @Test
