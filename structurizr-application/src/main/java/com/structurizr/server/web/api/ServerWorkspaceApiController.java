@@ -2,6 +2,7 @@ package com.structurizr.server.web.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.structurizr.api.HttpHeaders;
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Features;
 import com.structurizr.server.component.workspace.WorkspaceBranch;
@@ -11,8 +12,6 @@ import com.structurizr.server.domain.User;
 import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.util.DateUtils;
 import com.structurizr.util.StringUtils;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
@@ -38,19 +37,18 @@ public class ServerWorkspaceApiController extends AbstractWorkspaceApiController
     @RequestMapping(value = "/api/workspace/{workspaceId}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     public String getWorkspace(@PathVariable("workspaceId") long workspaceId,
                                @RequestParam(required = false) String version,
-                               HttpServletRequest request, HttpServletResponse response) {
+                               @RequestHeader(name = HttpHeaders.X_AUTHORIZATION, required = false) String apiKey) {
 
-        return get(workspaceId, WorkspaceBranch.MAIN_BRANCH, version, request, response);
+        return get(workspaceId, WorkspaceBranch.MAIN_BRANCH, version, apiKey);
     }
 
     @CrossOrigin
     @RequestMapping(value = "/api/workspace/{workspaceId}", method = RequestMethod.PUT, consumes = "application/json", produces = "application/json; charset=UTF-8")
     public @ResponseBody ApiResponse putWorkspace(@PathVariable("workspaceId")long workspaceId,
                                                   @RequestBody String json,
-                                                  HttpServletRequest request,
-                                                  HttpServletResponse response) {
+                                                  @RequestHeader(name = HttpHeaders.X_AUTHORIZATION, required = false) String apiKey) {
 
-        return put(workspaceId, WorkspaceBranch.MAIN_BRANCH, json, request, response);
+        return put(workspaceId, WorkspaceBranch.MAIN_BRANCH, json, apiKey);
     }
 
     @CrossOrigin
@@ -58,8 +56,8 @@ public class ServerWorkspaceApiController extends AbstractWorkspaceApiController
     public String getWorkspace(@PathVariable("workspaceId") long workspaceId,
                                @PathVariable("branch") String branch,
                                @RequestParam(required = false) String version,
-                               HttpServletRequest request, HttpServletResponse response) {
-        return get(workspaceId, branch, version, request, response);
+                               @RequestHeader(name = HttpHeaders.X_AUTHORIZATION, required = false) String apiKey) {
+        return get(workspaceId, branch, version, apiKey);
     }
 
     @CrossOrigin
@@ -67,24 +65,21 @@ public class ServerWorkspaceApiController extends AbstractWorkspaceApiController
     public @ResponseBody ApiResponse putWorkspace(@PathVariable("workspaceId")long workspaceId,
                                                   @PathVariable("branch") String branch,
                                                   @RequestBody String json,
-                                                  HttpServletRequest request,
-                                                  HttpServletResponse response) {
-        return put(workspaceId, branch, json, request, response);
+                                                  @RequestHeader(name = HttpHeaders.X_AUTHORIZATION, required = false) String apiKey) {
+        return put(workspaceId, branch, json, apiKey);
     }
 
     @RequestMapping(value = "/api/workspace/{workspaceId}/branch", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     public String getBranches(@PathVariable("workspaceId") long workspaceId,
-                              HttpServletRequest request, HttpServletResponse response) {
+                              @RequestHeader(name = HttpHeaders.X_AUTHORIZATION, required = false) String apiKey) {
 
         if (!Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_BRANCHES)) {
             throw new ApiException("Workspace branches are not enabled for this installation");
         }
 
-        WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
+        authoriseRequest(workspaceId, Permission.Read, apiKey);
 
         try {
-            authoriseRequest(workspaceMetadata, request);
-
             List<WorkspaceBranch> branches = workspaceComponent.getWorkspaceBranches(workspaceId);
 
             branches = new ArrayList<>(branches);
@@ -107,14 +102,13 @@ public class ServerWorkspaceApiController extends AbstractWorkspaceApiController
     @RequestMapping(value = "/api/workspace/{workspaceId}/branch/{branch}", method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
     public @ResponseBody ApiResponse deleteBranch(@PathVariable("workspaceId") long workspaceId,
                                @PathVariable("branch") String branch,
-                              HttpServletRequest request) {
+                               @RequestHeader(name = HttpHeaders.X_AUTHORIZATION, required = false) String apiKey) {
 
         if (!Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_BRANCHES)) {
             throw new ApiException("Workspace branches are not enabled for this installation");
         }
 
-        WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
-        authoriseRequest(workspaceMetadata, request);
+        authoriseRequest(workspaceId, Permission.Write, apiKey);
 
         if (WorkspaceBranch.isMainBranch(branch)) {
             throw new ApiException("The main branch cannot be deleted");
@@ -132,30 +126,21 @@ public class ServerWorkspaceApiController extends AbstractWorkspaceApiController
 
     @RequestMapping(value = "/api/workspace/{workspaceId}/lock", method = RequestMethod.PUT, produces = "application/json; charset=UTF-8")
     public @ResponseBody ApiResponse lockWorkspace(@PathVariable("workspaceId") long workspaceId,
-                                                   @RequestParam(required = false) String username,
+                                                   @RequestParam(required = false) String user,
                                                    @RequestParam(required = true) String agent,
-                                                   HttpServletRequest request, HttpServletResponse response) {
+                                                   @RequestHeader(name = HttpHeaders.X_AUTHORIZATION, required = false) String apiKey) {
 
-        User user = getUser();
-        if (StringUtils.isNullOrEmpty(username) && user != null) {
-            username = getUser().getUsername();
+        User u = getUser();
+        if (StringUtils.isNullOrEmpty(user) && u != null) {
+            user = u.getUsername();
         }
 
-        WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
-        if (workspaceMetadata == null) {
-            throw new ApiException("404");
-        }
+        authoriseRequest(workspaceId, Permission.Write, apiKey);
 
-        if (user != null && !workspaceMetadata.getPermissions(user).isEmpty()) {
-            authoriseRequest(workspaceMetadata, user, Permission.Write);
-        } else {
-            authoriseRequest(workspaceMetadata, request);
-        }
-
-        if (workspaceComponent.lockWorkspace(workspaceId, username, agent)) {
+        if (workspaceComponent.lockWorkspace(workspaceId, user, agent)) {
             return new ApiResponse("OK");
         } else {
-            workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId); // refresh metadata
+            WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
             SimpleDateFormat sdf = new SimpleDateFormat(DateUtils.USER_FRIENDLY_DATE_FORMAT);
 
             return new ApiResponse(false, "The workspace could not be locked; it was locked by " + workspaceMetadata.getLockedUser() + " using " + workspaceMetadata.getLockedAgent() + " at " + sdf.format(workspaceMetadata.getLockedDate()));
@@ -166,20 +151,23 @@ public class ServerWorkspaceApiController extends AbstractWorkspaceApiController
     public @ResponseBody ApiResponse unlockWorkspace(@PathVariable("workspaceId") long workspaceId,
                                                      @RequestParam(required = false) String user,
                                                      @RequestParam(required = true) String agent,
-                                                     HttpServletRequest request, HttpServletResponse response) {
+                                                     @RequestHeader(name = HttpHeaders.X_AUTHORIZATION, required = false) String apiKey) {
 
+        User u = getUser();
         if (StringUtils.isNullOrEmpty(user)) {
-            user = getUser().getUsername();
+            user = u.getUsername();
         }
+
+        authoriseRequest(workspaceId, Permission.Write, apiKey);
 
         WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
-        authoriseRequest(workspaceMetadata, request);
-
-        if (workspaceComponent.unlockWorkspace(workspaceId)) {
-            return new ApiResponse("OK");
-        } else {
-            return new ApiResponse(false, "Could not unlock workspace.");
+        if (workspaceMetadata.isLockedBy(user, agent)) {
+            if (workspaceComponent.unlockWorkspace(workspaceId)) {
+                return new ApiResponse("OK");
+            }
         }
+
+        return new ApiResponse(false, "Could not unlock workspace");
     }
 
 }

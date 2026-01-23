@@ -22,20 +22,17 @@ public class LocalWorkspaceApiController extends AbstractWorkspaceApiController 
 
     @CrossOrigin
     @RequestMapping(value = "/api/workspace/{workspaceId}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
-    public String getWorkspace(@PathVariable("workspaceId") long workspaceId,
-                               HttpServletRequest request, HttpServletResponse response) {
+    public String getWorkspace(@PathVariable("workspaceId") long workspaceId) {
 
-        return get(workspaceId, WorkspaceBranch.MAIN_BRANCH, WorkspaceVersion.LATEST_VERSION, request, response);
+        return get(workspaceId, WorkspaceBranch.MAIN_BRANCH, WorkspaceVersion.LATEST_VERSION, "");
     }
 
     @CrossOrigin
     @RequestMapping(value = "/api/workspace/{workspaceId}", method = RequestMethod.PUT, consumes = "application/json", produces = "application/json; charset=UTF-8")
     public @ResponseBody ApiResponse putWorkspace(@PathVariable("workspaceId")long workspaceId,
-                                                  @RequestBody String json,
-                                                  HttpServletRequest request,
-                                                  HttpServletResponse response) {
+                                                  @RequestBody String json) {
 
-        return put(workspaceId, WorkspaceBranch.MAIN_BRANCH, json, request, response);
+        return put(workspaceId, WorkspaceBranch.MAIN_BRANCH, json, "");
     }
 
 }

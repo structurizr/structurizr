@@ -2,22 +2,15 @@ package com.structurizr.server.web.api;
 
 import com.structurizr.Workspace;
 import com.structurizr.api.HttpHeaders;
-import com.structurizr.configuration.Configuration;
-import com.structurizr.configuration.Profile;
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
 import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.ControllerTestsBase;
 import com.structurizr.server.web.MockHttpServletRequest;
 import com.structurizr.server.web.MockHttpServletResponse;
 import com.structurizr.server.web.MockWorkspaceComponent;
-import com.structurizr.util.Md5Digest;
 import com.structurizr.util.WorkspaceUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import java.util.Base64;
-import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -39,7 +32,7 @@ public class LocalWorkspaceApiControllerTests extends ControllerTestsBase {
     @Test
     void getWorkspace_ReturnsAnApiError_WhenANegativeWorkspaceIdIsSpecified() {
         try {
-            controller.getWorkspace(-1, request, response);
+            controller.getWorkspace(-1);
             fail();
         } catch (ApiException e) {
             assertEquals("Workspace ID must be greater than 1", e.getMessage());
@@ -62,14 +55,14 @@ public class LocalWorkspaceApiControllerTests extends ControllerTestsBase {
             }
         });
 
-        String json = controller.getWorkspace(1, request, response);
+        String json = controller.getWorkspace(1);
         assertEquals("json", json);
     }
 
     @Test
     void putWorkspace_ReturnsAnApiError_WhenANegativeWorkspaceIdIsSpecified() {
         try {
-            controller.putWorkspace(-1, "json", request, response);
+            controller.putWorkspace(-1, "json");
             fail();
         } catch (ApiException e) {
             assertEquals("Workspace ID must be greater than 1", e.getMessage());
@@ -93,7 +86,7 @@ public class LocalWorkspaceApiControllerTests extends ControllerTestsBase {
 
         request.addHeader(HttpHeaders.AUTHORIZATION, "1234567890");
 
-        controller.putWorkspace(1, json, request, response);
+        controller.putWorkspace(1, json);
     }
 
 }

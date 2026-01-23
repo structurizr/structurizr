@@ -53,8 +53,7 @@ public class AbstractWorkspaceApiController extends AbstractController {
     protected final String get(long workspaceId,
                                String branch,
                                String version,
-                               HttpServletRequest request,
-                               HttpServletResponse response) {
+                               String apiKey) {
         try {
             if (WorkspaceBranch.isMainBranch(branch)) {
                 branch = "";
@@ -66,27 +65,13 @@ public class AbstractWorkspaceApiController extends AbstractController {
                 throw new ApiException(e.getMessage());
             }
 
-            if (workspaceId > 0) {
-                WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
-                if (workspaceMetadata == null) {
-                    throw new ApiException("404");
-                }
+            authoriseRequest(workspaceId, Permission.Read, apiKey);
 
-                User user = getUser();
-                if (user != null && !workspaceMetadata.getPermissions(user).isEmpty()) {
-                    authoriseRequest(workspaceMetadata, user, Permission.Read);
-                } else {
-                    authoriseRequest(workspaceMetadata, request);
-                }
-
-                if (!StringUtils.isNullOrEmpty(branch) && !Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_BRANCHES)) {
-                    throw new ApiException("Workspace branches are not enabled for this installation");
-                }
-
-                return workspaceComponent.getWorkspace(workspaceId, branch, version);
-            } else {
-                throw new ApiException("Workspace ID must be greater than 1");
+            if (!StringUtils.isNullOrEmpty(branch) && !Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_BRANCHES)) {
+                throw new ApiException("Workspace branches are not enabled for this installation");
             }
+
+            return workspaceComponent.getWorkspace(workspaceId, branch, version);
         } catch (WorkspaceComponentException e) {
             log.error(e);
             throw new ApiException(e.getMessage());
@@ -96,8 +81,7 @@ public class AbstractWorkspaceApiController extends AbstractController {
     public ApiResponse put(long workspaceId,
                           String branch,
                           String json,
-                          HttpServletRequest request,
-                          HttpServletResponse response) {
+                          String apiKey) {
         try {
             if (WorkspaceBranch.isMainBranch(branch)) {
                 branch = "";
@@ -110,17 +94,7 @@ public class AbstractWorkspaceApiController extends AbstractController {
             }
 
             if (workspaceId > 0) {
-                WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
-                if (workspaceMetadata == null) {
-                    throw new ApiException("404");
-                }
-
-                User user = getUser();
-                if (user != null && !workspaceMetadata.getPermissions(user).isEmpty()) {
-                    authoriseRequest(workspaceMetadata, user, Permission.Write);
-                } else {
-                    authoriseRequest(workspaceMetadata, request);
-                }
+                authoriseRequest(workspaceId, Permission.Write, apiKey);
 
                 if (!StringUtils.isNullOrEmpty(branch) && !Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_BRANCHES)) {
                     throw new ApiException("Workspace branches are not enabled for this installation");
@@ -177,45 +151,48 @@ public class AbstractWorkspaceApiController extends AbstractController {
         }
     }
 
-    protected void authoriseRequest(WorkspaceMetadata workspaceMetadata, User user, Permission requiredPermission) throws WorkspaceComponentException {
-        if (!workspaceMetadata.getPermissions(user).contains(requiredPermission)) {
-            throw new HttpUnauthorizedException("Missing permission " + requiredPermission);
-        }
-    }
-
-    protected void authoriseRequest(WorkspaceMetadata workspaceMetadata, HttpServletRequest request) throws WorkspaceComponentException {
-        String authorizationHeaderAsString = request.getHeader(HttpHeaders.X_AUTHORIZATION);
-        if (StringUtils.isNullOrEmpty(authorizationHeaderAsString)) {
-            // fallback on the regular header
-            authorizationHeaderAsString = request.getHeader(HttpHeaders.AUTHORIZATION);
+    protected final void authoriseRequest(long workspaceId, Permission requiredPermission, String apiKey) {
+        if (workspaceId < 1) {
+            throw new ApiException("Workspace ID must be greater than 1");
         }
 
-        if (StringUtils.isNullOrEmpty(authorizationHeaderAsString)) {
-            throw new HttpUnauthorizedException("Authorization header must be provided");
+        WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
+        if (workspaceMetadata == null) {
+            throw new ApiException("404");
         }
 
-        String apiKeyFromAuthorizationHeader = authorizationHeaderAsString;
-        String workspaceApiKey = workspaceMetadata.getApiKey();
+        User user = getUser();
+        if (user != null && !workspaceMetadata.getPermissions(user).isEmpty()) {
+            if (!workspaceMetadata.getPermissions(user).contains(requiredPermission)) {
+                throw new HttpUnauthorizedException("Missing permission " + requiredPermission);
+            }
+        } else {
+            if (StringUtils.isNullOrEmpty(apiKey)) {
+                throw new HttpUnauthorizedException("API key must be provided");
+            }
 
-        BCryptPasswordEncoder bcryptEncoder = new BCryptPasswordEncoder();
+            String workspaceApiKey = workspaceMetadata.getApiKey();
 
-        if (bcryptEncoder.matches(apiKeyFromAuthorizationHeader, workspaceApiKey)) {
-            // the given API key matches the bcrypt encoded workspace API key
-            return;
+            BCryptPasswordEncoder bcryptEncoder = new BCryptPasswordEncoder();
+
+            if (bcryptEncoder.matches(apiKey, workspaceApiKey)) {
+                // the given API key matches the bcrypt encoded workspace API key
+                return;
+            }
+
+            if (apiKey.equals(workspaceApiKey)) {
+                // the given API key matches the plaintext workspace API key (this is for backwards compatibility with existing workspace data)
+                return;
+            }
+
+            String adminApiKey = Configuration.getInstance().getProperty(StructurizrProperties.API_KEY);
+            if (bcryptEncoder.matches(apiKey, adminApiKey)) {
+                // the given API key matches the bcrypt encoded admin API key
+                return;
+            }
+
+            throw new HttpUnauthorizedException("Incorrect API key");
         }
-
-        if (apiKeyFromAuthorizationHeader.equals(workspaceApiKey)) {
-            // the given API key matches the plaintext workspace API key (this is for backwards compatibility with existing workspace data)
-            return;
-        }
-
-        String adminApiKey = Configuration.getInstance().getProperty(StructurizrProperties.API_KEY);
-        if (bcryptEncoder.matches(apiKeyFromAuthorizationHeader, adminApiKey)) {
-            // the given API key matches the bcrypt encoded admin API key
-            return;
-        }
-
-        throw new HttpUnauthorizedException("Incorrect API key");
     }
 
     @ExceptionHandler(HttpUnauthorizedException.class)
