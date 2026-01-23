@@ -852,6 +852,8 @@
                 enterPresentationMode();
                 return;
             } else if (e.which === g) {
+                $('#filterOnButton').addClass('hidden');
+                $('#filterOffButton').removeClass('hidden');
                 openFilterModal();
                 return;
             } else if (e.which === p && !e.metaKey) {

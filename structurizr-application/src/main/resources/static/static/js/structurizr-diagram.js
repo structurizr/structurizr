@@ -974,7 +974,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
         runFilter();
 
-        // // adjust any overlapping vertices, and bring all relationships to the front
+        // adjust any overlapping vertices, and bring all relationships to the front
         lines.forEach(function(line) {
             try {
                 //adjustVertices(graph, line);
@@ -1496,10 +1496,11 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
     }
 
     function runFilter() {
+        var itemsHidden = false;
         const hiddenOpacity = '0.1';
 
         const elements = [];
-        Object.keys(cellsByElementId).forEach(function (elementId) {
+        Object.keys(cellsByElementId).forEach(function(elementId) {
             const cell = cellsByElementId[elementId];
             elements.push(structurizr.workspace.findElementById(cell.elementInView.id));
         });
@@ -1516,12 +1517,14 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                         showElement(element.id);
                     } else {
                         hideElement(element.id, hiddenOpacity);
+                        itemsHidden = true;
                     }
                 } else {
                     showElement(element.id);
                 }
             } else {
                 hideElement(element.id, hiddenOpacity);
+                itemsHidden = true;
             }
         });
 
@@ -1537,14 +1540,22 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                         showRelationship(relationship.id);
                     } else {
                         hideRelationship(relationship.id, hiddenOpacity);
+                        itemsHidden = true;
                     }
                 } else {
                     showRelationship(relationship.id);
                 }
             } else {
                 hideRelationship(relationship.id, hiddenOpacity);
+                itemsHidden = true;
             }
         });
+
+        if (itemsHidden) {
+            hideBoundaries(hiddenOpacity);
+        } else {
+            showBoundaries();
+        }
     }
 
     this.getCurrentView = function() {
@@ -5389,23 +5400,39 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
     }
 
     function showRelationship(relationshipId, order) {
-        var line = mapOfIdToLine[relationshipId + (order ? '/' + order : '')];
-        if (line) {
-            var lineView = paper.findViewByModel(line);
-            if (lineView) {
-                $('#' + lineView.el.id).css('opacity', '1.0');
+        Object.keys(mapOfIdToLine).forEach(function(id) {
+            var line;
+            if (order) {
+                if (id === relationshipId + '/' + order) {
+                    line = mapOfIdToLine[id];
+                }
+            } else {
+                if (id === relationshipId || id.split('/')[0] === relationshipId) {
+                    line = mapOfIdToLine[id];
+                }
             }
-        }
+
+            if (line) {
+                var lineView = paper.findViewByModel(line);
+                if (lineView) {
+                    $('#' + lineView.el.id).css('opacity', '1.0');
+                }
+            }
+        });
     }
 
     function hideRelationship(relationshipId, opacity) {
-        var line = mapOfIdToLine[relationshipId];
-        if (line) {
-            var lineView = paper.findViewByModel(line);
-            if (lineView) {
-                $('#' + lineView.el.id).css('opacity', opacity);
+        Object.keys(mapOfIdToLine).forEach(function(id) {
+            if (id === relationshipId || id.split('/')[0] === relationshipId) {
+                var line = mapOfIdToLine[id];
+                if (line) {
+                    var lineView = paper.findViewByModel(line);
+                    if (lineView) {
+                        $('#' + lineView.el.id).css('opacity', opacity);
+                    }
+                }
             }
-        }
+        });
     }
 
     function showElement(elementId) {
@@ -5590,6 +5617,22 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             var elementView = paper.findViewByModel(element);
             $('#' + elementView.el.id + ' .structurizrElement').css('opacity', opacity);
         }
+    }
+
+    function hideBoundaries(opacity) {
+        Object.keys(boundariesByElementId).forEach(function(elementId) {
+            const cell = boundariesByElementId[elementId];
+            var cellView = paper.findViewByModel(cell);
+            $('#' + cellView.id).css('opacity', opacity);
+        });
+    }
+
+    function showBoundaries() {
+        Object.keys(boundariesByElementId).forEach(function(elementId) {
+            const cell = boundariesByElementId[elementId];
+            var cellView = paper.findViewByModel(cell);
+            $('#' + cellView.id).css('opacity', 1.0);
+        });
     }
 
     this.stopAnimation = function() {
