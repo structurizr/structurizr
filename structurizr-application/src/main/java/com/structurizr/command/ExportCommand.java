@@ -25,10 +25,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.Base64;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ExportCommand extends AbstractCommand {
 
@@ -135,25 +132,31 @@ public class ExportCommand extends AbstractCommand {
             ClassLoader cl = this.getClass().getClassLoader();
             ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver(cl);
 
-            Resource[] resources = resolver.getResources("classpath*:/static/static/js/*.js") ;
-            for (Resource resource: resources){
-                writeStaticFile("js/" + resource.getFilename(), outputDir);
-            }
+            writeStaticFile("js/jquery-3.7.1.min.js", outputDir);
+            writeStaticFile("js/bootstrap-5.3.7.min.js", outputDir);
+            writeStaticFile("js/jointjs-Core-4.1.3.js", outputDir);
+            writeStaticFile("js/jointjs-DirectedGraph-4.1.3.min.js", outputDir);
+            writeStaticFile("js/dagre-1.1.8.js", outputDir);
+            writeStaticFile("js/graphlib-2.2.4.min.js", outputDir);
+            writeStaticFile("js/jointjs-DirectedGraph-4.1.3.min.js", outputDir);
+            writeStaticFile("js/structurizr.js", outputDir);
+            writeStaticFile("js/structurizr-util.js", outputDir);
+            writeStaticFile("js/structurizr-ui.js", outputDir);
+            writeStaticFile("js/structurizr-workspace.js", outputDir);
+            writeStaticFile("js/structurizr-diagram.js", outputDir);
+            writeStaticFile("js/structurizr-quick-navigation.js", outputDir);
+            writeStaticFile("js/structurizr-navigation.js", outputDir);
+            writeStaticFile("js/structurizr-tooltip.js", outputDir);
+            writeStaticFile("js/structurizr-embed.js", outputDir);
 
-            resources = resolver.getResources("classpath*:/static/static/css/*.css") ;
-            for (Resource resource: resources){
-                writeStaticFile("css/" + resource.getFilename(), outputDir);
-            }
+            writeStaticFile("css/bootstrap-5.3.7.min.css", outputDir);
+            writeStaticFile("css/structurizr.css", outputDir);
+            writeStaticFile("css/structurizr-static.css", outputDir);
+            writeStaticFile("css/structurizr-static-dark.css", outputDir);
 
-            resources = resolver.getResources("classpath*:/static/static/css/fonts/katex/*") ;
-            for (Resource resource: resources){
-                writeStaticFile("css/fonts/katex/" + resource.getFilename(), outputDir);
-            }
-
-            resources = resolver.getResources("classpath*:/static/static/img/*") ;
-            for (Resource resource: resources){
-                writeStaticFile("img/" + resource.getFilename(), outputDir);
-            }
+            writeStaticFile("img/favicon.png", outputDir);
+            writeStaticFile("img/structurizr-banner-light.png", outputDir);
+            writeStaticFile("img/structurizr-banner-dark.png", outputDir);
 
             // clear all documentation - this isn't supported by the static site
             workspace.getDocumentation().clear();
