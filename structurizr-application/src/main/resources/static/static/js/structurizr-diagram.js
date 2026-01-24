@@ -16,7 +16,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
     var zoomDelta = (maxZoomScale - minZoomScale) / zoomSteps;
     var pageSizeDelta = 100;
 
-    const thumbnailWidth = 800;
+    const thumbnailWidth = 600;
 
     var diagramWidth = 0;
     var diagramHeight = 0;
