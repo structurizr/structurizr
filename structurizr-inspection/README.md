@@ -4,4 +4,4 @@
 
 This library provides utilities to inspect a Structurizr workspace for warnings.
 
-- [Documentation](https://docs.structurizr.com/workspaces)
+- [Documentation](https://docs.structurizr.com/workspaces/inspections)

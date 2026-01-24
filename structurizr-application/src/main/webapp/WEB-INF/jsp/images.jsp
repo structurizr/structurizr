@@ -6,7 +6,7 @@
         <p>
             Structurizr supports the ability to embed diagrams via a static PNG/SVG file via a regular image tag in HTML, Markdown, AsciiDoc, etc.
             <br />
-            See <a href="https://docs.structurizr.com/server/embed" target="_blank">Structurizr server - Embedding diagrams</a> for more details.
+            See <a href="https://docs.structurizr.com/server/image-embed" target="_blank">server - Image embed</a> for more details.
         </p>
 
         <br />

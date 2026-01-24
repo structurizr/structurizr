@@ -215,7 +215,7 @@
                     <p>
                         This is your workspace summary page from where you can access your diagrams, documentation, and architecture decision records.
                         We recommend that a workspace contains the model, views, and documentation for a single software system
-                        - see <a href="https://docs.structurizr.com/basics" target="_blank">usage recommendations</a> for more details.
+                        - see <a href="https://docs.structurizr.com/workspaces" target="_blank">usage recommendations</a> for more details.
                     </p>
 
                     <div class="row" style="margin-top: 20px; margin-bottom: 20px">

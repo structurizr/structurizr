@@ -17,7 +17,7 @@
                     <c:otherwise>
                 <p>
                     The code below allows you to embed your diagram(s) using a responsive iframe.
-                    See <a href="https://docs.structurizr.com/server/embed" target="_blank">Structurizr - server - Embed</a> for more details.
+                    See <a href="https://docs.structurizr.com/server/iframe-embed" target="_blank">server - iframe embed</a> for more details.
                 </p>
 
                 <c:choose>

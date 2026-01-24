@@ -766,7 +766,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
             workspaceComponent.putWorkspace(1, "", json);
             fail();
         } catch (WorkspaceComponentException e) {
-            assertEquals("Strict workspace scope validation has been enabled for this installation. Unscoped workspaces are not permitted - see https://docs.structurizr.com/basics/workspace-scope for more information.", e.getMessage());
+            assertEquals("Strict workspace scope validation has been enabled for this server and unscoped workspaces are not permitted - see https://docs.structurizr.com/workspaces/scope for more information.", e.getMessage());
         }
     }
 

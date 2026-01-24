@@ -95,9 +95,6 @@
         <div class="row">
             <div class="col-2">
                 <h4 style="margin-top: 0">Client-side encryption</h4>
-                <p>
-                    <a href="https://docs.structurizr.com/server/client-side-encryption" target="_blank">Documentation</a>
-                </p>
             </div>
             <div class="col-10">
                 <c:choose>
