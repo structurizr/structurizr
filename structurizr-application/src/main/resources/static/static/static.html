@@ -314,7 +314,7 @@
             }
         })
 
-        if (structurizr.workspace.getProperty('structurizr.introduction') !== 'false') {
+        if (structurizr.workspace.getProperty('structurizr.introduction') !== 'false' && getParameter('introduction') !== 'false') {
             const hideIntroductionModal = document.cookie.indexOf(INTRODUCTION_MODAL_COOKIE_NAME + '=false') > -1;
             if (!hideIntroductionModal) {
                 $('#introductionModal').modal('show');
