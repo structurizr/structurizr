@@ -1,6 +1,7 @@
 package com.structurizr.util;
 
-import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 /**
@@ -23,9 +24,9 @@ public class Url {
     public static boolean isUrl(String urlAsString) {
         if (!StringUtils.isNullOrEmpty(urlAsString)) {
             try {
-                new URL(urlAsString);
+                URI.create(urlAsString).toURL();
                 return true;
-            } catch (MalformedURLException murle) {
+            } catch (Exception e) {
                 return false;
             }
         }
