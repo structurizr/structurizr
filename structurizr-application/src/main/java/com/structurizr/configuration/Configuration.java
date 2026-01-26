@@ -62,11 +62,17 @@ public class Configuration {
         }
 
         if (!getDataDirectory().exists()) {
-            getDataDirectory().mkdirs();
+            boolean result = getDataDirectory().mkdirs();
+            if (!result) {
+                log.fatal("Could not create data directory at " + getDataDirectory().getAbsolutePath());
+            }
         }
 
         if (!getWorkDirectory().exists()) {
-            getWorkDirectory().mkdirs();
+            boolean result = getWorkDirectory().mkdirs();
+            if (!result) {
+                log.fatal("Could not create work directory at " + getWorkDirectory().getAbsolutePath());
+            }
         }
 
         configureLogging();
@@ -365,6 +371,16 @@ public class Configuration {
 
         logAllProperties(log, getProperties());
         log.info("***********************************************************************************");
+
+        if (!getDataDirectory().exists()) {
+            log.fatal("Data directory " + getDataDirectory().getAbsolutePath() + " does not exist");
+        } else if (!getDataDirectory().isDirectory()) {
+            log.fatal("Data directory " + getDataDirectory().getAbsolutePath() + " is not a directory");
+        } else {
+            if (!getDataDirectory().canWrite()) {
+                log.fatal("Data directory " + getDataDirectory().getAbsolutePath() + " is not writable");
+            }
+        }
     }
 
     private void logAllProperties(Log log, Properties properties) {
