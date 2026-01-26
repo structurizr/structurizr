@@ -64,13 +64,8 @@ structurizr.ui.loadThemes = function(callback) {
         if (theme.indexOf('http') === 0) {
             structurizr.ui.loadTheme(theme);
         } else {
-            structurizr.ui.themes.push(
-                {
-                    elements: [],
-                    relationships: [],
-                    logo: undefined
-                }
-            );
+            // built-in theme
+            structurizr.ui.loadTheme('/static/themes/' + theme + '/theme.json');
         }
     });
 

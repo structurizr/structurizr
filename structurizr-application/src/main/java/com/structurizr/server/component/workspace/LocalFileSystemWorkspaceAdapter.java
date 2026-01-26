@@ -118,9 +118,6 @@ abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspa
         // run default inspections
         new DefaultInspector(workspace);
 
-        // inline built-in theme icons
-        BuiltInThemes.inlineIcons(workspace);
-
         // add default views if no views are explicitly defined
         if (!workspace.getModel().isEmpty() && workspace.getViews().isEmpty()) {
             workspace.getViews().createDefaultViews();

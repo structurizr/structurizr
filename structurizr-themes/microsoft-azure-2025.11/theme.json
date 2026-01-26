@@ -1125,6 +1125,9 @@
     "icon" : "10816-learn.png"
   }, {
     "tag" : "Microsoft Azure - Load Balancer Hub",
+    "icon" : "029029174-load-balancer-hub.png"
+  }, {
+    "tag" : "Microsoft Azure - Load Balancer Hub 2",
     "icon" : "02302-load-balancer-hub.png"
   }, {
     "tag" : "Microsoft Azure - Load Balancers",
@@ -1863,6 +1866,9 @@
     "icon" : "03623-workspace-gateway.png"
   }, {
     "tag" : "Microsoft Azure - Workspaces",
+    "icon" : "00330-workspaces.png"
+  }, {
+    "tag" : "Microsoft Azure - Workspaces 2",
     "icon" : "00400-workspaces.png"
   }, {
     "tag" : "Microsoft Azure - eBooks",

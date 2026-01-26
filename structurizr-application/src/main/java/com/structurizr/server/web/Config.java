@@ -7,6 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.resource.CssLinkResourceTransformer;
 import org.springframework.web.servlet.resource.VersionResourceResolver;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
@@ -23,6 +24,11 @@ public class Config implements WebMvcConfigurer {
 
         registry.addResourceHandler("/static/js/*", "/static/css/*")
                 .addResourceLocations("classpath:/static/static/js/", "classpath:/static/static/css/")
+                .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS))
+                .resourceChain(false);
+
+        registry.addResourceHandler("/static/themes/**")
+                .addResourceLocations("file:" + new File(com.structurizr.configuration.Configuration.getInstance().getDataDirectory(), "themes").getAbsolutePath() + File.separator)
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS))
                 .resourceChain(false);
     }

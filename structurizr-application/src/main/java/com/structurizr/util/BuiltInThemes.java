@@ -1,6 +1,7 @@
 package com.structurizr.util;
 
 import com.structurizr.Workspace;
+import com.structurizr.configuration.Configuration;
 import com.structurizr.model.Element;
 import com.structurizr.view.ElementStyle;
 import com.structurizr.view.Theme;
@@ -12,6 +13,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -25,27 +27,27 @@ public final class BuiltInThemes {
 
     private static final Log log = LogFactory.getLog(BuiltInThemes.class);
 
+    private static final String THEMES_DIRECTORY = "themes";
+    private static final String THEME_JSON = "theme.json";
+
     public static List<String> getThemes() {
-        List<String> themes = new ArrayList<>();
+        List<String> themeNames = new ArrayList<>();
 
-        ClassLoader cl = BuiltInThemes.class.getClassLoader();
-        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver(cl);
-
-        try {
-            Resource[] resources = resolver.getResources("classpath*:static/static/themes/*/theme.json") ;
-            for (Resource resource: resources) {
-                String themeName = resource.getURI().toString();
-                themeName = themeName.replace("/theme.json", "");
-                themeName = themeName.substring(themeName.lastIndexOf('/') + 1);
-
-                themes.add(themeName);
+        File themesDirectory = new File(Configuration.getInstance().getDataDirectory(), THEMES_DIRECTORY);
+        File[] themes = themesDirectory.listFiles();
+        if (themes != null) {
+            for (File theme : themes) {
+                if (theme.isDirectory()) {
+                    File themeJson = new File(theme, THEME_JSON);
+                    if (themeJson.exists()) {
+                        themeNames.add(theme.getName());
+                    }
+                }
             }
-        } catch (IOException e) {
-            log.error(e);
         }
 
-        Collections.sort(themes);
-        return themes;
+        Collections.sort(themeNames);
+        return themeNames;
     }
 
     public static void inlineIcons(Workspace workspace) {

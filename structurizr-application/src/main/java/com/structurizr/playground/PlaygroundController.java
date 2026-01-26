@@ -131,9 +131,6 @@ class PlaygroundController extends AbstractController {
         Workspace workspace = parser.getWorkspace();
         DslUtils.setDsl(workspace, dsl);
 
-        // inline built-in theme icons
-        BuiltInThemes.inlineIcons(workspace);
-
         // add default views if no views are explicitly defined
         if (!workspace.getModel().isEmpty() && workspace.getViews().isEmpty()) {
             workspace.getViews().createDefaultViews();
