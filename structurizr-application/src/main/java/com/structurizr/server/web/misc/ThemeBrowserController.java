@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 class ThemeBrowserController extends AbstractController {
 
-    @RequestMapping(value = "/theme-browser", method = RequestMethod.GET)
+    @RequestMapping(value = "/themes", method = RequestMethod.GET)
     String showThemeBrowser(ModelMap model) {
         model.addAttribute("themes", BuiltInThemes.getThemes());
 
