@@ -2,20 +2,24 @@ workspace "Shapes" "An example of all shapes available in Structurizr." {
 
     model {
         softwareSystem "Box" "" "Box" 
-        softwareSystem "RoundedBox" "" "RoundedBox" 
-        softwareSystem "Diamond" "" "Diamond" 
-        softwareSystem "Circle" "" "Circle" 
-        softwareSystem "Ellipse" "" "Ellipse" 
-        softwareSystem "Hexagon" "" "Hexagon" 
-        softwareSystem "Folder" "" "Folder" 
-        softwareSystem "Cylinder" "" "Cylinder" 
-        softwareSystem "Pipe" "" "Pipe" 
-        softwareSystem "WebBrowser" "" "Web Browser" 
-        softwareSystem "Mobile Device Portrait" "" "Mobile Device Portrait" 
-        softwareSystem "Mobile Device Landscape" "" "Mobile Device Landscape" 
-        softwareSystem "Component" "" "Component" 
+        softwareSystem "Rounded Box" "" "RoundedBox"
+        softwareSystem "Circle" "" "Circle"
+        softwareSystem "Ellipse" "" "Ellipse"
+        softwareSystem "Hexagon" "" "Hexagon"
+        softwareSystem "Diamond" "" "Diamond"
+        softwareSystem "Component" "" "Component"
+        softwareSystem "Cylinder" "" "Cylinder"
+        softwareSystem "Bucket" "" "Bucket"
+        softwareSystem "Folder" "" "Folder"
+        softwareSystem "Pipe" "" "Pipe"
+        softwareSystem "Web Browser" "" "Web Browser"
+        softwareSystem "Window" "" "Window"
+        softwareSystem "Shell" "" "Shell"
+        softwareSystem "Terminal" "" "Terminal"
+        softwareSystem "Mobile Device Portrait" "" "Mobile Device Portrait"
+        softwareSystem "Mobile Device Landscape" "" "Mobile Device Landscape"
 	    person "Person"
-        softwareSystem "Robot" "" "Robot" 
+        softwareSystem "Robot" "" "Robot"
     }
 
     views {
@@ -25,62 +29,73 @@ workspace "Shapes" "An example of all shapes available in Structurizr." {
 
         styles {
             element "Element" {
-                width "650" 
-                height "400" 
-                background "#438dd5" 
-                color "#ffffff" 
-                fontSize "34" 
-                metadata "false" 
-                description "false" 
+                color #000000
+                stroke #000000
+                strokeWidth 7
+                fontsize 35
+                description false
+                metadata false
             }
+
             element "Box" {
-                shape "Box" 
+                shape "Box"
             }
             element "RoundedBox" {
-                shape "RoundedBox" 
+                shape "RoundedBox"
+            }
+            element "Circle" {
+                shape "Circle"
+            }
+            element "Ellipse" {
+                shape "Ellipse"
+            }
+            element "Hexagon" {
+                shape "Hexagon"
             }
             element "Diamond" {
                 shape "Diamond"
             }
-            element "Circle" {
-                shape "Circle" 
-            }
-            element "Ellipse" {
-                shape "Ellipse" 
-            }
-            element "Hexagon" {
-                shape "Hexagon" 
-            }
-            element "Folder" {
-                shape "Folder" 
+            element "Component" {
+                shape "Component"
             }
             element "Cylinder" {
-                shape "Cylinder" 
+                shape "Cylinder"
+            }
+            element "Bucket" {
+                shape bucket
+            }
+            element "Folder" {
+                shape "Folder"
             }
             element "Pipe" {
-                shape "Pipe" 
+                shape "Pipe"
             }
+
             element "Web Browser" {
-                shape "WebBrowser" 
+                shape "WebBrowser"
             }
+            element "Window" {
+                shape "Window"
+            }
+            element "Shell" {
+                shape shell
+            }
+            element "Terminal" {
+                shape terminal
+            }
+
             element "Mobile Device Portrait" {
-                shape "MobileDevicePortrait" 
-                width "400" 
-                height "650" 
+                shape "MobileDevicePortrait"
             }
             element "Mobile Device Landscape" {
-                shape "MobileDeviceLandscape" 
+                shape "MobileDeviceLandscape"
             }
-            element "Component" {
-                shape "Component" 
-            }
+
             element "Person" {
-                shape "Person" 
-                width "550" 
+                shape "Person"
             }
             element "Robot" {
-                shape "Robot" 
-                width "550" 
+                shape "Robot"
             }
         }
 
