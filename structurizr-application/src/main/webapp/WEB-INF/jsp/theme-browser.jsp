@@ -73,6 +73,10 @@
         themesList.val(previousTheme);
     }
 
+    if (externalTheme && externalTheme.length > 0) {
+        themesList.val('');
+    }
+
     loadSelectedTheme();
 
     themesList.change(function() {
