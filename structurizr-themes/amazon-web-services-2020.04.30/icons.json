@@ -1,0 +1,1097 @@
+{
+  "name" : "Amazon Web Services",
+  "description" : "This theme includes element styles with icons for each of the AWS services, based upon the AWS Architecture Icons (https://aws.amazon.com/architecture/icons/).",
+  "elements" : [ {
+    "tag" : "Amazon Web Services - Alexa For Business",
+    "icon" : "alexa-for-business.png"
+  }, {
+    "tag" : "Amazon Web Services - Amplify",
+    "icon" : "aws-amplify.png"
+  }, {
+    "tag" : "Amazon Web Services - API Gateway",
+    "icon" : "amazon-api-gateway.png"
+  }, {
+    "tag" : "Amazon Web Services - API Gateway Endpoint",
+    "icon" : "amazon-api-gateway-endpoint.png"
+  }, {
+    "tag" : "Amazon Web Services - App Config",
+    "icon" : "aws-app-config.png"
+  }, {
+    "tag" : "Amazon Web Services - App Mesh",
+    "icon" : "aws-app-mesh.png"
+  }, {
+    "tag" : "Amazon Web Services - Application Discovery Service",
+    "icon" : "aws-application-discovery-service.png"
+  }, {
+    "tag" : "Amazon Web Services - Appstream 2.0",
+    "icon" : "amazon-appstream-2-0.png"
+  }, {
+    "tag" : "Amazon Web Services - AppSync",
+    "icon" : "aws-appsync.png"
+  }, {
+    "tag" : "Amazon Web Services - Artifact",
+    "icon" : "aws-artifact.png"
+  }, {
+    "tag" : "Amazon Web Services - Athena",
+    "icon" : "amazon-athena.png"
+  }, {
+    "tag" : "Amazon Web Services - Aurora",
+    "icon" : "amazon-aurora.png"
+  }, {
+    "tag" : "Amazon Web Services - Auto Scaling",
+    "icon" : "aws-auto-scaling.png"
+  }, {
+    "tag" : "Amazon Web Services - Backup",
+    "icon" : "aws-backup.png"
+  }, {
+    "tag" : "Amazon Web Services - Batch",
+    "icon" : "aws-batch.png"
+  }, {
+    "tag" : "Amazon Web Services - Budgets",
+    "icon" : "aws-budgets.png"
+  }, {
+    "tag" : "Amazon Web Services - Certificate Authority",
+    "icon" : "aws-certificate-authority.png"
+  }, {
+    "tag" : "Amazon Web Services - Certificate Manager",
+    "icon" : "aws-certificate-manager.png"
+  }, {
+    "tag" : "Amazon Web Services - Chime",
+    "icon" : "amazon-chime.png"
+  }, {
+    "tag" : "Amazon Web Services - Client VPN",
+    "icon" : "aws-client-vpn.png"
+  }, {
+    "tag" : "Amazon Web Services - Cloud",
+    "icon" : "aws-cloud.png"
+  }, {
+    "tag" : "Amazon Web Services - Cloud Development Kit",
+    "icon" : "aws-cloud-development-kit.png"
+  }, {
+    "tag" : "Amazon Web Services - Cloud Directory",
+    "icon" : "amazon-cloud-directory.png"
+  }, {
+    "tag" : "Amazon Web Services - Cloud Map",
+    "icon" : "aws-cloud-map.png"
+  }, {
+    "tag" : "Amazon Web Services - Cloud9",
+    "icon" : "aws-cloud9.png"
+  }, {
+    "tag" : "Amazon Web Services - CloudFormation",
+    "icon" : "aws-cloudformation.png"
+  }, {
+    "tag" : "Amazon Web Services - CloudFormation Change Set",
+    "icon" : "aws-cloudformation-change-set.png"
+  }, {
+    "tag" : "Amazon Web Services - CloudFormation Stack",
+    "icon" : "aws-cloudformation-stack.png"
+  }, {
+    "tag" : "Amazon Web Services - CloudFormation Template",
+    "icon" : "aws-cloudformation-template.png"
+  }, {
+    "tag" : "Amazon Web Services - CloudFront",
+    "icon" : "amazon-cloudfront.png"
+  }, {
+    "tag" : "Amazon Web Services - CloudFront Download Distribution",
+    "icon" : "amazon-cloudfront-download-distribution.png"
+  }, {
+    "tag" : "Amazon Web Services - CloudFront Edge Location",
+    "icon" : "amazon-cloudfront-edge-location.png"
+  }, {
+    "tag" : "Amazon Web Services - CloudFront Streaming Distribution",
+    "icon" : "amazon-cloudfront-streaming-distribution.png"
+  }, {
+    "tag" : "Amazon Web Services - CloudHSM",
+    "icon" : "aws-cloudhsm.png"
+  }, {
+    "tag" : "Amazon Web Services - CloudSearch",
+    "icon" : "amazon-cloudsearch.png"
+  }, {
+    "tag" : "Amazon Web Services - CloudSearch Search documents",
+    "icon" : "amazon-cloudsearch-search-documents.png"
+  }, {
+    "tag" : "Amazon Web Services - CloudTrail",
+    "icon" : "aws-cloudtrail.png"
+  }, {
+    "tag" : "Amazon Web Services - CloudWatch",
+    "icon" : "amazon-cloudwatch.png"
+  }, {
+    "tag" : "Amazon Web Services - CloudWatch Alarm",
+    "icon" : "amazon-cloudwatch-alarm.png"
+  }, {
+    "tag" : "Amazon Web Services - CloudWatch Event Event Based",
+    "icon" : "amazon-cloudwatch-event-event-based.png"
+  }, {
+    "tag" : "Amazon Web Services - CloudWatch Event Time Based",
+    "icon" : "amazon-cloudwatch-event-time-based.png"
+  }, {
+    "tag" : "Amazon Web Services - CloudWatch Rule",
+    "icon" : "amazon-cloudwatch-rule.png"
+  }, {
+    "tag" : "Amazon Web Services - CodeBuild",
+    "icon" : "aws-codebuild.png"
+  }, {
+    "tag" : "Amazon Web Services - CodeCommit",
+    "icon" : "aws-codecommit.png"
+  }, {
+    "tag" : "Amazon Web Services - CodeDeploy",
+    "icon" : "aws-codedeploy.png"
+  }, {
+    "tag" : "Amazon Web Services - CodePipeline",
+    "icon" : "aws-codepipeline.png"
+  }, {
+    "tag" : "Amazon Web Services - CodeStar",
+    "icon" : "aws-codestar.png"
+  }, {
+    "tag" : "Amazon Web Services - Cognito",
+    "icon" : "amazon-cognito.png"
+  }, {
+    "tag" : "Amazon Web Services - Command Line Interface",
+    "icon" : "aws-command-line-interface.png"
+  }, {
+    "tag" : "Amazon Web Services - Comprehend",
+    "icon" : "amazon-comprehend.png"
+  }, {
+    "tag" : "Amazon Web Services - Config",
+    "icon" : "aws-config.png"
+  }, {
+    "tag" : "Amazon Web Services - Connect",
+    "icon" : "amazon-connect.png"
+  }, {
+    "tag" : "Amazon Web Services - Control Tower",
+    "icon" : "aws-control-tower.png"
+  }, {
+    "tag" : "Amazon Web Services - Corporate data center",
+    "icon" : "corporate-data-center.png"
+  }, {
+    "tag" : "Amazon Web Services - Cost and Usage Report",
+    "icon" : "aws-cost-and-usage-report.png"
+  }, {
+    "tag" : "Amazon Web Services - Cost Explorer",
+    "icon" : "aws-cost-explorer.png"
+  }, {
+    "tag" : "Amazon Web Services - Cost Management",
+    "icon" : "aws-cost-management.png"
+  }, {
+    "tag" : "Amazon Web Services - Data lake Resource",
+    "icon" : "aws-data-lake-resource.png"
+  }, {
+    "tag" : "Amazon Web Services - Data Pipeline",
+    "icon" : "aws-data-pipeline.png"
+  }, {
+    "tag" : "Amazon Web Services - Database Migration Service",
+    "icon" : "aws-database-migration-service.png"
+  }, {
+    "tag" : "Amazon Web Services - Database Migration Service Database Migration Workflow",
+    "icon" : "aws-database-migration-service-database-migration-workflow.png"
+  }, {
+    "tag" : "Amazon Web Services - DataSync",
+    "icon" : "aws-datasync.png"
+  }, {
+    "tag" : "Amazon Web Services - DataSync Agent",
+    "icon" : "aws-datasync-agent.png"
+  }, {
+    "tag" : "Amazon Web Services - Deep Learning AMIs",
+    "icon" : "aws-deep-learning-amis.png"
+  }, {
+    "tag" : "Amazon Web Services - Deep Learning Containers",
+    "icon" : "aws-deep-learning-containers.png"
+  }, {
+    "tag" : "Amazon Web Services - DeepLens",
+    "icon" : "aws-deeplens.png"
+  }, {
+    "tag" : "Amazon Web Services - DeepRacer",
+    "icon" : "aws-deepracer.png"
+  }, {
+    "tag" : "Amazon Web Services - Device Farm",
+    "icon" : "aws-device-farm.png"
+  }, {
+    "tag" : "Amazon Web Services - Direct Connect",
+    "icon" : "aws-direct-connect.png"
+  }, {
+    "tag" : "Amazon Web Services - Directory Service",
+    "icon" : "aws-directory-service.png"
+  }, {
+    "tag" : "Amazon Web Services - DocumentDB with MongoDB compatibility",
+    "icon" : "amazon-documentdb-with-mongodb-compatibility.png"
+  }, {
+    "tag" : "Amazon Web Services - DynamoDB",
+    "icon" : "amazon-dynamodb.png"
+  }, {
+    "tag" : "Amazon Web Services - DynamoDB Attribute",
+    "icon" : "amazon-dynamodb-attribute.png"
+  }, {
+    "tag" : "Amazon Web Services - DynamoDB Attributes",
+    "icon" : "amazon-dynamodb-attributes.png"
+  }, {
+    "tag" : "Amazon Web Services - DynamoDB Global Secondary Index",
+    "icon" : "amazon-dynamodb-global-secondary-index.png"
+  }, {
+    "tag" : "Amazon Web Services - DynamoDB Item",
+    "icon" : "amazon-dynamodb-item.png"
+  }, {
+    "tag" : "Amazon Web Services - DynamoDB Items",
+    "icon" : "amazon-dynamodb-items.png"
+  }, {
+    "tag" : "Amazon Web Services - DynamoDB Table",
+    "icon" : "amazon-dynamodb-table.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2",
+    "icon" : "amazon-ec2.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 A1 Instance",
+    "icon" : "amazon-ec2-a1-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 AMI",
+    "icon" : "amazon-ec2-ami.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 Auto Scaling",
+    "icon" : "amazon-ec2-auto-scaling.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 C4 Instance",
+    "icon" : "amazon-ec2-c4-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 C5 Instance",
+    "icon" : "amazon-ec2-c5-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 C5n Instance",
+    "icon" : "amazon-ec2-c5n-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 Container Registry",
+    "icon" : "amazon-ec2-container-registry.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 Container Registry Image",
+    "icon" : "amazon-ec2-container-registry-image.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 Container Registry Registry",
+    "icon" : "amazon-ec2-container-registry-registry.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 D2 Instance",
+    "icon" : "amazon-ec2-d2-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 DB on Instance",
+    "icon" : "amazon-ec2-db-on-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 Elastic IP Address",
+    "icon" : "amazon-ec2-elastic-ip-address.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 F1 Instance",
+    "icon" : "amazon-ec2-f1-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 G3 Instance",
+    "icon" : "amazon-ec2-g3-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 H1 Instance",
+    "icon" : "amazon-ec2-h1-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 High Memory Instance",
+    "icon" : "amazon-ec2-high-memory-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 I3 Instance",
+    "icon" : "amazon-ec2-i3-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 Instance",
+    "icon" : "amazon-ec2-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 Instance with CloudWatch",
+    "icon" : "amazon-ec2-instance-with-cloudwatch.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 Instances",
+    "icon" : "amazon-ec2-instances.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 M4 Instance",
+    "icon" : "amazon-ec2-m4-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 M5 Instance",
+    "icon" : "amazon-ec2-m5-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 M5a Instance",
+    "icon" : "amazon-ec2-m5a-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 Optimized Instance",
+    "icon" : "amazon-ec2-optimized-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 P2 Instance",
+    "icon" : "amazon-ec2-p2-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 P3 Instance",
+    "icon" : "amazon-ec2-p3-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 R4 Instance",
+    "icon" : "amazon-ec2-r4-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 R5 Instance",
+    "icon" : "amazon-ec2-r5-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 R5a Instance",
+    "icon" : "amazon-ec2-r5a-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 Rescue",
+    "icon" : "amazon-ec2-rescue.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 Spot instance",
+    "icon" : "amazon-ec2-spot-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 T2 Instance",
+    "icon" : "amazon-ec2-t2-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 T3 Instance",
+    "icon" : "amazon-ec2-t3-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 T3a Instance",
+    "icon" : "amazon-ec2-t3a-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 X1 Instance",
+    "icon" : "amazon-ec2-x1-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 X1e Instance",
+    "icon" : "amazon-ec2-x1e-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - EC2 z1d Instance",
+    "icon" : "amazon-ec2-z1d-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - Elastic Beanstalk",
+    "icon" : "aws-elastic-beanstalk.png"
+  }, {
+    "tag" : "Amazon Web Services - Elastic Beanstalk Application",
+    "icon" : "aws-elastic-beanstalk-application.png"
+  }, {
+    "tag" : "Amazon Web Services - Elastic Beanstalk container",
+    "icon" : "elastic-beanstalk-container.png"
+  }, {
+    "tag" : "Amazon Web Services - Elastic Beanstalk Deployment",
+    "icon" : "aws-elastic-beanstalk-deployment.png"
+  }, {
+    "tag" : "Amazon Web Services - Elastic Block Store EBS",
+    "icon" : "amazon-elastic-block-store-ebs.png"
+  }, {
+    "tag" : "Amazon Web Services - Elastic Block Store EBS Snapshot",
+    "icon" : "amazon-elastic-block-store-ebs-snapshot.png"
+  }, {
+    "tag" : "Amazon Web Services - Elastic Block Store EBS Volume",
+    "icon" : "amazon-elastic-block-store-ebs-volume.png"
+  }, {
+    "tag" : "Amazon Web Services - Elastic Container Service",
+    "icon" : "amazon-elastic-container-service.png"
+  }, {
+    "tag" : "Amazon Web Services - Elastic Container Service Container1",
+    "icon" : "amazon-elastic-container-service-container1.png"
+  }, {
+    "tag" : "Amazon Web Services - Elastic Container Service Container2",
+    "icon" : "amazon-elastic-container-service-container2.png"
+  }, {
+    "tag" : "Amazon Web Services - Elastic Container Service Container3",
+    "icon" : "amazon-elastic-container-service-container3.png"
+  }, {
+    "tag" : "Amazon Web Services - Elastic Container Service Service",
+    "icon" : "amazon-elastic-container-service-service.png"
+  }, {
+    "tag" : "Amazon Web Services - Elastic File System EFS",
+    "icon" : "amazon-elastic-file-system-efs.png"
+  }, {
+    "tag" : "Amazon Web Services - Elastic File System EFS File system",
+    "icon" : "amazon-elastic-file-system-efs-file-system.png"
+  }, {
+    "tag" : "Amazon Web Services - Elastic Inference",
+    "icon" : "amazon-elastic-inference.png"
+  }, {
+    "tag" : "Amazon Web Services - Elastic Kubernetes Service",
+    "icon" : "amazon-elastic-kubernetes-service.png"
+  }, {
+    "tag" : "Amazon Web Services - Elastic Load Balancing",
+    "icon" : "elastic-load-balancing.png"
+  }, {
+    "tag" : "Amazon Web Services - Elastic Load Balancing Classic load balancer",
+    "icon" : "elastic-load-balancing-classic-load-balancer.png"
+  }, {
+    "tag" : "Amazon Web Services - Elastic Load Balancing ELB Application load balancer",
+    "icon" : "elastic-load-balancing-elb-application-load-balancer.png"
+  }, {
+    "tag" : "Amazon Web Services - Elastic Load Balancing ELB Network load balancer",
+    "icon" : "elastic-load-balancing-elb-network-load-balancer.png"
+  }, {
+    "tag" : "Amazon Web Services - Elastic Transcoder",
+    "icon" : "amazon-elastic-transcoder.png"
+  }, {
+    "tag" : "Amazon Web Services - ElastiCache",
+    "icon" : "amazon-elasticache.png"
+  }, {
+    "tag" : "Amazon Web Services - ElastiCache Cache Node",
+    "icon" : "amazon-elasticache-cache-node.png"
+  }, {
+    "tag" : "Amazon Web Services - ElastiCache For Memcached",
+    "icon" : "amazon-elasticache-for-memcached.png"
+  }, {
+    "tag" : "Amazon Web Services - ElastiCache For Redis",
+    "icon" : "amazon-elasticache-for-redis.png"
+  }, {
+    "tag" : "Amazon Web Services - Elasticsearch Service",
+    "icon" : "amazon-elasticsearch-service.png"
+  }, {
+    "tag" : "Amazon Web Services - Elemental MediaConnect",
+    "icon" : "aws-elemental-mediaconnect.png"
+  }, {
+    "tag" : "Amazon Web Services - Elemental MediaConvert",
+    "icon" : "aws-elemental-mediaconvert.png"
+  }, {
+    "tag" : "Amazon Web Services - Elemental MediaLive",
+    "icon" : "aws-elemental-medialive.png"
+  }, {
+    "tag" : "Amazon Web Services - Elemental MediaPackage",
+    "icon" : "aws-elemental-mediapackage.png"
+  }, {
+    "tag" : "Amazon Web Services - Elemental MediaStore",
+    "icon" : "aws-elemental-mediastore.png"
+  }, {
+    "tag" : "Amazon Web Services - Elemental MediaTailor",
+    "icon" : "aws-elemental-mediatailor.png"
+  }, {
+    "tag" : "Amazon Web Services - EMR",
+    "icon" : "amazon-emr.png"
+  }, {
+    "tag" : "Amazon Web Services - EMR Cluster",
+    "icon" : "amazon-emr-cluster.png"
+  }, {
+    "tag" : "Amazon Web Services - EMR EMR engine",
+    "icon" : "amazon-emr-emr-engine.png"
+  }, {
+    "tag" : "Amazon Web Services - EMR EMR engine MapR M3",
+    "icon" : "amazon-emr-emr-engine-mapr-m3.png"
+  }, {
+    "tag" : "Amazon Web Services - EMR EMR engine MapR M5",
+    "icon" : "amazon-emr-emr-engine-mapr-m5.png"
+  }, {
+    "tag" : "Amazon Web Services - EMR EMR engine MapR M7",
+    "icon" : "amazon-emr-emr-engine-mapr-m7.png"
+  }, {
+    "tag" : "Amazon Web Services - EMR HDFS cluster",
+    "icon" : "amazon-emr-hdfs-cluster.png"
+  }, {
+    "tag" : "Amazon Web Services - EventBridge",
+    "icon" : "amazon-eventbridge.png"
+  }, {
+    "tag" : "Amazon Web Services - Fargate",
+    "icon" : "aws-fargate.png"
+  }, {
+    "tag" : "Amazon Web Services - Firewall Manager",
+    "icon" : "aws-firewall-manager.png"
+  }, {
+    "tag" : "Amazon Web Services - Forecast",
+    "icon" : "amazon-forecast.png"
+  }, {
+    "tag" : "Amazon Web Services - FreeRTOS",
+    "icon" : "amazon-freertos.png"
+  }, {
+    "tag" : "Amazon Web Services - FSx",
+    "icon" : "amazon-fsx.png"
+  }, {
+    "tag" : "Amazon Web Services - FSx for Lustre",
+    "icon" : "amazon-fsx-for-lustre.png"
+  }, {
+    "tag" : "Amazon Web Services - FSx for Windows File Server",
+    "icon" : "amazon-fsx-for-windows-file-server.png"
+  }, {
+    "tag" : "Amazon Web Services - GameLift",
+    "icon" : "amazon-gamelift.png"
+  }, {
+    "tag" : "Amazon Web Services - Global Accelerator",
+    "icon" : "aws-global-accelerator.png"
+  }, {
+    "tag" : "Amazon Web Services - Glue",
+    "icon" : "aws-glue.png"
+  }, {
+    "tag" : "Amazon Web Services - Glue Crawlers",
+    "icon" : "aws-glue-crawlers.png"
+  }, {
+    "tag" : "Amazon Web Services - Glue Data catalog",
+    "icon" : "aws-glue-data-catalog.png"
+  }, {
+    "tag" : "Amazon Web Services - Ground Station",
+    "icon" : "aws-ground-station.png"
+  }, {
+    "tag" : "Amazon Web Services - GuardDuty",
+    "icon" : "amazon-guardduty.png"
+  }, {
+    "tag" : "Amazon Web Services - Identity and Access Management IAM",
+    "icon" : "aws-identity-and-access-management-iam.png"
+  }, {
+    "tag" : "Amazon Web Services - Identity and Access Management IAM Add on",
+    "icon" : "aws-identity-and-access-management-iam-add-on.png"
+  }, {
+    "tag" : "Amazon Web Services - Identity and Access Management IAM AWS STS",
+    "icon" : "aws-identity-and-access-management-iam-aws-sts.png"
+  }, {
+    "tag" : "Amazon Web Services - Identity and Access Management IAM AWS STS Alternate",
+    "icon" : "aws-identity-and-access-management-iam-aws-sts-alternate.png"
+  }, {
+    "tag" : "Amazon Web Services - Identity and Access Management IAM Data Encryption Key",
+    "icon" : "aws-identity-and-access-management-iam-data-encryption-key.png"
+  }, {
+    "tag" : "Amazon Web Services - Identity and Access Management IAM Encrypted Data",
+    "icon" : "aws-identity-and-access-management-iam-encrypted-data.png"
+  }, {
+    "tag" : "Amazon Web Services - Identity and Access Management IAM Long term Security Credential",
+    "icon" : "aws-identity-and-access-management-iam-long-term-security-credential.png"
+  }, {
+    "tag" : "Amazon Web Services - Identity and Access Management IAM MFA Token",
+    "icon" : "aws-identity-and-access-management-iam-mfa-token.png"
+  }, {
+    "tag" : "Amazon Web Services - Identity and Access Management IAM Permissions",
+    "icon" : "aws-identity-and-access-management-iam-permissions.png"
+  }, {
+    "tag" : "Amazon Web Services - Identity and Access Management IAM Role",
+    "icon" : "aws-identity-and-access-management-iam-role.png"
+  }, {
+    "tag" : "Amazon Web Services - Identity and Access Management IAM Temporary Security Credential",
+    "icon" : "aws-identity-and-access-management-iam-temporary-security-credential.png"
+  }, {
+    "tag" : "Amazon Web Services - Inspector",
+    "icon" : "amazon-inspector.png"
+  }, {
+    "tag" : "Amazon Web Services - Inspector Agent",
+    "icon" : "amazon-inspector-agent.png"
+  }, {
+    "tag" : "Amazon Web Services - IoT 1 Click",
+    "icon" : "aws-iot-1-click.png"
+  }, {
+    "tag" : "Amazon Web Services - IoT Analytics",
+    "icon" : "aws-iot-analytics.png"
+  }, {
+    "tag" : "Amazon Web Services - IoT Analytics Channel",
+    "icon" : "aws-iot-analytics-channel.png"
+  }, {
+    "tag" : "Amazon Web Services - IoT Analytics Data Set",
+    "icon" : "aws-iot-analytics-data-set.png"
+  }, {
+    "tag" : "Amazon Web Services - IoT Analytics Data Store",
+    "icon" : "aws-iot-analytics-data-store.png"
+  }, {
+    "tag" : "Amazon Web Services - IoT Analytics Notebook",
+    "icon" : "aws-iot-analytics-notebook.png"
+  }, {
+    "tag" : "Amazon Web Services - IoT Analytics Pipeline",
+    "icon" : "aws-iot-analytics-pipeline.png"
+  }, {
+    "tag" : "Amazon Web Services - IoT Button",
+    "icon" : "aws-iot-button.png"
+  }, {
+    "tag" : "Amazon Web Services - IoT Core",
+    "icon" : "aws-iot-core.png"
+  }, {
+    "tag" : "Amazon Web Services - IoT Device Defender",
+    "icon" : "aws-iot-device-defender.png"
+  }, {
+    "tag" : "Amazon Web Services - IoT Device Management",
+    "icon" : "aws-iot-device-management.png"
+  }, {
+    "tag" : "Amazon Web Services - IoT Events",
+    "icon" : "aws-iot-events.png"
+  }, {
+    "tag" : "Amazon Web Services - IoT Greengrass",
+    "icon" : "aws-iot-greengrass.png"
+  }, {
+    "tag" : "Amazon Web Services - IoT Greengrass Connector",
+    "icon" : "aws-iot-greengrass-connector.png"
+  }, {
+    "tag" : "Amazon Web Services - IoT SiteWise",
+    "icon" : "aws-iot-sitewise.png"
+  }, {
+    "tag" : "Amazon Web Services - IoT Things Graph",
+    "icon" : "aws-iot-things-graph.png"
+  }, {
+    "tag" : "Amazon Web Services - IQ",
+    "icon" : "aws-iq.png"
+  }, {
+    "tag" : "Amazon Web Services - Key Management Service",
+    "icon" : "aws-key-management-service.png"
+  }, {
+    "tag" : "Amazon Web Services - Kinesis",
+    "icon" : "amazon-kinesis.png"
+  }, {
+    "tag" : "Amazon Web Services - Kinesis Data Analytics",
+    "icon" : "amazon-kinesis-data-analytics.png"
+  }, {
+    "tag" : "Amazon Web Services - Kinesis Data Firehose",
+    "icon" : "amazon-kinesis-data-firehose.png"
+  }, {
+    "tag" : "Amazon Web Services - Kinesis Data Streams",
+    "icon" : "amazon-kinesis-data-streams.png"
+  }, {
+    "tag" : "Amazon Web Services - Kinesis Video Streams",
+    "icon" : "amazon-kinesis-video-streams.png"
+  }, {
+    "tag" : "Amazon Web Services - Lake Formation",
+    "icon" : "aws-lake-formation.png"
+  }, {
+    "tag" : "Amazon Web Services - Lambda",
+    "icon" : "aws-lambda.png"
+  }, {
+    "tag" : "Amazon Web Services - Lambda Lambda Function",
+    "icon" : "aws-lambda-lambda-function.png"
+  }, {
+    "tag" : "Amazon Web Services - Lex",
+    "icon" : "amazon-lex.png"
+  }, {
+    "tag" : "Amazon Web Services - License Manager",
+    "icon" : "aws-license-manager.png"
+  }, {
+    "tag" : "Amazon Web Services - Lightsail",
+    "icon" : "amazon-lightsail.png"
+  }, {
+    "tag" : "Amazon Web Services - Macie",
+    "icon" : "amazon-macie.png"
+  }, {
+    "tag" : "Amazon Web Services - Managed Blockchain",
+    "icon" : "amazon-managed-blockchain.png"
+  }, {
+    "tag" : "Amazon Web Services - Managed Microsoft AD",
+    "icon" : "aws-managed-microsoft-ad.png"
+  }, {
+    "tag" : "Amazon Web Services - Managed Services",
+    "icon" : "aws-managed-services.png"
+  }, {
+    "tag" : "Amazon Web Services - Managed Streaming for Kafka",
+    "icon" : "amazon-managed-streaming-for-kafka.png"
+  }, {
+    "tag" : "Amazon Web Services - Management Console",
+    "icon" : "aws-management-console.png"
+  }, {
+    "tag" : "Amazon Web Services - Marketplace",
+    "icon" : "aws-marketplace.png"
+  }, {
+    "tag" : "Amazon Web Services - Migration Hub",
+    "icon" : "aws-migration-hub.png"
+  }, {
+    "tag" : "Amazon Web Services - MQ",
+    "icon" : "amazon-mq.png"
+  }, {
+    "tag" : "Amazon Web Services - Neptune",
+    "icon" : "amazon-neptune.png"
+  }, {
+    "tag" : "Amazon Web Services - OpsWorks",
+    "icon" : "aws-opsworks.png"
+  }, {
+    "tag" : "Amazon Web Services - OpsWorks Apps",
+    "icon" : "aws-opsworks-apps.png"
+  }, {
+    "tag" : "Amazon Web Services - OpsWorks Deployments",
+    "icon" : "aws-opsworks-deployments.png"
+  }, {
+    "tag" : "Amazon Web Services - OpsWorks Instances",
+    "icon" : "aws-opsworks-instances.png"
+  }, {
+    "tag" : "Amazon Web Services - OpsWorks Layers",
+    "icon" : "aws-opsworks-layers.png"
+  }, {
+    "tag" : "Amazon Web Services - OpsWorks Monitoring",
+    "icon" : "aws-opsworks-monitoring.png"
+  }, {
+    "tag" : "Amazon Web Services - OpsWorks Permissions",
+    "icon" : "aws-opsworks-permissions.png"
+  }, {
+    "tag" : "Amazon Web Services - OpsWorks Resources",
+    "icon" : "aws-opsworks-resources.png"
+  }, {
+    "tag" : "Amazon Web Services - OpsWorks Stack2",
+    "icon" : "aws-opsworks-stack2.png"
+  }, {
+    "tag" : "Amazon Web Services - Organizations",
+    "icon" : "aws-organizations.png"
+  }, {
+    "tag" : "Amazon Web Services - Organizations Account",
+    "icon" : "aws-organizations-account.png"
+  }, {
+    "tag" : "Amazon Web Services - Organizations Organizational unit",
+    "icon" : "aws-organizations-organizational-unit.png"
+  }, {
+    "tag" : "Amazon Web Services - Outposts",
+    "icon" : "aws-outposts.png"
+  }, {
+    "tag" : "Amazon Web Services - Personal Health Dashboard",
+    "icon" : "aws-personal-health-dashboard.png"
+  }, {
+    "tag" : "Amazon Web Services - Personalize",
+    "icon" : "amazon-personalize.png"
+  }, {
+    "tag" : "Amazon Web Services - Pinpoint",
+    "icon" : "amazon-pinpoint.png"
+  }, {
+    "tag" : "Amazon Web Services - Polly",
+    "icon" : "amazon-polly.png"
+  }, {
+    "tag" : "Amazon Web Services - PrivateLink",
+    "icon" : "aws-privatelink.png"
+  }, {
+    "tag" : "Amazon Web Services - Quantum Ledger Database QLDB",
+    "icon" : "amazon-quantum-ledger-database-qldb.png"
+  }, {
+    "tag" : "Amazon Web Services - Quicksight",
+    "icon" : "amazon-quicksight.png"
+  }, {
+    "tag" : "Amazon Web Services - RDS",
+    "icon" : "amazon-rds.png"
+  }, {
+    "tag" : "Amazon Web Services - RDS Amazon Aurora instance",
+    "icon" : "amazon-rds-amazon-aurora-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - RDS Amazon RDS instance",
+    "icon" : "amazon-rds-amazon-rds-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - RDS MariaDB instance",
+    "icon" : "amazon-rds-mariadb-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - RDS MySQL instance",
+    "icon" : "amazon-rds-mysql-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - RDS on VMware",
+    "icon" : "amazon-rds-on-vmware.png"
+  }, {
+    "tag" : "Amazon Web Services - RDS Oracle instance",
+    "icon" : "amazon-rds-oracle-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - RDS PostgreSQL instance",
+    "icon" : "amazon-rds-postgresql-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - RDS SQL Server instance",
+    "icon" : "amazon-rds-sql-server-instance.png"
+  }, {
+    "tag" : "Amazon Web Services - Redshift",
+    "icon" : "amazon-redshift.png"
+  }, {
+    "tag" : "Amazon Web Services - Redshift Dense Compute Node",
+    "icon" : "amazon-redshift-dense-compute-node.png"
+  }, {
+    "tag" : "Amazon Web Services - Redshift Dense Storage Node",
+    "icon" : "amazon-redshift-dense-storage-node.png"
+  }, {
+    "tag" : "Amazon Web Services - Region",
+    "icon" : "region.png"
+  }, {
+    "tag" : "Amazon Web Services - Rekognition",
+    "icon" : "amazon-rekognition.png"
+  }, {
+    "tag" : "Amazon Web Services - Rekognition Image",
+    "icon" : "amazon-rekognition-image.png"
+  }, {
+    "tag" : "Amazon Web Services - Rekognition Video",
+    "icon" : "amazon-rekognition-video.png"
+  }, {
+    "tag" : "Amazon Web Services - Resource Access Manager",
+    "icon" : "aws-resource-access-manager.png"
+  }, {
+    "tag" : "Amazon Web Services - RoboMaker",
+    "icon" : "aws-robomaker.png"
+  }, {
+    "tag" : "Amazon Web Services - RoboMaker Cloud Extension ROS",
+    "icon" : "aws-robomaker-cloud-extension-ros.png"
+  }, {
+    "tag" : "Amazon Web Services - RoboMaker Development Environment",
+    "icon" : "aws-robomaker-development-environment.png"
+  }, {
+    "tag" : "Amazon Web Services - RoboMaker Fleet Management",
+    "icon" : "aws-robomaker-fleet-management.png"
+  }, {
+    "tag" : "Amazon Web Services - RoboMaker Simulation",
+    "icon" : "aws-robomaker-simulation.png"
+  }, {
+    "tag" : "Amazon Web Services - Route 53",
+    "icon" : "amazon-route-53.png"
+  }, {
+    "tag" : "Amazon Web Services - Route 53 Hosted Zone",
+    "icon" : "amazon-route-53-hosted-zone.png"
+  }, {
+    "tag" : "Amazon Web Services - Route 53 Route Table",
+    "icon" : "amazon-route-53-route-table.png"
+  }, {
+    "tag" : "Amazon Web Services - S3 Glacier",
+    "icon" : "amazon-s3-glacier.png"
+  }, {
+    "tag" : "Amazon Web Services - S3 Glacier Archive",
+    "icon" : "amazon-s3-glacier-archive.png"
+  }, {
+    "tag" : "Amazon Web Services - S3 Glacier Vault",
+    "icon" : "amazon-s3-glacier-vault.png"
+  }, {
+    "tag" : "Amazon Web Services - SageMaker",
+    "icon" : "amazon-sagemaker.png"
+  }, {
+    "tag" : "Amazon Web Services - SageMaker Ground Truth",
+    "icon" : "amazon-sagemaker-ground-truth.png"
+  }, {
+    "tag" : "Amazon Web Services - SageMaker Model",
+    "icon" : "amazon-sagemaker-model.png"
+  }, {
+    "tag" : "Amazon Web Services - SageMaker Notebook",
+    "icon" : "amazon-sagemaker-notebook.png"
+  }, {
+    "tag" : "Amazon Web Services - SageMaker Train",
+    "icon" : "amazon-sagemaker-train.png"
+  }, {
+    "tag" : "Amazon Web Services - Secrets Manager",
+    "icon" : "aws-secrets-manager.png"
+  }, {
+    "tag" : "Amazon Web Services - Security Hub",
+    "icon" : "aws-security-hub.png"
+  }, {
+    "tag" : "Amazon Web Services - Server contents",
+    "icon" : "server-contents.png"
+  }, {
+    "tag" : "Amazon Web Services - Server Migration Service",
+    "icon" : "aws-server-migration-service.png"
+  }, {
+    "tag" : "Amazon Web Services - Serverless Application Repository",
+    "icon" : "aws-serverless-application-repository.png"
+  }, {
+    "tag" : "Amazon Web Services - Service Catalog",
+    "icon" : "aws-service-catalog.png"
+  }, {
+    "tag" : "Amazon Web Services - Shield",
+    "icon" : "aws-shield.png"
+  }, {
+    "tag" : "Amazon Web Services - Shield Shield Advanced",
+    "icon" : "aws-shield-shield-advanced.png"
+  }, {
+    "tag" : "Amazon Web Services - Simple Email Service SES",
+    "icon" : "amazon-simple-email-service-ses.png"
+  }, {
+    "tag" : "Amazon Web Services - Simple Email Service SES Email",
+    "icon" : "amazon-simple-email-service-ses-email.png"
+  }, {
+    "tag" : "Amazon Web Services - Simple Notification Service SNS",
+    "icon" : "amazon-simple-notification-service-sns.png"
+  }, {
+    "tag" : "Amazon Web Services - Simple Notification Service SNS Email Notification",
+    "icon" : "amazon-simple-notification-service-sns-email-notification.png"
+  }, {
+    "tag" : "Amazon Web Services - Simple Notification Service SNS HTTP Notification",
+    "icon" : "amazon-simple-notification-service-sns-http-notification.png"
+  }, {
+    "tag" : "Amazon Web Services - Simple Notification Service SNS Topic",
+    "icon" : "amazon-simple-notification-service-sns-topic.png"
+  }, {
+    "tag" : "Amazon Web Services - Simple Queue Service SQS",
+    "icon" : "amazon-simple-queue-service-sqs.png"
+  }, {
+    "tag" : "Amazon Web Services - Simple Queue Service SQS Message",
+    "icon" : "amazon-simple-queue-service-sqs-message.png"
+  }, {
+    "tag" : "Amazon Web Services - Simple Queue Service SQS Queue",
+    "icon" : "amazon-simple-queue-service-sqs-queue.png"
+  }, {
+    "tag" : "Amazon Web Services - Simple Storage Service S3",
+    "icon" : "amazon-simple-storage-service-s3.png"
+  }, {
+    "tag" : "Amazon Web Services - Simple Storage Service S3 Bucket",
+    "icon" : "amazon-simple-storage-service-s3-bucket.png"
+  }, {
+    "tag" : "Amazon Web Services - Simple Storage Service S3 Bucket with Objects",
+    "icon" : "amazon-simple-storage-service-s3-bucket-with-objects.png"
+  }, {
+    "tag" : "Amazon Web Services - Simple Storage Service S3 Object",
+    "icon" : "amazon-simple-storage-service-s3-object.png"
+  }, {
+    "tag" : "Amazon Web Services - Single Sign On",
+    "icon" : "aws-single-sign-on.png"
+  }, {
+    "tag" : "Amazon Web Services - Site to Site VPN",
+    "icon" : "aws-site-to-site-vpn.png"
+  }, {
+    "tag" : "Amazon Web Services - Snow Family Snowball Import Export",
+    "icon" : "aws-snow-family-snowball-import-export.png"
+  }, {
+    "tag" : "Amazon Web Services - Snowball",
+    "icon" : "aws-snowball.png"
+  }, {
+    "tag" : "Amazon Web Services - Snowball Edge",
+    "icon" : "aws-snowball-edge.png"
+  }, {
+    "tag" : "Amazon Web Services - Snowmobile",
+    "icon" : "aws-snowmobile.png"
+  }, {
+    "tag" : "Amazon Web Services - Spot fleet",
+    "icon" : "spot-fleet.png"
+  }, {
+    "tag" : "Amazon Web Services - Step Function",
+    "icon" : "aws-step-function.png"
+  }, {
+    "tag" : "Amazon Web Services - Step Functions",
+    "icon" : "aws-step-functions.png"
+  }, {
+    "tag" : "Amazon Web Services - Storage Gateway",
+    "icon" : "aws-storage-gateway.png"
+  }, {
+    "tag" : "Amazon Web Services - Storage Gateway Cached Volume",
+    "icon" : "aws-storage-gateway-cached-volume.png"
+  }, {
+    "tag" : "Amazon Web Services - Storage Gateway Non Cached Volume",
+    "icon" : "aws-storage-gateway-non-cached-volume.png"
+  }, {
+    "tag" : "Amazon Web Services - Storage Gateway Virtual Tape Library",
+    "icon" : "aws-storage-gateway-virtual-tape-library.png"
+  }, {
+    "tag" : "Amazon Web Services - Sumerian",
+    "icon" : "amazon-sumerian.png"
+  }, {
+    "tag" : "Amazon Web Services - Systems Manager",
+    "icon" : "aws-systems-manager.png"
+  }, {
+    "tag" : "Amazon Web Services - Systems Manager Automation",
+    "icon" : "aws-systems-manager-automation.png"
+  }, {
+    "tag" : "Amazon Web Services - Systems Manager Documents",
+    "icon" : "aws-systems-manager-documents.png"
+  }, {
+    "tag" : "Amazon Web Services - Systems Manager Inventory",
+    "icon" : "aws-systems-manager-inventory.png"
+  }, {
+    "tag" : "Amazon Web Services - Systems Manager Maintenance Windows",
+    "icon" : "aws-systems-manager-maintenance-windows.png"
+  }, {
+    "tag" : "Amazon Web Services - Systems Manager Parameter Store",
+    "icon" : "aws-systems-manager-parameter-store.png"
+  }, {
+    "tag" : "Amazon Web Services - Systems Manager Patch Manager",
+    "icon" : "aws-systems-manager-patch-manager.png"
+  }, {
+    "tag" : "Amazon Web Services - Systems Manager Run Command",
+    "icon" : "aws-systems-manager-run-command.png"
+  }, {
+    "tag" : "Amazon Web Services - Systems Manager State Manager",
+    "icon" : "aws-systems-manager-state-manager.png"
+  }, {
+    "tag" : "Amazon Web Services - TensorFlow on AWS",
+    "icon" : "tensorflow-on-aws.png"
+  }, {
+    "tag" : "Amazon Web Services - Textract",
+    "icon" : "amazon-textract.png"
+  }, {
+    "tag" : "Amazon Web Services - Thinkbox Deadline",
+    "icon" : "aws-thinkbox-deadline.png"
+  }, {
+    "tag" : "Amazon Web Services - Thinkbox Draft",
+    "icon" : "aws-thinkbox-draft.png"
+  }, {
+    "tag" : "Amazon Web Services - Thinkbox Frost",
+    "icon" : "aws-thinkbox-frost.png"
+  }, {
+    "tag" : "Amazon Web Services - Thinkbox Krakatoa",
+    "icon" : "aws-thinkbox-krakatoa.png"
+  }, {
+    "tag" : "Amazon Web Services - Thinkbox Sequoia",
+    "icon" : "aws-thinkbox-sequoia.png"
+  }, {
+    "tag" : "Amazon Web Services - Thinkbox Stoke",
+    "icon" : "aws-thinkbox-stoke.png"
+  }, {
+    "tag" : "Amazon Web Services - Thinkbox XMesh",
+    "icon" : "aws-thinkbox-xmesh.png"
+  }, {
+    "tag" : "Amazon Web Services - Timestream",
+    "icon" : "amazon-timestream.png"
+  }, {
+    "tag" : "Amazon Web Services - Tools And SDKs",
+    "icon" : "aws-tools-and-sdks.png"
+  }, {
+    "tag" : "Amazon Web Services - Transcribe",
+    "icon" : "amazon-transcribe.png"
+  }, {
+    "tag" : "Amazon Web Services - Transit Gateway",
+    "icon" : "aws-transit-gateway.png"
+  }, {
+    "tag" : "Amazon Web Services - Translate",
+    "icon" : "amazon-translate.png"
+  }, {
+    "tag" : "Amazon Web Services - Trusted Advisor",
+    "icon" : "aws-trusted-advisor.png"
+  }, {
+    "tag" : "Amazon Web Services - Trusted Advisor Checklist",
+    "icon" : "aws-trusted-advisor-checklist.png"
+  }, {
+    "tag" : "Amazon Web Services - Trusted Advisor Checklist Cost",
+    "icon" : "aws-trusted-advisor-checklist-cost.png"
+  }, {
+    "tag" : "Amazon Web Services - Trusted Advisor Checklist Fault Tolerant",
+    "icon" : "aws-trusted-advisor-checklist-fault-tolerant.png"
+  }, {
+    "tag" : "Amazon Web Services - Trusted Advisor Checklist Performance",
+    "icon" : "aws-trusted-advisor-checklist-performance.png"
+  }, {
+    "tag" : "Amazon Web Services - Trusted Advisor Checklist Security",
+    "icon" : "aws-trusted-advisor-checklist-security.png"
+  }, {
+    "tag" : "Amazon Web Services - Virtual private cloud VPC",
+    "icon" : "virtual-private-cloud-vpc.png"
+  }, {
+    "tag" : "Amazon Web Services - VMware Cloud On AWS",
+    "icon" : "vmware-cloud-on-aws.png"
+  }, {
+    "tag" : "Amazon Web Services - VPC",
+    "icon" : "amazon-vpc.png"
+  }, {
+    "tag" : "Amazon Web Services - VPC Customer Gateway",
+    "icon" : "amazon-vpc-customer-gateway.png"
+  }, {
+    "tag" : "Amazon Web Services - VPC Elastic Network Adapter",
+    "icon" : "amazon-vpc-elastic-network-adapter.png"
+  }, {
+    "tag" : "Amazon Web Services - VPC Elastic Network Interface",
+    "icon" : "amazon-vpc-elastic-network-interface.png"
+  }, {
+    "tag" : "Amazon Web Services - VPC Endpoints",
+    "icon" : "amazon-vpc-endpoints.png"
+  }, {
+    "tag" : "Amazon Web Services - VPC Flow Logs",
+    "icon" : "amazon-vpc-flow-logs.png"
+  }, {
+    "tag" : "Amazon Web Services - VPC Internet Gateway",
+    "icon" : "amazon-vpc-internet-gateway.png"
+  }, {
+    "tag" : "Amazon Web Services - VPC NAT Gateway",
+    "icon" : "amazon-vpc-nat-gateway.png"
+  }, {
+    "tag" : "Amazon Web Services - VPC Network Access Control List",
+    "icon" : "amazon-vpc-network-access-control-list.png"
+  }, {
+    "tag" : "Amazon Web Services - VPC Peering",
+    "icon" : "amazon-vpc-peering.png"
+  }, {
+    "tag" : "Amazon Web Services - VPC Router",
+    "icon" : "amazon-vpc-router.png"
+  }, {
+    "tag" : "Amazon Web Services - VPC subnet private",
+    "icon" : "vpc-subnet-private.png"
+  }, {
+    "tag" : "Amazon Web Services - VPC subnet public",
+    "icon" : "vpc-subnet-public.png"
+  }, {
+    "tag" : "Amazon Web Services - VPC VPN Connection",
+    "icon" : "amazon-vpc-vpn-connection.png"
+  }, {
+    "tag" : "Amazon Web Services - VPC VPN Gateway",
+    "icon" : "amazon-vpc-vpn-gateway.png"
+  }, {
+    "tag" : "Amazon Web Services - WAF",
+    "icon" : "aws-waf.png"
+  }, {
+    "tag" : "Amazon Web Services - WAF Filtering rule",
+    "icon" : "aws-waf-filtering-rule.png"
+  }, {
+    "tag" : "Amazon Web Services - Well Architected Tool",
+    "icon" : "aws-well-architected-tool.png"
+  }, {
+    "tag" : "Amazon Web Services - WorkDocs",
+    "icon" : "amazon-workdocs.png"
+  }, {
+    "tag" : "Amazon Web Services - WorkLink",
+    "icon" : "amazon-worklink.png"
+  }, {
+    "tag" : "Amazon Web Services - WorkMail",
+    "icon" : "amazon-workmail.png"
+  }, {
+    "tag" : "Amazon Web Services - Workspaces",
+    "icon" : "amazon-workspaces.png"
+  }, {
+    "tag" : "Amazon Web Services - X Ray",
+    "icon" : "aws-x-ray.png"
+  } ]
+}

@@ -1,0 +1,1215 @@
+{
+  "name" : "Microsoft Azure",
+  "description" : "This theme includes element styles with icons for each of the Azure services, based upon the Microsoft Azure Cloud and AI Symbol / Icon Set - SVG (https://www.microsoft.com/en-us/download/details.aspx?id=41937).",
+  "elements" : [ {
+    "tag" : "Microsoft Azure - Spatial Anchor",
+    "stroke" : "#804998",
+    "color" : "#804998",
+    "icon" : "Spatial_Anchor.png"
+  }, {
+    "tag" : "Microsoft Azure - Function Apps",
+    "stroke" : "#fcd116",
+    "color" : "#fcd116",
+    "icon" : "Function_Apps.png"
+  }, {
+    "tag" : "Microsoft Azure - Virtual Network (Classic)",
+    "stroke" : "#3999c6",
+    "color" : "#3999c6",
+    "icon" : "Virtual_Network_(Classic).png"
+  }, {
+    "tag" : "Microsoft Azure - Image Definitions",
+    "stroke" : "#9bd2e8",
+    "color" : "#9bd2e8",
+    "icon" : "Image_Definitions.png"
+  }, {
+    "tag" : "Microsoft Azure - DeveloperTools",
+    "stroke" : "#535353",
+    "color" : "#535353",
+    "icon" : "DeveloperTools.png"
+  }, {
+    "tag" : "Microsoft Azure - API Management Services",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "API_Management_Services.png"
+  }, {
+    "tag" : "Microsoft Azure - Active Directory Connect Health",
+    "stroke" : "#69bbdd",
+    "color" : "#69bbdd",
+    "icon" : "Active_Directory_Connect_Health.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Mobile Engagement",
+    "stroke" : "#d5ecf5",
+    "color" : "#d5ecf5",
+    "icon" : "Azure_Mobile_Engagement.png"
+  }, {
+    "tag" : "Microsoft Azure - Subscriptions",
+    "stroke" : "#fcd116",
+    "color" : "#fcd116",
+    "icon" : "Subscriptions.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Database for MariaDB servers",
+    "stroke" : "#1b3662",
+    "color" : "#1b3662",
+    "icon" : "Azure_Database_for_MariaDB_servers.png"
+  }, {
+    "tag" : "Microsoft Azure - Event Hub Clusters",
+    "stroke" : "#7a7a7a",
+    "color" : "#7a7a7a",
+    "icon" : "Event_Hub_Clusters.png"
+  }, {
+    "tag" : "Microsoft Azure - Tenant Status",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Tenant_Status.png"
+  }, {
+    "tag" : "Microsoft Azure - SQL Databases",
+    "stroke" : "#2687ce",
+    "color" : "#2687ce",
+    "icon" : "SQL_Databases.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Boards",
+    "stroke" : "#00947d",
+    "color" : "#00947d",
+    "icon" : "Azure_Boards.png"
+  }, {
+    "tag" : "Microsoft Azure - VM-windows",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "VM-windows.png"
+  }, {
+    "tag" : "Microsoft Azure - Machine Learning Studio Web Service Plans",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Machine_Learning_Studio_Web_Service_Plans.png"
+  }, {
+    "tag" : "Microsoft Azure - Shared Dashboard",
+    "stroke" : "#3999c6",
+    "color" : "#3999c6",
+    "icon" : "Shared_Dashboard.png"
+  }, {
+    "tag" : "Microsoft Azure - Support",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Support.png"
+  }, {
+    "tag" : "Microsoft Azure - Managed Databases",
+    "stroke" : "#c0ecfc",
+    "color" : "#c0ecfc",
+    "icon" : "Managed_Databases.png"
+  }, {
+    "tag" : "Microsoft Azure - Machine Learning Studio Web Services",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Machine_Learning_Studio_Web_Services.png"
+  }, {
+    "tag" : "Microsoft Azure - eBooks",
+    "stroke" : "#e5e5e5",
+    "color" : "#e5e5e5",
+    "icon" : "eBooks.png"
+  }, {
+    "tag" : "Microsoft Azure - Conditional Access",
+    "stroke" : "#7fba00",
+    "color" : "#7fba00",
+    "icon" : "Conditional_Access.png"
+  }, {
+    "tag" : "Microsoft Azure - Device Config",
+    "stroke" : "#72bfdf",
+    "color" : "#72bfdf",
+    "icon" : "Device_Config.png"
+  }, {
+    "tag" : "Microsoft Azure - DDOS Protection Plans",
+    "stroke" : "#7fba00",
+    "color" : "#7fba00",
+    "icon" : "DDOS_Protection_Plans.png"
+  }, {
+    "tag" : "Microsoft Azure - VM",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "VM.png"
+  }, {
+    "tag" : "Microsoft Azure - Cloud Services (Classic)",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Cloud_Services_(Classic).png"
+  }, {
+    "tag" : "Microsoft Azure - SignalR",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "SignalR.png"
+  }, {
+    "tag" : "Microsoft Azure - CloudSimple Services",
+    "stroke" : "#e4e4e4",
+    "color" : "#e4e4e4",
+    "icon" : "CloudSimple_Services.png"
+  }, {
+    "tag" : "Microsoft Azure - Security Center",
+    "stroke" : "#7fba00",
+    "color" : "#7fba00",
+    "icon" : "Security_Center.png"
+  }, {
+    "tag" : "Microsoft Azure - Enrollment",
+    "stroke" : "#57a8ce",
+    "color" : "#57a8ce",
+    "icon" : "Enrollment.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Maps",
+    "stroke" : "#3999c6",
+    "color" : "#3999c6",
+    "icon" : "Azure_Maps.png"
+  }, {
+    "tag" : "Microsoft Azure - Identity governance",
+    "stroke" : "#2999c6",
+    "color" : "#2999c6",
+    "icon" : "Identity_governance.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure AD Privileged Identity Management",
+    "stroke" : "#804998",
+    "color" : "#804998",
+    "icon" : "Azure_AD_Privileged_Identity_Management.png"
+  }, {
+    "tag" : "Microsoft Azure - Support Requests",
+    "stroke" : "#59b3d8",
+    "color" : "#59b3d8",
+    "icon" : "Support_Requests.png"
+  }, {
+    "tag" : "Microsoft Azure - Automation Accounts",
+    "stroke" : "#a0a1a2",
+    "color" : "#a0a1a2",
+    "icon" : "Automation_Accounts.png"
+  }, {
+    "tag" : "Microsoft Azure - Templates",
+    "stroke" : "#def0f7",
+    "color" : "#def0f7",
+    "icon" : "Templates.png"
+  }, {
+    "tag" : "Microsoft Azure - VM (Classic)",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "VM_(Classic).png"
+  }, {
+    "tag" : "Microsoft Azure - Queues Storage",
+    "stroke" : "#72bfdf",
+    "color" : "#72bfdf",
+    "icon" : "Queues_Storage.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure SQL DataWarehouse",
+    "stroke" : "#3999c6",
+    "color" : "#3999c6",
+    "icon" : "Azure_SQL_DataWarehouse.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Search",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Azure_Search.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure IoT Hub",
+    "stroke" : "#006dd6",
+    "color" : "#006dd6",
+    "icon" : "Azure_IoT_Hub.png"
+  }, {
+    "tag" : "Microsoft Azure - Two User Icon",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Two_User_Icon.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Data Catalog",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Azure_Data_Catalog.png"
+  }, {
+    "tag" : "Microsoft Azure - Policy",
+    "stroke" : "#3999c6",
+    "color" : "#3999c6",
+    "icon" : "Policy.png"
+  }, {
+    "tag" : "Microsoft Azure - Service Catalog Managed Application Definitions",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Service_Catalog_Managed_Application_Definitions.png"
+  }, {
+    "tag" : "Microsoft Azure - User Privacy",
+    "stroke" : "#61add1",
+    "color" : "#61add1",
+    "icon" : "User_Privacy.png"
+  }, {
+    "tag" : "Microsoft Azure - HDInsightClusters",
+    "stroke" : "#59b3d8",
+    "color" : "#59b3d8",
+    "icon" : "HDInsightClusters.png"
+  }, {
+    "tag" : "Microsoft Azure - Public IP Addresses",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Public_IP_Addresses.png"
+  }, {
+    "tag" : "Microsoft Azure - Blueprints",
+    "stroke" : "#cee9f4",
+    "color" : "#cee9f4",
+    "icon" : "Blueprints.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure DevTest Labs",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Azure_DevTest_Labs.png"
+  }, {
+    "tag" : "Microsoft Azure - Cloud Services",
+    "stroke" : "#3e3e3e",
+    "color" : "#3e3e3e",
+    "icon" : "Cloud_Services.png"
+  }, {
+    "tag" : "Microsoft Azure - Storage Sync Services",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Storage_Sync_Services.png"
+  }, {
+    "tag" : "Microsoft Azure - Network Interfaces",
+    "stroke" : "#7fba00",
+    "color" : "#7fba00",
+    "icon" : "Network_Interfaces.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure AD Identity Protection",
+    "stroke" : "#ffb900",
+    "color" : "#ffb900",
+    "icon" : "Azure_AD_Identity_Protection.png"
+  }, {
+    "tag" : "Microsoft Azure - Container Registries",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Container_Registries.png"
+  }, {
+    "tag" : "Microsoft Azure - General Storage",
+    "stroke" : "#5b5b5b",
+    "color" : "#5b5b5b",
+    "icon" : "General_Storage.png"
+  }, {
+    "tag" : "Microsoft Azure - Integration Service Environments",
+    "stroke" : "#cce3f4",
+    "color" : "#cce3f4",
+    "icon" : "Integration_Service_Environments.png"
+  }, {
+    "tag" : "Microsoft Azure - Data Lake Analytics",
+    "stroke" : "#a0a1a2",
+    "color" : "#a0a1a2",
+    "icon" : "Data_Lake_Analytics.png"
+  }, {
+    "tag" : "Microsoft Azure - Managed Desktop",
+    "stroke" : "#def0f7",
+    "color" : "#def0f7",
+    "icon" : "Managed_Desktop.png"
+  }, {
+    "tag" : "Microsoft Azure - App Service Plans",
+    "stroke" : "#3e3e3e",
+    "color" : "#3e3e3e",
+    "icon" : "App_Service_Plans.png"
+  }, {
+    "tag" : "Microsoft Azure - DNS Zones",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "DNS_Zones.png"
+  }, {
+    "tag" : "Microsoft Azure - Data Lake Storage",
+    "stroke" : "#3e3e3e",
+    "color" : "#3e3e3e",
+    "icon" : "Data_Lake_Storage.png"
+  }, {
+    "tag" : "Microsoft Azure - Intune App Protection",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Intune_App_Protection.png"
+  }, {
+    "tag" : "Microsoft Azure - App Service Certificates",
+    "stroke" : "#fcd116",
+    "color" : "#fcd116",
+    "icon" : "App_Service_Certificates.png"
+  }, {
+    "tag" : "Microsoft Azure - Integration Accounts",
+    "stroke" : "#3999c6",
+    "color" : "#3999c6",
+    "icon" : "Integration_Accounts.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Repos",
+    "stroke" : "#e15815",
+    "color" : "#e15815",
+    "icon" : "Azure_Repos.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Service Bus Relays",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Azure_Service_Bus_Relays.png"
+  }, {
+    "tag" : "Microsoft Azure - CDN Profiles",
+    "stroke" : "#3999c6",
+    "color" : "#3999c6",
+    "icon" : "CDN_Profiles.png"
+  }, {
+    "tag" : "Microsoft Azure - App Service Domains",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "App_Service_Domains.png"
+  }, {
+    "tag" : "Microsoft Azure - Availability Sets",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Availability_Sets.png"
+  }, {
+    "tag" : "Microsoft Azure - Recent",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Recent.png"
+  }, {
+    "tag" : "Microsoft Azure - Storage Explorer",
+    "stroke" : "#a0a1a2",
+    "color" : "#a0a1a2",
+    "icon" : "Storage_Explorer.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Sentinel",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Azure_Sentinel.png"
+  }, {
+    "tag" : "Microsoft Azure - App Service Environments",
+    "stroke" : "#a0a1a2",
+    "color" : "#a0a1a2",
+    "icon" : "App_Service_Environments.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Sphere",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Azure_Sphere.png"
+  }, {
+    "tag" : "Microsoft Azure - Batch AI",
+    "stroke" : "#3999c6",
+    "color" : "#3999c6",
+    "icon" : "Batch_AI.png"
+  }, {
+    "tag" : "Microsoft Azure - VM Scale Sets",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "VM_Scale_Sets.png"
+  }, {
+    "tag" : "Microsoft Azure - IoT Central Applications",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "IoT_Central_Applications.png"
+  }, {
+    "tag" : "Microsoft Azure - SendGrid Accounts",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "SendGrid_Accounts.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Cosmos DB",
+    "stroke" : "#acdaec",
+    "color" : "#acdaec",
+    "icon" : "Azure_Cosmos_DB.png"
+  }, {
+    "tag" : "Microsoft Azure - Tag",
+    "stroke" : "#804998",
+    "color" : "#804998",
+    "icon" : "Tag.png"
+  }, {
+    "tag" : "Microsoft Azure - Dedicated Event Hub",
+    "stroke" : "#7a7a7a",
+    "color" : "#7a7a7a",
+    "icon" : "Dedicated_Event_Hub.png"
+  }, {
+    "tag" : "Microsoft Azure - Route Tables",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Route_Tables.png"
+  }, {
+    "tag" : "Microsoft Azure - Help + Support",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Help_+_Support.png"
+  }, {
+    "tag" : "Microsoft Azure - Elastic Database Pools",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Elastic_Database_Pools.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Database (Generic)",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Azure_Database_(Generic).png"
+  }, {
+    "tag" : "Microsoft Azure - Disk Snapshots",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Disk_Snapshots.png"
+  }, {
+    "tag" : "Microsoft Azure - Local Network Gateways",
+    "stroke" : "#7fba00",
+    "color" : "#7fba00",
+    "icon" : "Local_Network_Gateways.png"
+  }, {
+    "tag" : "Microsoft Azure - App Services",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "App_Services.png"
+  }, {
+    "tag" : "Microsoft Azure - Virtual WANs",
+    "stroke" : "#7ac3e1",
+    "color" : "#7ac3e1",
+    "icon" : "Virtual_WANs.png"
+  }, {
+    "tag" : "Microsoft Azure - Resource Groups",
+    "stroke" : "#7a7a7a",
+    "color" : "#7a7a7a",
+    "icon" : "Resource_Groups.png"
+  }, {
+    "tag" : "Microsoft Azure - Application Insights",
+    "stroke" : "#7f428e",
+    "color" : "#7f428e",
+    "icon" : "Application_Insights.png"
+  }, {
+    "tag" : "Microsoft Azure - Event Hubs",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Event_Hubs.png"
+  }, {
+    "tag" : "Microsoft Azure - Notification Hubs",
+    "stroke" : "#ff8c00",
+    "color" : "#ff8c00",
+    "icon" : "Notification_Hubs.png"
+  }, {
+    "tag" : "Microsoft Azure - Log Analytics Workspaces",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Log_Analytics_Workspaces.png"
+  }, {
+    "tag" : "Microsoft Azure - Connections",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Connections.png"
+  }, {
+    "tag" : "Microsoft Azure - Notification Hub Namespaces",
+    "stroke" : "#ff8c00",
+    "color" : "#ff8c00",
+    "icon" : "Notification_Hub_Namespaces.png"
+  }, {
+    "tag" : "Microsoft Azure - VM-Linux-non-azure",
+    "stroke" : "#b392c1",
+    "color" : "#b392c1",
+    "icon" : "VM-Linux-non-azure.png"
+  }, {
+    "tag" : "Microsoft Azure - Content Protection",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Content_Protection.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Databricks",
+    "stroke" : "#f25f32",
+    "color" : "#f25f32",
+    "icon" : "Azure_Databricks.png"
+  }, {
+    "tag" : "Microsoft Azure - Data Box Edge   Data Box Gateway",
+    "stroke" : "#2272b9",
+    "color" : "#2272b9",
+    "icon" : "Data_Box_Edge___Data_Box_Gateway.png"
+  }, {
+    "tag" : "Microsoft Azure - Mesh Applications",
+    "stroke" : "#dd5900",
+    "color" : "#dd5900",
+    "icon" : "Mesh_Applications.png"
+  }, {
+    "tag" : "Microsoft Azure - Advisor",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Advisor.png"
+  }, {
+    "tag" : "Microsoft Azure - VM-windows-non-azure",
+    "stroke" : "#b392c1",
+    "color" : "#b392c1",
+    "icon" : "VM-windows-non-azure.png"
+  }, {
+    "tag" : "Microsoft Azure - Recovery Services Vaults",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Recovery_Services_Vaults.png"
+  }, {
+    "tag" : "Microsoft Azure - SQL Managed Instances",
+    "stroke" : "#777777",
+    "color" : "#777777",
+    "icon" : "SQL_Managed_Instances.png"
+  }, {
+    "tag" : "Microsoft Azure - Quick Start Center",
+    "stroke" : "#ff8c00",
+    "color" : "#ff8c00",
+    "icon" : "Quick_Start_Center.png"
+  }, {
+    "tag" : "Microsoft Azure - Image Versions",
+    "stroke" : "#9bd2e8",
+    "color" : "#9bd2e8",
+    "icon" : "Image_Versions.png"
+  }, {
+    "tag" : "Microsoft Azure - Time Series Insights Events Sources",
+    "stroke" : "#a0a1a2",
+    "color" : "#a0a1a2",
+    "icon" : "Time_Series_Insights_Events_Sources.png"
+  }, {
+    "tag" : "Microsoft Azure - Cost Management + Billing",
+    "stroke" : "#8cc119",
+    "color" : "#8cc119",
+    "icon" : "Cost_Management_+_Billing.png"
+  }, {
+    "tag" : "Microsoft Azure - Time Series Insights environments",
+    "stroke" : "#00b294",
+    "color" : "#00b294",
+    "icon" : "Time_Series_Insights_environments.png"
+  }, {
+    "tag" : "Microsoft Azure - SAP HANA on Azure",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "SAP_HANA_on_Azure.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure AD B2C",
+    "stroke" : "#804998",
+    "color" : "#804998",
+    "icon" : "Azure_AD_B2C.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Artifacts",
+    "stroke" : "#cf3071",
+    "color" : "#cf3071",
+    "icon" : "Azure_Artifacts.png"
+  }, {
+    "tag" : "Microsoft Azure - Service Endpoint Policies",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Service_Endpoint_Policies.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Cache for Redis",
+    "stroke" : "#996dad",
+    "color" : "#996dad",
+    "icon" : "Azure_Cache_for_Redis.png"
+  }, {
+    "tag" : "Microsoft Azure - Tools",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Tools.png"
+  }, {
+    "tag" : "Microsoft Azure - Service Fabric Clusters",
+    "stroke" : "#ff8c00",
+    "color" : "#ff8c00",
+    "icon" : "Service_Fabric_Clusters.png"
+  }, {
+    "tag" : "Microsoft Azure - Information",
+    "stroke" : "#3999c6",
+    "color" : "#3999c6",
+    "icon" : "Information.png"
+  }, {
+    "tag" : "Microsoft Azure - Active Directory",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Active_Directory.png"
+  }, {
+    "tag" : "Microsoft Azure - Software Update",
+    "stroke" : "#57a8ce",
+    "color" : "#57a8ce",
+    "icon" : "Software_Update.png"
+  }, {
+    "tag" : "Microsoft Azure - Customer Lockbox",
+    "stroke" : "#996dad",
+    "color" : "#996dad",
+    "icon" : "Customer_Lockbox.png"
+  }, {
+    "tag" : "Microsoft Azure - Alerts",
+    "stroke" : "#b8d432",
+    "color" : "#b8d432",
+    "icon" : "Alerts.png"
+  }, {
+    "tag" : "Microsoft Azure - Virtual Network Gateways",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Virtual_Network_Gateways.png"
+  }, {
+    "tag" : "Microsoft Azure - Media On-Demand",
+    "stroke" : "#72bfdf",
+    "color" : "#72bfdf",
+    "icon" : "Media_On-Demand.png"
+  }, {
+    "tag" : "Microsoft Azure - On-premises Data Gateways",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "On-premises_Data_Gateways.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Pipelines",
+    "stroke" : "#5d8de4",
+    "color" : "#5d8de4",
+    "icon" : "Azure_Pipelines.png"
+  }, {
+    "tag" : "Microsoft Azure - Exchange On-Premises Access",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Exchange_On-Premises_Access.png"
+  }, {
+    "tag" : "Microsoft Azure - Controllers",
+    "stroke" : "#a0a1a2",
+    "color" : "#a0a1a2",
+    "icon" : "Controllers.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Data Explorer Clusters",
+    "stroke" : "#7ac3e1",
+    "color" : "#7ac3e1",
+    "icon" : "Azure_Data_Explorer_Clusters.png"
+  }, {
+    "tag" : "Microsoft Azure - Front Doors",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Front_Doors.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure AD Domain Services",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Azure_AD_Domain_Services.png"
+  }, {
+    "tag" : "Microsoft Azure - Reserved IP Addresses (Classic)",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Reserved_IP_Addresses_(Classic).png"
+  }, {
+    "tag" : "Microsoft Azure - Windows 10 IoT Core Services",
+    "stroke" : "#000000",
+    "color" : "#000000",
+    "icon" : "Windows_10_IoT_Core_Services.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Media Player",
+    "stroke" : "#3e3e3e",
+    "color" : "#3e3e3e",
+    "icon" : "Azure_Media_Player.png"
+  }, {
+    "tag" : "Microsoft Azure - Service Health",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Service_Health.png"
+  }, {
+    "tag" : "Microsoft Azure - Storage Accounts (classic)",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Storage_Accounts_(classic).png"
+  }, {
+    "tag" : "Microsoft Azure - Machine Learning Studio Workspaces",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Machine_Learning_Studio_Workspaces.png"
+  }, {
+    "tag" : "Microsoft Azure - Monitor",
+    "stroke" : "#b3b4b5",
+    "color" : "#b3b4b5",
+    "icon" : "Monitor.png"
+  }, {
+    "tag" : "Microsoft Azure - Network Security Groups (Classic)",
+    "stroke" : "#4c9cd7",
+    "color" : "#4c9cd7",
+    "icon" : "Network_Security_Groups_(Classic).png"
+  }, {
+    "tag" : "Microsoft Azure - Managed Applications",
+    "stroke" : "#996dad",
+    "color" : "#996dad",
+    "icon" : "Managed_Applications.png"
+  }, {
+    "tag" : "Microsoft Azure - Application Gateway",
+    "stroke" : "#7fba00",
+    "color" : "#7fba00",
+    "icon" : "Application_Gateway.png"
+  }, {
+    "tag" : "Microsoft Azure - Migration Projects",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Migration_Projects.png"
+  }, {
+    "tag" : "Microsoft Azure - Virtual Networks",
+    "stroke" : "#3999c6",
+    "color" : "#3999c6",
+    "icon" : "Virtual_Networks.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Information Protection",
+    "stroke" : "#58b4d9",
+    "color" : "#58b4d9",
+    "icon" : "Azure_Information_Protection.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Database for PostgreSQL servers",
+    "stroke" : "#3998c5",
+    "color" : "#3998c5",
+    "icon" : "Azure_Database_for_PostgreSQL_servers.png"
+  }, {
+    "tag" : "Microsoft Azure - Shared Image Galleries",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Shared_Image_Galleries.png"
+  }, {
+    "tag" : "Microsoft Azure - CloudSimple Virtual Machines",
+    "stroke" : "#496487",
+    "color" : "#496487",
+    "icon" : "CloudSimple_Virtual_Machines.png"
+  }, {
+    "tag" : "Microsoft Azure - Devices Groups",
+    "stroke" : "#57a8ce",
+    "color" : "#57a8ce",
+    "icon" : "Devices_Groups.png"
+  }, {
+    "tag" : "Microsoft Azure - Analysis Services",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Analysis_Services.png"
+  }, {
+    "tag" : "Microsoft Azure - Software as a Service (SaaS)",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Software_as_a_Service_(SaaS).png"
+  }, {
+    "tag" : "Microsoft Azure - Azure DevOps",
+    "stroke" : "#509aeb",
+    "color" : "#509aeb",
+    "icon" : "Azure_DevOps.png"
+  }, {
+    "tag" : "Microsoft Azure - Traffic Manager Profiles",
+    "stroke" : "#996dad",
+    "color" : "#996dad",
+    "icon" : "Traffic_Manager_Profiles.png"
+  }, {
+    "tag" : "Microsoft Azure - Device Compliance",
+    "stroke" : "#72bfdf",
+    "color" : "#72bfdf",
+    "icon" : "Device_Compliance.png"
+  }, {
+    "tag" : "Microsoft Azure - Container Instances",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Container_Instances.png"
+  }, {
+    "tag" : "Microsoft Azure - Device Provisioning Services",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Device_Provisioning_Services.png"
+  }, {
+    "tag" : "Microsoft Azure - Genomics Accounts",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Genomics_Accounts.png"
+  }, {
+    "tag" : "Microsoft Azure - SQL Server stretch Databases",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "SQL_Server_stretch_Databases.png"
+  }, {
+    "tag" : "Microsoft Azure - Client Apps",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Client_Apps.png"
+  }, {
+    "tag" : "Microsoft Azure - Elastic Job Agents",
+    "stroke" : "#3999c7",
+    "color" : "#3999c7",
+    "icon" : "Elastic_Job_Agents.png"
+  }, {
+    "tag" : "Microsoft Azure - Event Grid Topics",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Event_Grid_Topics.png"
+  }, {
+    "tag" : "Microsoft Azure - DNS Private Zones",
+    "stroke" : "#338ed1",
+    "color" : "#338ed1",
+    "icon" : "DNS_Private_Zones.png"
+  }, {
+    "tag" : "Microsoft Azure - Resource Graph Explorer",
+    "stroke" : "#804998",
+    "color" : "#804998",
+    "icon" : "Resource_Graph_Explorer.png"
+  }, {
+    "tag" : "Microsoft Azure - User Health Icon",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "User_Health_Icon.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure App Service - Mobile",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Azure_App_Service_-_Mobile.png"
+  }, {
+    "tag" : "Microsoft Azure - Network Watcher",
+    "stroke" : "#3898c5",
+    "color" : "#3898c5",
+    "icon" : "Network_Watcher.png"
+  }, {
+    "tag" : "Microsoft Azure - User Icon",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "User_Icon.png"
+  }, {
+    "tag" : "Microsoft Azure - StorSimple Data Managers",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "StorSimple_Data_Managers.png"
+  }, {
+    "tag" : "Microsoft Azure - Tags",
+    "stroke" : "#804998",
+    "color" : "#804998",
+    "icon" : "Tags.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure API for FHIR",
+    "stroke" : "#ff8c00",
+    "color" : "#ff8c00",
+    "icon" : "Azure_API_for_FHIR.png"
+  }, {
+    "tag" : "Microsoft Azure - Machine Learning Service Workspaces",
+    "stroke" : "#046eab",
+    "color" : "#046eab",
+    "icon" : "Machine_Learning_Service_Workspaces.png"
+  }, {
+    "tag" : "Microsoft Azure - User Resource",
+    "stroke" : "#c6dd5b",
+    "color" : "#c6dd5b",
+    "icon" : "User_Resource.png"
+  }, {
+    "tag" : "Microsoft Azure - AzureFXTEdgeFiler",
+    "stroke" : "#ff8c00",
+    "color" : "#ff8c00",
+    "icon" : "AzureFXTEdgeFiler.png"
+  }, {
+    "tag" : "Microsoft Azure - VM-non-azure",
+    "stroke" : "#b392c1",
+    "color" : "#b392c1",
+    "icon" : "VM-non-azure.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure NetApp files",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Azure_NetApp_files.png"
+  }, {
+    "tag" : "Microsoft Azure - Enterprise Applications",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Enterprise_Applications.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Digital Twins",
+    "stroke" : "#4c9cd7",
+    "color" : "#4c9cd7",
+    "icon" : "Azure_Digital_Twins.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Service Bus",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Azure_Service_Bus.png"
+  }, {
+    "tag" : "Microsoft Azure - Bot Services",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Bot_Services.png"
+  }, {
+    "tag" : "Microsoft Azure - Web App Firewall",
+    "stroke" : "#a0a1a2",
+    "color" : "#a0a1a2",
+    "icon" : "Web_App_Firewall.png"
+  }, {
+    "tag" : "Microsoft Azure - Data Lake",
+    "stroke" : "#a0a1a2",
+    "color" : "#a0a1a2",
+    "icon" : "Data_Lake.png"
+  }, {
+    "tag" : "Microsoft Azure - Metrics",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Metrics.png"
+  }, {
+    "tag" : "Microsoft Azure - Load Balancers",
+    "stroke" : "#7fba00",
+    "color" : "#7fba00",
+    "icon" : "Load_Balancers.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure IoT Hub Security",
+    "stroke" : "#7fba00",
+    "color" : "#7fba00",
+    "icon" : "Azure_IoT_Hub_Security.png"
+  }, {
+    "tag" : "Microsoft Azure - Marketplace",
+    "stroke" : "#3999c6",
+    "color" : "#3999c6",
+    "icon" : "Marketplace.png"
+  }, {
+    "tag" : "Microsoft Azure - Event Grid Subscriptions",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Event_Grid_Subscriptions.png"
+  }, {
+    "tag" : "Microsoft Azure - Managed Identities",
+    "stroke" : "#fcd116",
+    "color" : "#fcd116",
+    "icon" : "Managed_Identities.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Home",
+    "stroke" : "#3999c6",
+    "color" : "#3999c6",
+    "icon" : "Azure_Home.png"
+  }, {
+    "tag" : "Microsoft Azure - Virtual Clusters",
+    "stroke" : "#777777",
+    "color" : "#777777",
+    "icon" : "Virtual_Clusters.png"
+  }, {
+    "tag" : "Microsoft Azure - Kubernetes Services",
+    "stroke" : "#804998",
+    "color" : "#804998",
+    "icon" : "Kubernetes_Services.png"
+  }, {
+    "tag" : "Microsoft Azure - Guest Assignments",
+    "stroke" : "#def0f7",
+    "color" : "#def0f7",
+    "icon" : "Guest_Assignments.png"
+  }, {
+    "tag" : "Microsoft Azure - Storage Accounts",
+    "stroke" : "#3e3e3e",
+    "color" : "#3e3e3e",
+    "icon" : "Storage_Accounts.png"
+  }, {
+    "tag" : "Microsoft Azure - Stream Analytics Jobs",
+    "stroke" : "#7a7a7a",
+    "color" : "#7a7a7a",
+    "icon" : "Stream_Analytics_Jobs.png"
+  }, {
+    "tag" : "Microsoft Azure - Virtual Datacenter",
+    "stroke" : "#7ac3e1",
+    "color" : "#7ac3e1",
+    "icon" : "Virtual_Datacenter.png"
+  }, {
+    "tag" : "Microsoft Azure - CloudSimple Nodes",
+    "stroke" : "#486385",
+    "color" : "#486385",
+    "icon" : "CloudSimple_Nodes.png"
+  }, {
+    "tag" : "Microsoft Azure - Media Encoding",
+    "stroke" : "#3e3e3e",
+    "color" : "#3e3e3e",
+    "icon" : "Media_Encoding.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Cache plus Redis",
+    "stroke" : "#3999c6",
+    "color" : "#3999c6",
+    "icon" : "Azure_Cache_plus_Redis.png"
+  }, {
+    "tag" : "Microsoft Azure - Management Groups",
+    "stroke" : "#7a7a7a",
+    "color" : "#7a7a7a",
+    "icon" : "Management_Groups.png"
+  }, {
+    "tag" : "Microsoft Azure - Disks",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Disks.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Firewall",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Azure_Firewall.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Media Services",
+    "stroke" : "#3e3e3e",
+    "color" : "#3e3e3e",
+    "icon" : "Azure_Media_Services.png"
+  }, {
+    "tag" : "Microsoft Azure - Resource Explorer",
+    "stroke" : "#fee087",
+    "color" : "#fee087",
+    "icon" : "Resource_Explorer.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure StorSimple Device Managers",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Azure_StorSimple_Device_Managers.png"
+  }, {
+    "tag" : "Microsoft Azure - Education",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Education.png"
+  }, {
+    "tag" : "Microsoft Azure - Access Review",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Access_Review.png"
+  }, {
+    "tag" : "Microsoft Azure - Non-azure-machine",
+    "stroke" : "#804998",
+    "color" : "#804998",
+    "icon" : "Non-azure-machine.png"
+  }, {
+    "tag" : "Microsoft Azure - App Registrations",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "App_Registrations.png"
+  }, {
+    "tag" : "Microsoft Azure - App Configuration",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "App_Configuration.png"
+  }, {
+    "tag" : "Microsoft Azure - Key Vaults",
+    "stroke" : "#fcd116",
+    "color" : "#fcd116",
+    "icon" : "Key_Vaults.png"
+  }, {
+    "tag" : "Microsoft Azure - Reservations",
+    "stroke" : "#804998",
+    "color" : "#804998",
+    "icon" : "Reservations.png"
+  }, {
+    "tag" : "Microsoft Azure - Scheduler Job Collections",
+    "stroke" : "#7a7a7a",
+    "color" : "#7a7a7a",
+    "icon" : "Scheduler_Job_Collections.png"
+  }, {
+    "tag" : "Microsoft Azure - StorSimple Device Managers",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "StorSimple_Device_Managers.png"
+  }, {
+    "tag" : "Microsoft Azure - Archive Storage",
+    "stroke" : "#3e3e3e",
+    "color" : "#3e3e3e",
+    "icon" : "Archive_Storage.png"
+  }, {
+    "tag" : "Microsoft Azure - VM Images",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "VM_Images.png"
+  }, {
+    "tag" : "Microsoft Azure - Security Baselines",
+    "stroke" : "#96c514",
+    "color" : "#96c514",
+    "icon" : "Security_Baselines.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Database for MySQL servers",
+    "stroke" : "#0f80b0",
+    "color" : "#0f80b0",
+    "icon" : "Azure_Database_for_MySQL_servers.png"
+  }, {
+    "tag" : "Microsoft Azure - Table Storage",
+    "stroke" : "#5b5b5b",
+    "color" : "#5b5b5b",
+    "icon" : "Table_Storage.png"
+  }, {
+    "tag" : "Microsoft Azure - Data Factories",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Data_Factories.png"
+  }, {
+    "tag" : "Microsoft Azure - Resource",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Resource.png"
+  }, {
+    "tag" : "Microsoft Azure - Solutions",
+    "stroke" : "#3999c6",
+    "color" : "#3999c6",
+    "icon" : "Solutions.png"
+  }, {
+    "tag" : "Microsoft Azure - Logic Apps",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Logic_Apps.png"
+  }, {
+    "tag" : "Microsoft Azure - Citrix Virtual Desktops Essentials",
+    "stroke" : "#4293f4",
+    "color" : "#4293f4",
+    "icon" : "Citrix_Virtual_Desktops_Essentials.png"
+  }, {
+    "tag" : "Microsoft Azure - Batch Accounts",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Batch_Accounts.png"
+  }, {
+    "tag" : "Microsoft Azure - Logic Apps Custom Connector",
+    "stroke" : "#7fba00",
+    "color" : "#7fba00",
+    "icon" : "Logic_Apps_Custom_Connector.png"
+  }, {
+    "tag" : "Microsoft Azure - Blob Storage",
+    "stroke" : "#3e3e3e",
+    "color" : "#3e3e3e",
+    "icon" : "Blob_Storage.png"
+  }, {
+    "tag" : "Microsoft Azure - Data Box",
+    "stroke" : "#2272b9",
+    "color" : "#2272b9",
+    "icon" : "Data_Box.png"
+  }, {
+    "tag" : "Microsoft Azure - Activity Log",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Activity_Log.png"
+  }, {
+    "tag" : "Microsoft Azure - API Connections",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "API_Connections.png"
+  }, {
+    "tag" : "Microsoft Azure - Cognitive Services",
+    "stroke" : "#3176bc",
+    "color" : "#3176bc",
+    "icon" : "Cognitive_Services.png"
+  }, {
+    "tag" : "Microsoft Azure - OS Images (Classic)",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "OS_Images_(Classic).png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Database Migration Services",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Azure_Database_Migration_Services.png"
+  }, {
+    "tag" : "Microsoft Azure - VM-Linux",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "VM-Linux.png"
+  }, {
+    "tag" : "Microsoft Azure - SQL Servers",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "SQL_Servers.png"
+  }, {
+    "tag" : "Microsoft Azure - ExpressRoute Circuits",
+    "stroke" : "#7fba00",
+    "color" : "#7fba00",
+    "icon" : "ExpressRoute_Circuits.png"
+  }, {
+    "tag" : "Microsoft Azure - Route Filters",
+    "stroke" : "#804998",
+    "color" : "#804998",
+    "icon" : "Route_Filters.png"
+  }, {
+    "tag" : "Microsoft Azure - Data Lake Store Gen1",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Data_Lake_Store_Gen1.png"
+  }, {
+    "tag" : "Microsoft Azure - All Resources",
+    "stroke" : "#b8d432",
+    "color" : "#b8d432",
+    "icon" : "All_Resources.png"
+  }, {
+    "tag" : "Microsoft Azure - Diagnostic Settings",
+    "stroke" : "#7fba00",
+    "color" : "#7fba00",
+    "icon" : "Diagnostic_Settings.png"
+  }, {
+    "tag" : "Microsoft Azure - Event Grid Domains",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Event_Grid_Domains.png"
+  }, {
+    "tag" : "Microsoft Azure - Application Security Groups",
+    "stroke" : "#0072c6",
+    "color" : "#0072c6",
+    "icon" : "Application_Security_Groups.png"
+  }, {
+    "tag" : "Microsoft Azure - Free Services",
+    "stroke" : "#59b4d9",
+    "color" : "#59b4d9",
+    "icon" : "Free_Services.png"
+  }, {
+    "tag" : "Microsoft Azure - Azure Test Plans",
+    "stroke" : "#661db0",
+    "color" : "#661db0",
+    "icon" : "Azure_Test_Plans.png"
+  } ]
+}

@@ -1,0 +1,218 @@
+{
+  "name" : "Oracle Cloud Infrastructure",
+  "description" : "This theme includes element styles with icons for each of the OCI services, based upon the Graphics for Topologies and Diagrams (https://docs.cloud.oracle.com/en-us/iaas/Content/General/Reference/graphicsfordiagrams.htm).",
+  "elements" : [ {
+    "tag" : "Oracle Cloud Infrastructure - Data Transfer",
+    "icon" : "OCI_icon_Data_Transfer.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Object Storage",
+    "icon" : "OCI_icon_Object_Storage.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - BM",
+    "icon" : "OCI_icon_BM.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - OKE",
+    "icon" : "OCI_icon_OKE.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Logging",
+    "icon" : "OCI_icon_Logging.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - WAF",
+    "icon" : "OCI_icon_WAF.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Alarm",
+    "icon" : "OCI_icon_Alarm.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Policies",
+    "icon" : "OCI_icon_Policies.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - VPN",
+    "icon" : "OCI_icon_VPN.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Backbone",
+    "icon" : "OCI_icon_Backbone.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Block Storage",
+    "icon" : "OCI_icon_Block_Storage.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - DNS",
+    "icon" : "OCI_icon_DNS.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - DDOS",
+    "icon" : "OCI_icon_DDOS.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Service Gateway",
+    "icon" : "OCI_icon_Service_Gateway.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Disconnected Regions",
+    "icon" : "OCI_icon_Disconnected_Regions.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Customer DataCenter",
+    "icon" : "OCI_icon_Customer_DataCenter.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - VM",
+    "icon" : "OCI_icon_VM.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - File Storage",
+    "icon" : "OCI_icon_File_Storage.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - AutoScale",
+    "icon" : "OCI_icon_AutoScale.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Storage Gateway",
+    "icon" : "OCI_icon_Storage_Gateway.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - VCN",
+    "icon" : "OCI_icon_VCN.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - DIS",
+    "icon" : "OCI_icon_DIS.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - API Gateway",
+    "icon" : "OCI_icon_API_Gateway.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Key Management",
+    "icon" : "OCI_icon_Key_Management.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Internet Gateway",
+    "icon" : "OCI_icon_Internet_Gateway.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Health Check",
+    "icon" : "OCI_icon_Health_Check.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Groups",
+    "icon" : "OCI_icon_Groups.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Cloud Guard",
+    "icon" : "OCI_icon_Cloud_Guard.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - ID Access",
+    "icon" : "OCI_icon_ID_Access.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - BackUp Restore",
+    "icon" : "OCI_icon_BackUp_Restore.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - FireWall",
+    "icon" : "OCI_icon_FireWall.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Market Place",
+    "icon" : "OCI_icon_Market_Place.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Resource Mgmt",
+    "icon" : "OCI_icon_Resource_Mgmt.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Elastic Performance",
+    "icon" : "OCI_icon_Elastic Performance.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - DRG",
+    "icon" : "OCI_icon_DRG.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - MAX Security Zone",
+    "icon" : "OCI_icon_MAX_Security_Zone.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Notifications",
+    "icon" : "OCI_icon_Notifications.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Email",
+    "icon" : "OCI_icon_Email.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Block Storage Clone",
+    "icon" : "OCI_icon_Block_Storage_Clone.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - DataFlow Apache",
+    "icon" : "OCI_icon_DataFlow_Apache.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - BigData Service",
+    "icon" : "OCI_icon_BigData_Service.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Load Balancer",
+    "icon" : "OCI_icon_Load_Balancer.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Customer Premise",
+    "icon" : "OCI_icon_Customer_Premise.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - DCAT",
+    "icon" : "OCI_icon_DCAT.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Fast Connect",
+    "icon" : "OCI_icon_Fast_Connect.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Database Service",
+    "icon" : "OCI_icon_Database_Service.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - NAT Gateway",
+    "icon" : "OCI_icon_NAT_Gateway.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Autonomous",
+    "icon" : "OCI_icon_Autonomous.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Search",
+    "icon" : "OCI_icon_Search.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Telemetry",
+    "icon" : "OCI_icon_Telemetry.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Stream",
+    "icon" : "OCI_icon_Stream.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Vault",
+    "icon" : "OCI_icon_Vault.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - OCIR",
+    "icon" : "OCI_icon_OCIR.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - OCID",
+    "icon" : "OCI_icon_OCID.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Functions",
+    "icon" : "OCI_icon_Functions.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - CDN",
+    "icon" : "OCI_icon_CDN.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - API Service",
+    "icon" : "OCI_icon_API_Service.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Tagging",
+    "icon" : "OCI_icon_Tagging.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - WorkFlow",
+    "icon" : "OCI_icon_WorkFlow.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Audit",
+    "icon" : "OCI_icon_Audit.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Encryption",
+    "icon" : "OCI_icon_Encryption.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Events",
+    "icon" : "OCI_icon_Events.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - DMS",
+    "icon" : "OCI_icon_DMS.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Security Lists",
+    "icon" : "OCI_icon_Security_Lists.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Container",
+    "icon" : "OCI_icon_Container.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Queue",
+    "icon" : "OCI_icon_Queue.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Instance Pools",
+    "icon" : "OCI_icon_Instance_Pools.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Science",
+    "icon" : "OCI_icon_Science.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Route Table",
+    "icon" : "OCI_icon_Route_Table.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Buckets",
+    "icon" : "OCI_icon_Buckets.png"
+  }, {
+    "tag" : "Oracle Cloud Infrastructure - Compartments",
+    "icon" : "OCI_icon_Compartments.png"
+  } ]
+}
