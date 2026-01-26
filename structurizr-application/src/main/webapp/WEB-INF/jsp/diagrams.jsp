@@ -1191,19 +1191,23 @@
         }
 
         structurizr.workspace.views.configuration.lastSavedView = structurizr.diagram.getCurrentViewOrFilter().key;
+
+        unsavedChanges = false;
         structurizr.saveWorkspace(function(response) {
             if (response.success === true) {
                 progressMessage.hide();
 
-                $('#saveButton').removeClass('btn-danger');
-                $('#saveButton').addClass('btn-default');
-                $('#saveButton img').removeClass('icon-white');
-                $('#saveButton').prop('disabled', true);
-
-                unsavedChanges = false;
+                if (unsavedChanges === false) {
+                    $('#saveButton').removeClass('btn-danger');
+                    $('#saveButton').addClass('btn-default');
+                    $('#saveButton img').removeClass('icon-white');
+                    $('#saveButton').prop('disabled', true);
+                }
 
                 refreshThumbnail();
             } else {
+                unsavedChanges = true;
+
                 $('#saveButton').prop('disabled', false);
                 if (response.message) {
                     console.log(response.message);
