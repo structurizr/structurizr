@@ -6532,7 +6532,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             });
 
             this.autoPageSize();
-            this.zoomFitHeight();
+            this.zoomToWidthOrHeight();
 
             centreDiagram();
             diagramRendered = true;
