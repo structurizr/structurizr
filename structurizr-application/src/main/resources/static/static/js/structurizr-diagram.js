@@ -6219,13 +6219,15 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
                 if (highlightedElement) {
                     // and unhighlight connections to/from element
-                    const connectionsForElement = connections[cell.model.elementInView.id];
-                    if (connectionsForElement) {
-                        connectionsForElement.forEach(function (cellView) {
-                            unhighlightRelationship(cellView);
-                        });
+                    if (cell.model.elementInView) {
+                        const connectionsForElement = connections[cell.model.elementInView.id];
+                        if (connectionsForElement) {
+                            connectionsForElement.forEach(function (cellView) {
+                                unhighlightRelationship(cellView);
+                            });
+                        }
+                        highlightedElement = undefined;
                     }
-                    highlightedElement = undefined;
                 }
 
                 if (highlightedLink) {
