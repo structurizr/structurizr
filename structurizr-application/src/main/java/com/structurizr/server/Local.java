@@ -2,6 +2,7 @@ package com.structurizr.server;
 
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Profile;
+import com.structurizr.view.ThemeUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEvent;
 import org.springframework.boot.web.servlet.context.ServletWebServerInitializedEvent;
@@ -12,6 +13,7 @@ import java.io.File;
 import java.util.Properties;
 
 import static com.structurizr.configuration.StructurizrProperties.DATA_DIRECTORY;
+import static com.structurizr.configuration.StructurizrProperties.THEMES;
 
 public class Local extends AbstractServer {
 
@@ -24,6 +26,7 @@ public class Local extends AbstractServer {
 		}
 
 		Configuration.init(Profile.Local, properties);
+		ThemeUtils.registerThemes(new File(Configuration.getInstance().getProperty(THEMES)));
 
 		SpringApplication app = new SpringApplication(Local.class);
 		app.setAdditionalProfiles("command-local");

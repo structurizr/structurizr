@@ -1,5 +1,6 @@
 package com.structurizr.server.web;
 
+import com.structurizr.configuration.StructurizrProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.CacheControl;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -28,7 +29,7 @@ public class Config implements WebMvcConfigurer {
                 .resourceChain(false);
 
         registry.addResourceHandler("/static/themes/**")
-                .addResourceLocations("file:" + new File(com.structurizr.configuration.Configuration.getInstance().getDataDirectory(), "themes").getAbsolutePath() + File.separator)
+                .addResourceLocations("file:" + new File(com.structurizr.configuration.Configuration.getInstance().getProperty(StructurizrProperties.THEMES)).getAbsolutePath() + File.separator)
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS))
                 .resourceChain(false);
     }

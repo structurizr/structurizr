@@ -22,6 +22,9 @@ public class StructurizrProperties {
     public static final String NETWORK_URLS_ALLOWED = "structurizr.network.urls.allowed";
     public static final String NETWORK_TIMEOUT = "structurizr.network.timeout";
 
+    public static final String THEMES = "structurizr.themes";
+    public static final String DEFAULT_THEMES_PATH = "themes";
+
     public static final String AUTHENTICATION_IMPLEMENTATION = "structurizr.authentication";
     public static final String AUTHENTICATION_VARIANT_NONE = "none";
     public static final String AUTHENTICATION_VARIANT_FILE = "file";

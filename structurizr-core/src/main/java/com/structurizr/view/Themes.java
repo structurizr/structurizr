@@ -1,19 +1,24 @@
 package com.structurizr.view;
 
+import java.io.File;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Themes {
 
-    private static Set<String> BUILT_IN_THEMES = new HashSet<>();
+    static final Map<String, File> THEMES = new HashMap<>();
 
-    public static void setBuiltInThemes(Collection<String> themes) {
-        BUILT_IN_THEMES = new HashSet<>(themes);
+    public static Collection<String> getThemes() {
+        return THEMES.keySet();
     }
 
-    public static boolean isBuiltIn(String theme) {
-        return BUILT_IN_THEMES.contains(theme);
+    public static File getTheme(String name) {
+        return THEMES.get(name);
+    }
+
+    public static boolean isRegistered(String theme) {
+        return THEMES.containsKey(theme);
     }
 
 }

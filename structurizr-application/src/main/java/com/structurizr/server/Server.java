@@ -3,8 +3,7 @@ package com.structurizr.server;
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Profile;
 import com.structurizr.configuration.StructurizrProperties;
-import com.structurizr.util.BuiltInThemes;
-import com.structurizr.view.Themes;
+import com.structurizr.view.ThemeUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEvent;
 import org.springframework.context.ApplicationListener;
@@ -12,8 +11,7 @@ import org.springframework.context.ApplicationListener;
 import java.io.File;
 import java.util.Properties;
 
-import static com.structurizr.configuration.StructurizrProperties.AUTHENTICATION_IMPLEMENTATION;
-import static com.structurizr.configuration.StructurizrProperties.DATA_DIRECTORY;
+import static com.structurizr.configuration.StructurizrProperties.*;
 
 public class Server extends AbstractServer {
 
@@ -26,7 +24,7 @@ public class Server extends AbstractServer {
 		}
 
 		Configuration.init(Profile.Server, properties);
-		Themes.setBuiltInThemes(BuiltInThemes.getThemes());
+		ThemeUtils.registerThemes(new File(Configuration.getInstance().getProperty(THEMES)));
 
 		SpringApplication app = new SpringApplication(Server.class);
 		app.setAdditionalProfiles(

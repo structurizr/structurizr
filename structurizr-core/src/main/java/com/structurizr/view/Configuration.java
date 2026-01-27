@@ -75,6 +75,13 @@ public final class Configuration implements PropertyHolder {
     }
 
     /**
+     * Clears all themes.
+     */
+    public void clearThemes() {
+        themes.clear();
+    }
+
+    /**
      * Adds a theme.
      *
      * @param theme       the name of URL of the theme to be added
@@ -83,11 +90,11 @@ public final class Configuration implements PropertyHolder {
         if (!StringUtils.isNullOrEmpty(theme)) {
             theme = theme.trim();
 
-            if (Themes.isBuiltIn(theme)) {
+            if (Themes.isRegistered(theme)) {
                 themes.add(theme);
             } else if (Url.isUrl(theme)) {
                 if (theme.startsWith(STRUCTURIZR_CLOUD_SERVICE_THEMES_URL)) {
-                    log.warn("The Structurizr cloud service will reach its End of Life (EOL) on 30 September 2026 and this theme will not be available");
+                    log.warn("The Structurizr cloud service will reach its End of Life (EOL) on 30 September 2026 and this theme will not be available: " + theme);
                 }
 
                 if (!themes.contains(theme)) {

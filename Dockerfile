@@ -5,7 +5,7 @@ RUN set -eux; \
 	apt-get update;
 
 COPY structurizr-application/target/structurizr-*.war /usr/local/structurizr.war
-COPY structurizr-themes /usr/local/structurizr/themes
+COPY structurizr-themes /usr/local/structurizr-themes
 
 EXPOSE ${PORT}
 

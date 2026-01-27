@@ -8,13 +8,13 @@ import com.structurizr.export.plantuml.C4PlantUMLExporter;
 import com.structurizr.export.plantuml.StructurizrPlantUMLExporter;
 import com.structurizr.export.websequencediagrams.WebSequenceDiagramsExporter;
 import com.structurizr.http.HttpClient;
+import com.structurizr.util.StringUtils;
 import com.structurizr.util.WorkspaceUtils;
 import com.structurizr.view.ColorScheme;
 import com.structurizr.view.ThemeUtils;
 import org.apache.commons.cli.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
@@ -25,7 +25,10 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.*;
+import java.util.Base64;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ExportCommand extends AbstractCommand {
 
@@ -85,6 +88,10 @@ public class ExportCommand extends AbstractCommand {
         option.setRequired(false);
         options.addOption(option);
 
+        option = new Option("t", "themes", true, "Path to themes");
+        option.setRequired(false);
+        options.addOption(option);
+
         CommandLineParser commandLineParser = new DefaultParser();
 
         String workspacePathAsString = null;
@@ -92,6 +99,7 @@ public class ExportCommand extends AbstractCommand {
         long workspaceId = 1;
         String format = "";
         String outputPath = null;
+        String themes = null;
 
         try {
             CommandLine cmd = commandLineParser.parse(options, args);
@@ -99,6 +107,7 @@ public class ExportCommand extends AbstractCommand {
             workspacePathAsString = cmd.getOptionValue("workspace");
             format = cmd.getOptionValue("format");
             outputPath = cmd.getOptionValue("output");
+            themes = cmd.getOptionValue("themes");
 
         } catch (ParseException e) {
             log.error(e.getMessage());
@@ -107,6 +116,10 @@ public class ExportCommand extends AbstractCommand {
         }
 
         log.info("Exporting workspace from " + workspacePathAsString);
+
+        if (!StringUtils.isNullOrEmpty(themes)) {
+            ThemeUtils.registerThemes(new File(themes));
+        }
 
         Workspace workspace = loadWorkspace(workspacePathAsString);
 
@@ -126,11 +139,10 @@ public class ExportCommand extends AbstractCommand {
         outputDir.mkdirs();
 
         if (STATIC_FORMAT.equals(format)) {
+            ThemeUtils.inlineThemes(workspace);
+
             log.info(" - writing static site to " + outputDir.getAbsolutePath());
             writeStaticFile("static.html", outputDir, "index.html");
-
-            ClassLoader cl = this.getClass().getClassLoader();
-            ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver(cl);
 
             writeStaticFile("js/jquery-3.7.1.min.js", outputDir);
             writeStaticFile("js/bootstrap-5.3.7.min.js", outputDir);

@@ -4,6 +4,7 @@ import com.structurizr.dsl.StructurizrDslParser;
 import com.structurizr.http.HttpClient;
 import com.structurizr.util.StringUtils;
 import com.structurizr.util.Version;
+import com.structurizr.view.Themes;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -240,6 +241,7 @@ public class Configuration {
     private void setDefaults() {
         setDefault(DEBUG, FALSE);
         setDefault(NETWORK_TIMEOUT, DEFAULT_NETWORK_TIMEOUT_OF_SIXTY_SECONDS);
+        setDefault(THEMES, getDataDirectory().getAbsolutePath() + File.separator + DEFAULT_THEMES_PATH + File.separator);
 
         if (profile != Profile.Playground) {
             setDefault(AUTHENTICATION_IMPLEMENTATION, AUTHENTICATION_VARIANT_NONE);
@@ -370,6 +372,12 @@ public class Configuration {
         log.info("v" + new Version().getBuildNumber());
 
         logAllProperties(log, getProperties());
+        log.info("***********************************************************************************");
+
+        log.info("Themes:");
+        for (String theme : Themes.getThemes()) {
+            log.info(" - " + theme);
+        }
         log.info("***********************************************************************************");
 
         if (!getDataDirectory().exists()) {

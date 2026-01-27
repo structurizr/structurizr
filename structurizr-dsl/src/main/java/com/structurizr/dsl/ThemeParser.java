@@ -28,9 +28,9 @@ final class ThemeParser extends AbstractParser {
     }
 
     void parseThemes(DslContext context, File dslFile, Tokens tokens) {
-        // themes <url|file> [url|file] ... [url|file]
+        // themes <name|url|file> [name|url|file] ... [name|url|file]
         if (!tokens.includes(FIRST_THEME_INDEX)) {
-            throw new RuntimeException("Expected: themes <url|file> [url|file] ... [url|file]");
+            throw new RuntimeException("Expected: themes <name|url|file> [name|url|file] ... [name|url|file]");
         }
 
         for (int i = FIRST_THEME_INDEX; i < tokens.size(); i++) {
@@ -43,7 +43,7 @@ final class ThemeParser extends AbstractParser {
             theme = DEFAULT_THEME_URL;
         }
 
-        if (Themes.isBuiltIn(theme)) {
+        if (Themes.isRegistered(theme)) {
             context.getWorkspace().getViews().getConfiguration().addTheme(theme);
         } else if (Url.isUrl(theme)) {
             // this adds the theme to the list of theme URLs in the workspace
@@ -65,7 +65,7 @@ final class ThemeParser extends AbstractParser {
                         throw new RuntimeException(file.getAbsolutePath() + " is not a file");
                     }
                 } else {
-                    throw new RuntimeException(file.getAbsolutePath() + " does not exist");
+                    throw new RuntimeException("Theme " + theme + " does not exist at " + file.getAbsolutePath());
                 }
             } else {
                 throw new FeatureNotEnabledException(Features.FILE_SYSTEM, "File-based themes are not permitted");

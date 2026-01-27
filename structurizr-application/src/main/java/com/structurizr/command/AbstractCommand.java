@@ -6,7 +6,6 @@ import com.structurizr.Workspace;
 import com.structurizr.dsl.StructurizrDslParser;
 import com.structurizr.http.HttpClient;
 import com.structurizr.inspection.DefaultInspector;
-import com.structurizr.util.BuiltInThemes;
 import com.structurizr.util.Version;
 import com.structurizr.util.WorkspaceUtils;
 import com.structurizr.validation.WorkspaceScopeValidatorFactory;

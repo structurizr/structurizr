@@ -8,20 +8,56 @@ import com.structurizr.Workspace;
 import com.structurizr.http.HttpClient;
 import com.structurizr.http.RemoteContent;
 import com.structurizr.io.WorkspaceWriterException;
+import com.structurizr.model.Element;
 import com.structurizr.util.ImageUtils;
 import com.structurizr.util.StringUtils;
 import com.structurizr.util.Url;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.*;
 
 /**
  * Some utility methods for exporting themes to JSON.
  */
 public final class ThemeUtils {
 
+    private static final Log log = LogFactory.getLog(ThemeUtils.class);
+
+    private static final String THEME_JSON = "theme.json";
+
     private static final int DEFAULT_TIMEOUT_IN_MILLISECONDS = 10000;
+
+    /**
+     * Registers a directory containing themes.
+     *
+     * @param themesDirectory
+     */
+    public static void registerThemes(File themesDirectory) {
+        if (themesDirectory == null) {
+            throw new IllegalArgumentException("Themes directory must be specified");
+        }
+
+        if (!themesDirectory.exists() || !themesDirectory.isDirectory()) {
+            log.warn("The themes directory at " + themesDirectory.getAbsolutePath() + " does not exist");
+            return;
+        }
+
+        File[] themes = themesDirectory.listFiles();
+        if (themes != null) {
+            for (File theme : themes) {
+                if (theme.isDirectory()) {
+                    File themeJson = new File(theme, THEME_JSON);
+                    if (themeJson.exists()) {
+                        Themes.THEMES.put(theme.getName(), themeJson);
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * Serializes the theme (element and relationship styles) in the specified workspace to a file, as a JSON string.
@@ -113,6 +149,56 @@ public final class ThemeUtils {
                     throw new RuntimeException(String.format("%s - expected content type of %s, actual content type is %s", themeLocation, RemoteContent.CONTENT_TYPE_JSON, remoteContent.getContentType()));
                 }
             }
+        }
+    }
+
+    /**
+     * Inlines icons from "registered" themes into the workspace.
+     *
+     * @param workspace     a Workspace instance
+     */
+    public static void inlineThemes(Workspace workspace) {
+        // todo: inline all style properties from element and relationship styles
+
+        // find all tags used by elements in the model
+        Set<String> elementTags = new HashSet<>();
+        for (Element element : workspace.getModel().getElements()) {
+            elementTags.addAll(element.getTagsAsSet());
+        }
+
+        try {
+            List<String> themeNames = new ArrayList<>();
+            for (String themeName : workspace.getViews().getConfiguration().getThemes()) {
+                if (Themes.isRegistered(themeName)) {
+                    File themeJson = Themes.getTheme(themeName);
+                    String json = Files.readString(themeJson.toPath());
+                    Theme theme = fromJson(json);
+
+                    if (theme != null) {
+                        for (ElementStyle styleInTheme : theme.getElements()) {
+                            if (elementTags.contains(styleInTheme.getTag())) {
+                                ElementStyle styleInWorkspace = workspace.getViews().getConfiguration().getStyles().getElementStyle(styleInTheme.getTag());
+                                if (styleInWorkspace == null) {
+                                    styleInWorkspace = workspace.getViews().getConfiguration().getStyles().addElementStyle(styleInTheme.getTag());
+                                }
+
+                                if (StringUtils.isNullOrEmpty(styleInWorkspace.getIcon())) {
+                                    styleInWorkspace.setIcon(ImageUtils.getImageAsDataUri(new File(themeJson.getParentFile(), styleInTheme.getIcon())));
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    themeNames.add(themeName);
+                }
+            }
+
+            // remove all built-in themes
+            workspace.getViews().getConfiguration().clearThemes();
+            workspace.getViews().getConfiguration().setThemes(themeNames.toArray(new String[0]));
+            System.out.println(Arrays.toString(workspace.getViews().getConfiguration().getThemes()));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
