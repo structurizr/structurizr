@@ -120,14 +120,20 @@ structurizr.ui.ContentRenderer = function(workspace, host, urlPrefix, safeMode) 
     }
 
     function renderImage(name, alt) {
-        // if the image is a workspace diagram PNG, replace it with the embedded version
-        var regex = new RegExp(host + '/workspace/' + workspace.id + '/diagrams/(.*?).png');
+        // if the image is a published workspace image, replace it with the embedded version
+        var regex = new RegExp('.*/workspace/' + workspace.id + '/images/(.*?).png');
         var match = regex.exec(name);
         if (match && match[1]) {
             return renderEmbeddedDiagram(match[1]);
         }
 
-        regex = new RegExp(host + '/workspace/' + workspace.id + '/[0-9a-zA-Z-]{36}/diagrams/(.*?).png');
+        regex = new RegExp('.*/share/' + workspace.id + '/images/(.*?).png');
+        match = regex.exec(name);
+        if (match && match[1]) {
+            return renderEmbeddedDiagram(match[1]);
+        }
+
+        regex = new RegExp('.*/share/' + workspace.id + '/[0-9a-zA-Z-]{36}/images/(.*?).png');
         match = regex.exec(name);
         if (match && match[1]) {
             return renderEmbeddedDiagram(match[1]);
