@@ -91,6 +91,14 @@ structurizr.util.trim = function(s) {
     }
 };
 
+structurizr.util.removeNewlineCharacters = function(s) {
+    if (s) {
+        s = s.replace(/(\r\n|\r|\n)/g, ' ');
+    }
+
+    return s;
+};
+
 structurizr.util.btoa = function(plain) {
     return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(plain));
 };

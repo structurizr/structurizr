@@ -2888,7 +2888,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         diagramMetadataWidth = 0;
 
         if (showTitle) {
-            diagramTitle = structurizr.ui.getTitleForView(viewOrFilter);
+            diagramTitle = structurizr.util.removeNewlineCharacters(structurizr.ui.getTitleForView(viewOrFilter));
         }
 
         diagramTitleElement = new structurizr.shapes.DiagramTitle({
@@ -2948,7 +2948,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
         if (showMetadata) {
             if (structurizr.workspace.id === 0) {
-                // demo page
+                // playground
                 diagramMetadata = new Date().toLocaleString(locale, options);
             } else {
                 const lastModified = structurizr.workspace.lastModifiedDate;
@@ -3120,7 +3120,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
     }
 
     function formatName(element, configuration, width) {
-        return breakText(element.name ? element.name : "", Math.max(0, width), font.name, (configuration.fontSize * nameFontSizeDifferenceRatio));
+        return breakText(element.name ? structurizr.util.removeNewlineCharacters(element.name) : "", Math.max(0, width), font.name, (configuration.fontSize * nameFontSizeDifferenceRatio));
     }
 
     function formatDescription(element, configuration, width) {
@@ -3684,7 +3684,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         var fill;
         var icon;
         var strokeWidth = 2;
-        var nameText = name;
+        var nameText = structurizr.util.removeNewlineCharacters(name);
 
         if (type === structurizr.constants.GROUP_ELEMENT_TYPE) {
             elementStyle = structurizr.ui.findElementStyle( {
@@ -3848,6 +3848,9 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         boundary._computedStyle.stroke = stroke;
         boundary._computedStyle.fontSize = elementStyle.fontSize;
 
+        var cellView = paper.findViewByModel(boundary);
+        const widthOfName = $('#' + cellView.id + ' .structurizrName')[0].getComputedTextLength();
+
         if (icon) {
             var iconRatio = getImageRatio(icon);
             var widthOfIcon = (heightOfIcon * iconRatio);
@@ -3857,9 +3860,12 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             boundary.attributes.attrs['.structurizrIcon']['height'] = heightOfIcon;
             boundary.attributes.attrs['.structurizrIcon']['opacity'] = (elementStyle.opacity/100);
             boundary._computedStyle.icon = icon;
+
+            boundary._computedStyle.minimumWidth = widthOfIcon + 10 + widthOfName;
+        } else {
+            boundary._computedStyle.minimumWidth = widthOfName;
         }
 
-        var cellView = paper.findViewByModel(boundary);
         $('#' + cellView.id).attr('style', 'cursor: ' + (editable === true ? 'move' : 'default') + ' !important');
 
         return boundary;
@@ -3914,7 +3920,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                     opacity: editable ? 0.6 : 1.0
                 },
                 '.structurizrName': {
-                    text: element.name,
+                    text: structurizr.util.removeNewlineCharacters(element.name),
                     'font-family': font.name,
                     'font-weight': 'bold',
                     'font-size': (configuration.fontSize * nameFontSizeDifferenceRatio) + 'px',
@@ -3948,6 +3954,10 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         cell._computedStyle.fontSize = configuration.fontSize;
         cell._computedStyle.opacity = configuration.opacity;
 
+        var cellView = paper.findViewByModel(cell);
+        const widthOfName = $('#' + cellView.id + ' .structurizrName')[0].getComputedTextLength();
+        const widthOfMetadata = $('#' + cellView.id + ' .structurizrMetaData')[0].getComputedTextLength();
+
         if (configuration.icon) {
             var iconRatio = getImageRatio(configuration.icon);
             var widthOfIcon = (heightOfIcon * iconRatio);
@@ -3957,9 +3967,12 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             cell.attributes.attrs['.structurizrIcon']['height'] = heightOfIcon;
             cell.attributes.attrs['.structurizrIcon']['opacity'] = (configuration.opacity/100);
             cell._computedStyle.icon = configuration.icon;
+
+            cell._computedStyle.minimumWidth = widthOfIcon + 10 + Math.max(widthOfName, widthOfMetadata);
+        } else {
+            cell._computedStyle.minimumWidth = Math.max(widthOfName, widthOfMetadata);
         }
 
-        var cellView = paper.findViewByModel(cell);
         const domElement = $('#' + cellView.id);
         domElement.attr('style', 'cursor: ' + (editable === true ? 'move' : 'default') + ' !important');
 
@@ -4093,6 +4106,11 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             var newHeight = maxY - minY + padding.top + padding.bottom;
             var newX = minX - padding.left;
             var newY = minY - padding.top;
+
+            const minimumWidth = parentCell._computedStyle.minimumWidth;
+            if (minimumWidth) {
+                newWidth = Math.max(newWidth, minimumWidth + margin + margin);
+            }
 
             var refX = (margin / newWidth);
 
