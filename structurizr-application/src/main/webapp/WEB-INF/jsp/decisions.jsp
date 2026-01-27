@@ -410,7 +410,7 @@
 
             html += '<tr>';
             html += '<td width="80%"><a href="' + createDecisionAnchor(decision) + '">' + decision.id + '. ' + structurizr.util.escapeHtml(decision.title) + '</a><div class="decisionSummaryMetadata">' + formatDate(decision.date) + '</div></td>';
-            html += '<td style="text-align: right">' + createStatusLabel(decision, true) + '</td>';
+            html += '<td style="text-align: right; padding: 10px;">' + createStatusLabel(decision, true) + '</td>';
             html += '</tr>';
         });
 
@@ -440,7 +440,7 @@
     function createStatusLabel(decision, includeText) {
         const style = getDecisionStyle(decision);
 
-        return '<span class="label" style="background: ' + style.background + '; color: ' + style.color + '">' + (includeText ? ' ' + structurizr.util.escapeHtml(decision.status) : '') + '</span>';
+        return '<span class="label" style="background: ' + style.background + '; color: ' + style.color + '; padding: 5px; margin: 5px; font-size: 14px;">' + (includeText ? ' ' + structurizr.util.escapeHtml(decision.status) : '') + '</span>';
     }
 
     function showDecision(decisionId) {
