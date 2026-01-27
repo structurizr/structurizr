@@ -112,7 +112,8 @@ class ThemeParserTests extends AbstractTests {
             parser.parseTheme(context, dslFile, tokens("theme", "my-theme.json"));
             fail();
         } catch (Exception e) {
-            assertTrue(e.getMessage().endsWith("/src/test/resources/themes/my-theme.json does not exist"));
+            assertTrue(e.getMessage().startsWith("Theme my-theme.json does not exist at"));
+            assertTrue(e.getMessage().endsWith("/src/test/resources/themes/my-theme.json"));
         }
     }
 
