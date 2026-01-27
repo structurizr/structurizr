@@ -49,11 +49,11 @@ class ThemeParserTests extends AbstractTests {
 
     @Test
     void test_parseTheme_AddsTheTheme_WhenBuiltInThemeIsSpecified() {
-        ThemeUtils.registerThemes(new File("structurizr-themes"));
-        parser.parseTheme(context(), null, tokens("theme", "amazon-web-services-2023.01.31"));
+        ThemeUtils.installThemes(new File("structurizr-themes"));
+        parser.parseTheme(context(), null, tokens("theme", "amazon-web-services-2023.01"));
 
         assertEquals(1, workspace.getViews().getConfiguration().getThemes().length);
-        assertEquals("amazon-web-services-2023.01.31", workspace.getViews().getConfiguration().getThemes()[0]);
+        assertEquals("amazon-web-services-2023.01", workspace.getViews().getConfiguration().getThemes()[0]);
     }
 
     @Test
@@ -94,11 +94,11 @@ class ThemeParserTests extends AbstractTests {
 
     @Test
     void test_parseThemes_AddsTheTheme_WhenBuiltInThemeIsSpecified() {
-        ThemeUtils.registerThemes(new File("../structurizr-themes"));
-        parser.parseThemes(context(), null, tokens("themes", "amazon-web-services-2023.01.31"));
+        ThemeUtils.installThemes(new File("../structurizr-themes"));
+        parser.parseThemes(context(), null, tokens("themes", "amazon-web-services-2023.01"));
 
         assertEquals(1, workspace.getViews().getConfiguration().getThemes().length);
-        assertEquals("amazon-web-services-2023.01.31", workspace.getViews().getConfiguration().getThemes()[0]);
+        assertEquals("amazon-web-services-2023.01", workspace.getViews().getConfiguration().getThemes()[0]);
     }
 
     @Test

@@ -90,7 +90,7 @@ public final class Configuration implements PropertyHolder {
         if (!StringUtils.isNullOrEmpty(theme)) {
             theme = theme.trim();
 
-            if (Themes.isRegistered(theme)) {
+            if (InstalledThemes.isInstalled(theme)) {
                 themes.add(theme);
             } else if (Url.isUrl(theme)) {
                 if (theme.startsWith(STRUCTURIZR_CLOUD_SERVICE_THEMES_URL)) {

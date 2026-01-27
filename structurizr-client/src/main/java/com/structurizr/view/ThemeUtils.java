@@ -9,6 +9,7 @@ import com.structurizr.http.HttpClient;
 import com.structurizr.http.RemoteContent;
 import com.structurizr.io.WorkspaceWriterException;
 import com.structurizr.model.Element;
+import com.structurizr.model.Relationship;
 import com.structurizr.util.ImageUtils;
 import com.structurizr.util.StringUtils;
 import com.structurizr.util.Url;
@@ -30,34 +31,6 @@ public final class ThemeUtils {
     private static final String THEME_JSON = "theme.json";
 
     private static final int DEFAULT_TIMEOUT_IN_MILLISECONDS = 10000;
-
-    /**
-     * Registers a directory containing themes.
-     *
-     * @param themesDirectory
-     */
-    public static void registerThemes(File themesDirectory) {
-        if (themesDirectory == null) {
-            throw new IllegalArgumentException("Themes directory must be specified");
-        }
-
-        if (!themesDirectory.exists() || !themesDirectory.isDirectory()) {
-            log.warn("The themes directory at " + themesDirectory.getAbsolutePath() + " does not exist");
-            return;
-        }
-
-        File[] themes = themesDirectory.listFiles();
-        if (themes != null) {
-            for (File theme : themes) {
-                if (theme.isDirectory()) {
-                    File themeJson = new File(theme, THEME_JSON);
-                    if (themeJson.exists()) {
-                        Themes.THEMES.put(theme.getName(), themeJson);
-                    }
-                }
-            }
-        }
-    }
 
     /**
      * Serializes the theme (element and relationship styles) in the specified workspace to a file, as a JSON string.
@@ -135,7 +108,7 @@ public final class ThemeUtils {
                         if (!StringUtils.isNullOrEmpty(icon)) {
                             if (Url.isHttpUrl(icon) || Url.isHttpsUrl(icon)) {
                                 // okay, image served over HTTP or HTTPS
-                            } else if (icon.startsWith("data:image")) {
+                            } else if (icon.startsWith(ImageUtils.DATA_URI_IMAGE_PREFIX)) {
                                 // also okay, data URI
                             } else {
                                 // convert the relative icon filename into a full URL
@@ -148,43 +121,99 @@ public final class ThemeUtils {
                 } else {
                     throw new RuntimeException(String.format("%s - expected content type of %s, actual content type is %s", themeLocation, RemoteContent.CONTENT_TYPE_JSON, remoteContent.getContentType()));
                 }
+            } else if (InstalledThemes.isInstalled(themeLocation)) {
+                File themeDotJsonFile = InstalledThemes.getTheme(themeLocation);
+                String json = Files.readString(themeDotJsonFile.toPath());
+                Theme theme = fromJson(json);
+
+                workspace.getViews().getConfiguration().getStyles().addStylesFromTheme(theme);
             }
         }
     }
 
     /**
-     * Inlines icons from "registered" themes into the workspace.
+     * Installs themes from a directory containing themes.
+     *
+     * @param themesDirectory       a directory that contains themes
+     */
+    public static void installThemes(File themesDirectory) {
+        if (themesDirectory == null) {
+            throw new IllegalArgumentException("Themes directory must be specified");
+        }
+
+        if (!themesDirectory.exists() || !themesDirectory.isDirectory()) {
+            log.warn("The themes directory at " + themesDirectory.getAbsolutePath() + " does not exist");
+            return;
+        }
+
+        File[] themes = themesDirectory.listFiles();
+        if (themes != null) {
+            for (File theme : themes) {
+                if (theme.isDirectory()) {
+                    File themeJson = new File(theme, THEME_JSON);
+                    if (themeJson.exists()) {
+                        InstalledThemes.THEMES.put(theme.getName(), themeJson);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Inlines icons from "installed" themes into the workspace.
      *
      * @param workspace     a Workspace instance
      */
-    public static void inlineThemes(Workspace workspace) {
-        // todo: inline all style properties from element and relationship styles
-
-        // find all tags used by elements in the model
+    public static void inlineStylesUsedFromInstalledThemes(Workspace workspace) {
+        // find all tags used by elements and relationships in the model
         Set<String> elementTags = new HashSet<>();
         for (Element element : workspace.getModel().getElements()) {
             elementTags.addAll(element.getTagsAsSet());
         }
 
+        Set<String> relationshipTags = new HashSet<>();
+        for (Relationship relationship : workspace.getModel().getRelationships()) {
+            relationshipTags.addAll(relationship.getTagsAsSet());
+        }
+
         try {
             List<String> themeNames = new ArrayList<>();
             for (String themeName : workspace.getViews().getConfiguration().getThemes()) {
-                if (Themes.isRegistered(themeName)) {
-                    File themeJson = Themes.getTheme(themeName);
-                    String json = Files.readString(themeJson.toPath());
+                if (InstalledThemes.isInstalled(themeName)) {
+                    File themeDotJsonFile = InstalledThemes.getTheme(themeName);
+                    String json = Files.readString(themeDotJsonFile.toPath());
                     Theme theme = fromJson(json);
 
                     if (theme != null) {
                         for (ElementStyle styleInTheme : theme.getElements()) {
-                            if (elementTags.contains(styleInTheme.getTag())) {
+                            if (elementTags.contains(styleInTheme.getTag())) { // element style is used
+                                String icon = styleInTheme.getIcon();
+                                if (!StringUtils.isNullOrEmpty(icon)) {
+                                    if (Url.isHttpUrl(icon) || Url.isHttpsUrl(icon)) {
+                                        // okay, image served over HTTP
+                                    } else if (icon.startsWith(ImageUtils.DATA_URI_IMAGE_PREFIX)) {
+                                        // also okay, data URI
+                                    } else {
+                                        // convert the relative icon filename into a data URI
+                                        styleInTheme.setIcon(ImageUtils.getImageAsDataUri(new File(themeDotJsonFile.getParentFile(), icon)));
+                                    }
+                                }
+
                                 ElementStyle styleInWorkspace = workspace.getViews().getConfiguration().getStyles().getElementStyle(styleInTheme.getTag());
                                 if (styleInWorkspace == null) {
                                     styleInWorkspace = workspace.getViews().getConfiguration().getStyles().addElementStyle(styleInTheme.getTag());
                                 }
+                                styleInWorkspace.copyFrom(styleInTheme);
+                            }
+                        }
 
-                                if (StringUtils.isNullOrEmpty(styleInWorkspace.getIcon())) {
-                                    styleInWorkspace.setIcon(ImageUtils.getImageAsDataUri(new File(themeJson.getParentFile(), styleInTheme.getIcon())));
+                        for (RelationshipStyle styleInTheme : theme.getRelationships()) {
+                            if (relationshipTags.contains(styleInTheme.getTag())) { // relationship style is used
+                                RelationshipStyle styleInWorkspace = workspace.getViews().getConfiguration().getStyles().getRelationshipStyle(styleInTheme.getTag());
+                                if (styleInWorkspace == null) {
+                                    styleInWorkspace = workspace.getViews().getConfiguration().getStyles().addRelationshipStyle(styleInTheme.getTag());
                                 }
+                                styleInWorkspace.copyFrom(styleInTheme);
                             }
                         }
                     }
@@ -196,21 +225,20 @@ public final class ThemeUtils {
             // remove all built-in themes
             workspace.getViews().getConfiguration().clearThemes();
             workspace.getViews().getConfiguration().setThemes(themeNames.toArray(new String[0]));
-            System.out.println(Arrays.toString(workspace.getViews().getConfiguration().getThemes()));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * Inlines the element and relationship styles from the specified file, adding the styles into the workspace
+     * Inlines all element and relationship styles from the specified file, adding the styles into the workspace
      * and overriding any properties already set.
      *
      * @param workspace     the Workspace to load the theme into
      * @param file          a File object representing a theme (a JSON file)
      * @throws Exception    if something goes wrong
      */
-    public static void inlineTheme(Workspace workspace, File file) throws Exception {
+    public static void inlineAllStylesFromTheme(Workspace workspace, File file) throws Exception {
         String json = Files.readString(file.toPath());
         Theme theme = fromJson(json);
 
@@ -219,7 +247,7 @@ public final class ThemeUtils {
             if (!StringUtils.isNullOrEmpty(icon)) {
                 if (icon.startsWith("http")) {
                     // okay, image served over HTTP
-                } else if (icon.startsWith("data:image")) {
+                } else if (icon.startsWith(ImageUtils.DATA_URI_IMAGE_PREFIX)) {
                     // also okay, data URI
                 } else {
                     // convert the relative icon filename into a data URI
@@ -228,7 +256,24 @@ public final class ThemeUtils {
             }
         }
 
-        workspace.getViews().getConfiguration().getStyles().inlineTheme(theme);
+        Styles styles = workspace.getViews().getConfiguration().getStyles();
+        for (ElementStyle elementStyle : theme.getElements()) {
+            ElementStyle es = styles.getElementStyle(elementStyle.getTag());
+            if (es == null) {
+                es = styles.addElementStyle(elementStyle.getTag());
+            }
+
+            es.copyFrom(elementStyle);
+        }
+
+        for (RelationshipStyle relationshipStyle : theme.getRelationships()) {
+            RelationshipStyle rs = styles.getRelationshipStyle(relationshipStyle.getTag());
+            if (rs == null) {
+                rs = styles.addRelationshipStyle(relationshipStyle.getTag());
+            }
+
+            rs.copyFrom(relationshipStyle);
+        }
     }
 
     public static Theme fromJson(String json) throws Exception {

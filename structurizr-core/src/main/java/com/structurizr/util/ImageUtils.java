@@ -17,6 +17,7 @@ import java.util.Base64;
 public class ImageUtils {
 
     public static final String DATA_URI_PREFIX = "data:";
+    public static final String DATA_URI_IMAGE_PREFIX = "data:image";
     public static final String DATA_URI_IMAGE_PNG = "data:image/png;base64,";
     public static final String DATA_URI_IMAGE_JPG = "data:image/jpeg;base64,";
     public static final String DATA_URI_IMAGE_SVG = "data:image/svg+xml;";

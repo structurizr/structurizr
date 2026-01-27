@@ -50,7 +50,7 @@ public class Server extends SpringBootServletInitializer {
 		properties.setProperty(DATA_DIRECTORY, structurizrDataDirectory.getAbsolutePath());
 
 		Configuration.init(Profile.Playground, properties);
-		ThemeUtils.registerThemes(new File(Configuration.getInstance().getProperty(THEMES)));
+		ThemeUtils.installThemes(new File(Configuration.getInstance().getProperty(THEMES)));
 
 		SpringApplication app = new SpringApplication(Server.class);
 		app.addListeners((ApplicationListener<ApplicationEnvironmentPreparedEvent>) event -> Configuration.getInstance().banner(Server.class));

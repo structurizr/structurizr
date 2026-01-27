@@ -26,7 +26,7 @@ public class Local extends AbstractServer {
 		}
 
 		Configuration.init(Profile.Local, properties);
-		ThemeUtils.registerThemes(new File(Configuration.getInstance().getProperty(THEMES)));
+		ThemeUtils.installThemes(new File(Configuration.getInstance().getProperty(THEMES)));
 
 		SpringApplication app = new SpringApplication(Local.class);
 		app.setAdditionalProfiles("command-local");

@@ -1,7 +1,7 @@
 package com.structurizr.server.web.misc;
 
 import com.structurizr.server.web.AbstractController;
-import com.structurizr.view.Themes;
+import com.structurizr.view.InstalledThemes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +16,7 @@ class ThemeBrowserController extends AbstractController {
 
     @RequestMapping(value = "/themes", method = RequestMethod.GET)
     String showThemeBrowser(ModelMap model) {
-        List<String> themes = new ArrayList<>(Themes.getThemes());
+        List<String> themes = new ArrayList<>(InstalledThemes.getThemes());
         Collections.sort(themes);
         model.addAttribute("themes", themes);
 

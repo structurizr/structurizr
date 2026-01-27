@@ -15,8 +15,6 @@ import com.structurizr.view.ThemeUtils;
 import org.apache.commons.cli.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.core.io.support.ResourcePatternResolver;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -118,7 +116,7 @@ public class ExportCommand extends AbstractCommand {
         log.info("Exporting workspace from " + workspacePathAsString);
 
         if (!StringUtils.isNullOrEmpty(themes)) {
-            ThemeUtils.registerThemes(new File(themes));
+            ThemeUtils.installThemes(new File(themes));
         }
 
         Workspace workspace = loadWorkspace(workspacePathAsString);
@@ -139,58 +137,8 @@ public class ExportCommand extends AbstractCommand {
         outputDir.mkdirs();
 
         if (STATIC_FORMAT.equals(format)) {
-            ThemeUtils.inlineThemes(workspace);
-
-            log.info(" - writing static site to " + outputDir.getAbsolutePath());
-            writeStaticFile("static.html", outputDir, "index.html");
-
-            writeStaticFile("js/jquery-3.7.1.min.js", outputDir);
-            writeStaticFile("js/bootstrap-5.3.7.min.js", outputDir);
-            writeStaticFile("js/jointjs-Core-4.1.3.js", outputDir);
-            writeStaticFile("js/jointjs-DirectedGraph-4.1.3.min.js", outputDir);
-            writeStaticFile("js/dagre-1.1.8.js", outputDir);
-            writeStaticFile("js/graphlib-2.2.4.min.js", outputDir);
-            writeStaticFile("js/jointjs-DirectedGraph-4.1.3.min.js", outputDir);
-            writeStaticFile("js/structurizr.js", outputDir);
-            writeStaticFile("js/structurizr-util.js", outputDir);
-            writeStaticFile("js/structurizr-ui.js", outputDir);
-            writeStaticFile("js/structurizr-workspace.js", outputDir);
-            writeStaticFile("js/structurizr-diagram.js", outputDir);
-            writeStaticFile("js/structurizr-quick-navigation.js", outputDir);
-            writeStaticFile("js/structurizr-navigation.js", outputDir);
-            writeStaticFile("js/structurizr-tooltip.js", outputDir);
-            writeStaticFile("js/structurizr-embed.js", outputDir);
-
-            writeStaticFile("css/bootstrap-5.3.7.min.css", outputDir);
-            writeStaticFile("css/structurizr.css", outputDir);
-            writeStaticFile("css/structurizr-static.css", outputDir);
-            writeStaticFile("css/structurizr-static-dark.css", outputDir);
-
-            writeStaticFile("img/favicon.png", outputDir);
-            writeStaticFile("img/structurizr-banner-light.png", outputDir);
-            writeStaticFile("img/structurizr-banner-dark.png", outputDir);
-
-            // clear all documentation - this isn't supported by the static site
-            workspace.getDocumentation().clear();
-            workspace.getModel().getElements().stream().filter(e -> e instanceof Documentable).map(e -> (Documentable)e).forEach(e -> e.getDocumentation().clear());
-
-            String json = WorkspaceUtils.toJson(workspace, false);
-            String base64 = Base64.getEncoder().encodeToString(json.getBytes(StandardCharsets.UTF_8));
-
-            writeToFile(
-                    new File(outputDir, "workspace.js"),
-                    String.format("const jsonAsString = '%s';", base64)
-            );
-
+            generateStaticSite(workspace, outputDir);
         } else {
-            if (!JSON_FORMAT.equalsIgnoreCase(format)) {
-                // only inline the theme amd create default views if the user wants a diagram export
-                HttpClient httpClient = new HttpClient();
-                httpClient.allow(".*");
-
-                ThemeUtils.loadThemes(workspace, httpClient);
-            }
-
             Exporter exporter = findExporter(format, workspacePath);
             if (exporter == null) {
                 log.info(" - unknown export format: " + format);
@@ -198,6 +146,12 @@ public class ExportCommand extends AbstractCommand {
                 log.info(" - exporting with " + exporter.getClass().getSimpleName());
 
                 if (exporter instanceof DiagramExporter) {
+                    HttpClient httpClient = new HttpClient();
+                    httpClient.allow(".*");
+
+                    // load the themes so that the styles can be applied to the diagram exports
+                    ThemeUtils.loadThemes(workspace, httpClient);
+
                     DiagramExporter diagramExporter = (DiagramExporter) exporter;
 
                     if (workspace.getViews().isEmpty()) {
@@ -243,6 +197,51 @@ public class ExportCommand extends AbstractCommand {
         }
 
         log.info(" - finished");
+    }
+
+    private void generateStaticSite(Workspace workspace, File outputDir) throws Exception {
+        ThemeUtils.inlineStylesUsedFromInstalledThemes(workspace);
+
+        log.info(" - writing static site to " + outputDir.getAbsolutePath());
+        writeStaticFile("static.html", outputDir, "index.html");
+
+        writeStaticFile("js/jquery-3.7.1.min.js", outputDir);
+        writeStaticFile("js/bootstrap-5.3.7.min.js", outputDir);
+        writeStaticFile("js/jointjs-Core-4.1.3.js", outputDir);
+        writeStaticFile("js/jointjs-DirectedGraph-4.1.3.min.js", outputDir);
+        writeStaticFile("js/dagre-1.1.8.js", outputDir);
+        writeStaticFile("js/graphlib-2.2.4.min.js", outputDir);
+        writeStaticFile("js/jointjs-DirectedGraph-4.1.3.min.js", outputDir);
+        writeStaticFile("js/structurizr.js", outputDir);
+        writeStaticFile("js/structurizr-util.js", outputDir);
+        writeStaticFile("js/structurizr-ui.js", outputDir);
+        writeStaticFile("js/structurizr-workspace.js", outputDir);
+        writeStaticFile("js/structurizr-diagram.js", outputDir);
+        writeStaticFile("js/structurizr-quick-navigation.js", outputDir);
+        writeStaticFile("js/structurizr-navigation.js", outputDir);
+        writeStaticFile("js/structurizr-tooltip.js", outputDir);
+        writeStaticFile("js/structurizr-embed.js", outputDir);
+
+        writeStaticFile("css/bootstrap-5.3.7.min.css", outputDir);
+        writeStaticFile("css/structurizr.css", outputDir);
+        writeStaticFile("css/structurizr-static.css", outputDir);
+        writeStaticFile("css/structurizr-static-dark.css", outputDir);
+
+        writeStaticFile("img/favicon.png", outputDir);
+        writeStaticFile("img/structurizr-banner-light.png", outputDir);
+        writeStaticFile("img/structurizr-banner-dark.png", outputDir);
+
+        // clear all documentation - this isn't supported by the static site
+        workspace.getDocumentation().clear();
+        workspace.getModel().getElements().stream().filter(e -> e instanceof Documentable).map(e -> (Documentable)e).forEach(e -> e.getDocumentation().clear());
+
+        String json = WorkspaceUtils.toJson(workspace, false);
+        String base64 = Base64.getEncoder().encodeToString(json.getBytes(StandardCharsets.UTF_8));
+
+        writeToFile(
+                new File(outputDir, "workspace.js"),
+                String.format("const jsonAsString = '%s';", base64)
+        );
     }
 
     private void writeStaticFile(String filename, File outputDir) throws IOException {

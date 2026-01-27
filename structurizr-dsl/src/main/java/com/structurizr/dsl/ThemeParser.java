@@ -3,7 +3,7 @@ package com.structurizr.dsl;
 import com.structurizr.util.FeatureNotEnabledException;
 import com.structurizr.util.Url;
 import com.structurizr.view.ThemeUtils;
-import com.structurizr.view.Themes;
+import com.structurizr.view.InstalledThemes;
 
 import java.io.File;
 
@@ -43,7 +43,7 @@ final class ThemeParser extends AbstractParser {
             theme = DEFAULT_THEME_URL;
         }
 
-        if (Themes.isRegistered(theme)) {
+        if (InstalledThemes.isInstalled(theme)) {
             context.getWorkspace().getViews().getConfiguration().addTheme(theme);
         } else if (Url.isUrl(theme)) {
             // this adds the theme to the list of theme URLs in the workspace
@@ -57,7 +57,7 @@ final class ThemeParser extends AbstractParser {
                 if (file.exists()) {
                     if (file.isFile()) {
                         try {
-                            ThemeUtils.inlineTheme(context.getWorkspace(), file);
+                            ThemeUtils.inlineAllStylesFromTheme(context.getWorkspace(), file);
                         } catch (Exception e) {
                             throw new RuntimeException("Error loading theme from " + file.getAbsolutePath() + ": " + e.getMessage());
                         }

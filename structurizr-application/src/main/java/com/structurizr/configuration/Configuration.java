@@ -4,7 +4,7 @@ import com.structurizr.dsl.StructurizrDslParser;
 import com.structurizr.http.HttpClient;
 import com.structurizr.util.StringUtils;
 import com.structurizr.util.Version;
-import com.structurizr.view.Themes;
+import com.structurizr.view.InstalledThemes;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -375,7 +375,7 @@ public class Configuration {
         log.info("***********************************************************************************");
 
         log.info("Themes:");
-        for (String theme : Themes.getThemes()) {
+        for (String theme : InstalledThemes.getThemes()) {
             log.info(" - " + theme);
         }
         log.info("***********************************************************************************");

@@ -9,8 +9,10 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -74,10 +76,11 @@ public class ThemeUtilsTests {
     @Test
     void toJson() throws Exception {
         Workspace workspace = new Workspace("Name", "Description");
-        assertEquals("{\n" +
-                "  \"name\" : \"Name\",\n" +
-                "  \"description\" : \"Description\"\n" +
-                "}", ThemeUtils.toJson(workspace));
+        assertEquals("""
+                {
+                  "name" : "Name",
+                  "description" : "Description"
+                }""", ThemeUtils.toJson(workspace));
 
         workspace.getViews().getConfiguration().getStyles().addElementStyle(Tags.ELEMENT).background("#ff0000");
         workspace.getViews().getConfiguration().getStyles().addRelationshipStyle(Tags.RELATIONSHIP).color("#ff0000");
@@ -183,7 +186,7 @@ public class ThemeUtilsTests {
     }
 
     @Test
-    void inlineTheme() throws Exception {
+    void inlineAllStylesFromTheme() throws Exception {
         File themeFile = new File("src/test/resources/theme.json");
 
         try {
@@ -196,7 +199,7 @@ public class ThemeUtilsTests {
         }
 
         Workspace workspace = new Workspace("Name", "Description");
-        ThemeUtils.inlineTheme(workspace, themeFile);
+        ThemeUtils.inlineAllStylesFromTheme(workspace, themeFile);
 
         assertEquals(0, workspace.getViews().getConfiguration().getThemes().length);
         assertEquals("#ff0000", workspace.getViews().getConfiguration().getStyles().getElementStyle("Tag").getBackground());
@@ -205,14 +208,17 @@ public class ThemeUtilsTests {
     }
 
     @Test
-    void inlineThemes_WhenTheElementStyleDoesNotExist() {
-        ThemeUtils.registerThemes(new File("../structurizr-themes"));
+    void inlineUsedStylesFromRegisteredThemes_WhenTheElementStyleDoesNotExist() {
+        ThemeUtils.installThemes(new File("../structurizr-themes"));
 
         Workspace workspace = new Workspace("Name", "Description");
         workspace.getModel().addSoftwareSystem("Name").addTags("Amazon Web Services - Fargate");
         workspace.getViews().getConfiguration().addTheme("amazon-web-services-2025.07");
 
-        ThemeUtils.inlineThemes(workspace);
+        ThemeUtils.inlineStylesUsedFromInstalledThemes(workspace);
+
+        assertEquals(1, workspace.getViews().getConfiguration().getStyles().getElements().size()); // only the one style has been inlined
+        assertEquals(0, workspace.getViews().getConfiguration().getStyles().getRelationships().size()); // only the one style has been inlined
 
         ElementStyle elementStyle = workspace.getViews().getConfiguration().getStyles().getElementStyle("Amazon Web Services - Fargate");
         assertNotNull(elementStyle);
@@ -220,20 +226,58 @@ public class ThemeUtilsTests {
     }
 
     @Test
-    void inlineThemes_WhenTheElementStyleDoeExist() {
-        ThemeUtils.registerThemes(new File("../structurizr-themes"));
+    void inlineStylesUsedFromInstalledThemes_WhenTheElementStyleDoesExist() {
+        ThemeUtils.installThemes(new File("../structurizr-themes"));
 
         Workspace workspace = new Workspace("Name", "Description");
         workspace.getModel().addSoftwareSystem("Name").addTags("Amazon Web Services - Fargate");
         workspace.getViews().getConfiguration().getStyles().addElementStyle("Amazon Web Services - Fargate").shape(Shape.RoundedBox);
         workspace.getViews().getConfiguration().addTheme("amazon-web-services-2025.07");
 
-        ThemeUtils.inlineThemes(workspace);
+        ThemeUtils.inlineStylesUsedFromInstalledThemes(workspace);
+
+        assertEquals(1, workspace.getViews().getConfiguration().getStyles().getElements().size()); // only the one style has been inlined
+        assertEquals(0, workspace.getViews().getConfiguration().getStyles().getRelationships().size()); // only the one style has been inlined
 
         ElementStyle elementStyle = workspace.getViews().getConfiguration().getStyles().getElementStyle("Amazon Web Services - Fargate");
         assertNotNull(elementStyle);
         assertEquals("data:image/png;base64,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", elementStyle.getIcon());
         assertEquals(Shape.RoundedBox, elementStyle.getShape());
+    }
+
+    @Test
+    void inlineStylesUsedFromInstalledThemes() throws Exception {
+        Workspace themeWorkspace = new Workspace("Theme");
+        themeWorkspace.getViews().getConfiguration().getStyles().addElementStyle("Red").color("#ff0000");
+        themeWorkspace.getViews().getConfiguration().getStyles().addElementStyle("Blue").color("#0000ff");
+        themeWorkspace.getViews().getConfiguration().getStyles().addRelationshipStyle("Red").color("#ff0000");
+        themeWorkspace.getViews().getConfiguration().getStyles().addRelationshipStyle("Blue").color("#0000ff");
+
+        File themesDirectory = Files.createTempDirectory(this.getClass().getSimpleName()).toFile();
+        themesDirectory.mkdirs();
+        themesDirectory.deleteOnExit();
+
+        String themeName = UUID.randomUUID().toString();
+
+        File themeDirectory = new File(themesDirectory, themeName);
+        themeDirectory.mkdir();
+        ThemeUtils.toJson(themeWorkspace, new File(themeDirectory, "theme.json"));
+
+        Workspace workspace = new Workspace("Name");
+        SoftwareSystem a = workspace.getModel().addSoftwareSystem("A");
+        a.addTags("Red");
+        SoftwareSystem b = workspace.getModel().addSoftwareSystem("B");
+        Relationship r = a.uses(b, "Uses");
+        r.addTags("Red");
+
+        ThemeUtils.installThemes(themesDirectory);
+        workspace.getViews().getConfiguration().addTheme(themeName);
+
+        ThemeUtils.inlineStylesUsedFromInstalledThemes(workspace);
+        assertEquals(1, workspace.getViews().getConfiguration().getStyles().getElements().size());
+        assertEquals("#ff0000", workspace.getViews().getConfiguration().getStyles().getElementStyle("Red").getColor());
+        assertEquals(1, workspace.getViews().getConfiguration().getStyles().getRelationships().size());
+        assertEquals("#ff0000", workspace.getViews().getConfiguration().getStyles().getRelationshipStyle("Red").getColor());
     }
 
 }

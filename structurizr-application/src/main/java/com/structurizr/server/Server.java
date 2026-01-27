@@ -24,7 +24,7 @@ public class Server extends AbstractServer {
 		}
 
 		Configuration.init(Profile.Server, properties);
-		ThemeUtils.registerThemes(new File(Configuration.getInstance().getProperty(THEMES)));
+		ThemeUtils.installThemes(new File(Configuration.getInstance().getProperty(THEMES)));
 
 		SpringApplication app = new SpringApplication(Server.class);
 		app.setAdditionalProfiles(
