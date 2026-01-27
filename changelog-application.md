@@ -16,6 +16,7 @@
 - Diagram editor UI/UX improvements and bug fixes.
 - Adds a theme browser with new built-in themes.
 - Configuration items can be specified as `structurizr.xxx` properties in `structurizr.properties` file, or via `STRUCTURIZR_XXX` environment variables.
+- Adds a way to install themes via a property named `structurizr.themes`.
 
 ### server
 
@@ -33,6 +34,8 @@
   - Adds a theme browser with new built-in themes.
   - Branch can be specified with iframe embed.
   - Tags can be specified with iframe embed.
+  - Removes the `/theme` endpoints for workspaces.
+  - Adds a way to install themes via a property named `structurizr.themes`.
 - Closed extensions
   - Adds a `fixed` authentication variant (username/password specified via config).
   - Simplifies role-based access.

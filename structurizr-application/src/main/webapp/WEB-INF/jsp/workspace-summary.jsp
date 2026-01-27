@@ -125,10 +125,6 @@
                 <img src="/static/bootstrap-icons/filetype-json.svg" class="icon-sm" /> <a href="${urlPrefix}/json${urlSuffix}" target="_blank">JSON</a>
             </div>
 
-            <div id="themeLink" class="navigationItem hidden">
-                <a href="<c:out value="${urlPrefix}" />/theme<c:out value="${urlSuffix}" escapeXml="false" />" target="_blank"><img src="/static/bootstrap-icons/palette.svg" class="icon-sm" /> Theme</a>
-            </div>
-
             <c:if test="${workspace.editable && not workspace.locked}">
             <div class="navigationItem">
                 <a id="importJsonLink1" href=""><img src="/static/bootstrap-icons/cloud-upload.svg" class="icon-sm" /> JSON</a>
@@ -385,10 +381,6 @@
 
         if (structurizr.workspace.hasElements()) {
             $('#exploreLink').removeClass('hidden');
-        }
-
-        if (structurizr.workspace.hasStyles()) {
-            $('#themeLink').removeClass('hidden');
         }
 
         if (!structurizr.workspace.hasElements() && !structurizr.workspace.hasViews() && !structurizr.workspace.hasDocumentation() && !structurizr.workspace.hasDecisions()) {
