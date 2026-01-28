@@ -9,6 +9,7 @@
     <option value="https://docs.structurizr.com/dsl/language">DSL language reference</option>
     <option value="https://docs.structurizr.com/dsl/language#workspace">workspace</option>
     <option value="https://docs.structurizr.com/dsl/language#model">&nbsp;- model</option>
+    <option value="https://docs.structurizr.com/dsl/language#archetypes">&nbsp;&nbsp;&nbsp;- archetypes</option>
     <option value="https://docs.structurizr.com/dsl/language#group">&nbsp;&nbsp;&nbsp;- group</option>
     <option value="https://docs.structurizr.com/dsl/language#person">&nbsp;&nbsp;&nbsp;- person</option>
     <option value="https://docs.structurizr.com/dsl/language#softwaresystem">&nbsp;&nbsp;&nbsp;- softwareSystem</option>
@@ -17,8 +18,10 @@
     <option value="https://docs.structurizr.com/dsl/language#infrastructurenode">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- infrastructureNode</option>
     <option value="https://docs.structurizr.com/dsl/language#softwaresysteminstance">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- softwareSystemInstance</option>
     <option value="https://docs.structurizr.com/dsl/language#containerinstance">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- containerInstance</option>
+    <option value="https://docs.structurizr.com/dsl/language#instanceof">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- instanceOf</option>
     <option value="https://docs.structurizr.com/dsl/language#element">&nbsp;&nbsp;&nbsp;- element</option>
     <option value="https://docs.structurizr.com/dsl/language#relationship">&nbsp;&nbsp;&nbsp;- -> (relationship)</option>
+    <option value="https://docs.structurizr.com/dsl/language#remove-relationship">&nbsp;&nbsp;&nbsp;- -/> (remove relationship)</option>
     <option value="https://docs.structurizr.com/dsl/language#views">&nbsp;- views</option>
     <option value="https://docs.structurizr.com/dsl/language#systemlandscape-view">&nbsp;&nbsp;&nbsp;- systemLandscape</option>
     <option value="https://docs.structurizr.com/dsl/language#systemcontext-view">&nbsp;&nbsp;&nbsp;- systemContext</option>
@@ -33,7 +36,6 @@
     <option value="https://docs.structurizr.com/dsl/language#element-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- element</option>
     <option value="https://docs.structurizr.com/dsl/language#relationship-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- relationship</option>
     <option value="https://docs.structurizr.com/dsl/language#themes">&nbsp;&nbsp;&nbsp;- themes</option>
-    <option value="https://docs.structurizr.com/dsl/language#branding">&nbsp;&nbsp;&nbsp;- branding</option>
     <option value="https://docs.structurizr.com/dsl/language#terminology">&nbsp;&nbsp;&nbsp;- terminology</option>
     <option value="https://docs.structurizr.com/dsl/language#configuration">&nbsp;- configuration</option>
     <option value="https://docs.structurizr.com/dsl/language#visibility">&nbsp;&nbsp;&nbsp;- visibility</option>
