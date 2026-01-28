@@ -23,9 +23,6 @@
     #tooltipMetadata {
         font-size: 10px;
     }
-    #tooltipType {
-        font-size: 10px;
-    }
     #tooltipDescription {
         font-size: 12px;
         margin-top: 10px;
