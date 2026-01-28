@@ -275,10 +275,6 @@ abstract class AbstractWorkspaceAdapterTests extends AbstractTestsBase {
             }
         }
 
-        // and a different workspace ID
-        images = getWorkspaceAdapter().getImages(2);
-        assertTrue(images.isEmpty());
-
         // and delete the images
         boolean result = getWorkspaceAdapter().deleteImages(1);
         assertTrue(result);

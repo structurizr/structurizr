@@ -30,7 +30,7 @@
                         Download
                     </label>
 
-                    <c:if test="${embed ne true && fn:startsWith(urlPrefix, '/workspace') && not workspace.clientEncrypted && structurizrConfiguration.profile eq 'Server'}">
+                    <c:if test="${embed ne true && fn:startsWith(urlPrefix, '/workspace') && not workspace.clientEncrypted && structurizrConfiguration.profile ne 'Playground'}">
                     <label style="margin-right: 20px">
                         <input type="checkbox" id="exportPublish" checked="checked" class="form-check-input" />
                         Publish

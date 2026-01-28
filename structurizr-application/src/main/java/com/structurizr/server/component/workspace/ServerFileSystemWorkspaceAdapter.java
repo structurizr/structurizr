@@ -52,12 +52,16 @@ class ServerFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspaceAdapte
     }
 
     protected File getPathToWorkspace(long workspaceId, String branch, boolean createIfNotExists) {
+        return getPathToWorkspace(Configuration.getInstance().getDataDirectory(), workspaceId, branch, createIfNotExists);
+    }
+
+    protected File getPathToWorkspace(File baseDirectory, long workspaceId, String branch, boolean createIfNotExists) {
         File path;
 
         if (StringUtils.isNullOrEmpty(branch)) {
-            path = new File(dataDirectory, "" + workspaceId);
+            path = new File(baseDirectory, "" + workspaceId);
         } else {
-            path = new File(dataDirectory, workspaceId + "/" + BRANCHES_DIRECTORY_NAME + "/" + branch);
+            path = new File(baseDirectory, workspaceId + "/" + BRANCHES_DIRECTORY_NAME + "/" + branch);
         }
 
         if (!path.exists() && createIfNotExists) {
@@ -233,6 +237,20 @@ class ServerFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspaceAdapte
     @Override
     protected File getPathToWorkspaceImages(long workspaceId, String branch) {
         File path = new File(getPathToWorkspace(workspaceId, branch, true), IMAGES_DIRECTORY_NAME);
+        if (!path.exists()) {
+            try {
+                Files.createDirectories(path.toPath());
+            } catch (IOException e) {
+                log.error(e);
+            }
+        }
+
+        return path;
+    }
+
+    @Override
+    protected File getPathToWorkspaceThumbnails(long workspaceId, String branch) {
+        File path = new File(getPathToWorkspace(Configuration.getInstance().getWorkDirectory(), workspaceId, branch, true), IMAGES_DIRECTORY_NAME);
         if (!path.exists()) {
             try {
                 Files.createDirectories(path.toPath());

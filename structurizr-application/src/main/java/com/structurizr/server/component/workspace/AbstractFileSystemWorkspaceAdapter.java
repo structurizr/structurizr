@@ -26,10 +26,23 @@ abstract class AbstractFileSystemWorkspaceAdapter extends AbstractWorkspaceAdapt
         this.dataDirectory = dataDirectory;
     }
 
+    private boolean isThumbnail(String filename) {
+        return  filename.equals("thumbnail.png") ||
+                filename.endsWith("-thumbnail.png") ||
+                filename.equals("thumbnail-dark.png") ||
+                filename.endsWith("-thumbnail-dark.png");
+    }
+
     @Override
     public boolean putImage(long workspaceId, String branch, String filename, File file) {
         try {
-            File imagesDirectory = getPathToWorkspaceImages(workspaceId, branch);
+            File imagesDirectory;
+            if (isThumbnail(filename)) {
+                imagesDirectory = getPathToWorkspaceThumbnails(workspaceId, branch);
+            } else {
+                imagesDirectory = getPathToWorkspaceImages(workspaceId, branch);
+            }
+
             File destination = new File(imagesDirectory, filename);
             Files.move(file.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
@@ -42,7 +55,13 @@ abstract class AbstractFileSystemWorkspaceAdapter extends AbstractWorkspaceAdapt
     @Override
     public InputStreamAndContentLength getImage(long workspaceId, String branch, String filename) {
         try {
-            File imagesDirectory = getPathToWorkspaceImages(workspaceId, branch);
+            File imagesDirectory;
+            if (isThumbnail(filename)) {
+                imagesDirectory = getPathToWorkspaceThumbnails(workspaceId, branch);
+            } else {
+                imagesDirectory = getPathToWorkspaceImages(workspaceId, branch);
+            }
+
             File file = new File(imagesDirectory, filename);
             if (file.exists()) {
                 return new InputStreamAndContentLength(new FileInputStream(file), file.length());
@@ -87,5 +106,7 @@ abstract class AbstractFileSystemWorkspaceAdapter extends AbstractWorkspaceAdapt
     }
 
     protected abstract File getPathToWorkspaceImages(long workspaceId, String branch);
+
+    protected abstract File getPathToWorkspaceThumbnails(long workspaceId, String branch);
 
 }
