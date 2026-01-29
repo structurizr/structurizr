@@ -2,6 +2,7 @@ package com.structurizr.server.web.workspace;
 
 import com.structurizr.configuration.Features;
 import com.structurizr.configuration.Profile;
+import com.structurizr.dsl.StructurizrDslParserException;
 import com.structurizr.server.component.search.SearchComponent;
 import com.structurizr.server.component.workspace.WorkspaceBranch;
 import com.structurizr.server.component.workspace.WorkspaceComponent;
@@ -73,9 +74,17 @@ public abstract class AbstractWorkspaceController extends AbstractController {
                 }
             } else {
                 workspaceMetadata.setEditable(false);
-                String json = workspaceComponent.getWorkspace(workspaceMetadata.getId(), branch, version);
-                json = json.replaceAll("[\\n\\r\\f]", "");
-                model.addAttribute("workspaceAsJson", JsonUtils.base64(json));
+                try {
+                    String json = workspaceComponent.getWorkspace(workspaceMetadata.getId(), branch, version);
+                    json = json.replaceAll("[\\n\\r\\f]", "");
+                    model.addAttribute("workspaceAsJson", JsonUtils.base64(json));
+                } catch (Exception e) {
+                    if (Configuration.getInstance().getProfile() == Profile.Local && e.getCause() instanceof StructurizrDslParserException) {
+                        return showError((StructurizrDslParserException)e.getCause(), model);
+                    } else {
+                        log.error(e);
+                    }
+                }
             }
 
             addCommonAttributes(model, workspaceMetadata.getName(), showHeaderAndFooter);

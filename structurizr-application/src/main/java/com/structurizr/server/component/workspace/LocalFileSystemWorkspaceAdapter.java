@@ -32,8 +32,6 @@ abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspa
     LocalFileSystemWorkspaceAdapter(File dataDirectory) {
         super(dataDirectory);
 
-        this.lastModifiedDate = findLatestLastModifiedDate(dataDirectory);
-
         TimerTask task = new TimerTask() {
             public void run() {
                 lastModifiedDate = findLatestLastModifiedDate(dataDirectory);
@@ -52,58 +50,49 @@ abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspa
         File dslFile = new File(workspaceDirectory, WORKSPACE_DSL_FILENAME);
         File jsonFile = new File(workspaceDirectory, WORKSPACE_JSON_FILENAME);
 
-        if (jsonFile.exists() && jsonFile.lastModified() > lastModifiedDate) {
+        if (dslFile.exists()) {
             try {
-                return loadWorkspaceFromJson(workspaceId, jsonFile);
+                return loadWorkspaceFromDsl(workspaceId);
+            } catch (StructurizrDslParserException | WorkspaceScopeValidationException e) {
+                throw new WorkspaceComponentException(e);
+            }
+        } else if (jsonFile.exists()) {
+            Workspace workspace;
+            try {
+                workspace = loadWorkspaceFromJson(workspaceId);
             } catch (Exception e) {
                 throw new WorkspaceComponentException(e);
             }
-        } else {
-            if (dslFile.exists()) {
-                try {
-                    return loadWorkspaceFromDsl(workspaceId, dslFile, jsonFile);
-                } catch (StructurizrDslParserException | WorkspaceScopeValidationException e) {
-                    throw new WorkspaceComponentException(e);
-                }
-            } else if (jsonFile.exists()) {
-                Workspace workspace = null;
-                try {
-                    workspace = loadWorkspaceFromJson(workspaceId, jsonFile);
-                } catch (Exception e) {
-                    throw new WorkspaceComponentException(e);
-                }
 
-                // if the JSON file exists and contains DSL, extract this and save it
-                String embeddedDsl = DslUtils.getDsl(workspace);
-                if (!StringUtils.isNullOrEmpty(embeddedDsl)) {
-                    FileUtils.write(dslFile, embeddedDsl);
-                }
-
-                return workspace;
-            } else {
-                throw new WorkspaceNotFoundException(workspaceDirectory);
+            // if the JSON file exists and contains DSL, extract this and save it
+            String embeddedDsl = DslUtils.getDsl(workspace);
+            if (!StringUtils.isNullOrEmpty(embeddedDsl)) {
+                FileUtils.write(dslFile, embeddedDsl);
             }
+
+            return workspace;
+        } else {
+            throw new WorkspaceNotFoundException(workspaceDirectory);
         }
     }
 
-    private Workspace loadWorkspaceFromJson(long workspaceId, File jsonFile) throws Exception {
+    private Workspace loadWorkspaceFromJson(long workspaceId) throws Exception {
+        File workspaceDirectory = getDataDirectory(workspaceId);
+        File jsonFile = new File(workspaceDirectory, WORKSPACE_JSON_FILENAME);
         Workspace workspace = null;
 
         if (jsonFile.exists()) {
             workspace = WorkspaceUtils.loadWorkspaceFromJson(jsonFile);
             workspace.setId(workspaceId);
-
-            // validate workspace scope
-            WorkspaceScopeValidatorFactory.getValidator(workspace).validate(workspace);
-
-            // run default inspections
-            new DefaultInspector(workspace);
         }
 
         return workspace;
     }
 
-    private Workspace loadWorkspaceFromDsl(long workspaceId, File dslFile, File jsonFile) throws StructurizrDslParserException, WorkspaceScopeValidationException {
+    private Workspace loadWorkspaceFromDsl(long workspaceId) throws StructurizrDslParserException, WorkspaceScopeValidationException {
+        File workspaceDirectory = getDataDirectory(workspaceId);
+        File dslFile = new File(workspaceDirectory, WORKSPACE_DSL_FILENAME);
+        File jsonFile = new File(workspaceDirectory, WORKSPACE_JSON_FILENAME);
         Workspace workspace;
 
         StructurizrDslParser parser = new StructurizrDslParser();
@@ -124,7 +113,7 @@ abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspa
         }
 
         try {
-            Workspace workspaceFromJson = loadWorkspaceFromJson(workspaceId, jsonFile);
+            Workspace workspaceFromJson = loadWorkspaceFromJson(workspaceId);
             if (workspaceFromJson != null) {
                 workspace.getViews().copyLayoutInformationFrom(workspaceFromJson.getViews());
                 workspace.getViews().getConfiguration().copyConfigurationFrom(workspaceFromJson.getViews().getConfiguration());
@@ -146,14 +135,10 @@ abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspa
 
     @Override
     public String getWorkspace(long workspaceId, String branch, String version) {
+        Workspace workspace = loadWorkspace(workspaceId);
         try {
-            File jsonFile = new File(getDataDirectory(workspaceId), WORKSPACE_JSON_FILENAME);
-            if (jsonFile.exists()) {
-                return Files.readString(jsonFile.toPath());
-            } else {
-                throw new RuntimeException("Workspace " + workspaceId + " does not exist");
-            }
-        } catch (IOException e) {
+            return WorkspaceUtils.toJson(workspace, false);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -180,10 +165,17 @@ abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspa
     @Override
     public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
         WorkspaceMetadata wmd = new WorkspaceMetadata(workspaceId);
-        Workspace workspace = loadWorkspace(workspaceId);
-        if (workspace != null) {
-            wmd.setName(workspace.getName());
-            wmd.setDescription(workspace.getDescription());
+        wmd.setName("Name");
+        wmd.setDescription("Description");
+
+        try {
+            Workspace workspace = loadWorkspaceFromJson(workspaceId);
+            if (workspace != null) {
+                wmd.setName(workspace.getName());
+                wmd.setDescription(workspace.getDescription());
+            }
+        } catch (Exception e) {
+            log.error(e);
         }
 
         return wmd;

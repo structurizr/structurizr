@@ -32,17 +32,7 @@ abstract class AbstractWorkspaceController extends com.structurizr.server.web.wo
     }
 
     protected final String showAuthenticatedView(String view, long workspaceId, AuthenticatedViewFunction function, String branch, String version, ModelMap model, boolean showHeaderAndFooter, boolean editable) {
-        WorkspaceMetadata workspaceMetadata = null;
-
-        try {
-            workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
-        } catch (WorkspaceComponentException e) {
-            if (Configuration.getInstance().getProfile() == Profile.Local && e.getCause() instanceof StructurizrDslParserException) {
-                return showError((StructurizrDslParserException)e.getCause(), model);
-            } else {
-                log.error(e);
-            }
-        }
+        WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
 
         if (workspaceMetadata == null) {
             return show404Page(model);

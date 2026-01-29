@@ -1,10 +1,12 @@
 package com.structurizr.server.component.workspace;
 
+import com.structurizr.Workspace;
 import com.structurizr.server.domain.Image;
 import com.structurizr.server.domain.InputStreamAndContentLength;
 import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.AbstractTestsBase;
 import com.structurizr.util.DateUtils;
+import com.structurizr.util.WorkspaceUtils;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -61,13 +63,16 @@ abstract class AbstractWorkspaceAdapterTests extends AbstractTestsBase {
     }
 
     @Test
-    void workspaceContent() {
+    void workspaceContent() throws Exception {
         WorkspaceAdapter workspaceAdapter = getWorkspaceAdapter();
 
-        workspaceAdapter.putWorkspace(new WorkspaceMetadata(1), "json", "");
+        Workspace workspace = new Workspace("Name");
+        workspace.setId(1L);
+        workspaceAdapter.putWorkspace(new WorkspaceMetadata(1), WorkspaceUtils.toJson(workspace, false), "");
 
         String json = workspaceAdapter.getWorkspace(1, "", "");
-        assertEquals("json", json);
+        assertEquals("""
+                {"configuration":{},"documentation":{},"id":1,"model":{},"name":"Name","views":{"configuration":{"styles":{},"terminology":{}}}}""", json);
     }
 
     @Test
