@@ -1,10 +1,8 @@
 openapi: 3.0.0
 info:
-  version: 1.29.0
+  version: 6.0.0
   title: Structurizr
-  description: The web API for Structurizr.
-servers:
-  - url: https://api.structurizr.com
+  description: The workspace API for Structurizr.
 paths:
   '/workspace/{id}':
     get:
