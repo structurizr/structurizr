@@ -9,7 +9,7 @@
 
 - Removes Graphviz integration from the diagram viewer/editor; uses browser-based Dagre instead.
 - Removes font and icon configuration via "branding".
-- A workspace logo can now be sourced from an element style named `Workspace:Logo`.
+- A workspace logo can now be sourced from an element style named `Workspace:Icon`.
 - Diagrams are now editable after clicking the "edit" button on the diagram viewer.
 - Removes support for Lite's `STRUCTURIZR_WORKSPACE_PATH` and `STRUCTURIZR_WORKSPACE_FILENAME` (use multi-workspace mode instead).
 - Removes support for Lite's auto-sync.
@@ -23,7 +23,7 @@
 - Open core
   - Removes Graphviz integration from the diagram viewer/editor; uses browser-based Dagre instead.
   - Removes font and icon configuration via "branding".
-  - A workspace logo can now be sourced from an element style named `Workspace:Logo`.
+  - A workspace logo can now be sourced from an element style named `Workspace:Icon`.
   - Authentication is disabled by default.
   - No API key required for API calls when authentication is disabled.
   - Adds API endpoint to get branches.
@@ -62,4 +62,4 @@
 ### export
 
 - Adds a way to suppress the introduction modal on the static site export.
-- `Workspace:Logo` element style icon used on static site introduction modal.
+- `Workspace:Icon` element style icon used on static site introduction modal.

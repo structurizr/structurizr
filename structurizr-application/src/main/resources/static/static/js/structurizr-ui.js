@@ -43,8 +43,8 @@ structurizr.ui.getBranding = function() {
 }
 
 structurizr.ui.applyWorkspaceLogo = function() {
-    const logoLight = structurizr.ui.findElementStyle( { type: undefined, tags: 'Workspace:Logo' }, false).icon;
-    const logoDark = structurizr.ui.findElementStyle( { type: undefined, tags: 'Workspace:Logo' }, true).icon;
+    const logoLight = structurizr.ui.findElementStyle( { type: undefined, tags: 'Workspace:Icon' }, false).icon;
+    const logoDark = structurizr.ui.findElementStyle( { type: undefined, tags: 'Workspace:Icon' }, true).icon;
 
     if (logoLight) {
         const workspaceLogo = $('.img-light.workspaceLogo');
