@@ -118,6 +118,7 @@ public class PullCommand extends AbstractCommand {
         }
 
         WorkspaceApiClient client = new WorkspaceApiClient(apiUrl, workspaceId, apiKey);
+        client.setWorkspaceArchiveLocation(outputDir);
         client.setBranch(branch);
         client.setAgent(getAgent());
 
