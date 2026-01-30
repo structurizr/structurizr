@@ -141,18 +141,15 @@ public final class ThemeUtils {
             throw new IllegalArgumentException("Themes directory must be specified");
         }
 
-        if (!themesDirectory.exists() || !themesDirectory.isDirectory()) {
-            log.warn("The themes directory at " + themesDirectory.getAbsolutePath() + " does not exist");
-            return;
-        }
-
-        File[] themes = themesDirectory.listFiles();
-        if (themes != null) {
-            for (File theme : themes) {
-                if (theme.isDirectory()) {
-                    File themeJson = new File(theme, THEME_JSON);
-                    if (themeJson.exists()) {
-                        InstalledThemes.THEMES.put(theme.getName(), themeJson);
+        if (themesDirectory.exists() && themesDirectory.isDirectory()) {
+            File[] themes = themesDirectory.listFiles();
+            if (themes != null) {
+                for (File theme : themes) {
+                    if (theme.isDirectory()) {
+                        File themeJson = new File(theme, THEME_JSON);
+                        if (themeJson.exists()) {
+                            InstalledThemes.THEMES.put(theme.getName(), themeJson);
+                        }
                     }
                 }
             }
