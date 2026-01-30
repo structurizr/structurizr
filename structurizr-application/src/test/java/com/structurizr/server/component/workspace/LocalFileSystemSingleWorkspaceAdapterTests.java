@@ -84,8 +84,8 @@ class LocalFileSystemSingleWorkspaceAdapterTests extends AbstractWorkspaceAdapte
         workspaceAdapter = new LocalFileSystemSingleWorkspaceAdapter();
 
         WorkspaceMetadata wmd = workspaceAdapter.getWorkspaceMetadata(1);
-        assertEquals("Name", wmd.getName());
-        assertEquals("Description", wmd.getDescription());
+        assertEquals("Workspace 1", wmd.getName());
+        assertEquals("", wmd.getDescription());
     }
 
     @Override

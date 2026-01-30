@@ -173,8 +173,8 @@ abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspa
     @Override
     public WorkspaceMetadata getWorkspaceMetadata(long workspaceId) {
         WorkspaceMetadata wmd = new WorkspaceMetadata(workspaceId);
-        wmd.setName("Name");
-        wmd.setDescription("Description");
+        wmd.setName("Workspace " + workspaceId);
+        wmd.setDescription("");
 
         try {
             Workspace workspace = loadWorkspaceFromJson(workspaceId);
