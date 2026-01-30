@@ -9,13 +9,18 @@ import com.structurizr.dsl.StructurizrDslParserException;
 import com.structurizr.inspection.DefaultInspector;
 import com.structurizr.server.domain.InputStreamAndContentLength;
 import com.structurizr.server.domain.WorkspaceMetadata;
-import com.structurizr.util.*;
+import com.structurizr.util.DateUtils;
+import com.structurizr.util.FileUtils;
+import com.structurizr.util.StringUtils;
+import com.structurizr.util.WorkspaceUtils;
 import com.structurizr.validation.WorkspaceScopeValidationException;
 import com.structurizr.validation.WorkspaceScopeValidatorFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -92,7 +97,6 @@ abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspa
     private Workspace loadWorkspaceFromDsl(long workspaceId) throws StructurizrDslParserException, WorkspaceScopeValidationException {
         File workspaceDirectory = getDataDirectory(workspaceId);
         File dslFile = new File(workspaceDirectory, WORKSPACE_DSL_FILENAME);
-        File jsonFile = new File(workspaceDirectory, WORKSPACE_JSON_FILENAME);
         Workspace workspace;
 
         StructurizrDslParser parser = new StructurizrDslParser();
@@ -150,7 +154,11 @@ abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspa
             workspaceDirectory.mkdirs();
 
             File file = new File(workspaceDirectory, WORKSPACE_JSON_FILENAME);
-            Files.writeString(file.toPath(), json);
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                writer.write(json);
+                writer.flush();
+            }
         } catch (Exception e) {
             log.error(e);
             throw new WorkspaceComponentException(e.getMessage());

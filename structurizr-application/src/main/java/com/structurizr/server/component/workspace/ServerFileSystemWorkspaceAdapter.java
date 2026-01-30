@@ -7,10 +7,7 @@ import com.structurizr.util.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
@@ -146,7 +143,11 @@ class ServerFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspaceAdapte
             // write the latest version to workspace.json
             File path = getPathToWorkspace(workspaceMetadata.getId(), branch, true);
             File file = new File(path, WORKSPACE_JSON_FILENAME);
-            Files.writeString(file.toPath(), json);
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                writer.write(json);
+                writer.flush();
+            }
 
             try {
                 // and write a versioned workspace.json file too
