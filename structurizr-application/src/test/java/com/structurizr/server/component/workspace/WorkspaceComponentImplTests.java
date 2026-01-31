@@ -822,22 +822,10 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
         long workspaceId = workspaceComponent.createWorkspace(null);
 
         assertEquals(1, workspaceId);
-        assertEquals(String.format("""
-                {
-                  "configuration" : { },
-                  "description" : "Description",
-                  "documentation" : { },
-                  "id" : 1,
-                  "lastModifiedDate" : "%s",
-                  "model" : { },
-                  "name" : "Workspace 0001",
-                  "views" : {
-                    "configuration" : {
-                      "styles" : { },
-                      "terminology" : { }
-                    }
-                  }
-                }""", DateUtils.formatIsoDate(workspaceMetaData.getLastModifiedDate())), jsonBuffer.toString());
+
+        Workspace workspace = WorkspaceUtils.fromJson(jsonBuffer.toString());
+        assertEquals(1, workspace.getId());
+        assertEquals("Workspace 0001", workspace.getName());
     }
 
     @Test

@@ -3,7 +3,9 @@ package com.structurizr.server.component.workspace;
 import com.structurizr.AbstractWorkspace;
 import com.structurizr.Workspace;
 import com.structurizr.configuration.*;
+import com.structurizr.configuration.Features;
 import com.structurizr.configuration.Role;
+import com.structurizr.dsl.StructurizrDslParser;
 import com.structurizr.encryption.AesEncryptionStrategy;
 import com.structurizr.encryption.EncryptedWorkspace;
 import com.structurizr.encryption.EncryptionLocation;
@@ -11,11 +13,9 @@ import com.structurizr.encryption.EncryptionStrategy;
 import com.structurizr.io.json.EncryptedJsonReader;
 import com.structurizr.io.json.EncryptedJsonWriter;
 import com.structurizr.server.domain.*;
+import com.structurizr.server.domain.Image;
 import com.structurizr.server.domain.User;
-import com.structurizr.util.DateUtils;
-import com.structurizr.util.ImageUtils;
-import com.structurizr.util.StringUtils;
-import com.structurizr.util.WorkspaceUtils;
+import com.structurizr.util.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -271,11 +271,12 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
             }
 
             NumberFormat format = new DecimalFormat("0000");
-            Workspace workspace = new Workspace("Workspace " + format.format(workspaceId), "Description");
+            String dsl = DslTemplate.generate("Workspace " + format.format(workspaceId), "Description");
 
-            if (Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_SCOPE_VALIDATION)) {
-                workspace.getConfiguration().setScope(WorkspaceScope.SoftwareSystem);
-            }
+            StructurizrDslParser dslParser = new StructurizrDslParser();
+            dslParser.parse(dsl);
+
+            Workspace workspace = dslParser.getWorkspace();
 
             String json = WorkspaceUtils.toJson(workspace, true);
 
