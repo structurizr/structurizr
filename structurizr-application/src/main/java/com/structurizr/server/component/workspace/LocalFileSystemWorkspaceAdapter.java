@@ -56,10 +56,19 @@ abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspa
         File jsonFile = new File(workspaceDirectory, WORKSPACE_JSON_FILENAME);
 
         if (dslFile.exists()) {
-            try {
-                return loadWorkspaceFromDsl(workspaceId);
-            } catch (StructurizrDslParserException | WorkspaceScopeValidationException e) {
-                throw new WorkspaceComponentException(e);
+            // the DSL file exists, but load the JSON if nothing has changed
+            if (jsonFile.exists() && jsonFile.lastModified() > lastModifiedDate) {
+                try {
+                    return loadWorkspaceFromJson(workspaceId);
+                } catch (Exception e) {
+                    throw new WorkspaceComponentException(e);
+                }
+            } else {
+                try {
+                    return loadWorkspaceFromDsl(workspaceId);
+                } catch (StructurizrDslParserException | WorkspaceScopeValidationException e) {
+                    throw new WorkspaceComponentException(e);
+                }
             }
         } else if (jsonFile.exists()) {
             Workspace workspace;
