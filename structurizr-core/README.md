@@ -5,4 +5,3 @@
 This library provides the core functionality of Structurizr related to creating workspaces.
 
 - [Documentation](https://docs.structurizr.com/java)
-

@@ -2,6 +2,8 @@
 
 ## v6.0.0 (1st February 2026)
 
+### General
+
 - Requires Java 21.
 
 ### structurizr-core
