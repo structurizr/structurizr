@@ -1,6 +1,8 @@
 # Changelog
 
-## v6.0.0 (unreleased)
+## v6.0.0 (1st February 2026)
+
+- Requires Java 21.
 
 ### structurizr-core
 
@@ -14,4 +16,4 @@
 
 - Removes `branding` keyword.
 - Adds a way to override relationship technologies in deployment environments.
-
+- Adds support for "installed" themes (e.g. `theme amazon-web-services-2025.07`).

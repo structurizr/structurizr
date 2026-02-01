@@ -1,20 +1,20 @@
 # Changelog
 
-## 2026.xx.xx (unreleased)
+## 2026.02.01
 
-- Adds com.structurizr.dsl.plugin.documentation.PlantUML plugin.
-- Adds com.structurizr.dsl.plugin.documentation.Mermaid plugin.
+- Adds `com.structurizr.dsl.plugin.documentation.PlantUML` plugin.
+- Adds `com.structurizr.dsl.plugin.documentation.Mermaid` plugin.
 
 ### local
 
 - Removes Graphviz integration from the diagram viewer/editor; uses browser-based Dagre instead.
 - Removes font and icon configuration via "branding".
-- A workspace logo can now be sourced from an element style named `Workspace:Icon`.
+- A workspace icon can now be sourced from an element style named `Workspace:Icon`.
 - Diagrams are now editable after clicking the "edit" button on the diagram viewer.
 - Removes support for Lite's `STRUCTURIZR_WORKSPACE_PATH` and `STRUCTURIZR_WORKSPACE_FILENAME` (use multi-workspace mode instead).
 - Removes support for Lite's auto-sync.
 - Diagram editor UI/UX improvements and bug fixes.
-- Adds a theme browser with new built-in themes.
+- Adds a theme browser to display installed themes (/themes).
 - Configuration items can be specified as `structurizr.xxx` properties in `structurizr.properties` file, or via `STRUCTURIZR_XXX` environment variables.
 - Adds a way to install themes via a property named `structurizr.themes`.
 
@@ -23,7 +23,7 @@
 - Open core
   - Removes Graphviz integration from the diagram viewer/editor; uses browser-based Dagre instead.
   - Removes font and icon configuration via "branding".
-  - A workspace logo can now be sourced from an element style named `Workspace:Icon`.
+  - A workspace icon can now be sourced from an element style named `Workspace:Icon`.
   - Authentication is disabled by default.
   - No API key required for API calls when authentication is disabled.
   - Adds API endpoint to get branches.
@@ -31,7 +31,7 @@
   - Simplifies the iframe embed code.
   - Added ability to publish SVG exports for image embeds.
   - Diagram editor UI/UX improvements and bug fixes.
-  - Adds a theme browser with new built-in themes.
+  - Adds a theme browser to display installed themes (/themes).
   - Branch can be specified with iframe embed.
   - Tags can be specified with iframe embed.
   - Removes the `/theme` endpoints for workspaces.
