@@ -33,6 +33,8 @@
     <option value="https://docs.structurizr.com/dsl/language#custom-view">&nbsp;&nbsp;&nbsp;- custom</option>
     <option value="https://docs.structurizr.com/dsl/language#image-view">&nbsp;&nbsp;&nbsp;- image</option>
     <option value="https://docs.structurizr.com/dsl/language#styles">&nbsp;&nbsp;&nbsp;- styles</option>
+    <option value="https://docs.structurizr.com/dsl/language#light">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- light</option>
+    <option value="https://docs.structurizr.com/dsl/language#dark">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- dark</option>
     <option value="https://docs.structurizr.com/dsl/language#element-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- element</option>
     <option value="https://docs.structurizr.com/dsl/language#relationship-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- relationship</option>
     <option value="https://docs.structurizr.com/dsl/language#themes">&nbsp;&nbsp;&nbsp;- themes</option>
