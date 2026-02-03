@@ -16,12 +16,18 @@
             $('#openTreeInNewWindowButton').click(function() { openTreeInNewWindow(); });
         </script>
         </c:if>
+        <div class="btn-group">
+            <button id="zoomOutButton" class="btn btn-default" title="Decrease distance [-]"><img src="/static/bootstrap-icons/zoom-out.svg" class="icon-btn" /></button>
+            <button id="zoomInButton" class="btn btn-default" title="Increase distance [+]"><img src="/static/bootstrap-icons/zoom-in.svg" class="icon-btn" /></button>
+        </div>
         <button id="enterFullScreenButton" class="btn btn-default" title="Enter Full Screen [f]"><img src="/static/bootstrap-icons/fullscreen.svg" class="icon-btn" /></button>
         <button id="exitFullScreenButton" class="btn btn-default hidden" title="Exit Full Screen [Escape]"><img src="/static/bootstrap-icons/fullscreen-exit.svg" class="icon-btn" /></button>
     </div>
     <script nonce="${scriptNonce}">
         $('#enterFullScreenButton').click(function() { structurizr.ui.enterFullScreen('exploreTreePanel'); });
         $('#exitFullScreenButton').click(function() { structurizr.ui.exitFullScreen(); });
+        $('#zoomOutButton').click(function() { decreaseDistance(); });
+        $('#zoomInButton').click(function() { increaseDistance(); });
     </script>
 
     <div style="position: fixed; bottom: 10px; left: 10px;">
@@ -41,6 +47,8 @@
 
 <script nonce="${scriptNonce}">
     var margin = 0;
+    var dx = 50;
+    const dxDelta = 25;
 
     var viewKey = decodeURIComponent('<c:out value="${view}" />');
     var view;
@@ -74,6 +82,7 @@
         }
 
         renderTree();
+        addEventHandlers();
 
         <c:choose>
         <c:when test="${embed}">
@@ -135,7 +144,6 @@
     function graph(label, root) {
         const horizontalMargin = 50;
         const width = window.innerWidth - horizontalMargin;
-        const dx = 100;
         const dy = width / 5;
         const tree = d3.tree().nodeSize([dx, dy]);
         const treeLink = d3.linkHorizontal().x(d => d.y).y(d => d.x);
@@ -301,9 +309,23 @@
         $("#exploreTree").height(height);
     }
 
-    window.addEventListener("resize", function() {
-        setWidthAndHeight();
-    }, false);
+    function addEventHandlers() {
+        $(document).keypress(function(e) {
+            const plus = 43;
+            const equals = 61;
+            const minus = 45;
+
+            if (e.which === plus || e.which === equals) {
+                increaseDistance();
+            } else if (e.which === minus) {
+                decreaseDistance();
+            }
+        });
+
+        window.addEventListener("resize", function () {
+            setWidthAndHeight();
+        }, false);
+    }
 
     function openTreeInNewWindow() {
         window.open('<c:out value="${urlPrefix}" />/explore/tree#' + encodeURIComponent(viewKey));
@@ -494,6 +516,18 @@
         array.sort(function(a, b) {
             return a.name.localeCompare(b.name);
         })
+    }
+
+    function increaseDistance() {
+        dx += dxDelta;
+        dx = Math.min(dx, 150);
+        renderTree();
+    }
+
+    function decreaseDistance() {
+        dx -= dxDelta;
+        dx = Math.max(dx, 50);
+        renderTree();
     }
 </script>
 
