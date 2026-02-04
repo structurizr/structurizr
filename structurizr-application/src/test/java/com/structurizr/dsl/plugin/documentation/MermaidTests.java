@@ -92,7 +92,7 @@ public class MermaidTests {
         container.getDocumentation().addSection(new Section(Format.Markdown, MARKDOWN_CONTENT));
         documentables.add(container);
 
-        component.getDocumentation().addSection(new Section(Format.Markdown, MARKDOWN_CONTENT));
+        component.getDocumentation().addSection(new Section(Format.Markdown, MARKDOWN_CONTENT.replace("\\n", "\r\n"))); // Windows CRLF
         documentables.add(component);
 
         Map<String,String> parameters = new HashMap<>();
@@ -134,7 +134,7 @@ public class MermaidTests {
         container.getDocumentation().addSection(new Section(Format.AsciiDoc, ASCIIDOC_CONTENT));
         documentables.add(container);
 
-        component.getDocumentation().addSection(new Section(Format.AsciiDoc, ASCIIDOC_CONTENT));
+        component.getDocumentation().addSection(new Section(Format.AsciiDoc, ASCIIDOC_CONTENT.replace("\\n", "\r\n"))); // Windows CRLF
         documentables.add(component);
 
         Map<String,String> parameters = new HashMap<>();
