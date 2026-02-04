@@ -1,5 +1,11 @@
 # Changelog
 
+## v6.0.1 (unreleased)
+
+## structurizr-core
+
+- Normalises line endings when importing Markdown/AsciiDoc content (documentation and decisions).
+
 ## v6.0.0 (1st February 2026)
 
 ### General
