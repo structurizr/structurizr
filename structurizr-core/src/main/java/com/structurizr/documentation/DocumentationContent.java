@@ -38,7 +38,9 @@ public abstract class DocumentationContent {
     }
 
     public void setContent(String content) {
-        this.content = content;
+        if (content != null) {
+            this.content = content.replaceAll("\\r\\n|\\r|\\n", "\n");
+        }
     }
 
     /**
