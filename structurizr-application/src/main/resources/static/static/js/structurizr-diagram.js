@@ -1619,7 +1619,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
                 // default to HTTP status if response body is empty
                 if (!perspective.value || perspective.value.length === 0) {
-                    perspective.value = jqXHR.status;
+                    perspective.value = '' + jqXHR.status;
                 }
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
