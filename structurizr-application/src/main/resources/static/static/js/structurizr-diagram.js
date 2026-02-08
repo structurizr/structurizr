@@ -6740,7 +6740,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
             lines.forEach(function(line) {
                 const labels = line.get('labels');
-                if (labels !== undefined && labels.length > 1) {
+                if (labels !== undefined && labels.length > 0 && labels[0].position) {
                     labels[0].position.offset = labels[0].position.calculatedOffset;
                     labels[1].position.distance = labels[0].position.distance;
                 }
