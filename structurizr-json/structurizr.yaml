@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: 6.0.0
+  version: 6.1.0
   title: Structurizr
   description: The workspace API for Structurizr.
 paths:
@@ -584,10 +584,13 @@ components:
           description: The name of this perspective (e.g. "Security").
         description:
           type: string
-          description: The description of this perspective.
+          description: The description of this perspective (optional).
         value:
           type: string
           description: The value of this perspective (optional).
+        url:
+          type: string
+          description: The URL of this perspective (optional).
 
     Views:
       type: object
