@@ -1,7 +1,0 @@
-workspace {
-
-    model {
-        group "Name"
-    }
-
-}

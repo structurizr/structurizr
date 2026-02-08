@@ -1,1 +1,0 @@
-softwareSystem = softwareSystem "Software System"

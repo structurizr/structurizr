@@ -1,4 +1,0 @@
-workspace {
-}
-
-hello world
