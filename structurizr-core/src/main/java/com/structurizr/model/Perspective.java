@@ -1,5 +1,6 @@
 package com.structurizr.model;
 
+import com.structurizr.util.StringUtils;
 /**
  * Represents an architectural perspective, that can be applied to elements and relationships.
  * See https://www.viewpoints-and-perspectives.info/home/perspectives/ for more details of this concept.
@@ -13,8 +14,24 @@ public final class Perspective implements Comparable<Perspective> {
     Perspective() {
     }
 
-    public Perspective(String name, String description, String value) {
+    /**
+     * Creates a perspective with the given name.
+     *
+     * @param name          the perspective name
+     */
+    public Perspective(String name) {
         this.name = name;
+    }
+
+    /**
+     * Creates a static perspective, with the given name, description, and value.
+     *
+     * @param name          the perspective name
+     * @param description   the perspective description
+     * @param value         the perspective value (optional)
+     */
+    public Perspective(String name, String description, String value) {
+        setName(name);
         this.description = description;
         this.value = value;
     }
@@ -29,6 +46,10 @@ public final class Perspective implements Comparable<Perspective> {
     }
 
     void setName(String name) {
+        if (StringUtils.isNullOrEmpty(name)) {
+            throw new IllegalArgumentException("Perspective name must be specified");
+        }
+
         this.name = name;
     }
 
@@ -41,7 +62,7 @@ public final class Perspective implements Comparable<Perspective> {
         return description;
     }
 
-    void setDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -54,7 +75,7 @@ public final class Perspective implements Comparable<Perspective> {
         return value;
     }
 
-    void setValue(String value) {
+    public void setValue(String value) {
         this.value = value;
     }
 

@@ -160,7 +160,7 @@ public class ModelItemTests extends AbstractWorkspaceTestBase {
             element.addPerspective(null, null);
             fail();
         } catch (IllegalArgumentException iae) {
-            assertEquals("A name must be specified.", iae.getMessage());
+            assertEquals("Perspective name must be specified", iae.getMessage());
         }
     }
 
@@ -171,29 +171,7 @@ public class ModelItemTests extends AbstractWorkspaceTestBase {
             element.addPerspective(" ", null);
             fail();
         } catch (IllegalArgumentException iae) {
-            assertEquals("A name must be specified.", iae.getMessage());
-        }
-    }
-
-    @Test
-    void addPerspective_ThrowsAnException_WhenADescriptionIsNotSpecified() {
-        try {
-            Element element = model.addSoftwareSystem("Name", "Description");
-            element.addPerspective("Security", null);
-            fail();
-        } catch (IllegalArgumentException iae) {
-            assertEquals("A description must be specified.", iae.getMessage());
-        }
-    }
-
-    @Test
-    void addPerspective_ThrowsAnException_WhenAnEmptyDescriptionIsSpecified() {
-        try {
-            Element element = model.addSoftwareSystem("Name", "Description");
-            element.addPerspective("Security", " ");
-            fail();
-        } catch (IllegalArgumentException iae) {
-            assertEquals("A description must be specified.", iae.getMessage());
+            assertEquals("Perspective name must be specified", iae.getMessage());
         }
     }
 

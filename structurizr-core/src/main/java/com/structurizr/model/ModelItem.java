@@ -211,6 +211,21 @@ public abstract class ModelItem implements PropertyHolder, PerspectivesHolder, C
     }
 
     /**
+     * Adds a perspective to this object.
+     *
+     * @param perspective       a Perspective object
+     * @throws IllegalArgumentException     if the named perspective exists already
+     */
+    @Override
+    public void addPerspective(Perspective perspective) {
+        if (perspectives.stream().anyMatch(p -> p.getName().equals(perspective.getName()))) {
+            throw new IllegalArgumentException("A perspective named \"" + perspective.getName() + "\" already exists.");
+        }
+
+        perspectives.add(perspective);
+    }
+
+    /**
      * Adds a perspective to this model item.
      *
      * @param name          the name of the perspective (e.g. "Security", must be unique)
@@ -232,20 +247,8 @@ public abstract class ModelItem implements PropertyHolder, PerspectivesHolder, C
      * @throws IllegalArgumentException     if perspective details are not specified, or the named perspective exists already
      */
     public Perspective addPerspective(String name, String description, String value) {
-        if (StringUtils.isNullOrEmpty(name)) {
-            throw new IllegalArgumentException("A name must be specified.");
-        }
-
-        if (StringUtils.isNullOrEmpty(description)) {
-            throw new IllegalArgumentException("A description must be specified.");
-        }
-
-        if (perspectives.stream().anyMatch(p -> p.getName().equals(name))) {
-            throw new IllegalArgumentException("A perspective named \"" + name + "\" already exists.");
-        }
-
         Perspective perspective = new Perspective(name, description, value);
-        perspectives.add(perspective);
+        addPerspective(perspective);
 
         return perspective;
     }

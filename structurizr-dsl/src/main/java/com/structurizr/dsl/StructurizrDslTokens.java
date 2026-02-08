@@ -25,6 +25,9 @@ class StructurizrDslTokens {
     static final String URL_TOKEN = "url";
     static final String PROPERTIES_TOKEN = "properties";
     static final String PERSPECTIVES_TOKEN = "perspectives";
+    static final String PERSPECTIVE_TOKEN = "perspective";
+    static final String PERSPECTIVE_DESCRIPTION_TOKEN = "description";
+    static final String PERSPECTIVE_VALUE_TOKEN = "value";
     static final String WORKSPACE_TOKEN = "workspace";
     static final String EXTENDS_TOKEN = "extends";
     static final String SCOPE_TOKEN = "scope";

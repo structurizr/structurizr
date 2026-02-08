@@ -687,8 +687,18 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     } else if (PERSPECTIVES_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelItemsDslContext.class)) {
                         startContext(new PerspectivesDslContext(getContext(ModelItemsDslContext.class).getModelItems()));
 
+                    } else if (PERSPECTIVE_TOKEN.equalsIgnoreCase(firstToken) && inContext(PerspectivesDslContext.class) && shouldStartContext(tokens) && tokens.size() == 3) {
+                        Perspective perspective = new PerspectiveParser().parse(tokens);
+                        startContext(new PerspectiveDslContext(perspective, getContext(PerspectivesDslContext.class)));
+
                     } else if (inContext(PerspectivesDslContext.class)) {
                         new PerspectiveParser().parse(getContext(PerspectivesDslContext.class), tokens);
+
+                    } else if (PERSPECTIVE_VALUE_TOKEN.equalsIgnoreCase(firstToken) && inContext(PerspectiveDslContext.class)) {
+                        new PerspectiveParser().parseValue(getContext(PerspectiveDslContext.class), tokens);
+
+                    } else if (PERSPECTIVE_DESCRIPTION_TOKEN.equalsIgnoreCase(firstToken) && inContext(PerspectiveDslContext.class)) {
+                        new PerspectiveParser().parseDescription(getContext(PerspectiveDslContext.class), tokens);
 
                     } else if (GROUP_TOKEN.equalsIgnoreCase(firstToken) && inContext(ComponentDslContext.class)) {
                         new GroupParser().parseProperty(getContext(ComponentDslContext.class), tokens);

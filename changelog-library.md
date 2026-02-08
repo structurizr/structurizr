@@ -6,6 +6,10 @@
 
 - Normalises line endings when importing Markdown/AsciiDoc content (documentation and decisions).
 
+## structurizr-dsl
+
+- Perspectives can be specified as a `perspective { ... }` block.
+
 ## v6.0.0 (1st February 2026)
 
 ### General

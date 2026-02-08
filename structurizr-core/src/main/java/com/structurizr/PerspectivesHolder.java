@@ -19,6 +19,14 @@ public interface PerspectivesHolder {
     /**
      * Adds a perspective to this object.
      *
+     * @param perspective       a Perspective object
+     * @throws IllegalArgumentException     if the named perspective exists already
+     */
+    void addPerspective(Perspective perspective);
+
+    /**
+     * Adds a perspective to this object.
+     *
      * @param name          the name of the perspective (e.g. "Security", must be unique)
      * @param description   the description of the perspective
      * @return              a Perspective object

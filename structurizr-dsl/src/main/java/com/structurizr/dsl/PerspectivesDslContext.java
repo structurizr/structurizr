@@ -24,7 +24,9 @@ final class PerspectivesDslContext extends DslContext {
 
     @Override
     protected String[] getPermittedTokens() {
-        return new String[0];
+        return new String[] {
+                StructurizrDslTokens.PERSPECTIVE_TOKEN
+        };
     }
 
 }

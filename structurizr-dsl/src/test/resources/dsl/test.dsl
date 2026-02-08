@@ -34,6 +34,24 @@ workspace "Name" "Description" {
             "Name" "Value"
         }
 
+        archetypes {
+            application = container {
+                tag "Application"
+                perspectives {
+                    "Name" "Description" "Value"
+                }
+            }
+            datastore = container {
+                tag "Datastore"
+                perspectives {
+                    perspective "Name" {
+                        value "Value"
+                        description "Description"
+                    }
+                }
+            }
+        }
+
         box1 = element "Box 1" "Metadata" "Description" "Tag"
         box2 = element "Box 2" "Metadata" "Description" "Tag"
         box1 -> box2
@@ -89,6 +107,10 @@ workspace "Name" "Description" {
                 }
                 perspectives {
                     "Security" "A description..."
+                    perspective "Ownership" {
+                        description "Owned by team 1."
+                        value "Team 1"
+                    }
                 }
             }
 
