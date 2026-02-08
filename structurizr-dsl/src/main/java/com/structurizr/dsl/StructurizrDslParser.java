@@ -700,6 +700,9 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     } else if (PERSPECTIVE_DESCRIPTION_TOKEN.equalsIgnoreCase(firstToken) && inContext(PerspectiveDslContext.class)) {
                         new PerspectiveParser().parseDescription(getContext(PerspectiveDslContext.class), tokens);
 
+                    } else if (PERSPECTIVE_URL_TOKEN.equalsIgnoreCase(firstToken) && inContext(PerspectiveDslContext.class)) {
+                        new PerspectiveParser().parseUrl(getContext(PerspectiveDslContext.class), tokens);
+
                     } else if (GROUP_TOKEN.equalsIgnoreCase(firstToken) && inContext(ComponentDslContext.class)) {
                         new GroupParser().parseProperty(getContext(ComponentDslContext.class), tokens);
 

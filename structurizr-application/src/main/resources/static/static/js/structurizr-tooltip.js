@@ -138,27 +138,7 @@ structurizr.ui.Tooltip = function() {
             }
 
             if (perspectiveDetails !== undefined) {
-                var perspectiveDescription = perspectiveDetails.description;
-                if (perspectiveDescription === undefined) {
-                    perspectiveDescription = '';
-                }
-                perspectiveDescription = structurizr.util.escapeHtml(perspectiveDescription).replaceAll('\n', '<br />');
-
-                additionalContent += '<div style="font-weight: bold; margin-bottom: 10px;">Perspective: ';
-                additionalContent += structurizr.util.escapeHtml(perspectiveDetails.name);
-                additionalContent += '</div>';
-
-                if (perspectiveDescription && perspectiveDescription.length > 0) {
-                    additionalContent += '<div style="margin-bottom: 10px;">';
-                    additionalContent += perspectiveDescription;
-                    additionalContent += '</div>';
-                }
-
-                if (perspectiveDetails.value && perspectiveDetails.value.length > 0) {
-                    additionalContent += '<div>';
-                    additionalContent += 'Value: ' + perspectiveDetails.value;
-                    additionalContent += '</div>';
-                }
+                additionalContent += renderPerspective(perspectiveDetails);
             }
 
             renderAdditionalContent(additionalContent);
@@ -273,27 +253,7 @@ structurizr.ui.Tooltip = function() {
             }
 
             if (perspectiveDetails !== undefined) {
-                var perspectiveDescription = perspectiveDetails.description;
-                if (perspectiveDescription === undefined) {
-                    perspectiveDescription = '';
-                }
-                perspectiveDescription = structurizr.util.escapeHtml(perspectiveDescription).replaceAll('\n', '<br />');
-
-                additionalContent += '<div style="font-weight: bold; margin-bottom: 10px;">Perspective: ';
-                additionalContent += structurizr.util.escapeHtml(perspectiveDetails.name);
-                additionalContent += '</div>';
-
-                if (perspectiveDescription && perspectiveDescription.length > 0) {
-                    additionalContent += '<div style="margin-bottom: 10px;">';
-                    additionalContent += perspectiveDescription;
-                    additionalContent += '</div>';
-                }
-
-                if (perspectiveDetails.value && perspectiveDetails.value.length > 0) {
-                    additionalContent += '<div>';
-                    additionalContent += 'Value: ' + perspectiveDetails.value;
-                    additionalContent += '</div>';
-                }
+                additionalContent += renderPerspective(perspectiveDetails);
             }
 
             renderAdditionalContent(additionalContent);
@@ -418,6 +378,40 @@ structurizr.ui.Tooltip = function() {
             tooltipAdditionalContent.html('');
             tooltipAdditionalContent.addClass('hidden');
         }
+    }
+
+    function renderPerspective(perspective) {
+        var html = '';
+
+        var perspectiveDescription = perspective.description;
+        if (perspectiveDescription === undefined) {
+            perspectiveDescription = '';
+        }
+        perspectiveDescription = structurizr.util.escapeHtml(perspectiveDescription).replaceAll('\n', '<br />');
+
+        html += '<div style="font-weight: bold; margin-bottom: 10px;">Perspective: ';
+        html += structurizr.util.escapeHtml(perspective.name);
+        html += '</div>';
+
+        if (perspectiveDescription && perspectiveDescription.length > 0) {
+            html += '<div style="margin-bottom: 10px;">';
+            html += perspectiveDescription;
+            html += '</div>';
+        }
+
+        if (perspective.url && perspective.url.length > 0) {
+            html += '<div>';
+            html += 'URL: <a href="' + perspective.url + '" target="_blank">' + perspective.url + '</a>';
+            html += '</div>';
+        }
+
+        if (perspective.value !== undefined && perspective.value.length > 0) {
+            html += '<div>';
+            html += 'Value: ' + perspective.value;
+            html += '</div>';
+        }
+
+        return html;
     }
 
     function isUrl(s) {

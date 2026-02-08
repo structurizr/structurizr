@@ -73,4 +73,21 @@ final class PerspectiveParser extends AbstractParser {
         context.getPerspective().setDescription(description);
     }
 
+    void parseUrl(PerspectiveDslContext context, Tokens tokens) {
+        // url <url>
+        final int PERSPECTIVE_URL_INDEX = 1;
+
+        if (tokens.hasMoreThan(PERSPECTIVE_URL_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: url <url>");
+        }
+
+        if (!tokens.includes(PERSPECTIVE_URL_INDEX)) {
+            throw new RuntimeException("Expected: url <url>");
+        }
+
+        String url = tokens.get(1);
+
+        context.getPerspective().setUrl(url);
+    }
+
 }

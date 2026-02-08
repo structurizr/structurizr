@@ -1,15 +1,23 @@
 package com.structurizr.model;
 
 import com.structurizr.util.StringUtils;
+import com.structurizr.util.Url;
+
 /**
  * Represents an architectural perspective, that can be applied to elements and relationships.
  * See https://www.viewpoints-and-perspectives.info/home/perspectives/ for more details of this concept.
+ *
+ * Two types of perspectives are supported:
+ *
+ * 1. Static perspective: has a static value.
+ * 2. Dynamic perspective: has a dynamic value, retrieved via a URL.
  */
 public final class Perspective implements Comparable<Perspective> {
 
     private String name;
     private String description;
     private String value;
+    private String url;
 
     Perspective() {
     }
@@ -34,6 +42,17 @@ public final class Perspective implements Comparable<Perspective> {
         setName(name);
         this.description = description;
         this.value = value;
+    }
+
+    /**
+     * Creates a dynamic perspective, the value of which is sourced from a URL.
+     *
+     * @param name          the perspective name
+     * @param url           the perspective URL
+     */
+    public Perspective(String name, String url) {
+        setName(name);
+        setUrl(url);
     }
 
     /**
@@ -62,6 +81,11 @@ public final class Perspective implements Comparable<Perspective> {
         return description;
     }
 
+    /**
+     * Sets the description of this perspective.
+     *
+     * @param description       the description, as a String
+     */
     public void setDescription(String description) {
         this.description = description;
     }
@@ -75,8 +99,37 @@ public final class Perspective implements Comparable<Perspective> {
         return value;
     }
 
+    /**
+     * Sets the value of this perspective.
+     *
+     * @param value     the value, as a String
+     */
     public void setValue(String value) {
         this.value = value;
+    }
+
+    /**
+     * Gets the URL of this perspective.
+     *
+     * @return  the URL of this perspective, as a String
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * Sets the URL of this perspective.
+     *
+     * @param url       the URL as a String
+     */
+    public void setUrl(String url) {
+        if (StringUtils.isNullOrEmpty(url)) {
+            throw new IllegalArgumentException("URL must be specified");
+        } else if (Url.isUrl(url)) {
+            this.url = url;
+        } else {
+            throw new IllegalArgumentException(url + " is not a valid URL.");
+        }
     }
 
     @Override

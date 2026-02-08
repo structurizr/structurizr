@@ -3,6 +3,8 @@ package com.structurizr.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.structurizr.util.StringUtils;
 import com.structurizr.util.Url;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
@@ -13,6 +15,8 @@ import java.util.TreeSet;
  * Represents a deployment instance of a {@link SoftwareSystem} or {@link Container}, which can be added to a {@link DeploymentNode}.
  */
 public abstract class StaticStructureElementInstance extends DeploymentElement {
+
+    private static final Log log = LogFactory.getLog(StaticStructureElementInstance.class);
 
     private static final int DEFAULT_HEALTH_CHECK_INTERVAL_IN_SECONDS = 60;
     private static final long DEFAULT_HEALTH_CHECK_TIMEOUT_IN_MILLISECONDS = 0;
@@ -139,6 +143,7 @@ public abstract class StaticStructureElementInstance extends DeploymentElement {
      * @throws IllegalArgumentException     if the name is empty, or the URL is not a well-formed URL
      */
     @Nonnull
+    @Deprecated
     public HttpHealthCheck addHealthCheck(String name, String url) {
         return addHealthCheck(name, url, DEFAULT_HEALTH_CHECK_INTERVAL_IN_SECONDS, DEFAULT_HEALTH_CHECK_TIMEOUT_IN_MILLISECONDS);
     }
@@ -154,7 +159,10 @@ public abstract class StaticStructureElementInstance extends DeploymentElement {
      * @throws IllegalArgumentException     if the name is empty, the URL is not a well-formed URL, or the interval/timeout is not zero/a positive integer
      */
     @Nonnull
+    @Deprecated
     public HttpHealthCheck addHealthCheck(String name, String url, int interval, long timeout) {
+        log.warn("Health checks are deprecated - please use dynamic perspectives instead");
+
         if (name == null || name.trim().length() == 0) {
             throw new IllegalArgumentException("The name must not be null or empty.");
         }

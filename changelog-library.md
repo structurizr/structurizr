@@ -1,10 +1,12 @@
 # Changelog
 
-## v6.0.1 (unreleased)
+## v6.1.0 (unreleased)
 
 ## structurizr-core
 
 - Normalises line endings when importing Markdown/AsciiDoc content (documentation and decisions).
+- Adds support for dynamic perspectives.
+- Deprecates health checks in favour of dynamic perspectives.
 
 ## structurizr-dsl
 

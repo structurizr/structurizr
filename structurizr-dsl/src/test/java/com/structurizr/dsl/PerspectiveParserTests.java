@@ -110,7 +110,7 @@ class PerspectiveParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parseValue_ThrowsException_WhenNoDescriptionIsSpecified() {
+    void test_parseValue_ThrowsException_WhenNoValueIsSpecified() {
         try {
             Perspective perspective = new Perspective("Name");
             PerspectiveDslContext context = new PerspectiveDslContext(perspective, null);
@@ -140,6 +140,39 @@ class PerspectiveParserTests extends AbstractTests {
         parser.parseValue(context, tokens("value", "Value"));
 
         assertEquals("Value", perspective.getValue());
+    }
+
+    @Test
+    void test_parseUrl_ThrowsException_WhenNoUrlIsSpecified() {
+        try {
+            Perspective perspective = new Perspective("Name");
+            PerspectiveDslContext context = new PerspectiveDslContext(perspective, null);
+            parser.parseUrl(context, tokens("url"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Expected: url <url>", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseUrl_ThrowsException_WhenThereAreTooManyTokens() {
+        try {
+            Perspective perspective = new Perspective("Name");
+            PerspectiveDslContext context = new PerspectiveDslContext(perspective, null);
+            parser.parseUrl(context, tokens("url", "url", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: url <url>", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseUrl() {
+        Perspective perspective = new Perspective("Name");
+        PerspectiveDslContext context = new PerspectiveDslContext(perspective, null);
+        parser.parseUrl(context, tokens("url", "https://example.com/health"));
+
+        assertEquals("https://example.com/health", perspective.getUrl());
     }
 
 }
