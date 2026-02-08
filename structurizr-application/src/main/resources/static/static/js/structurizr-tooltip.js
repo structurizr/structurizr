@@ -147,9 +147,18 @@ structurizr.ui.Tooltip = function() {
                 additionalContent += '<div style="font-weight: bold; margin-bottom: 10px;">Perspective: ';
                 additionalContent += structurizr.util.escapeHtml(perspectiveDetails.name);
                 additionalContent += '</div>';
-                additionalContent += '<div>';
-                additionalContent += perspectiveDescription;
-                additionalContent += '</div>';
+
+                if (perspectiveDescription && perspectiveDescription.length > 0) {
+                    additionalContent += '<div style="margin-bottom: 10px;">';
+                    additionalContent += perspectiveDescription;
+                    additionalContent += '</div>';
+                }
+
+                if (perspectiveDetails.value && perspectiveDetails.value.length > 0) {
+                    additionalContent += '<div>';
+                    additionalContent += 'Value: ' + perspectiveDetails.value;
+                    additionalContent += '</div>';
+                }
             }
 
             renderAdditionalContent(additionalContent);
@@ -273,9 +282,18 @@ structurizr.ui.Tooltip = function() {
                 additionalContent += '<div style="font-weight: bold; margin-bottom: 10px;">Perspective: ';
                 additionalContent += structurizr.util.escapeHtml(perspectiveDetails.name);
                 additionalContent += '</div>';
-                additionalContent += '<div>';
-                additionalContent += perspectiveDescription;
-                additionalContent += '</div>';
+
+                if (perspectiveDescription && perspectiveDescription.length > 0) {
+                    additionalContent += '<div style="margin-bottom: 10px;">';
+                    additionalContent += perspectiveDescription;
+                    additionalContent += '</div>';
+                }
+
+                if (perspectiveDetails.value && perspectiveDetails.value.length > 0) {
+                    additionalContent += '<div>';
+                    additionalContent += 'Value: ' + perspectiveDetails.value;
+                    additionalContent += '</div>';
+                }
             }
 
             renderAdditionalContent(additionalContent);

@@ -192,6 +192,48 @@ structurizr.ui.RelationshipStyle = function(thickness, color, dashed, routing, j
 
 };
 
+structurizr.ui.getElementStylesForPerspective = function(perspective, darkMode) {
+    var elementStyles = [];
+    const elementStylesForPerspective = [];
+    const tag = 'Perspective:' + perspective;
+    const colorScheme = darkMode ? 'Dark' : 'Light';
+
+    structurizr.ui.themes.forEach(function (theme) {
+        elementStyles = elementStyles.concat(theme.elements);
+    });
+    elementStyles = elementStyles.concat(structurizr.workspace.views.configuration.styles.elements);
+
+    for (var i = 0; i < elementStyles.length; i++) {
+        const elementStyle = elementStyles[i];
+        if (elementStyle.tag.indexOf(tag) === 0 && (elementStyle.colorScheme === undefined || elementStyle.colorScheme === colorScheme)) {
+            elementStylesForPerspective.push(elementStyle);
+        }
+    }
+
+    return elementStylesForPerspective;
+}
+
+structurizr.ui.getRelationshipStylesForPerspective = function(perspective, darkMode) {
+    var relationshipStyles = [];
+    const relationshipStylesForPerspective = [];
+    const tag = 'Perspective:' + perspective;
+    const colorScheme = darkMode ? 'Dark' : 'Light';
+
+    structurizr.ui.themes.forEach(function (theme) {
+        relationshipStyles = relationshipStyles.concat(theme.relationships);
+    });
+    relationshipStyles = relationshipStyles.concat(structurizr.workspace.views.configuration.styles.relationships);
+
+    for (var i = 0; i < relationshipStyles.length; i++) {
+        const relationshipStyle = relationshipStyles[i];
+        if (relationshipStyle.tag.indexOf(tag) === 0 && (relationshipStyle.colorScheme === undefined || relationshipStyle.colorScheme === colorScheme)) {
+            relationshipStylesForPerspective.push(relationshipStyle);
+        }
+    }
+
+    return relationshipStylesForPerspective;
+}
+
 structurizr.ui.findElementStyle = function(element, darkMode) {
     if (darkMode === undefined) {
         darkMode = false;
