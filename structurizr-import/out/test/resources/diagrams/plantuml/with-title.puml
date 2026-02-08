@@ -1,4 +1,0 @@
-@startuml
-title Sequence diagram example
-Bob -> Alice : hello
-@enduml
