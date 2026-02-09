@@ -5812,16 +5812,19 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
     function changeColourOfLine(link, color) {
         link.attr('line/stroke', color);
+
         link.label(0, {
             attrs: {
                 text: { fill: color }
             }
         });
-        link.label(1, {
-            attrs: {
-                text: { fill: color }
-            }
-        });
+        if (link.labels().length === 3) {
+            link.label(1, {
+                attrs: {
+                    text: { fill: color }
+                }
+            });
+        }
     }
 
     function hideElement(elementId, opacity) {
