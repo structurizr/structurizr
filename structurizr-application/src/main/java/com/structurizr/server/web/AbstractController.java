@@ -15,9 +15,6 @@ import com.structurizr.util.Version;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -84,14 +81,6 @@ public abstract class AbstractController {
             model.addAttribute("pageTitle", "Structurizr");
         } else {
             model.addAttribute("pageTitle", "Structurizr - " + pageTitle);
-        }
-    }
-
-    protected String calculateUrlPrefix(long workspaceId) {
-        if (Configuration.getInstance().isSingleWorkspace()) {
-            return "/workspace";
-        } else {
-            return "/workspace/" + workspaceId;
         }
     }
 
