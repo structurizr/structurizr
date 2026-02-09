@@ -78,7 +78,7 @@ define(
                     },
                     {
                         token: "structurizr_keyword",
-                        regex: '(!constant|workspace|model|ref|impliedRelationships|enterprise|group|person|softwareSystemInstance|softwareSystem|containerInstance|container|component|deploymentEnvironment|deploymentNode|infrastructureNode|name|description|tags|url|properties|perspectives|perspective|views|systemLandscape|container|component|filtered|dynamic|deployment|autolayout|animationStep|title|styles|element|relationship|shape|icon|logo|width|height|background|color|colour|stroke|fontSize|border|opacity|metadata|description|thickness|dashed|routing|position|themes|theme|branding|terminology|configuration|visibility|scope|users)',
+                        regex: '(!constant|workspace|model|ref|impliedRelationships|enterprise|archetypes|group|person|softwareSystemInstance|softwareSystem|containerInstance|container|component|deploymentEnvironment|deploymentNode|infrastructureNode|name|description|tags|url|properties|perspectives|perspective|views|systemLandscape|container|component|filtered|dynamic|deployment|autolayout|animationStep|title|styles|element|relationship|shape|icon|logo|width|height|background|color|colour|stroke|fontSize|border|opacity|metadata|description|thickness|dashed|routing|position|themes|theme|branding|terminology|configuration|visibility|scope|users)',
                         next: 'default'
                     },
                     {
