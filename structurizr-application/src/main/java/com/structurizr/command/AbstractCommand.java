@@ -87,7 +87,7 @@ public abstract class AbstractCommand {
                     throw new StructurizrException(workspaceFile.getAbsolutePath() + " is not a JSON or DSL file");
                 }
 
-                installThemes(new File(workspaceFile.getParent()));
+                installThemes(workspaceFile.getParentFile());
                 structurizrDslParser.parse(workspaceFile);
             }
 
