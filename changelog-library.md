@@ -31,3 +31,4 @@
 - Removes `branding` keyword.
 - Adds a way to override relationship technologies in deployment environments.
 - Adds support for "installed" themes (e.g. `theme amazon-web-services-2025.07`).
+- Removes `theme default`.
