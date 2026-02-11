@@ -6,9 +6,11 @@ import com.structurizr.Workspace;
 import com.structurizr.dsl.StructurizrDslParser;
 import com.structurizr.http.HttpClient;
 import com.structurizr.inspection.DefaultInspector;
+import com.structurizr.util.StringUtils;
 import com.structurizr.util.Version;
 import com.structurizr.util.WorkspaceUtils;
 import com.structurizr.validation.WorkspaceScopeValidatorFactory;
+import com.structurizr.view.ThemeUtils;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.help.HelpFormatter;
 import org.apache.commons.logging.Log;
@@ -23,6 +25,9 @@ import java.nio.charset.Charset;
 public abstract class AbstractCommand {
 
     private static final Log log = LogFactory.getLog(AbstractCommand.class);
+
+    private static final String THEMES_ENVIRONMENT_VARIABLE_NAME = "STRUCTURIZR_THEMES";
+    private static final String THEMES_DIRECTORY_NAME = "themes";
 
     private static final String PLUGINS_DIRECTORY_NAME = "plugins";
 
@@ -70,6 +75,7 @@ public abstract class AbstractCommand {
 
             if (workspacePathAsString.startsWith("http://") || workspacePathAsString.startsWith("https://")) {
                 String dsl = readFromUrl(workspacePathAsString);
+                installThemes(new File("."));
                 structurizrDslParser.parse(dsl);
             } else {
                 File workspaceFile = new File(workspacePathAsString);
@@ -81,6 +87,7 @@ public abstract class AbstractCommand {
                     throw new StructurizrException(workspaceFile.getAbsolutePath() + " is not a JSON or DSL file");
                 }
 
+                installThemes(new File(workspaceFile.getParent()));
                 structurizrDslParser.parse(workspaceFile);
             }
 
@@ -104,6 +111,22 @@ public abstract class AbstractCommand {
         }
 
         return workspace;
+    }
+
+    private void installThemes(File directory) {
+        File themesDirectory = new File(directory, THEMES_DIRECTORY_NAME);
+        if (themesDirectory.exists()) {
+            ThemeUtils.installThemes(themesDirectory);
+        } else {
+            // try STRUCTURIZR_THEMES environment variable
+            String themesEnvironmentVariable = System.getenv(THEMES_ENVIRONMENT_VARIABLE_NAME);
+            if (!StringUtils.isNullOrEmpty(themesEnvironmentVariable)) {
+                themesDirectory = new File(themesEnvironmentVariable);
+                if (themesDirectory.exists()) {
+                    ThemeUtils.installThemes(themesDirectory);
+                }
+            }
+        }
     }
 
     protected String readFromUrl(String url) {

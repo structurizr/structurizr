@@ -8,7 +8,6 @@ import com.structurizr.export.plantuml.C4PlantUMLExporter;
 import com.structurizr.export.plantuml.StructurizrPlantUMLExporter;
 import com.structurizr.export.websequencediagrams.WebSequenceDiagramsExporter;
 import com.structurizr.http.HttpClient;
-import com.structurizr.util.StringUtils;
 import com.structurizr.util.WorkspaceUtils;
 import com.structurizr.view.ColorScheme;
 import com.structurizr.view.ThemeUtils;
@@ -97,7 +96,6 @@ public class ExportCommand extends AbstractCommand {
         long workspaceId = 1;
         String format = "";
         String outputPath = null;
-        String themes = null;
 
         try {
             CommandLine cmd = commandLineParser.parse(options, args);
@@ -105,7 +103,6 @@ public class ExportCommand extends AbstractCommand {
             workspacePathAsString = cmd.getOptionValue("workspace");
             format = cmd.getOptionValue("format");
             outputPath = cmd.getOptionValue("output");
-            themes = cmd.getOptionValue("themes");
 
         } catch (ParseException e) {
             log.error(e.getMessage());
@@ -114,10 +111,6 @@ public class ExportCommand extends AbstractCommand {
         }
 
         log.info("Exporting workspace from " + workspacePathAsString);
-
-        if (!StringUtils.isNullOrEmpty(themes)) {
-            ThemeUtils.installThemes(new File(themes));
-        }
 
         Workspace workspace = loadWorkspace(workspacePathAsString);
 
