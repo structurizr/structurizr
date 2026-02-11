@@ -53,15 +53,15 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
             } else {
                 workspaceAdapter = new LocalFileSystemMultipleWorkspaceAdapter();
             }
+            encryptionPassphrase = null;
         } else {
             workspaceAdapter = WorkspaceAdapterFactory.create();
+            encryptionPassphrase = Configuration.getInstance().getProperty(StructurizrProperties.ENCRYPTION_PASSPHRASE);
         }
 
         if (workspaceAdapter == null) {
             System.exit(1);
         }
-
-        encryptionPassphrase = Configuration.getInstance().getProperty(StructurizrProperties.ENCRYPTION_PASSPHRASE);
 
         initCache();
         initThreadPool();
