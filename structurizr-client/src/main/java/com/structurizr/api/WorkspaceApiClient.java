@@ -22,6 +22,7 @@ import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.Header;
+import org.apache.hc.core5.http.HttpResponse;
 import org.apache.hc.core5.http.HttpStatus;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
@@ -241,18 +242,20 @@ public class WorkspaceApiClient extends AbstractApiClient {
             addHeaders(httpGet, "");
             debugRequest(httpGet, null);
 
-            try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
+            HttpClientResult result = httpClient.execute(httpGet, response -> {
                 String json = EntityUtils.toString(response.getEntity());
                 debugResponse(response, json);
 
-                if (response.getCode() == HttpStatus.SC_OK) {
-                    archiveWorkspace(workspaceId, json);
+                return new HttpClientResult(response.getCode() == HttpStatus.SC_OK, json);
+            });
 
-                    return json;
-                } else {
-                    ApiResponse apiResponse = ApiResponse.parse(json);
-                    throw new StructurizrClientException(apiResponse.getMessage());
-                }
+            if (result.isSuccess()) {
+                archiveWorkspace(workspaceId, result.getContent());
+
+                return result.getContent();
+            } else {
+                ApiResponse apiResponse = ApiResponse.parse(result.content);
+                throw new StructurizrClientException(apiResponse.getMessage());
             }
         } catch (Exception e) {
             log.error(e);
@@ -311,14 +314,16 @@ public class WorkspaceApiClient extends AbstractApiClient {
             debugRequest(httpPut, EntityUtils.toString(stringEntity));
 
             log.info("Putting workspace with ID " + workspaceId);
-            try (CloseableHttpResponse response = httpClient.execute(httpPut)) {
+            HttpClientResult result = httpClient.execute(httpPut, response -> {
                 String json = EntityUtils.toString(response.getEntity());
                 debugResponse(response, json);
 
-                if (response.getCode() != HttpStatus.SC_OK) {
-                    ApiResponse apiResponse = ApiResponse.parse(json);
-                    throw new StructurizrClientException(apiResponse.getMessage());
-                }
+                return new HttpClientResult(response.getCode() == HttpStatus.SC_OK, json);
+            });
+
+            if (!result.isSuccess()) {
+                ApiResponse apiResponse = ApiResponse.parse(result.getContent());
+                throw new StructurizrClientException(apiResponse.getMessage());
             }
         } catch (Exception e) {
             log.error(e);
@@ -343,7 +348,7 @@ public class WorkspaceApiClient extends AbstractApiClient {
         }
     }
 
-    private void debugResponse(CloseableHttpResponse response, String content) {
+    private void debugResponse(HttpResponse response, String content) {
         log.debug("Response");
         log.debug("HTTP status code: " + response.getCode());
         if (content != null) {
