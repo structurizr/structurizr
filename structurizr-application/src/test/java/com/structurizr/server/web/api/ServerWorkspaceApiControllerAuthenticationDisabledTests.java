@@ -312,7 +312,7 @@ public class ServerWorkspaceApiControllerAuthenticationDisabledTests extends Con
 
         String json = controller.getBranches(1, "");
         assertEquals("""
-                ["branch1","branch2"]""", json);
+                {"id":1,"branches":["branch1","branch2"]}""", json);
     }
 
     @Test

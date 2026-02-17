@@ -6,6 +6,14 @@
 - Adds perspective specific styles for elements and relationships.
 - Adds support for dynamic perspectives.
 
+### server
+
+- Changes the output from the `GET /api/workspace/<id>/branches` endpoint.
+
+### branches
+
+- Adds a `-json` flag to enable JSON output.
+
 ## 2026.02.01
 
 - Adds `com.structurizr.dsl.plugin.documentation.PlantUML` plugin.

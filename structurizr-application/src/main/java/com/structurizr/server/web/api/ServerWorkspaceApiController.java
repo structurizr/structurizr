@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * An implementation of the Structurizr workspace API.
@@ -81,14 +82,14 @@ public class ServerWorkspaceApiController extends AbstractWorkspaceApiController
 
         try {
             List<WorkspaceBranch> branches = workspaceComponent.getWorkspaceBranches(workspaceId);
-
             branches = new ArrayList<>(branches);
             branches.sort(Comparator.comparing(WorkspaceBranch::getName));
-            String[] array = branches.stream().map(WorkspaceBranch::getName).toArray(String[]::new);
+
+            WorkspaceBranchesApiResponse apiResponse = new WorkspaceBranchesApiResponse(workspaceId, branches.stream().map(WorkspaceBranch::getName).toList());
 
             try {
                 ObjectMapper objectMapper = new ObjectMapper();
-                return objectMapper.writeValueAsString(array);
+                return objectMapper.writeValueAsString(apiResponse);
             } catch (JsonProcessingException e) {
                 log.error(e);
                 throw new ApiException("Could not get workspace branches");

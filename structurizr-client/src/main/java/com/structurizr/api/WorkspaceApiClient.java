@@ -18,7 +18,6 @@ import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPut;
 import org.apache.hc.client5.http.classic.methods.HttpUriRequestBase;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
-import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.Header;
@@ -32,6 +31,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * A client for the Structurizr workspace API that allows you to get and put Structurizr workspaces in a JSON format.
@@ -44,7 +44,6 @@ public class WorkspaceApiClient extends AbstractApiClient {
     private String user;
 
     private final long workspaceId;
-    private final String apiKey;
     private String branch = "";
 
     private EncryptionStrategy encryptionStrategy;
@@ -61,14 +60,13 @@ public class WorkspaceApiClient extends AbstractApiClient {
      * @param apiKey        the API key of the workspace
      */
     public WorkspaceApiClient(String url, long workspaceId, String apiKey) {
-        super(url);
+        super(url, apiKey);
 
         if (workspaceId <= 0) {
             throw new IllegalArgumentException("The workspace ID must be a positive integer");
         }
 
         this.workspaceId = workspaceId;
-        this.apiKey = apiKey;
     }
 
     /**
@@ -162,17 +160,20 @@ public class WorkspaceApiClient extends AbstractApiClient {
             addHeaders(httpRequest, "");
             debugRequest(httpRequest, null);
 
-            try (CloseableHttpResponse response = httpClient.execute(httpRequest)) {
+            HttpClientResult result = httpClient.execute(httpRequest, response -> {
                 String json = EntityUtils.toString(response.getEntity());
                 debugResponse(response, json);
 
-                ApiResponse apiResponse = ApiResponse.parse(json);
+                return new HttpClientResult(response.getCode() == HttpStatus.SC_OK, json);
+            });
 
-                if (response.getCode() == HttpStatus.SC_OK) {
-                    return apiResponse.isSuccess();
-                } else {
-                    throw new StructurizrClientException(apiResponse.getMessage());
-                }
+            checkResponseIsJson(result.getContent());
+            ApiResponse apiResponse = ApiResponse.parse(result.getContent());
+
+            if (result.isSuccess()) {
+                return apiResponse.isSuccess();
+            } else {
+                throw new StructurizrClientException(apiResponse.getMessage());
             }
         } catch (Exception e) {
             log.error(e);
@@ -331,47 +332,6 @@ public class WorkspaceApiClient extends AbstractApiClient {
         }
     }
 
-    private void debugRequest(HttpUriRequestBase httpRequest, String content) {
-        if (log.isDebugEnabled()) {
-            log.debug("Request");
-            log.debug("HTTP method: " + httpRequest.getMethod());
-            log.debug("Path: " + httpRequest.getPath());
-            Header[] headers = httpRequest.getHeaders();
-            for (Header header : headers) {
-                log.debug("Header: " + header.getName() + "=" + header.getValue());
-            }
-            if (content != null) {
-                log.debug("---Start content---");
-                log.debug(content);
-                log.debug("---End content---");
-            }
-        }
-    }
-
-    private void debugResponse(HttpResponse response, String content) {
-        log.debug("Response");
-        log.debug("HTTP status code: " + response.getCode());
-        if (content != null) {
-            log.debug("---Start content---");
-            log.debug(content);
-            log.debug("---End content---");
-        }
-    }
-
-    private void addHeaders(HttpUriRequestBase httpRequest, String contentType) {
-        String httpMethod = httpRequest.getMethod();
-
-        httpRequest.addHeader(HttpHeaders.USER_AGENT, agent);
-
-        if (!StringUtils.isNullOrEmpty(apiKey)) {
-            httpRequest.addHeader(HttpHeaders.AUTHORIZATION, apiKey);
-        }
-
-        if (httpMethod.equals("PUT")) {
-            httpRequest.addHeader(HttpHeaders.CONTENT_TYPE, contentType);
-        }
-    }
-
     private void archiveWorkspace(long workspaceId, String json) {
         if (this.workspaceArchiveLocation == null) {
             return;
@@ -434,7 +394,7 @@ public class WorkspaceApiClient extends AbstractApiClient {
      * @return                  an array of branch names (String)
      * @throws StructurizrClientException   if there are problems related to the network, authorization, etc
      */
-    public String[] getBranches() throws StructurizrClientException {
+    public WorkspaceBranches getBranches() throws StructurizrClientException {
         try (CloseableHttpClient httpClient = HttpClients.createSystem()) {
             HttpUriRequestBase httpRequest;
 
@@ -443,18 +403,21 @@ public class WorkspaceApiClient extends AbstractApiClient {
             addHeaders(httpRequest, "");
             debugRequest(httpRequest, null);
 
-            try (CloseableHttpResponse response = httpClient.execute(httpRequest)) {
+            HttpClientResult result = httpClient.execute(httpRequest, response -> {
                 String json = EntityUtils.toString(response.getEntity());
-                checkResponseIsJson(json);
                 debugResponse(response, json);
 
-                if (response.getCode() == HttpStatus.SC_OK) {
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    return objectMapper.readValue(json, String[].class);
-                } else {
-                    ApiResponse apiResponse = ApiResponse.parse(json);
-                    throw new StructurizrClientException(apiResponse.getMessage());
-                }
+                return new HttpClientResult(response.getCode() == HttpStatus.SC_OK, json);
+            });
+
+            checkResponseIsJson(result.getContent());
+            ApiResponse apiResponse = ApiResponse.parse(result.getContent());
+
+            if (result.isSuccess()) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                return objectMapper.readValue(result.getContent(), WorkspaceBranches.class);
+            } else {
+                throw new StructurizrClientException(apiResponse.getMessage());
             }
         } catch (Exception e) {
             log.error(e);
@@ -481,29 +444,24 @@ public class WorkspaceApiClient extends AbstractApiClient {
             addHeaders(httpRequest, "");
             debugRequest(httpRequest, null);
 
-            try (CloseableHttpResponse response = httpClient.execute(httpRequest)) {
+            HttpClientResult result = httpClient.execute(httpRequest, response -> {
                 String json = EntityUtils.toString(response.getEntity());
-                checkResponseIsJson(json);
                 debugResponse(response, json);
 
-                if (response.getCode() == HttpStatus.SC_OK) {
-                    ApiResponse apiResponse = ApiResponse.parse(json);
-                    return apiResponse.isSuccess();
-                } else {
-                    ApiResponse apiResponse = ApiResponse.parse(json);
-                    throw new StructurizrClientException(apiResponse.getMessage());
-                }
+                return new HttpClientResult(response.getCode() == HttpStatus.SC_OK, json);
+            });
+
+            checkResponseIsJson(result.getContent());
+            ApiResponse apiResponse = ApiResponse.parse(result.getContent());
+
+            if (result.isSuccess()) {
+                return apiResponse.isSuccess();
+            } else {
+                throw new StructurizrClientException(apiResponse.getMessage());
             }
         } catch (Exception e) {
             log.error(e);
             throw new StructurizrClientException(e);
-        }
-    }
-
-    private void checkResponseIsJson(String json) throws StructurizrClientException{
-        if (!json.startsWith("{")) {
-            log.error(json);
-            throw new StructurizrClientException("The response is not a JSON object - is the API URL correct?");
         }
     }
 

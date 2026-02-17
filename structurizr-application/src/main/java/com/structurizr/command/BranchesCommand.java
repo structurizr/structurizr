@@ -2,9 +2,12 @@ package com.structurizr.command;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.structurizr.api.WorkspaceApiClient;
+import com.structurizr.api.WorkspaceBranches;
 import org.apache.commons.cli.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import java.util.List;
 
 public class BranchesCommand extends AbstractCommand {
 
@@ -29,11 +32,16 @@ public class BranchesCommand extends AbstractCommand {
         option.setRequired(false);
         options.addOption(option);
 
+        option = new Option("json", "json", false, "Output JSON");
+        option.setRequired(false);
+        options.addOption(option);
+
         CommandLineParser commandLineParser = new DefaultParser();
 
         String apiUrl = "";
         long workspaceId = 1;
         String apiKey = "";
+        boolean json = false;
 
         try {
             CommandLine cmd = commandLineParser.parse(options, args);
@@ -41,19 +49,26 @@ public class BranchesCommand extends AbstractCommand {
             apiUrl = cmd.getOptionValue("apiUrl");
             workspaceId = Long.parseLong(cmd.getOptionValue("workspaceId"));
             apiKey = cmd.getOptionValue("apiKey");
+            json = cmd.hasOption("json");
         } catch (ParseException e) {
             log.error(e.getMessage());
             showHelp(options);
             System.exit(1);
         }
 
-        log.debug("Getting branches for workspace " + workspaceId + " at " + apiUrl);
         WorkspaceApiClient client = new WorkspaceApiClient(apiUrl, workspaceId, apiKey);
         client.setAgent(getAgent());
-        String[] branches = client.getBranches();
+        WorkspaceBranches branches = client.getBranches();
 
-        ObjectMapper mapper = new ObjectMapper();
-        System.out.println(mapper.writeValueAsString(branches));
+        if (json) {
+            ObjectMapper mapper = new ObjectMapper();
+            System.out.println(mapper.writeValueAsString(branches));
+        } else {
+            log.info("Getting branches for workspace " + workspaceId + " at " + apiUrl);
+            for (String branch : branches.getBranches()) {
+                log.info(" - " + branch);
+            }
+        }
     }
 
 }

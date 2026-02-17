@@ -1,6 +1,5 @@
 package com.structurizr.api;
 
-import com.structurizr.Workspace;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
