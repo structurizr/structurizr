@@ -25,6 +25,14 @@
 - Removes support for `-id *` in favour of making `-id` optional.
 - Adds a `-json` flag to enable JSON output (works only when pulling a single workspace).
 
+### inspect
+
+- Uses stdout rather than `log.info()`.
+
+### list
+
+- Uses stdout rather than `log.info()`.
+
 ## 2026.02.01
 
 - Adds `com.structurizr.dsl.plugin.documentation.PlantUML` plugin.

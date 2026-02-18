@@ -109,7 +109,7 @@ public class InspectCommand extends AbstractCommand {
                                     violation.getMessage()
                             );
 
-                            log.info(line);
+                            System.out.println(line);
                         }
                     }
 
@@ -121,9 +121,6 @@ public class InspectCommand extends AbstractCommand {
             log.error(e.getMessage());
             System.exit(1);
         }
-
-        log.debug(" - inspected");
-        log.debug(" - finished");
     }
 
     private Inspector findInspector(String name, Workspace workspace, File workspacePath) {
