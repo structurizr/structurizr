@@ -20,6 +20,11 @@
 - Confirmation prompt added.
 - Adds a `-force` flag to force deletion (non-interactive/quiet mode).
 
+### pull
+
+- Removes support for `-id *` in favour of making `-id` optional.
+- Adds a `-json` flag to enable JSON output (works only when pulling a single workspace).
+
 ## 2026.02.01
 
 - Adds `com.structurizr.dsl.plugin.documentation.PlantUML` plugin.
