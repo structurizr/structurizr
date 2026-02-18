@@ -189,6 +189,10 @@
 
             var diagramIdentifier = viewInFocus;
             var embedUrl = '/embed?view=' + encodeURIComponent(diagramIdentifier) + '&editable=true';
+            const perspective = new URLSearchParams(window.location.search).get('perspective');
+            if (perspective && perspective.length > 0) {
+                embedUrl += '&perspective=' + perspective;
+            }
             diagramEditorDiv.append('<div style="text-align: center"><iframe class="structurizrEmbed thumbnail" src="' + embedUrl + '" style="width: 100%; max-height: ' + getMaxHeightOfDiagramEditor() + 'px; border: none; overflow: hidden;" allow="fullscreen"></iframe></div>');
             structurizrDiagramIframeRendered = true;
             setTimeout(registerCallback, 500);
