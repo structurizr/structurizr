@@ -150,10 +150,10 @@ public class WorkspaceApiClient extends AbstractApiClient {
             HttpUriRequestBase httpRequest;
 
             if (lock) {
-                log.info("Locking workspace with ID " + workspaceId);
+                log.debug("Locking workspace with ID " + workspaceId);
                 httpRequest = new HttpPut(url + WORKSPACE_PATH + "/" + workspaceId + "/lock?user=" + getUser() + "&agent=" + agent);
             } else {
-                log.info("Unlocking workspace with ID " + workspaceId);
+                log.debug("Unlocking workspace with ID " + workspaceId);
                 httpRequest = new HttpDelete(url + WORKSPACE_PATH + "/" + workspaceId + "/lock?user=" + getUser() + "&agent=" + agent);
             }
 
@@ -231,7 +231,7 @@ public class WorkspaceApiClient extends AbstractApiClient {
         }
 
         try (CloseableHttpClient httpClient = HttpClients.createSystem()) {
-            log.info("Getting workspace with ID " + workspaceId);
+            log.debug("Getting workspace with ID " + workspaceId);
 
             HttpGet httpGet;
             if (StringUtils.isNullOrEmpty(branch) || branch.equalsIgnoreCase(MAIN_BRANCH)) {
@@ -314,7 +314,7 @@ public class WorkspaceApiClient extends AbstractApiClient {
 
             debugRequest(httpPut, EntityUtils.toString(stringEntity));
 
-            log.info("Putting workspace with ID " + workspaceId);
+            log.debug("Putting workspace with ID " + workspaceId);
             HttpClientResult result = httpClient.execute(httpPut, response -> {
                 String json = EntityUtils.toString(response.getEntity());
                 debugResponse(response, json);

@@ -41,7 +41,7 @@ public class AdminApiClient extends AbstractApiClient {
      */
     public List<WorkspaceMetadata> getWorkspaces() throws StructurizrClientException {
         try (CloseableHttpClient httpClient = HttpClients.createSystem()) {
-            log.info("Getting workspaces");
+            log.debug("Getting workspaces");
 
             HttpUriRequestBase httpRequest;
 
@@ -84,7 +84,7 @@ public class AdminApiClient extends AbstractApiClient {
      */
     public WorkspaceMetadata createWorkspace() throws StructurizrClientException {
         try (CloseableHttpClient httpClient = HttpClients.createSystem()) {
-            log.info("Creating workspace");
+            log.debug("Creating workspace");
 
             HttpUriRequestBase httpRequest = new HttpPost(url + WORKSPACE_PATH);
 
@@ -123,7 +123,7 @@ public class AdminApiClient extends AbstractApiClient {
      */
     public boolean deleteWorkspace(long workspaceId) throws StructurizrClientException {
         try (CloseableHttpClient httpClient = HttpClients.createSystem()) {
-            log.info("Deleting workspace " + workspaceId);
+            log.debug("Deleting workspace " + workspaceId);
 
             HttpUriRequestBase httpRequest = new HttpDelete(url + WORKSPACE_PATH + "/" + workspaceId);
 
