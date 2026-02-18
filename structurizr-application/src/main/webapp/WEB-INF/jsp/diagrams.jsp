@@ -539,14 +539,16 @@
     }
 
     function workspaceChanged() {
-        $('#undoButton').prop('disabled', structurizr.diagram.undoStackIsEmpty());
+        if (structurizr.diagram.isEditable()) {
+            $('#undoButton').prop('disabled', structurizr.diagram.undoStackIsEmpty());
 
-        $('#saveButton').removeClass('btn-default');
-        $('#saveButton').addClass('btn-danger');
-        $('#saveButton img').addClass('icon-white');
-        $('#saveButton').prop('disabled', false);
+            $('#saveButton').removeClass('btn-default');
+            $('#saveButton').addClass('btn-danger');
+            $('#saveButton img').addClass('icon-white');
+            $('#saveButton').prop('disabled', false);
 
-        unsavedChanges = true;
+            unsavedChanges = true;
+        }
     }
 
     function selectDiagramByView(view)
