@@ -14,6 +14,12 @@
 
 - Adds a `-json` flag to enable JSON output.
 
+### delete
+
+- Adds the ability to delete a workspace (admin API key is required).
+- Confirmation prompt added.
+- Adds a `-force` flag to force deletion (non-interactive/quiet mode).
+
 ## 2026.02.01
 
 - Adds `com.structurizr.dsl.plugin.documentation.PlantUML` plugin.
