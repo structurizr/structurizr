@@ -5,6 +5,8 @@
 - Fixes https://github.com/structurizr/structurizr/issues/22 (Diagram-as-text plugin rendering (Mermaid) for Markdown docs not compatible for Windows line endings).
 - Adds perspective specific styles for elements and relationships.
 - Adds support for dynamic perspectives.
+- Adds a way to install themes when using `push`, `validate`, etc commands - see [Installing themes](https://docs.structurizr.com/server/diagrams/themes#installing-themes).
+- Removes `-themes` from the `export` command in favour of the above.
 
 ### server
 
