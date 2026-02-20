@@ -11,7 +11,7 @@ import java.util.Set;
 @Controller
 public class JsonController extends AbstractWorkspaceController {
 
-    @RequestMapping(value = "/workspace/{workspaceId}/json", method = RequestMethod.GET, produces = "text/plain")
+    @RequestMapping(value = "/workspace/{workspaceId}/json", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @ResponseBody
     String showAuthenticatedJson(
             @PathVariable("workspaceId") long workspaceId,
