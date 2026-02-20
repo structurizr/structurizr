@@ -6,6 +6,8 @@ public class WorkspaceMetadata {
     private String name;
     private String description;
 
+    private String apiKey;
+
     private String privateUrl;
     private String publicUrl;
     private String shareableUrl;
@@ -39,6 +41,14 @@ public class WorkspaceMetadata {
 
     void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getApiKey() {
+        return apiKey;
+    }
+
+    void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
     }
 
     public String getPrivateUrl() {

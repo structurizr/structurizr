@@ -16,6 +16,10 @@
 
 - Adds a `-json` flag to enable JSON output.
 
+### create
+
+- Adds a `create` command to create a workspace on a Structurizr server.
+
 ### delete
 
 - Adds the ability to delete a workspace (admin API key is required).
