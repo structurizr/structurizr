@@ -25,14 +25,26 @@ public class StructurizrMcpService {
     public StructurizrMcpService() {
     }
 
-    @McpTool(description = "Gets Structurizr software architecture JSON workspace from a file")
+
+
+    @McpTool(description = "Gets a Structurizr software architecture JSON workspace from a file")
     public Workspace getJsonWorkspaceFromFile(
             @McpToolParam(description = "Filename", required = true) String filename
     ) throws Exception {
         return WorkspaceUtils.loadWorkspaceFromJson(new File(filename));
     }
 
-    @McpTool(description = "Parses Structurizr DSL software architecture workspace from a file")
+    @McpTool(description = "Inspects a Structurizr software architecture JSON workspace from a file")
+    public List<String> inspectJsonWorkspaceFromFile(
+            @McpToolParam(description = "Filename", required = true) String filename
+    ) throws Exception {
+        Workspace workspace = getJsonWorkspaceFromFile(filename);
+        return inspect(workspace);
+    }
+
+
+
+    @McpTool(description = "Parses a Structurizr DSL software architecture workspace from a file")
     public Workspace parseDslWorkspaceFromFile(
             @McpToolParam(description = "Filename", required = true) String filename
     ) throws Exception {
@@ -41,6 +53,16 @@ public class StructurizrMcpService {
         parser.parse(new File(filename));
         return parser.getWorkspace();
     }
+
+    @McpTool(description = "Inspects a Structurizr DSL software architecture workspace from a file")
+    public List<String> inspectDslWorkspaceFromFile(
+            @McpToolParam(description = "Filename", required = true) String filename
+    ) throws Exception {
+        Workspace workspace = parseDslWorkspaceFromFile(filename);
+        return inspect(workspace);
+    }
+
+
 
     @McpTool(description = "Gets a single software architecture workspace from a Structurizr server")
     public Workspace getWorkspaceFromStructurizrServer(
@@ -62,7 +84,19 @@ public class StructurizrMcpService {
         return workspace;
     }
 
-    @McpTool(description = "Gets software architecture workspaces from a Structurizr server")
+    @McpTool(description = "Inspects a single software architecture workspace from a Structurizr server")
+    public List<String> inspectWorkspaceFromStructurizrServer(
+            @McpToolParam(description = "URL", required = true) String url,
+            @McpToolParam(description = "Workspace ID", required = true) long workspaceId,
+            @McpToolParam(description = "API key", required = false) String apiKey
+    ) throws Exception {
+        Workspace workspace = getWorkspaceFromStructurizrServer(url, workspaceId, apiKey);
+        return inspect(workspace);
+    }
+
+
+
+    @McpTool(description = "Gets all software architecture workspaces from a Structurizr server")
     public Collection<Workspace> getWorkspacesFromStructurizrServer(
             @McpToolParam(description = "URL", required = true) String url,
             @McpToolParam(description = "API key", required = false) String apiKey
@@ -89,11 +123,7 @@ public class StructurizrMcpService {
         return workspaces;
     }
 
-    @McpTool(description = "Inspects a Structurizr software architecture JSON workspace")
-    public List<String> inspectWorkspace(
-            @McpToolParam(description = "Workspace as JSON", required = true) String json
-    ) throws Exception {
-        Workspace workspace = WorkspaceUtils.fromJson(json);
+    private List<String> inspect(Workspace workspace) throws Exception {
         Inspector inspector = new DefaultInspector(workspace);
 
         List<String> inspections = new ArrayList<>();
