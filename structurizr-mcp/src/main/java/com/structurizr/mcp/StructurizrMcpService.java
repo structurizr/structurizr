@@ -5,6 +5,9 @@ import com.structurizr.api.AdminApiClient;
 import com.structurizr.api.WorkspaceApiClient;
 import com.structurizr.api.WorkspaceMetadata;
 import com.structurizr.dsl.StructurizrDslParser;
+import com.structurizr.inspection.DefaultInspector;
+import com.structurizr.inspection.Inspector;
+import com.structurizr.inspection.Violation;
 import com.structurizr.util.WorkspaceUtils;
 import org.springaicommunity.mcp.annotation.McpTool;
 import org.springaicommunity.mcp.annotation.McpToolParam;
@@ -84,6 +87,21 @@ public class StructurizrMcpService {
         }
 
         return workspaces;
+    }
+
+    @McpTool(description = "Inspects a Structurizr software architecture JSON workspace")
+    public List<String> inspectWorkspace(
+            @McpToolParam(description = "Workspace as JSON", required = true) String json
+    ) throws Exception {
+        Workspace workspace = WorkspaceUtils.fromJson(json);
+        Inspector inspector = new DefaultInspector(workspace);
+
+        List<String> inspections = new ArrayList<>();
+        for (Violation violation : inspector.getViolations()) {
+            inspections.add(violation.getSeverity() + ": " + violation.getMessage());
+        }
+
+        return inspections;
     }
 
 }
