@@ -28,7 +28,7 @@ public class DeleteCommand extends AbstractCommand {
         option.setRequired(true);
         options.addOption(option);
 
-        option = new Option("key", "apiKey", true, "Workspace API key");
+        option = new Option("key", "apiKey", true, "Workspace/admin API key");
         option.setRequired(false);
         options.addOption(option);
 
