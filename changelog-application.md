@@ -11,6 +11,7 @@
 ### server
 
 - Changes the output from the `GET /api/workspace/<id>/branches` endpoint.
+- Fixes https://github.com/structurizr/structurizr/issues/34 (JSON endpoint produces text/plain instead of application/json).
 
 ### branches
 
