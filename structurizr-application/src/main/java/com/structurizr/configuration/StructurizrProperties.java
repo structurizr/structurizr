@@ -35,9 +35,10 @@ public class StructurizrProperties {
     public static final String SESSION_VARIANT_LOCAL = "local";
 
     public static final String DEFAULT_DATA_DIRECTORY_PATH = "/usr/local/structurizr";
-    public static final String DEFAULT_NUMBER_OF_THREADS = "10";
-    public static final String DEFAULT_MAX_WORKSPACE_VERSIONS = "30";
+
+    public static final String DEFAULT_WORKSPACE_THREADS = "10";
     public static final String DEFAULT_MAX_WORKSPACE_SIZE_IN_BYTES = "" + 1024 * 1024; // 1MB
+    public static final String DEFAULT_MAX_WORKSPACE_VERSIONS = "30";
 
     public static final String DEFAULT_NETWORK_TIMEOUT_OF_SIXTY_SECONDS = "" + (1000 * 60);
 

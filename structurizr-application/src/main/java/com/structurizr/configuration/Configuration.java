@@ -249,7 +249,7 @@ public class Configuration {
             setDefault(DATA_STORAGE_IMPLEMENTATION, DATA_STORAGE_VARIANT_FILE);
             setDefault(SEARCH_IMPLEMENTATION, SEARCH_VARIANT_LUCENE);
             setDefault(CACHE_IMPLEMENTATION, CACHE_VARIANT_NONE);
-            setDefault(WORKSPACE_THREADS, DEFAULT_NUMBER_OF_THREADS);
+            setDefault(WORKSPACE_THREADS, DEFAULT_WORKSPACE_THREADS);
         }
 
         if (profile == Profile.Local) {
