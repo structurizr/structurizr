@@ -107,7 +107,7 @@ public class StructurizrPlantUMLExporter extends AbstractPlantUMLExporter {
     protected void startGroupBoundary(ModelView view, String group, IndentingWriter writer) {
         String groupName = group;
 
-        String groupSeparator = view.getModel().getProperties().get(GROUP_SEPARATOR_PROPERTY_NAME);
+        String groupSeparator = view.getModel().getProperties().get(Model.GROUP_SEPARATOR_PROPERTY_NAME);
         if (!StringUtils.isNullOrEmpty(groupSeparator)) {
             groupName = group.substring(group.lastIndexOf(groupSeparator) + groupSeparator.length());
         }

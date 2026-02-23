@@ -826,4 +826,30 @@ public class ModelTests extends AbstractWorkspaceTestBase {
         assertEquals("ContainerInstance://Default/Deployment Node B/Software System.Container[2]", containerInstanceB2.getCanonicalName());
     }
 
+    @Test
+    void groupSeparator() {
+        model.addProperty("structurizr.groupSeparator", "/");
+
+        try {
+            model.addProperty("structurizr.groupSeparator", "");
+            fail();
+        } catch (Exception e) {
+            assertEquals("A property value must be specified.", e.getMessage());
+        }
+
+        try {
+            model.addProperty("structurizr.groupSeparator", "  ");
+            fail();
+        } catch (Exception e) {
+            assertEquals("A property value must be specified.", e.getMessage());
+        }
+
+        try {
+            model.addProperty("structurizr.groupSeparator", " / ");
+            fail();
+        } catch (Exception e) {
+            assertEquals("Group separator must be a single character", e.getMessage());
+        }
+    }
+
 }

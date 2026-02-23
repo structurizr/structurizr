@@ -1,11 +1,10 @@
 package com.structurizr.dsl;
 
 import com.structurizr.model.Component;
+import com.structurizr.model.Model;
 import com.structurizr.util.StringUtils;
 
 class GroupParser {
-
-    private static final String STRUCTURIZR_GROUP_SEPARATOR_PROPERTY_NAME = "structurizr.groupSeparator";
 
     private static final String GRAMMAR_AS_CONTEXT = "group <name> {";
     private static final String GRAMMAR_AS_PROPERTY = "group <name>";
@@ -31,10 +30,10 @@ class GroupParser {
 
         ElementGroup group;
         if (dslContext.hasGroup()) {
-            String groupSeparator = ((DslContext)dslContext).getWorkspace().getModel().getProperties().getOrDefault(STRUCTURIZR_GROUP_SEPARATOR_PROPERTY_NAME, "");
+            String groupSeparator = ((DslContext)dslContext).getWorkspace().getModel().getProperties().getOrDefault(Model.GROUP_SEPARATOR_PROPERTY_NAME, "");
 
             if (StringUtils.isNullOrEmpty(groupSeparator)) {
-                throw new RuntimeException("To use nested groups, please define a model property named " + STRUCTURIZR_GROUP_SEPARATOR_PROPERTY_NAME);
+                throw new RuntimeException("To use nested groups, please define a model property named " + Model.GROUP_SEPARATOR_PROPERTY_NAME);
             }
 
             group = new ElementGroup(tokens.get(NAME_INDEX), groupSeparator, dslContext.getGroup());
@@ -62,9 +61,9 @@ class GroupParser {
         String existingGroup = component.getGroup();
 
         if (!StringUtils.isNullOrEmpty(existingGroup)) {
-            String groupSeparator = dslContext.getWorkspace().getModel().getProperties().getOrDefault(STRUCTURIZR_GROUP_SEPARATOR_PROPERTY_NAME, "");
+            String groupSeparator = dslContext.getWorkspace().getModel().getProperties().getOrDefault(Model.GROUP_SEPARATOR_PROPERTY_NAME, "");
             if (StringUtils.isNullOrEmpty(groupSeparator)) {
-                throw new RuntimeException("To use nested groups, please define a model property named " + STRUCTURIZR_GROUP_SEPARATOR_PROPERTY_NAME);
+                throw new RuntimeException("To use nested groups, please define a model property named " + Model.GROUP_SEPARATOR_PROPERTY_NAME);
             }
 
             group = existingGroup + groupSeparator + group;

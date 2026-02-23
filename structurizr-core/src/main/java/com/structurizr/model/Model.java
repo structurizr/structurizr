@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
  */
 public final class Model implements PropertyHolder {
 
+    public static final String GROUP_SEPARATOR_PROPERTY_NAME = "structurizr.groupSeparator";
+
     private IdGenerator idGenerator = new SequentialIntegerIdGeneratorStrategy();
 
     private final Set<Element> elements = new TreeSet<>();
@@ -1041,12 +1043,18 @@ public final class Model implements PropertyHolder {
      * @param value     the value of the property
      */
     public void addProperty(String name, String value) {
-        if (name == null || name.trim().length() == 0) {
+        if (StringUtils.isNullOrEmpty(name)) {
             throw new IllegalArgumentException("A property name must be specified.");
         }
 
-        if (value == null || value.trim().length() == 0) {
+        if (StringUtils.isNullOrEmpty(value)) {
             throw new IllegalArgumentException("A property value must be specified.");
+        }
+
+        if (name.equalsIgnoreCase(GROUP_SEPARATOR_PROPERTY_NAME)) {
+            if (value.length() != 1) {
+                throw new IllegalArgumentException("Group separator must be a single character");
+            }
         }
 
         properties.put(name, value);

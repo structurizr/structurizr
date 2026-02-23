@@ -7,6 +7,7 @@
 - Normalises line endings when importing Markdown/AsciiDoc content (documentation and decisions).
 - Adds support for dynamic perspectives.
 - Deprecates health checks in favour of dynamic perspectives.
+- Fixes https://github.com/structurizr/structurizr/issues/35 (Group labels truncated when group name does not contain the group separator).
 
 ## structurizr-dsl
 
