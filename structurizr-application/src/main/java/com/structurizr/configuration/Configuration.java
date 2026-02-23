@@ -242,6 +242,7 @@ public class Configuration {
         setDefault(DEBUG, FALSE);
         setDefault(NETWORK_TIMEOUT, DEFAULT_NETWORK_TIMEOUT_OF_SIXTY_SECONDS);
         setDefault(THEMES, getDataDirectory().getAbsolutePath() + File.separator + DEFAULT_THEMES_PATH + File.separator);
+        setDefault(MAX_WORKSPACE_SIZE, DEFAULT_MAX_WORKSPACE_SIZE_IN_BYTES);
 
         if (profile != Profile.Playground) {
             setDefault(AUTHENTICATION_IMPLEMENTATION, AUTHENTICATION_VARIANT_NONE);

@@ -13,12 +13,14 @@ public class StructurizrProperties {
     public static final String EDITABLE_PROPERTY = "structurizr.editable";
 
     public static final String WORKSPACE_THREADS = "structurizr.workspace.threads";
+    public static final String MAX_WORKSPACE_SIZE = "structurizr.workspace.maxsize";
 
     public static final String URL = "structurizr.url";
     public static final String ENCRYPTION_PASSPHRASE = "structurizr.encryption";
     public static final String API_KEY = "structurizr.apikey";
     public static final String ADMIN_USERS_AND_ROLES = "structurizr.admin";
     public static final String MAX_WORKSPACE_VERSIONS = "structurizr.maxworkspaceversions";
+
     public static final String NETWORK_URLS_ALLOWED = "structurizr.network.urls.allowed";
     public static final String NETWORK_TIMEOUT = "structurizr.network.timeout";
 
@@ -33,8 +35,9 @@ public class StructurizrProperties {
     public static final String SESSION_VARIANT_LOCAL = "local";
 
     public static final String DEFAULT_DATA_DIRECTORY_PATH = "/usr/local/structurizr";
-    public static final String DEFAULT_MAX_WORKSPACE_VERSIONS = "30";
     public static final String DEFAULT_NUMBER_OF_THREADS = "10";
+    public static final String DEFAULT_MAX_WORKSPACE_VERSIONS = "30";
+    public static final String DEFAULT_MAX_WORKSPACE_SIZE_IN_BYTES = "" + 1024 * 1024; // 1MB
 
     public static final String DEFAULT_NETWORK_TIMEOUT_OF_SIXTY_SECONDS = "" + (1000 * 60);
 

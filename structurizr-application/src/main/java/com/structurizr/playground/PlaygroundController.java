@@ -2,6 +2,7 @@ package com.structurizr.playground;
 
 import com.structurizr.Workspace;
 import com.structurizr.configuration.Configuration;
+import com.structurizr.configuration.StructurizrProperties;
 import com.structurizr.dsl.DslUtils;
 import com.structurizr.dsl.StructurizrDslParser;
 import com.structurizr.dsl.StructurizrDslParserException;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 @Controller
@@ -76,6 +78,13 @@ class PlaygroundController extends AbstractController {
     }
 
     String show(ModelMap model, String dsl, String json, String view) throws Exception {
+        try {
+            validateWorkspaceSize(json);
+        } catch (WorkspaceTooLargeException e) {
+            log.error(e);
+            model.addAttribute("errorMessage", e.getMessage());
+        }
+
         if (StringUtils.isNullOrEmpty(dsl)) {
             dsl = DslTemplate.generate("Name", "Description");
         }
@@ -137,6 +146,15 @@ class PlaygroundController extends AbstractController {
         }
 
         return workspace;
+    }
+
+    private void validateWorkspaceSize(String json) throws WorkspaceTooLargeException {
+        int maxWorkspaceSizeInBytes = Integer.parseInt(Configuration.getInstance().getProperty(StructurizrProperties.MAX_WORKSPACE_SIZE));
+
+        long sizeInBytes = json.getBytes(StandardCharsets.UTF_8).length;
+        if (sizeInBytes > maxWorkspaceSizeInBytes) {
+            throw new WorkspaceTooLargeException(sizeInBytes, maxWorkspaceSizeInBytes);
+        }
     }
 
 }

@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -306,6 +307,7 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
     @Override
     public void putWorkspace(long workspaceId, String branch, String json) {
         WorkspaceBranch.validateBranchName(branch);
+        validateWorkspaceSize(workspaceId, json);
 
         try {
             AbstractWorkspace workspaceToBeStored;
@@ -430,6 +432,15 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
         } catch (Exception e) {
             e.printStackTrace();
             throw new WorkspaceComponentException(e.getMessage(), e);
+        }
+    }
+
+    private void validateWorkspaceSize(long workspaceId, String json) {
+        int maxWorkspaceSizeInBytes = Integer.parseInt(Configuration.getInstance().getProperty(StructurizrProperties.MAX_WORKSPACE_SIZE));
+
+        long sizeInBytes = json.getBytes(StandardCharsets.UTF_8).length;
+        if (sizeInBytes > maxWorkspaceSizeInBytes) {
+            throw new WorkspaceTooLargeException(workspaceId, sizeInBytes, maxWorkspaceSizeInBytes);
         }
     }
 

@@ -12,6 +12,15 @@
 
 - Changes the output from the `GET /api/workspace/<id>/branches` endpoint.
 - Fixes https://github.com/structurizr/structurizr/issues/34 (JSON endpoint produces text/plain instead of application/json).
+- Adds a workspace size limit of 1MB (configurable via `structurizr.workspace.maxsize`).
+
+### local
+
+- Adds a workspace size limit of 1MB (configurable via `structurizr.workspace.maxsize`).
+
+### playground
+
+- Adds a workspace size limit of 1MB (configurable via `structurizr.workspace.maxsize`).
 
 ### branches
 
