@@ -14,12 +14,12 @@ public class StructurizrProperties {
 
     public static final String WORKSPACE_THREADS = "structurizr.workspace.threads";
     public static final String MAX_WORKSPACE_SIZE = "structurizr.workspace.maxsize";
+    public static final String MAX_WORKSPACE_VERSIONS = "structurizr.workspace.maxversions";
 
     public static final String URL = "structurizr.url";
     public static final String ENCRYPTION_PASSPHRASE = "structurizr.encryption";
     public static final String API_KEY = "structurizr.apikey";
     public static final String ADMIN_USERS_AND_ROLES = "structurizr.admin";
-    public static final String MAX_WORKSPACE_VERSIONS = "structurizr.maxworkspaceversions";
 
     public static final String NETWORK_URLS_ALLOWED = "structurizr.network.urls.allowed";
     public static final String NETWORK_TIMEOUT = "structurizr.network.timeout";
