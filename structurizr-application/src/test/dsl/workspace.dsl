@@ -12,8 +12,6 @@ workspace {
             include *
             autolayout
         }
-
-        theme default
     }
 
 }
