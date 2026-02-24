@@ -62,6 +62,10 @@ public final class DeploymentNode extends DeploymentElement {
         this.containerInstances.remove(containerInstance);
     }
 
+    void remove(InfrastructureNode infrastructureNode) {
+        this.infrastructureNodes.remove(infrastructureNode);
+    }
+
     /**
      * Adds a container instance to this deployment node, replicating relationships.
      *

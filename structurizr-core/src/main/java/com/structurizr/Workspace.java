@@ -301,6 +301,18 @@ public final class Workspace extends AbstractWorkspace implements Documentable {
         }
     }
 
+    void remove(InfrastructureNode infrastructureNode) {
+        if (!isElementAssociatedWithAnyViews(infrastructureNode)) {
+            try {
+                Method method = Model.class.getDeclaredMethod("remove", InfrastructureNode.class);
+                method.setAccessible(true);
+                method.invoke(model, infrastructureNode);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     void remove(DeploymentNode deploymentNode) {
         if (deploymentNode.hasChildren()) {
             for (DeploymentNode child : deploymentNode.getChildren()) {
@@ -308,7 +320,11 @@ public final class Workspace extends AbstractWorkspace implements Documentable {
             }
         }
 
-        if (!deploymentNode.hasChildren() && !deploymentNode.hasSoftwareSystemInstances() && !deploymentNode.hasContainerInstances()) {
+        for (InfrastructureNode infrastructureNode : deploymentNode.getInfrastructureNodes()) {
+            remove(infrastructureNode);
+        }
+
+        if (!deploymentNode.hasChildren() && !deploymentNode.hasSoftwareSystemInstances() && !deploymentNode.hasContainerInstances() && !deploymentNode.hasInfrastructureNodes()) {
             try {
                 Method method = Model.class.getDeclaredMethod("remove", DeploymentNode.class);
                 method.setAccessible(true);

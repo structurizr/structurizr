@@ -1145,6 +1145,20 @@ public final class Model implements PropertyHolder {
     }
 
     /**
+     * Removes an infrastructure node from the model.
+     *
+     * @param infrastructureNode     the InfrastructureNode object to remove
+     */
+    void remove(InfrastructureNode infrastructureNode) {
+        removeElement(infrastructureNode);
+
+        Set<DeploymentNode> deploymentNodes = getElements().stream().filter(e -> e instanceof DeploymentNode).map(e -> (DeploymentNode)e).collect(Collectors.toSet());
+        for (DeploymentNode deploymentNode : deploymentNodes) {
+            deploymentNode.remove(infrastructureNode);
+        }
+    }
+
+    /**
      * Removes a deployment node from the model.
      *
      * @param deploymentNode        the DeploymentNode object to remove

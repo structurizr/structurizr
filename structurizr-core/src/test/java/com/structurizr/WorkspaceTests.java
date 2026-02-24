@@ -165,6 +165,22 @@ public class WorkspaceTests {
     }
 
     @Test
+    void remove_WhenAnInfrastructureNodeIsUsedInAView() {
+        Workspace workspace = new Workspace("Name", "Description");
+
+        DeploymentNode deploymentNode = workspace.getModel().addDeploymentNode("Deployment Node");
+        InfrastructureNode infrastructureNode = deploymentNode.addInfrastructureNode("Infrastructure Node");
+        workspace.getViews().createDeploymentView("key", "Description").add(infrastructureNode);
+        assertEquals(2, workspace.getModel().getElements().size());
+
+        workspace.remove(infrastructureNode);
+        assertEquals(2, workspace.getModel().getElements().size());
+
+        workspace.remove(deploymentNode);
+        assertEquals(2, workspace.getModel().getElements().size());
+    }
+
+    @Test
     void remove_WhenAnElementIsTheScopeOfAContainerView() {
         Workspace workspace = new Workspace("Name", "Description");
 
@@ -244,12 +260,15 @@ public class WorkspaceTests {
         DeploymentNode server2 = live.addDeploymentNode("Server 2");
         ContainerInstance webappInstance = server1.add(webapp);
         ContainerInstance databaseInstance = server2.add(database);
+        InfrastructureNode firewall = live.addInfrastructureNode("Firewall");
+        webappInstance.uses(firewall, "", "");
+        firewall.uses(databaseInstance, "", "");
 
         DeploymentNode dev = workspace.getModel().addDeploymentNode("Dev");
         SoftwareSystemInstance softwareSystemInstance = dev.add(softwareSystem);
 
-        assertEquals(13, workspace.getModel().getElements().size());
-        assertEquals(5, workspace.getModel().getRelationships().size());
+        assertEquals(14, workspace.getModel().getElements().size());
+        assertEquals(7, workspace.getModel().getRelationships().size());
 
         workspace.trim();
         assertEquals(0, workspace.getModel().getElements().size());
