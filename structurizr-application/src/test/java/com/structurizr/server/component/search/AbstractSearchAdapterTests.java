@@ -122,20 +122,20 @@ abstract class AbstractSearchAdapterTests extends AbstractTestsBase {
 
     @Test
     public void search_WorkspaceDocumentation() {
-        String content =
-                """
+        Workspace workspace = new Workspace("W", "Description");
+        workspace.setId(1);
+        workspace.getDocumentation().addSection(new Section(Format.Markdown, """
 ## Section 1
 
-Foo
-
+Foo"""));
+        workspace.getDocumentation().addSection(new Section(Format.Markdown, """
 ## Section 2
 
 Bar
-                """;
 
-        Workspace workspace = new Workspace("W", "Description");
-        workspace.setId(1);
-        workspace.getDocumentation().addSection(new Section(Format.Markdown, content));
+### Section 2.1
+
+Baz"""));
 
         getSearchAdapter().index(workspace);
 
@@ -148,25 +148,34 @@ Bar
         assertEquals(1, results.size());
         assertEquals("W - Section 2", results.get(0).getName());
         assertEquals("/documentation#2", results.get(0).getUrl());
+
+        results = getSearchAdapter().search("baz", null, Set.of(1L));
+        assertEquals(1, results.size());
+        assertEquals("W - Section 2.1", results.get(0).getName());
+        assertEquals("/documentation#2.1", results.get(0).getUrl());
     }
 
     @Test
     public void search_SoftwareSystemDocumentation() {
         String content =
                 """
-## Section 1
+== Section 1
 
 Foo
 
-## Section 2
+== Section 2
 
 Bar
+
+=== Section 2.1
+
+Baz
                 """;
 
         Workspace workspace = new Workspace("W", "Description");
         workspace.setId(1);
         SoftwareSystem softwareSystem = workspace.getModel().addSoftwareSystem("A");
-        softwareSystem.getDocumentation().addSection(new Section(Format.Markdown, content));
+        softwareSystem.getDocumentation().addSection(new Section(Format.AsciiDoc, content));
 
         getSearchAdapter().index(workspace);
 
@@ -179,6 +188,11 @@ Bar
         assertEquals(1, results.size());
         assertEquals("A - Section 2", results.get(0).getName());
         assertEquals("/documentation/A#2", results.get(0).getUrl());
+
+        results = getSearchAdapter().search("baz", null, Set.of(1L));
+        assertEquals(1, results.size());
+        assertEquals("A - Section 2.1", results.get(0).getName());
+        assertEquals("/documentation/A#2.1", results.get(0).getUrl());
     }
 
     @Test
@@ -192,6 +206,10 @@ Foo
 ## Section 2
 
 Bar
+
+### Section 2.1
+
+Baz
                 """;
 
         Workspace workspace = new Workspace("W", "Description");
@@ -211,6 +229,11 @@ Bar
         assertEquals(1, results.size());
         assertEquals("B - Section 2", results.get(0).getName());
         assertEquals("/documentation/A/B#2", results.get(0).getUrl());
+
+        results = getSearchAdapter().search("baz", null, Set.of(1L));
+        assertEquals(1, results.size());
+        assertEquals("B - Section 2.1", results.get(0).getName());
+        assertEquals("/documentation/A/B#2.1", results.get(0).getUrl());
     }
 
     @Test
@@ -224,6 +247,10 @@ Foo
 ## Section 2
 
 Bar
+
+### Section 2.1
+
+Baz
                 """;
 
         Workspace workspace = new Workspace("W", "Description");
@@ -244,6 +271,11 @@ Bar
         assertEquals(1, results.size());
         assertEquals("C - Section 2", results.get(0).getName());
         assertEquals("/documentation/A/B/C#2", results.get(0).getUrl());
+
+        results = getSearchAdapter().search("baz", null, Set.of(1L));
+        assertEquals(1, results.size());
+        assertEquals("C - Section 2.1", results.get(0).getName());
+        assertEquals("/documentation/A/B/C#2.1", results.get(0).getUrl());
     }
 
     @Test

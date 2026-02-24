@@ -45,10 +45,6 @@ class ApacheLuceneSearchAdapter extends AbstractSearchAdapter {
     private static final String TYPE_KEY = "type";
     private static final String CONTENT_KEY = "content";
 
-    private static final String MARKDOWN_SECTION_HEADING = "## ";
-    private static final String ASCIIDOC_SECTION_HEADING = "== ";
-    private static final String NEWLINE = "\n";
-
     private final File indexDirectory;
     private IndexWriter indexWriter;
 
@@ -296,34 +292,11 @@ class ApacheLuceneSearchAdapter extends AbstractSearchAdapter {
         }
     }
 
-    private void indexDocumentation(Workspace workspace, Element element, String documentationContent) throws Exception {
-        // split the entire documentation content up into sections, each of which is defined by a ## or == heading.
-        String title = "";
-        StringBuilder content = new StringBuilder();
-        String[] lines = documentationContent.split(NEWLINE);
-        int sectionNumber = 0;
-
-        for (String line : lines) {
-            if (line.startsWith(MARKDOWN_SECTION_HEADING) || line.startsWith(ASCIIDOC_SECTION_HEADING)) {
-                indexDocumentationSection(title, content.toString(), sectionNumber, workspace, element);
-                title = line.substring(MARKDOWN_SECTION_HEADING.length()-1).trim();
-                content = new StringBuilder();
-                sectionNumber++;
-            } else {
-                content.append(line);
-                content.append(NEWLINE);
-            }
-        }
-
-        if (!content.isEmpty()) {
-            indexDocumentationSection(title, content.toString(), sectionNumber, workspace, element);
-        }
-    }
-
-    private void indexDocumentationSection(String title, String content, int sectionNumber, Workspace workspace, Element element) throws Exception {
+    @Override
+    protected void indexDocumentationSection(String title, String content, int sectionNumber, int subSectionNumber, Workspace workspace, Element element) throws Exception {
         Document doc = new Document();
 
-        doc.add(new StoredField(URL_KEY, DOCUMENTATION_PATH + calculateUrlForSection(element, sectionNumber)));
+        doc.add(new StoredField(URL_KEY, DOCUMENTATION_PATH + calculateUrlForSection(element, sectionNumber, subSectionNumber)));
         doc.add(new TextField(WORKSPACE_KEY, toString(workspace.getId()), Field.Store.YES));
         doc.add(new TextField(TYPE_KEY, DocumentType.DOCUMENTATION, Field.Store.YES));
         if (element == null) {
@@ -339,7 +312,7 @@ class ApacheLuceneSearchAdapter extends AbstractSearchAdapter {
                 doc.add(new StoredField(NAME_KEY, element.getName()));
             }
         }
-        doc.add(new StoredField(DESCRIPTION_KEY, ""));
+        doc.add(new StoredField(DESCRIPTION_KEY, filterMarkup(StringUtils.truncate(content, SNIPPET_LENGTH))));
         doc.add(new TextField(CONTENT_KEY, appendAll(title, content), Field.Store.NO));
         indexWriter.addDocument(doc);
         indexWriter.commit();

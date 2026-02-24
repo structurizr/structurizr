@@ -14,10 +14,12 @@
 - Fixes https://github.com/structurizr/structurizr/issues/34 (JSON endpoint produces text/plain instead of application/json).
 - Adds a workspace size limit of 1MB (configurable via `structurizr.workspace.maxsize`).
 - Renames configuration property `structurizr.maxworkspaceversions` to `structurizr.workspace.maxversions`.
+- Documentation search results now link to subsections (https://github.com/structurizr/structurizr/issues/2).
 
 ### local
 
 - Adds a workspace size limit of 1MB (configurable via `structurizr.workspace.maxsize`).
+- Documentation search results now link to subsections (https://github.com/structurizr/structurizr/issues/2).
 
 ### playground
 
