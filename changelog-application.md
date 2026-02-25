@@ -2,9 +2,8 @@
 
 ## unreleased
 
-- Fixes https://github.com/structurizr/structurizr/issues/22 (Diagram-as-text plugin rendering (Mermaid) for Markdown docs not compatible for Windows line endings).
-- Adds perspective specific styles for elements and relationships.
-- Adds support for dynamic perspectives.
+- Adds [perspective specific styles](https://docs.structurizr.com/dsl/cookbook/perspectives-static/) for elements and relationships.
+- Adds support for [dynamic perspectives](https://docs.structurizr.com/dsl/cookbook/perspectives-dynamic/).
 - Adds a way to install themes when using `push`, `validate`, etc commands - see [Installing themes](https://docs.structurizr.com/server/diagrams/themes#installing-themes).
 - Removes `-themes` from the `export` command in favour of the above.
 
