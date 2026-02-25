@@ -84,7 +84,7 @@ public abstract class MockWorkspaceComponent implements WorkspaceComponent {
     }
 
     @Override
-    public List<Image> getImages(long workspaceId) {
+    public List<Image> getImages(long workspaceId, String branch) {
         return null;
     }
 
@@ -94,7 +94,7 @@ public abstract class MockWorkspaceComponent implements WorkspaceComponent {
     }
 
     @Override
-    public boolean deleteImages(long workspaceId) {
+    public boolean deleteImages(long workspaceId, String branch) {
         return false;
     }
 

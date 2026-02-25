@@ -29,11 +29,11 @@ interface WorkspaceAdapter {
 
     boolean putImage(long workspaceId, String branch, String filename, File file);
 
-    List<Image> getImages(long workspaceId);
+    List<Image> getImages(long workspaceId, String branch);
 
     InputStreamAndContentLength getImage(long workspaceId, String branch, String filename);
 
-    boolean deleteImages(long workspaceId);
+    boolean deleteImages(long workspaceId, String branch);
 
     long getLastModifiedDate();
 

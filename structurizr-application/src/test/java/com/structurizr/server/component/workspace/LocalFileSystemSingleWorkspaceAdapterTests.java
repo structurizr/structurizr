@@ -154,7 +154,12 @@ class LocalFileSystemSingleWorkspaceAdapterTests extends AbstractWorkspaceAdapte
     }
 
     @Override
-    void image_Branch() throws Exception {
+    void image_Branch() {
+        // not supported
+    }
+
+    @Override
+    void images_Branch() {
         // not supported
     }
 

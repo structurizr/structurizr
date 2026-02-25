@@ -43,9 +43,9 @@ public interface WorkspaceComponent {
 
     InputStreamAndContentLength getImage(long workspaceId, String branch, String filename);
 
-    List<Image> getImages(long workspaceId);
+    List<Image> getImages(long workspaceId, String branch);
 
-    boolean deleteImages(long workspaceId);
+    boolean deleteImages(long workspaceId, String branch);
 
     void makeWorkspacePublic(long workspaceId);
 

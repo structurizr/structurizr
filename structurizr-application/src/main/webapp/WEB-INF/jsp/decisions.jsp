@@ -115,6 +115,7 @@
                 structurizr.workspace,
                 '/static',
                 '<c:out value="${urlPrefix}" />',
+                '${workspace.branch}',
                 ${structurizrConfiguration.safeMode});
 
             initDecisionScopeAndOrder();

@@ -557,13 +557,13 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
     }
 
     @Override
-    public List<Image> getImages(long workspaceId) {
-        return workspaceAdapter.getImages(workspaceId);
+    public List<Image> getImages(long workspaceId, String branch) {
+        return workspaceAdapter.getImages(workspaceId, branch);
     }
 
     @Override
-    public boolean deleteImages(long workspaceId) {
-        return workspaceAdapter.deleteImages(workspaceId);
+    public boolean deleteImages(long workspaceId, String branch) {
+        return workspaceAdapter.deleteImages(workspaceId, branch);
     }
 
     @Override

@@ -106,7 +106,7 @@
 
             <c:if test="${structurizrConfiguration.profile == 'Server'}">
             <div id="imagesLink" class="navigationItem hidden">
-                <a href="<c:out value="${urlPrefix}" />/images"><img src="/static/bootstrap-icons/filetype-png.svg" class="icon-sm" /> Published images</a>
+                <a href="<c:out value="${urlPrefix}" />/images<c:out value="${urlSuffix}" escapeXml="false" />"><img src="/static/bootstrap-icons/filetype-png.svg" class="icon-sm" /> Published images</a>
             </div>
 
             <div class="navigationItemSeparator"></div>

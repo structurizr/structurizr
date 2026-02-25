@@ -132,7 +132,12 @@ class LocalFileSystemMultipleWorkspaceAdapterTests extends AbstractWorkspaceAdap
     }
 
     @Override
-    void image_Branch() throws Exception {
+    void image_Branch() {
+        // no supported
+    }
+
+    @Override
+    void images_Branch() {
         // no supported
     }
 

@@ -75,9 +75,9 @@ abstract class AbstractFileSystemWorkspaceAdapter extends AbstractWorkspaceAdapt
     }
 
     @Override
-    public List<Image> getImages(long workspaceId) {
+    public List<Image> getImages(long workspaceId, String branch) {
         List<Image> images = new LinkedList<>();
-        File imagesDirectory = getPathToWorkspaceImages(workspaceId, WorkspaceBranch.NO_BRANCH);
+        File imagesDirectory = getPathToWorkspaceImages(workspaceId, branch);
 
         File[] files = imagesDirectory.listFiles((dir, name) -> name.toLowerCase().endsWith(ImageUtils.PNG_EXTENSION) || name.toLowerCase().endsWith(ImageUtils.SVG_EXTENSION));
 
@@ -93,8 +93,8 @@ abstract class AbstractFileSystemWorkspaceAdapter extends AbstractWorkspaceAdapt
     }
 
     @Override
-    public boolean deleteImages(long workspaceId) {
-        File imagesDirectory = getPathToWorkspaceImages(workspaceId, WorkspaceBranch.NO_BRANCH);
+    public boolean deleteImages(long workspaceId, String branch) {
+        File imagesDirectory = getPathToWorkspaceImages(workspaceId, branch);
         File[] files = imagesDirectory.listFiles();
         if (files != null) {
             for (File file : files) {
