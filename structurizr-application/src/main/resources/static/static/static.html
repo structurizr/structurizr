@@ -136,10 +136,14 @@
 
             var diagramIdentifier = getParameter('diagram');
             if (!diagramIdentifier || diagramIdentifier.length === 0) {
-                diagramIdentifier = structurizr.workspace.views.configuration.defaultView;
+                diagramIdentifier = window.location.hash;
 
                 if (!diagramIdentifier || diagramIdentifier.length === 0) {
-                    diagramIdentifier = structurizr.workspace.getViews()[0].key;
+                    diagramIdentifier = structurizr.workspace.views.configuration.defaultView;
+
+                    if (!diagramIdentifier || diagramIdentifier.length === 0) {
+                        diagramIdentifier = structurizr.workspace.getViews()[0].key;
+                    }
                 }
             }
 

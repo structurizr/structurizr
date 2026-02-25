@@ -25,6 +25,10 @@
 
 - Adds a workspace size limit of 1MB (configurable via `structurizr.workspace.maxsize`).
 
+### export
+
+- Diagrams can be bookmarked in static site exports by copying the URL (including the hash).
+
 ### branches
 
 - Adds a `-json` flag to enable JSON output.
