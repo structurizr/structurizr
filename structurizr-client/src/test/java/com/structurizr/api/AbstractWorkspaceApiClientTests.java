@@ -5,6 +5,7 @@ import com.structurizr.encryption.AesEncryptionStrategy;
 import com.structurizr.encryption.EncryptedWorkspace;
 import com.structurizr.io.json.EncryptedJsonReader;
 import com.structurizr.io.json.JsonReader;
+import com.structurizr.util.ImageUtils;
 import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,14 +25,16 @@ abstract class AbstractWorkspaceApiClientTests {
     private static final String WORKSPACE_PROPERTIES = "workspace.properties";
 
     private static StructurizrContainer dockerContainer;
+
     private static String structurizrApiUrl;
+    private static File structurizrDataDirectory;
     private static File workspaceArchiveLocation;
 
     private WorkspaceApiClient client;
 
     @BeforeAll
     void startStructurizrServer() throws Exception {
-        File structurizrDataDirectory = Files.createTempDirectory(AbstractWorkspaceApiClientTests.class.getSimpleName()).toFile();
+        structurizrDataDirectory = Files.createTempDirectory(AbstractWorkspaceApiClientTests.class.getSimpleName()).toFile();
         structurizrDataDirectory.deleteOnExit();
 
         configureServer(structurizrDataDirectory);
@@ -142,5 +145,17 @@ abstract class AbstractWorkspaceApiClientTests {
         assertEquals(1, workspaceArchiveLocation.listFiles().length);
     }
 
-}
+    @Test
+    @Tag("IntegrationTest")
+    void putImage() throws Exception {
+        File localImage = new File("src/test/resources/structurizr-logo.png");
+        assertTrue(localImage.exists());
 
+        client.putImage(localImage);
+
+        File serverImage = new File(new File(new File(structurizrDataDirectory, "1"), "images"), "structurizr-logo.png");
+        assertTrue(serverImage.exists());
+        assertEquals(ImageUtils.getImageAsBase64(localImage), ImageUtils.getImageAsBase64(serverImage));
+    }
+
+}

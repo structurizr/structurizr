@@ -2,6 +2,8 @@ package com.structurizr.api;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class WorkspaceApiClientTests {
@@ -105,6 +107,40 @@ public class WorkspaceApiClientTests {
             fail();
         } catch (Exception e) {
             assertEquals("An agent must be provided.", e.getMessage());
+        }
+    }
+
+    @Test
+    void putImage_ThrowsAnException_WhenPassedNull() {
+        client = new WorkspaceApiClient("http://localhost", 1234, "key");
+        try {
+            client.putImage(null);
+            fail();
+        } catch (Exception e) {
+            assertEquals("An image must be provided", e.getMessage());
+        }
+    }
+
+    @Test
+    void putImage_ThrowsAnException_WhenTheImageDoesNotExist() {
+        client = new WorkspaceApiClient("http://localhost", 1234, "key");
+        try {
+            client.putImage(new File("image.png"));
+            fail();
+        } catch (Exception e) {
+            assertTrue(e.getMessage().startsWith("Image does not exist at "));
+            assertTrue(e.getMessage().endsWith("/image.png"));
+        }
+    }
+
+    @Test
+    void putImage_ThrowsAnException_WhenTheFileIsNotAnImage() {
+        client = new WorkspaceApiClient("http://localhost", 1234, "key");
+        try {
+            client.putImage(new File("src/test/resources/theme.json"));
+            fail();
+        } catch (Exception e) {
+            assertTrue(e.getMessage().endsWith("/theme.json is not a supported image file."));
         }
     }
 

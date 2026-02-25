@@ -466,16 +466,28 @@ public class WorkspaceApiClient extends AbstractApiClient {
     /**
      * Uploads an image to a workspace.
      *
-     * @param filename  the filename, as a String
-     * @param image     a Base64 encoded data URI of an image, as a String
+     * @param image     an image, as a File
      * @throws StructurizrClientException   if there are problems related to the network, authorization, etc
      */
-    public void putImage(String filename, String image) throws StructurizrClientException {
-        if (StringUtils.isNullOrEmpty(image)) {
+    public void putImage(File image) throws StructurizrClientException {
+        if (image == null) {
             throw new IllegalArgumentException("An image must be provided");
         }
 
-        if (!ImageUtils.isSupportedDataUri(image)) {
+        if (!image.exists()) {
+            throw new IllegalArgumentException("Image does not exist at " + image.getAbsolutePath());
+        }
+
+        String filename = image.getName();
+        String base64DataUri;
+
+        try {
+            base64DataUri = ImageUtils.getImageAsDataUri(image);
+        } catch (IOException e) {
+            throw new StructurizrClientException(e);
+        }
+
+        if (!ImageUtils.isSupportedDataUri(base64DataUri)) {
             throw new IllegalArgumentException(filename + " is not a supported image format");
         }
 
@@ -487,7 +499,7 @@ public class WorkspaceApiClient extends AbstractApiClient {
                 httpPut = new HttpPut(url + WORKSPACE_PATH + "/" + workspaceId + "/branch/" + branch + "/images/" + filename);
             }
 
-            StringEntity stringEntity = new StringEntity(image, ContentType.TEXT_PLAIN);
+            StringEntity stringEntity = new StringEntity(base64DataUri, ContentType.TEXT_PLAIN);
             httpPut.setEntity(stringEntity);
             addHeaders(httpPut, ContentType.TEXT_PLAIN.toString());
 

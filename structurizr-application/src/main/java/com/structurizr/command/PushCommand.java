@@ -115,15 +115,7 @@ public class PushCommand extends AbstractCommand {
         client.setWorkspaceArchiveLocation(null);
 
         if (!StringUtils.isNullOrEmpty(imagePath)) {
-            File imageFile = new File(imagePath);
-            if (!imageFile.exists()) {
-                log.fatal("Image file does not exist: " + imagePath);
-                System.exit(1);
-            }
-
-            String filename = imageFile.getName();
-            String base64DataUri = ImageUtils.getImageAsDataUri(new File(imagePath));
-            client.putImage(filename, base64DataUri);
+            client.putImage(new File(imagePath));
         } else {
             if (StringUtils.isNullOrEmpty(branch)) {
                 log.info("Pushing workspace " + workspaceId + " to " + apiUrl);

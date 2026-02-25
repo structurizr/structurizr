@@ -3,7 +3,7 @@
   "elements" : [ {
     "tag" : "Tag",
     "background" : "#ff0000",
-    "icon" : "logo.png"
+    "icon" : "structurizr-logo.png"
   } ],
   "relationships" : [ {
     "tag" : "Tag",
