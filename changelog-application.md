@@ -15,6 +15,7 @@
 - Adds a workspace size limit of 1MB (configurable via `structurizr.workspace.maxsize`).
 - Renames configuration property `structurizr.maxworkspaceversions` to `structurizr.workspace.maxversions`.
 - Documentation search results now link to subsections (https://github.com/structurizr/structurizr/issues/2).
+- Adds API endpoints to upload images to a workspace - `/api/workspace/{workspaceId}/images/{filename}` and `/api/workspace/{workspaceId}/branch/{branch}/images/{filename}`.
 
 ### local
 
