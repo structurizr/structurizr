@@ -94,12 +94,30 @@ public abstract class Element extends ModelItem {
     }
 
     /**
+     * Determines whether this element has relationships.
+     *
+     * @return      true if this element has afferent or efferent relationships, false otherwise
+     */
+    public boolean hasRelationships() {
+        return hasAfferentRelationships() || hasEfferentRelationships();
+    }
+
+    /**
      * Determines whether this element has afferent (incoming) relationships.
      *
      * @return  true if this element has afferent relationships, false otherwise
      */
     public boolean hasAfferentRelationships() {
-        return getModel().getRelationships().stream().filter(r -> r.getDestination() == this).count() > 0;
+        return getModel().getRelationships().stream().anyMatch(r -> r.getDestination() == this);
+    }
+
+    /**
+     * Determines whether this element has efferent (outgoing) relationships.
+     *
+     * @return  true if this element has efferent relationships, false otherwise
+     */
+    public boolean hasEfferentRelationships() {
+        return !relationships.isEmpty();
     }
 
     /**

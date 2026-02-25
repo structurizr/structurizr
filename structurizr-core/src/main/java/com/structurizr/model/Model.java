@@ -410,7 +410,7 @@ public final class Model implements PropertyHolder {
     }
 
     void hydrate() {
-        // add all of the elements to the model
+        // add all elements to the model
         customElements.forEach(this::addElementToInternalStructures);
         people.forEach(this::addElementToInternalStructures);
 
@@ -431,7 +431,7 @@ public final class Model implements PropertyHolder {
         // now hydrate the relationships
         getElements().forEach(this::hydrateRelationships);
 
-        // now check all of the element names are unique
+        // now check all element names are unique
         Collection<Element> peopleAndSoftwareSystems = new ArrayList<>();
         peopleAndSoftwareSystems.addAll(people);
         peopleAndSoftwareSystems.addAll(softwareSystems);
@@ -461,6 +461,16 @@ public final class Model implements PropertyHolder {
         for (Element element : getElements()) {
             for (Relationship relationship : element.getRelationships()) {
                 checkDescriptionIsUnique(element.getRelationships(), relationship);
+            }
+        }
+
+        // check that all linked relationships are present
+        for (Relationship relationship : getRelationships()) {
+            String linkedRelationshipId = relationship.getLinkedRelationshipId();
+            if (!StringUtils.isNullOrEmpty(linkedRelationshipId)) {
+                if (getRelationship(linkedRelationshipId) == null) {
+                    throw new WorkspaceValidationException(String.format("The linked relationship with id \"%s\" is not found.", linkedRelationshipId));
+                }
             }
         }
     }
@@ -1178,11 +1188,8 @@ public final class Model implements PropertyHolder {
             throw new IllegalArgumentException("An element must be specified.");
         }
 
-        // remove any relationships to/from the element
-        for (Relationship relationship : getRelationships()) {
-            if (relationship.getSource() == element || relationship.getDestination() == element) {
-                remove(relationship);
-            }
+        if (element.hasRelationships()) {
+            throw new IllegalArgumentException("The element " + element.getId() + " has relationships.");
         }
 
         elementsById.remove(element.getId());

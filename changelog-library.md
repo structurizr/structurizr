@@ -9,6 +9,7 @@
 - Deprecates health checks in favour of dynamic perspectives.
 - Fixes https://github.com/structurizr/structurizr/issues/35 (Group labels truncated when group name does not contain the group separator).
 - Fixes https://github.com/structurizr/structurizr/issues/36 (Workspace.trim() removes infrastructureNode when only element in deploymentNode).
+- Fixes https://github.com/structurizr/structurizr/issues/37 (Workspace.trim() removes the origin of linked relationships).
 
 ## structurizr-dsl
 

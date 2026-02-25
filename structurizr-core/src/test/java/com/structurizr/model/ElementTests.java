@@ -141,6 +141,24 @@ public class ElementTests extends AbstractWorkspaceTestBase {
     }
 
     @Test
+    void hasAfferentRelationships_ReturnsFalse_WhenThereAreNoRelationships() {
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
+        assertFalse(softwareSystem.hasAfferentRelationships());
+    }
+
+    @Test
+    void hasEfferentRelationships_ReturnsFalse_WhenThereAreNoRelationships() {
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
+        assertFalse(softwareSystem.hasEfferentRelationships());
+    }
+
+    @Test
+    void hasRelationships_ReturnsFalse_WhenThereAreNoRelationships() {
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
+        assertFalse(softwareSystem.hasRelationships());
+    }
+
+    @Test
     void addRelationship_DoesNothing_WhenTheSameRelationshipWithASoftwareSystemIsAddedMoreThanOnce() {
         SoftwareSystem a = model.addSoftwareSystem("A", "");
         SoftwareSystem b = model.addSoftwareSystem("B", "");
