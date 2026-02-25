@@ -11,13 +11,17 @@ import com.structurizr.server.domain.Permission;
 import com.structurizr.server.domain.User;
 import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.util.DateUtils;
+import com.structurizr.util.ImageUtils;
 import com.structurizr.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -169,6 +173,65 @@ public class ServerWorkspaceApiController extends AbstractWorkspaceApiController
         }
 
         return new ApiResponse(false, "Could not unlock workspace");
+    }
+
+    @RequestMapping(value = "/api/workspace/{workspaceId}/images/{filename:.+}", method = RequestMethod.PUT, consumes = "text/plain", produces = "application/json; charset=UTF-8")
+    public @ResponseBody ApiResponse putImage(@PathVariable("workspaceId")long workspaceId,
+                                              @PathVariable("filename")String filename,
+                                              @RequestBody String imageAsBase64EncodedDataUri,
+                                              @RequestHeader(name = HttpHeaders.X_AUTHORIZATION, required = false) String apiKey) {
+
+        return storeImage(workspaceId, WorkspaceBranch.NO_BRANCH, filename, imageAsBase64EncodedDataUri, apiKey);
+    }
+
+    @RequestMapping(value = "/api/workspace/{workspaceId}/branch/{branch}/images/{filename:.+}", method = RequestMethod.PUT, consumes = "text/plain", produces = "application/json; charset=UTF-8")
+    public @ResponseBody ApiResponse putImage(@PathVariable("workspaceId")long workspaceId,
+                                              @PathVariable("branch")String branch,
+                                              @PathVariable("filename")String filename,
+                                              @RequestBody String imageAsBase64EncodedDataUri,
+                                              @RequestHeader(name = HttpHeaders.X_AUTHORIZATION, required = false) String apiKey) {
+
+        if (!Configuration.getInstance().isFeatureEnabled(Features.WORKSPACE_BRANCHES)) {
+            throw new ApiException("Workspace branches are not enabled for this installation");
+        }
+
+        return storeImage(workspaceId, branch, filename, imageAsBase64EncodedDataUri, apiKey);
+    }
+
+    private ApiResponse storeImage(long workspaceId, String branch, String filename, String imageAsBase64EncodedDataUri, String apiKey) {
+        WorkspaceBranch.validateBranchName(branch);
+
+        WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
+        if (workspaceMetadata == null) {
+            throw new NotFoundApiException();
+        }
+
+        authoriseRequest(workspaceId, Permission.Write, apiKey);
+
+        try {
+            File file;
+            if (filename.toLowerCase().endsWith(ImageUtils.PNG_EXTENSION)) {
+                file = File.createTempFile("structurizr", ImageUtils.PNG_EXTENSION);
+            } else if (filename.endsWith(ImageUtils.JPG_EXTENSION)) {
+                file = File.createTempFile("structurizr", ImageUtils.JPG_EXTENSION);
+            } else if (filename.endsWith(ImageUtils.JPEG_EXTENSION)) {
+                file = File.createTempFile("structurizr", ImageUtils.JPEG_EXTENSION);
+            } else if (filename.endsWith(ImageUtils.SVG_EXTENSION)) {
+                file = File.createTempFile("structurizr", ImageUtils.SVG_EXTENSION);
+            } else {
+                throw new NotFoundApiException();
+            }
+
+            ImageUtils.writeDataUriToFile(imageAsBase64EncodedDataUri, file);
+
+            if (workspaceComponent.putImage(workspaceId, branch, filename, file)) {
+                return new ApiResponse("OK");
+            } else {
+                throw new ApiException("Failed to save image");
+            }
+        } catch (IOException ioe) {
+            throw new ApiException("Failed to save image");
+        }
     }
 
 }

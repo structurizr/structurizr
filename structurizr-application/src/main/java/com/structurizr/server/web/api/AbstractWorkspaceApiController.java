@@ -1,10 +1,8 @@
 package com.structurizr.server.web.api;
 
 import com.structurizr.Workspace;
-import com.structurizr.api.HttpHeaders;
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Features;
-import com.structurizr.configuration.StructurizrProperties;
 import com.structurizr.io.WorkspaceReaderException;
 import com.structurizr.io.json.JsonReader;
 import com.structurizr.server.component.search.SearchComponent;
@@ -21,7 +19,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -171,23 +168,7 @@ public class AbstractWorkspaceApiController extends AbstractController {
                 throw new HttpUnauthorizedException("API key must be provided");
             }
 
-            String workspaceApiKey = workspaceMetadata.getApiKey();
-
-            BCryptPasswordEncoder bcryptEncoder = new BCryptPasswordEncoder();
-
-            if (bcryptEncoder.matches(apiKey, workspaceApiKey)) {
-                // the given API key matches the bcrypt encoded workspace API key
-                return;
-            }
-
-            if (apiKey.equals(workspaceApiKey)) {
-                // the given API key matches the plaintext workspace API key (this is for backwards compatibility with existing workspace data)
-                return;
-            }
-
-            String adminApiKey = Configuration.getInstance().getProperty(StructurizrProperties.API_KEY);
-            if (bcryptEncoder.matches(apiKey, adminApiKey)) {
-                // the given API key matches the bcrypt encoded admin API key
+            if (workspaceMetadata.isApiKeyValid(apiKey)) {
                 return;
             }
 

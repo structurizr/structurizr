@@ -84,8 +84,6 @@ public class LocalWorkspaceApiControllerTests extends ControllerTestsBase {
         Workspace workspace = new Workspace("Name", "Description");
         String json = WorkspaceUtils.toJson(workspace, false);
 
-        request.addHeader(HttpHeaders.AUTHORIZATION, "1234567890");
-
         controller.putWorkspace(1, json);
     }
 

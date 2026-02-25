@@ -1,6 +1,7 @@
 package com.structurizr.server.domain;
 
 import com.structurizr.configuration.Configuration;
+import com.structurizr.configuration.StructurizrProperties;
 import com.structurizr.util.DateUtils;
 import com.structurizr.util.StringUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -110,6 +111,28 @@ public class WorkspaceMetadata {
         setApiKey(hashedApiKey);
 
         return apiKey;
+    }
+
+    public boolean isApiKeyValid(String key) {
+        BCryptPasswordEncoder bcryptEncoder = new BCryptPasswordEncoder();
+
+        if (bcryptEncoder.matches(key, this.apiKey)) {
+            // the given API key matches the bcrypt encoded workspace API key
+            return true;
+        }
+
+        if (key.equals(this.apiKey)) {
+            // the given API key matches the plaintext workspace API key (this is for backwards compatibility with existing workspace data)
+            return true;
+        }
+
+        String adminApiKey = Configuration.getInstance().getProperty(StructurizrProperties.API_KEY);
+        if (!StringUtils.isNullOrEmpty(adminApiKey)) {
+            // does the given API key match the bcrypt encoded admin API key?
+            return bcryptEncoder.matches(key, adminApiKey);
+        }
+
+        return false;
     }
 
     public boolean isPublicWorkspace() {
