@@ -64,7 +64,7 @@
                 <br />
                 <form id="regenerateApiCredentialsForm" class="form-inline small centered" style="display: inline-block; margin-bottom: 5px" action="/workspace/${workspace.id}/settings/regenerate-api-credentials" method="post">
                     <input type="hidden" name="workspaceId" value="${workspace.id}" />
-                    <button class="btn btn-danger" type="submit" title="Regenerate API credentials"><img src="/static/bootstrap-icons/key.svg" class="icon-btn icon-white" /> Regenerate API credentials</button>
+                    <button class="btn btn-danger" type="submit" title="Regenerate API key"><img src="/static/bootstrap-icons/key.svg" class="icon-btn icon-white" /> Regenerate API key</button>
                 </form>
                 </c:if>
 
