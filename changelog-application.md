@@ -47,6 +47,7 @@
 ### push
 
 - Adds a `-trim <true|false>` parameter to run `Workspace.trim()` before pushing the workspace.
+- Adds a `-image <file>` parameter to upload an image to a workspace.
 
 ### inspect
 

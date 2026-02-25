@@ -3,6 +3,7 @@ package com.structurizr.command;
 import com.structurizr.Workspace;
 import com.structurizr.api.WorkspaceApiClient;
 import com.structurizr.encryption.AesEncryptionStrategy;
+import com.structurizr.util.ImageUtils;
 import com.structurizr.util.StringUtils;
 import org.apache.commons.cli.*;
 import org.apache.commons.logging.Log;
@@ -38,7 +39,11 @@ public class PushCommand extends AbstractCommand {
         options.addOption(option);
 
         option = new Option("w", "workspace", true, "Path or URL to the workspace JSON/DSL file");
-        option.setRequired(true);
+        option.setRequired(false);
+        options.addOption(option);
+
+        option = new Option("i", "image", true, "Path to an PNG/JPG/SVG image");
+        option.setRequired(false);
         options.addOption(option);
 
         option = new Option("passphrase", "passphrase", true, "Client-side encryption passphrase");
@@ -68,6 +73,7 @@ public class PushCommand extends AbstractCommand {
         String apiKey = "";
         String branch = "";
         String workspacePath = "";
+        String imagePath = "";
         String passphrase = "";
         boolean mergeFromRemote = true;
         boolean trim = false;
@@ -82,6 +88,7 @@ public class PushCommand extends AbstractCommand {
             apiKey = cmd.getOptionValue("apiKey");
             branch = cmd.getOptionValue("branch");
             workspacePath = cmd.getOptionValue("workspace");
+            imagePath = cmd.getOptionValue("image");
             passphrase = cmd.getOptionValue("passphrase");
             mergeFromRemote = Boolean.parseBoolean(cmd.getOptionValue("merge", "true"));
             trim = Boolean.parseBoolean(cmd.getOptionValue("trim", "false"));
@@ -93,14 +100,13 @@ public class PushCommand extends AbstractCommand {
             System.exit(1);
         }
 
-        if (debug) {
-            configureDebugLogging();
+        if (StringUtils.isNullOrEmpty(workspacePath) && StringUtils.isNullOrEmpty(imagePath)) {
+            log.error("One of -workspace or -image are required");
+            System.exit(1);
         }
 
-        if (StringUtils.isNullOrEmpty(branch)) {
-            log.info("Pushing workspace " + workspaceId + " to " + apiUrl);
-        } else {
-            log.info("Pushing workspace " + workspaceId + " to " + apiUrl + " (branch=" + branch + ")");
+        if (debug) {
+            configureDebugLogging();
         }
 
         WorkspaceApiClient client = new WorkspaceApiClient(apiUrl, workspaceId, apiKey);
@@ -108,40 +114,58 @@ public class PushCommand extends AbstractCommand {
         client.setAgent(getAgent());
         client.setWorkspaceArchiveLocation(null);
 
-        if (!StringUtils.isNullOrEmpty(passphrase)) {
-            log.info(" - using client-side encryption");
-            client.setEncryptionStrategy(new AesEncryptionStrategy(passphrase));
+        if (!StringUtils.isNullOrEmpty(imagePath)) {
+            File imageFile = new File(imagePath);
+            if (!imageFile.exists()) {
+                log.fatal("Image file does not exist: " + imagePath);
+                System.exit(1);
+            }
+
+            String filename = imageFile.getName();
+            String base64DataUri = ImageUtils.getImageAsDataUri(new File(imagePath));
+            client.putImage(filename, base64DataUri);
+        } else {
+            if (StringUtils.isNullOrEmpty(branch)) {
+                log.info("Pushing workspace " + workspaceId + " to " + apiUrl);
+            } else {
+                log.info("Pushing workspace " + workspaceId + " to " + apiUrl + " (branch=" + branch + ")");
+            }
+
+            if (!StringUtils.isNullOrEmpty(passphrase)) {
+                log.info(" - using client-side encryption");
+                client.setEncryptionStrategy(new AesEncryptionStrategy(passphrase));
+            }
+
+            File archivePath = new File(".");
+
+            File path = new File(workspacePath);
+            archivePath = path.getParentFile();
+            if (!path.exists()) {
+                log.error(" - workspace path " + workspacePath + " does not exist");
+                System.exit(1);
+            }
+
+            log.info(" - creating new workspace");
+            log.info(" - parsing model and views from " + path.getCanonicalPath());
+
+            Workspace workspace = loadWorkspace(workspacePath);
+
+            if (trim) {
+                log.info(" - trimming workspace");
+                workspace.trim();
+            }
+
+            log.info(" - merge layout from remote: " + mergeFromRemote);
+            client.setMergeFromRemote(mergeFromRemote);
+
+            if (archive) {
+                client.setWorkspaceArchiveLocation(archivePath);
+                log.info(" - storing previous version of workspace in " + client.getWorkspaceArchiveLocation());
+            }
+
+            log.info(" - pushing workspace");
+            client.putWorkspace(workspace);
         }
-
-        File archivePath = new File(".");
-
-        File path = new File(workspacePath);
-        archivePath = path.getParentFile();
-        if (!path.exists()) {
-            log.error(" - workspace path " + workspacePath + " does not exist");
-            System.exit(1);
-        }
-
-        log.info(" - creating new workspace");
-        log.info(" - parsing model and views from " + path.getCanonicalPath());
-
-        Workspace workspace = loadWorkspace(workspacePath);
-
-        if (trim) {
-            log.info(" - trimming workspace");
-            workspace.trim();
-        }
-
-        log.info(" - merge layout from remote: " + mergeFromRemote);
-        client.setMergeFromRemote(mergeFromRemote);
-
-        if (archive) {
-            client.setWorkspaceArchiveLocation(archivePath);
-            log.info(" - storing previous version of workspace in " + client.getWorkspaceArchiveLocation());
-        }
-
-        log.info(" - pushing workspace");
-        client.putWorkspace(workspace);
 
         log.info(" - finished");
     }

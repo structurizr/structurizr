@@ -14,6 +14,7 @@
 ## structurizr-client
 
 - Removes deprecated Apache HttpClient usage (https://github.com/structurizr/structurizr/issues/31).
+- Adds `WorkspaceApiClient.putImage()` methods to upload an image to a workspace.
 
 ## structurizr-dsl
 

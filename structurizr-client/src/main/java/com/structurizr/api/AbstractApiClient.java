@@ -67,7 +67,7 @@ public abstract class AbstractApiClient {
         httpRequest.addHeader(HttpHeaders.USER_AGENT, agent);
 
         if (!StringUtils.isNullOrEmpty(apiKey)) {
-            httpRequest.addHeader(HttpHeaders.AUTHORIZATION, apiKey);
+            httpRequest.addHeader(HttpHeaders.X_AUTHORIZATION, apiKey);
         }
 
         if (httpMethod.equals("PUT")) {
