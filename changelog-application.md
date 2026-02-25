@@ -44,6 +44,10 @@
 - Removes support for `-id *` in favour of making `-id` optional.
 - Adds a `-json` flag to enable JSON output (works only when pulling a single workspace).
 
+### push
+
+- Adds a `-trim <true|false>` parameter to run `Workspace.trim()` before pushing the workspace.
+
 ### inspect
 
 - Uses stdout rather than `log.info()`.

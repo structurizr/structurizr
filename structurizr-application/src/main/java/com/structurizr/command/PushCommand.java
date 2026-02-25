@@ -45,7 +45,11 @@ public class PushCommand extends AbstractCommand {
         option.setRequired(false);
         options.addOption(option);
 
-        option = new Option("merge", "mergeFromRemote", true, "Whether to merge layout information from the remote workspace");
+        option = new Option("merge", "mergeFromRemote", true, "Whether to merge layout information from the remote workspace (default=true)");
+        option.setRequired(false);
+        options.addOption(option);
+
+        option = new Option("trim", "trim", true, "Whether to trim the workspace before pushing (default=false)");
         option.setRequired(false);
         options.addOption(option);
 
@@ -66,6 +70,7 @@ public class PushCommand extends AbstractCommand {
         String workspacePath = "";
         String passphrase = "";
         boolean mergeFromRemote = true;
+        boolean trim = false;
         boolean archive = true;
         boolean debug = false;
 
@@ -79,6 +84,7 @@ public class PushCommand extends AbstractCommand {
             workspacePath = cmd.getOptionValue("workspace");
             passphrase = cmd.getOptionValue("passphrase");
             mergeFromRemote = Boolean.parseBoolean(cmd.getOptionValue("merge", "true"));
+            trim = Boolean.parseBoolean(cmd.getOptionValue("trim", "false"));
             archive = Boolean.parseBoolean(cmd.getOptionValue("archive", "true"));
             debug = cmd.hasOption("debug");
         } catch (ParseException e) {
@@ -120,6 +126,11 @@ public class PushCommand extends AbstractCommand {
         log.info(" - parsing model and views from " + path.getCanonicalPath());
 
         Workspace workspace = loadWorkspace(workspacePath);
+
+        if (trim) {
+            log.info(" - trimming workspace");
+            workspace.trim();
+        }
 
         log.info(" - merge layout from remote: " + mergeFromRemote);
         client.setMergeFromRemote(mergeFromRemote);
