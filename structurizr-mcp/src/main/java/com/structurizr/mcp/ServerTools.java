@@ -28,7 +28,11 @@ public class ServerTools {
         log.info("Registering");
     }
 
-    @McpTool(description = "Gets a single workspace from a Structurizr server")
+    @McpTool(
+            name = "getWorkspace",
+            description = "Gets a single workspace from a Structurizr server",
+            title = "Get workspace from a Structurizr server"
+    )
     public Workspace getWorkspace(
             @McpToolParam(description = "URL", required = true) String url,
             @McpToolParam(description = "Workspace ID", required = true) long workspaceId,
@@ -50,7 +54,11 @@ public class ServerTools {
         return workspace;
     }
 
-    @McpTool(description = "Gets all workspaces from a Structurizr server")
+    @McpTool(
+            name = "getWorkspaces",
+            description = "Gets all workspaces from a Structurizr server",
+            title = "Get all workspaces from a Structurizr server"
+    )
     public Collection<Workspace> getWorkspaces(
             @McpToolParam(description = "URL", required = true) String url,
             @McpToolParam(description = "API key", required = false) String apiKey

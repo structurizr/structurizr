@@ -26,7 +26,11 @@ public class DslTools {
         log.info("Registering");
     }
 
-    @McpTool(description = "Validates a Structurizr DSL workspace")
+    @McpTool(
+            name = "validate",
+            description = "Validates a Structurizr DSL workspace",
+            title = "Validate a Structurizr DSL workspace"
+    )
     public String validate(
             @McpToolParam(description = "DSL", required = true) String dsl
     ) {
@@ -43,7 +47,11 @@ public class DslTools {
         }
     }
 
-    @McpTool(description = "Parses a Structurizr DSL workspace")
+    @McpTool(
+            name = "parse",
+            description = "Parses a Structurizr DSL workspace",
+            title = "Parse a Structurizr DSL workspace"
+    )
     public String parse(
             @McpToolParam(description = "DSL", required = true) String dsl
     ) {
@@ -60,7 +68,11 @@ public class DslTools {
         }
     }
 
-    @McpTool(description = "Inspects a Structurizr DSL workspace")
+    @McpTool(
+            name = "inspect",
+            description = "Inspects a Structurizr DSL workspace",
+            title = "Inspect a Structurizr DSL workspace"
+    )
     public List<String> inspect(
             @McpToolParam(description = "DSL", required = true) String dsl
     ) throws Exception {
