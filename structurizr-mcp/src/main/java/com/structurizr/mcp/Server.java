@@ -13,9 +13,7 @@ import java.util.List;
 @SpringBootApplication
 public class Server {
 
-	private static final String VALIDATE = "validate";
-	private static final String PARSE = "parse";
-	private static final String INSPECT = "inspect";
+	private static final String DSL = "dsl";
 	private static final String SERVER = "server";
 
 	public static void main(String[] args) throws Exception {
@@ -34,15 +32,7 @@ public class Server {
 
 		Options options = new Options();
 
-		Option option = new Option(VALIDATE, VALIDATE, false, "DSL validation tools - see https://docs.structurizr.com/dsl");
-		option.setRequired(false);
-		options.addOption(option);
-
-		option = new Option(PARSE, PARSE, false, "DSL parsing tools - see https://docs.structurizr.com/dsl");
-		option.setRequired(false);
-		options.addOption(option);
-
-		option = new Option(INSPECT, INSPECT, false, "Workspace inspection tools - see https://docs.structurizr.com/workspaces/inspections");
+		Option option = new Option(DSL, DSL, false, "Structurizr DSL tools (validate, parse, inspect) - see https://docs.structurizr.com/dsl");
 		option.setRequired(false);
 		options.addOption(option);
 
@@ -55,16 +45,8 @@ public class Server {
 
 		List<String> profiles = new ArrayList<>();
 
-		if (cmd.hasOption(VALIDATE)) {
-			profiles.add(VALIDATE);
-		}
-
-		if (cmd.hasOption(PARSE)) {
-			profiles.add(PARSE);
-		}
-
-		if (cmd.hasOption(INSPECT)) {
-			profiles.add(INSPECT);
+		if (cmd.hasOption(DSL)) {
+			profiles.add(DSL);
 		}
 
 		if (cmd.hasOption(SERVER)) {
