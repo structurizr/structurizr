@@ -8,6 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springaicommunity.mcp.annotation.McpTool;
 import org.springaicommunity.mcp.annotation.McpToolParam;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,14 +16,16 @@ import java.util.Collection;
 import java.util.List;
 
 @Service
-public class StructurizrServerService {
+@Profile("server")
+public class ServerService {
 
     private static final String API_PATH = "api";
     private static final String WORKSPACE_PATH = "workspace";
 
-    private static final Log log = LogFactory.getLog(StructurizrServerService.class);
+    private static final Log log = LogFactory.getLog(ServerService.class);
 
-    public StructurizrServerService() {
+    public ServerService() {
+        log.info("Registering tools");
     }
 
     @McpTool(description = "Gets a single workspace from a Structurizr server")

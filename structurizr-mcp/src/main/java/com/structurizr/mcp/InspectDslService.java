@@ -9,17 +9,20 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springaicommunity.mcp.annotation.McpTool;
 import org.springaicommunity.mcp.annotation.McpToolParam;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class InspectDslService {
+@Profile("inspect")
+public class InspectDslService extends AbstractService {
 
     private static final Log log = LogFactory.getLog(InspectDslService.class);
 
     public InspectDslService() {
+        log.info("Registering tools");
     }
 
     @McpTool(description = "Inspects a Structurizr DSL workspace")
@@ -28,7 +31,7 @@ public class InspectDslService {
     ) throws Exception {
         log.info("Inspecting DSL workspace");
 
-        StructurizrDslParser parser = new StructurizrDslParser();
+        StructurizrDslParser parser = createStructurizrDslParser();
         parser.parse(dsl);
         Workspace workspace = parser.getWorkspace();
 

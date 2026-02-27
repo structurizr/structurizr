@@ -6,14 +6,17 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springaicommunity.mcp.annotation.McpTool;
 import org.springaicommunity.mcp.annotation.McpToolParam;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ParseDslService {
+@Profile("parse")
+public class ParseDslService extends AbstractService {
 
     private static final Log log = LogFactory.getLog(ParseDslService.class);
 
     public ParseDslService() {
+        log.info("Registering tools");
     }
 
     @McpTool(description = "Parses a Structurizr DSL workspace")
@@ -23,7 +26,7 @@ public class ParseDslService {
         log.info("Validating DSL workspace");
 
         try {
-            StructurizrDslParser parser = new StructurizrDslParser();
+            StructurizrDslParser parser = createStructurizrDslParser();
             parser.parse(dsl);
 
             return WorkspaceUtils.toJson(parser.getWorkspace(), false);
