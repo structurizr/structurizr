@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Profile("validate")
-public class ValidateDslService extends AbstractService {
+public class ValidateTools extends AbstractService {
 
-    private static final Log log = LogFactory.getLog(ValidateDslService.class);
+    private static final Log log = LogFactory.getLog(ValidateTools.class);
 
-    public ValidateDslService() {
-        log.info("Registering tools");
+    public ValidateTools() {
+        log.info("Registering");
     }
 
     @McpTool(description = "Validates a Structurizr DSL workspace")

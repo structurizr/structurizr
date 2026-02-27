@@ -17,12 +17,12 @@ import java.util.List;
 
 @Service
 @Profile("inspect")
-public class InspectDslService extends AbstractService {
+public class InspectTools extends AbstractService {
 
-    private static final Log log = LogFactory.getLog(InspectDslService.class);
+    private static final Log log = LogFactory.getLog(InspectTools.class);
 
-    public InspectDslService() {
-        log.info("Registering tools");
+    public InspectTools() {
+        log.info("Registering");
     }
 
     @McpTool(description = "Inspects a Structurizr DSL workspace")

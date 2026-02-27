@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Profile("parse")
-public class ParseDslService extends AbstractService {
+public class ParseTools extends AbstractService {
 
-    private static final Log log = LogFactory.getLog(ParseDslService.class);
+    private static final Log log = LogFactory.getLog(ParseTools.class);
 
-    public ParseDslService() {
-        log.info("Registering tools");
+    public ParseTools() {
+        log.info("Registering");
     }
 
     @McpTool(description = "Parses a Structurizr DSL workspace")

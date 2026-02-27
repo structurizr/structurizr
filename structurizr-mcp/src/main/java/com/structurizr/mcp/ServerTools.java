@@ -17,15 +17,15 @@ import java.util.List;
 
 @Service
 @Profile("server")
-public class ServerService {
+public class ServerTools {
 
     private static final String API_PATH = "api";
     private static final String WORKSPACE_PATH = "workspace";
 
-    private static final Log log = LogFactory.getLog(ServerService.class);
+    private static final Log log = LogFactory.getLog(ServerTools.class);
 
-    public ServerService() {
-        log.info("Registering tools");
+    public ServerTools() {
+        log.info("Registering");
     }
 
     @McpTool(description = "Gets a single workspace from a Structurizr server")
