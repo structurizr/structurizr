@@ -149,7 +149,7 @@ class PlaygroundController extends AbstractController {
     }
 
     private void validateWorkspaceSize(String json) throws WorkspaceTooLargeException {
-        int maxWorkspaceSizeInBytes = Integer.parseInt(Configuration.getInstance().getProperty(StructurizrProperties.MAX_WORKSPACE_SIZE));
+        int maxWorkspaceSizeInBytes = SizeUtils.parse(Configuration.getInstance().getProperty(StructurizrProperties.MAX_WORKSPACE_SIZE));
 
         long sizeInBytes = json.getBytes(StandardCharsets.UTF_8).length;
         if (sizeInBytes > maxWorkspaceSizeInBytes) {

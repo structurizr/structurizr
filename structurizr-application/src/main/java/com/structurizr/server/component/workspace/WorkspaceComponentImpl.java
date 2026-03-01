@@ -436,7 +436,7 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
     }
 
     private void validateWorkspaceSize(long workspaceId, String json) {
-        int maxWorkspaceSizeInBytes = Integer.parseInt(Configuration.getInstance().getProperty(StructurizrProperties.MAX_WORKSPACE_SIZE));
+        int maxWorkspaceSizeInBytes = SizeUtils.parse(Configuration.getInstance().getProperty(StructurizrProperties.MAX_WORKSPACE_SIZE));
 
         long sizeInBytes = json.getBytes(StandardCharsets.UTF_8).length;
         if (sizeInBytes > maxWorkspaceSizeInBytes) {
