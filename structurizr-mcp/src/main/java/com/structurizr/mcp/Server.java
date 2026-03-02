@@ -30,6 +30,8 @@ public class Server {
 		log.info("v" + new Version().getBuildNumber());
 		log.info("***********************************************************************************");
 
+		List<String> profiles = new ArrayList<>();
+
 		Options options = new Options();
 
 		Option option = new Option(DSL, DSL, false, "Structurizr DSL tools (validate, parse, inspect) - see https://docs.structurizr.com/dsl");
@@ -40,29 +42,27 @@ public class Server {
 		option.setRequired(false);
 		options.addOption(option);
 
-		CommandLineParser commandLineParser = new DefaultParser();
-		CommandLine cmd = commandLineParser.parse(options, args);
+        try {
+			CommandLineParser commandLineParser = new DefaultParser();
+			CommandLine cmd = commandLineParser.parse(options, args);
 
-		List<String> profiles = new ArrayList<>();
+			if (cmd.hasOption(DSL)) {
+				profiles.add(DSL);
+			}
 
-		if (cmd.hasOption(DSL)) {
+			if (cmd.hasOption(SERVER)) {
+				profiles.add(SERVER);
+			}
+        } catch (ParseException e) {
+            log.warn(e.getMessage());
+        }
+
+		if (profiles.isEmpty()) {
+			log.warn("No tools were configured - configuring DSL tools");
 			profiles.add(DSL);
 		}
 
-		if (cmd.hasOption(SERVER)) {
-			profiles.add(SERVER);
-		}
-
-		if (profiles.isEmpty()) {
-			log.fatal("No tools were configured");
-			HelpFormatter formatter = HelpFormatter.builder().setShowSince(false).get();
-			formatter.printHelp("mcp", "Structurizr v" + new Version().getBuildNumber(), options, "", true);
-
-			System.exit(1);
-		}
-
 		SpringApplication app = new SpringApplication(Server.class);
-
 		app.setAdditionalProfiles(profiles.toArray(new String[0]));
 		app.run(args);
 	}
