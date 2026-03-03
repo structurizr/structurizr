@@ -9,7 +9,7 @@ public class HomePageController implements ErrorController {
 
     @RequestMapping("/")
     public String homePage() {
-        return "redirect:https://docs.structurizr.com/mcp-server";
+        return "redirect:https://docs.structurizr.com/ai/mcp";
     }
 
 }
