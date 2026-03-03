@@ -7,10 +7,10 @@ RUN set -eux; \
 COPY structurizr-application/target/structurizr-*.war /usr/local/structurizr.war
 COPY structurizr-mcp/target/structurizr-*.war /usr/local/structurizr-mcp.war
 COPY structurizr-themes /usr/local/structurizr-themes
-COPY entrypoint.sh /usr/local/structurizr/entrypoint.sh
+COPY entrypoint.sh /usr/local/entrypoint.sh
 
 EXPOSE ${PORT}
 
 WORKDIR /usr/local/structurizr
 
-ENTRYPOINT ["/usr/local/structurizr/entrypoint.sh"]
+ENTRYPOINT ["/usr/local/entrypoint.sh"]
