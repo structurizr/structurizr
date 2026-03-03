@@ -61,6 +61,17 @@
     </dependency>
     <dependency>
       <groupId>com.structurizr</groupId>
+      <artifactId>structurizr-export</artifactId>
+      <version>6.1.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.structurizr</groupId>
       <artifactId>structurizr-inspection</artifactId>
       <version>6.1.0</version>
       <exclusions>

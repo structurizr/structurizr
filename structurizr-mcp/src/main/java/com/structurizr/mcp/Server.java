@@ -1,7 +1,6 @@
 package com.structurizr.mcp;
 
 import org.apache.commons.cli.*;
-import org.apache.commons.cli.help.HelpFormatter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.SpringApplication;
@@ -15,6 +14,8 @@ public class Server {
 
 	private static final String DSL = "dsl";
 	private static final String SERVER = "server";
+	private static final String PLANTUML = "plantuml";
+	private static final String MERMAID = "mermaid";
 
 	public static void main(String[] args) throws Exception {
 		Log log = LogFactory.getLog(Server.class);
@@ -42,7 +43,15 @@ public class Server {
 		option.setRequired(false);
 		options.addOption(option);
 
-        try {
+		option = new Option(PLANTUML, PLANTUML, false, "PlantUML exports - see https://docs.structurizr.com/export/plantuml and https://docs.structurizr.com/export/c4plantuml");
+		option.setRequired(false);
+		options.addOption(option);
+
+		option = new Option(MERMAID, MERMAID, false, "Mermaid exports - see https://docs.structurizr.com/export/mermaid");
+		option.setRequired(false);
+		options.addOption(option);
+
+		try {
 			CommandLineParser commandLineParser = new DefaultParser();
 			CommandLine cmd = commandLineParser.parse(options, args);
 
@@ -52,6 +61,14 @@ public class Server {
 
 			if (cmd.hasOption(SERVER)) {
 				profiles.add(SERVER);
+			}
+
+			if (cmd.hasOption(PLANTUML)) {
+				profiles.add(PLANTUML);
+			}
+
+			if (cmd.hasOption(MERMAID)) {
+				profiles.add(MERMAID);
 			}
         } catch (ParseException e) {
             log.warn(e.getMessage());
