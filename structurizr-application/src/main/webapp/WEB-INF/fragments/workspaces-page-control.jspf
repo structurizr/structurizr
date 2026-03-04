@@ -16,7 +16,7 @@
     </c:otherwise>
 </c:choose>
 
-Page ${pageNumber}
+&nbsp;Page ${pageNumber}&nbsp;
 
 <c:choose>
     <c:when test="${not empty nextPage}">
