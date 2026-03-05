@@ -5237,37 +5237,35 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         $(".structurizrNavigation").attr('display', 'block');
         $(".structurizrMetadata>tspan").attr('display', 'block');
 
-        if (crop) {
-            var contentArea;
-            if (crop === true) {
-                contentArea = findContentArea(true, 50);
-            } else {
-                contentArea = {
-                    minX: 0,
-                    minY: 0,
-                    maxX: diagramWidth,
-                    maxY: diagramHeight
-                }
+        var contentArea;
+        if (crop === true) {
+            contentArea = findContentArea(true, 50);
+        } else {
+            contentArea = {
+                minX: 0,
+                minY: 0,
+                maxX: diagramWidth,
+                maxY: diagramHeight
             }
-
-            width = contentArea.maxX - contentArea.minX;
-            height = contentArea.maxY - contentArea.minY;
-
-            const viewbox = ' viewBox="' + contentArea.minX + " " + contentArea.minY + " " + width + " " + height + '"';
-            const svgOpeningTag = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="' + width +'" height="' + height + '" style="width: ' + width + 'px; height: ' + height + 'px; background: ' + canvasColor + '"' + viewbox + '>';
-
-            // replace opening tag with dimensions (some browsers seem to require this)
-            svgMarkup = svgOpeningTag + svgMarkup.substring(svgMarkup.indexOf('>') + 1, svgMarkup.length);
-
-            // this hides the handles used to change vertices
-            svgMarkup = svgMarkup.replace(/class="marker-vertices"/g, 'class="marker-vertices" display="none"');
-
-            // and remove the &nbsp; added by JointJS (otherwise you get a blank PNG file)
-            svgMarkup = svgMarkup.replace(/&nbsp;/g, ' ');
-
-            // remove any control characters (these shouldn't be there anyway, but...)
-            svgMarkup = svgMarkup.replace(/[\x00-\x19]+/g, "");
         }
+
+        width = contentArea.maxX - contentArea.minX;
+        height = contentArea.maxY - contentArea.minY;
+
+        const viewbox = ' viewBox="' + contentArea.minX + " " + contentArea.minY + " " + width + " " + height + '"';
+        const svgOpeningTag = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="' + width +'" height="' + height + '" style="width: ' + width + 'px; height: ' + height + 'px; background: ' + canvasColor + '"' + viewbox + '>';
+
+        // replace opening tag with dimensions (some browsers seem to require this)
+        svgMarkup = svgOpeningTag + svgMarkup.substring(svgMarkup.indexOf('>') + 1, svgMarkup.length);
+
+        // this hides the handles used to change vertices
+        svgMarkup = svgMarkup.replace(/class="marker-vertices"/g, 'class="marker-vertices" display="none"');
+
+        // and remove the &nbsp; added by JointJS (otherwise you get a blank PNG file)
+        svgMarkup = svgMarkup.replace(/&nbsp;/g, ' ');
+
+        // remove any control characters (these shouldn't be there anyway, but...)
+        svgMarkup = svgMarkup.replace(/[\x00-\x19]+/g, "");
 
         const result = {
             markup: svgMarkup,
