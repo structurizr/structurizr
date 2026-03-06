@@ -1,11 +1,11 @@
 # Changelog
 
-## unreleased
+## 2026.03.06
 
 - Adds [perspective specific styles](https://docs.structurizr.com/dsl/cookbook/perspectives-static/) for elements and relationships.
 - Adds support for [dynamic perspectives](https://docs.structurizr.com/dsl/cookbook/perspectives-dynamic/).
 - Adds a way to install themes when using `push`, `validate`, etc commands - see [Installing themes](https://docs.structurizr.com/server/diagrams/themes#installing-themes).
-- Removes `-themes` from the `export` command in favour of the above.
+- Removes `-themes` parameter from the `export` command in favour of the above.
 
 ### server
 
