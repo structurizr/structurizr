@@ -1,5 +1,11 @@
 # Changelog
 
+## unreleased
+
+### pull
+
+- Don't create archive versions of workspace.
+
 ## 2026.03.06
 
 - Adds [perspective specific styles](https://docs.structurizr.com/dsl/cookbook/perspectives-static/) for elements and relationships.
