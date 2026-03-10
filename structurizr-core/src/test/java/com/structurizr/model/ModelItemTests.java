@@ -205,6 +205,41 @@ public class ModelItemTests extends AbstractWorkspaceTestBase {
     }
 
     @Test
+    void hasPerspective_ThrowsAnException_WhenANullNameIsSpecified() {
+        try {
+            Element element = model.addSoftwareSystem("Name");
+            element.hasPerspective(null);
+            fail();
+        } catch (IllegalArgumentException iae) {
+            assertEquals("A perspective name must be specified.", iae.getMessage());
+        }
+    }
+
+    @Test
+    void hasPerspective_ThrowsAnException_WhenAnEmptyNameIsSpecified() {
+        try {
+            Element element = model.addSoftwareSystem("Name");
+            element.hasPerspective("");
+            fail();
+        } catch (IllegalArgumentException iae) {
+            assertEquals("A perspective name must be specified.", iae.getMessage());
+        }
+    }
+
+    @Test
+    void hasPerspective_ReturnsFalse_WhenTheNamedPerspectiveDoesNotExist() {
+        Element element = model.addSoftwareSystem("Name");
+        assertFalse(element.hasPerspective("Security"));
+    }
+
+    @Test
+    void hasPerspective_ReturnsTrue_WhenTheNamedPerspectiveDoesExist() {
+        Element element = model.addSoftwareSystem("Name");
+        element.addPerspective("Security", "Data is encrypted at rest.");
+        assertTrue(element.hasPerspective("Security"));
+    }
+
+    @Test
     void setUrl_AcceptsAUrl() {
         Element element = model.addSoftwareSystem("Name");
         element.setUrl("https://structurizr.com");

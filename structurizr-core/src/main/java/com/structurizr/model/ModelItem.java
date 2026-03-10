@@ -211,6 +211,20 @@ public abstract class ModelItem implements PropertyHolder, PerspectivesHolder, C
     }
 
     /**
+     * Determines whether this model item has the named perspective.
+     *
+     * @param name      the name of the perspective
+     * @return          true if the named perspective exists, false otherwise
+     */
+    public boolean hasPerspective(String name) {
+        if (StringUtils.isNullOrEmpty(name)) {
+            throw new IllegalArgumentException("A perspective name must be specified.");
+        }
+
+        return getPerspectives().stream().anyMatch(p -> p.getName().equals(name));
+    }
+
+    /**
      * Adds a perspective to this object.
      *
      * @param perspective       a Perspective object
