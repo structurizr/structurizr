@@ -61,12 +61,29 @@ class IdentifierRegisterTests extends AbstractTests {
     }
 
     @Test
-    void test_register_WhenTheElementHasAlreadyBeenRegisteredWithTheSameIdentifierCasedDifferently() {
+    void test_register_ThrowsAnException_WhenTheElementHasAlreadyBeenRegisteredWithTheSameIdentifierCasedDifferently() {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
         register.register("SoftwareSystem", softwareSystem);
-        register.register("softwareSystem", softwareSystem);
-        register.register("softwaresystem", softwareSystem);
-        register.register("SOFTWARESYSTEM", softwareSystem);
+        try {
+            register.register("SOFTWARESYSTEM", softwareSystem);
+            fail();
+        } catch (Exception e) {
+            assertEquals("The identifier \"softwaresystem\" is already in use", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_register_ThrowsAnException_WhenAnElementHasAlreadyBeenRegisteredWithTheSameIdentifier() {
+        SoftwareSystem a = model.addSoftwareSystem("A");
+        SoftwareSystem b = model.addSoftwareSystem("B");
+
+        try {
+            register.register("a", a);
+            register.register("a", b);
+            fail();
+        } catch (Exception e) {
+            assertEquals("The identifier \"a\" is already in use", e.getMessage());
+        }
     }
 
     @Test
@@ -117,6 +134,21 @@ class IdentifierRegisterTests extends AbstractTests {
             fail();
         } catch (Exception e) {
             assertEquals("Please assign an identifier to \"Relationship://SoftwareSystem://A -> SoftwareSystem://B (Uses)\" before using it", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_register_ThrowsAnException_WhenARelationshipHasAlreadyBeenRegisteredWithTheSameIdentifier() {
+        SoftwareSystem a = model.addSoftwareSystem("A");
+        SoftwareSystem b = model.addSoftwareSystem("B");
+        Relationship rel1 = a.uses(b, "Uses 1");
+        Relationship rel2 = a.uses(b, "Uses 2");
+        try {
+            register.register("r", rel1);
+            register.register("r", rel2);
+            fail();
+        } catch (Exception e) {
+            assertEquals("The identifier \"r\" is already in use", e.getMessage());
         }
     }
 

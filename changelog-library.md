@@ -1,8 +1,14 @@
 # Changelog
 
+## (unreleased)
+
+### structurizr-dsl
+
+- Throws an exception when an identifier is already in use, irrespective of whether the same element/relationship is being registered again.
+
 ## v6.1.0 (6th March 2026)
 
-## structurizr-core
+### structurizr-core
 
 - Normalises line endings when importing Markdown/AsciiDoc documentation and decisions (https://github.com/structurizr/structurizr/issues/22).
 - Adds validation that `structurizr.groupSeparator` is a single character (https://github.com/structurizr/structurizr/issues/35).
@@ -11,12 +17,12 @@
 - Fixes https://github.com/structurizr/structurizr/issues/36 (Workspace.trim() removes infrastructureNode when only element in deploymentNode).
 - Fixes https://github.com/structurizr/structurizr/issues/37 (Workspace.trim() removes the origin of linked relationships).
 
-## structurizr-client
+### structurizr-client
 
 - Removes deprecated Apache HttpClient usage (fixes https://github.com/structurizr/structurizr/issues/31).
 - Adds `WorkspaceApiClient.putImage()` methods to upload an image to a workspace.
 
-## structurizr-dsl
+### structurizr-dsl
 
 - Perspectives can be specified as a `perspective { ... }` block.
 
