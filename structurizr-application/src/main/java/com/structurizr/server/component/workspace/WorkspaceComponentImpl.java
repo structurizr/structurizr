@@ -430,7 +430,6 @@ class WorkspaceComponentImpl implements WorkspaceComponent {
         } catch (WorkspaceComponentException wce) {
             throw wce;
         } catch (Exception e) {
-            e.printStackTrace();
             throw new WorkspaceComponentException(e.getMessage(), e);
         }
     }
