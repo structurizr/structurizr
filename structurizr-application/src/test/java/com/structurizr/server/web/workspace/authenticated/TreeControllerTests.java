@@ -24,7 +24,7 @@ public class TreeControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedTree()  {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
 

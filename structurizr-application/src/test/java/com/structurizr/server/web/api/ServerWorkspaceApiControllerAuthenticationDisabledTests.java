@@ -31,7 +31,7 @@ public class ServerWorkspaceApiControllerAuthenticationDisabledTests extends Con
         controller = new ServerWorkspaceApiController();
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {});
 
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
     }
 
     @Test

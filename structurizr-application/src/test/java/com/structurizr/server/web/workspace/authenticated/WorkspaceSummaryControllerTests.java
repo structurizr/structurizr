@@ -30,7 +30,7 @@ public class WorkspaceSummaryControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedWorkspaceSummary_WhenBranchesAreNotEnabled()  {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
 
@@ -70,7 +70,7 @@ public class WorkspaceSummaryControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedWorkspaceSummary_WhenBranchesAreEnabled()  {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
         Configuration.getInstance().setFeatureEnabled(Features.WORKSPACE_BRANCHES);
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);

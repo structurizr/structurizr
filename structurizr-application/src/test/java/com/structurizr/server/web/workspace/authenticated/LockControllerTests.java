@@ -18,7 +18,7 @@ public class LockControllerTests extends ControllerTestsBase {
     public void setUp() {
         controller = new LockController();
         model = new ModelMap();
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
     }
 
     @Test

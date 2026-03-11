@@ -17,7 +17,7 @@ public class AbstractWorkspaceControllerTests extends AbstractControllerTests {
 
     @BeforeEach
     public void setUp() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
         controller = new AbstractWorkspaceController() {};
         model = new ModelMap();
     }
@@ -38,7 +38,7 @@ public class AbstractWorkspaceControllerTests extends AbstractControllerTests {
 
     @Test
     void showAuthenticatedView_ReturnsThe404Page_WhenAuthenticationIsEnabledAndTheUserIsAnonymous() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addWriteUser("user1@example.com");
@@ -56,7 +56,7 @@ public class AbstractWorkspaceControllerTests extends AbstractControllerTests {
 
     @Test
     void showAuthenticatedView_ReturnsThe404Page_WhenAuthenticationIsEnabledAndTheUserHasNoPermissions() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addWriteUser("user1@example.com");
@@ -80,7 +80,7 @@ public class AbstractWorkspaceControllerTests extends AbstractControllerTests {
 
     @Test
     void showAuthenticatedView_ReturnsTheView_WhenAuthenticationIsEnabledAndTheUserHasWritePermission() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addWriteUser("user1@example.com");
@@ -109,7 +109,7 @@ public class AbstractWorkspaceControllerTests extends AbstractControllerTests {
 
     @Test
     void showAuthenticatedView_ReturnsTheView_WhenAuthenticationIsEnabledAndTheUserHasReadPermission() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addReadUser("user1@example.com");
@@ -138,7 +138,7 @@ public class AbstractWorkspaceControllerTests extends AbstractControllerTests {
 
     @Test
     void showAuthenticatedView_ReturnsTheView_WhenAuthenticationIsDisabled() {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
 

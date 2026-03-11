@@ -24,7 +24,7 @@ public class GraphControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedGraph()  {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
 

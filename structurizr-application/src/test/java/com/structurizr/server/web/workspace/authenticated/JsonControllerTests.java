@@ -24,7 +24,7 @@ public class JsonControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedJson_ReturnsA404_WhenTheWorkspaceDoesNotExist() {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
@@ -40,7 +40,7 @@ public class JsonControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedJson_ReturnsTheJson_WhenAuthenticationIsDisabled() {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
 
@@ -62,7 +62,7 @@ public class JsonControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedJson_ReturnsTheJson_WhenAuthenticationIsEnabledAndTheUserHasAccess() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
         setUser("user1@example.com");
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
@@ -86,7 +86,7 @@ public class JsonControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedJson_ReturnsA404_WhenAuthenticationIsEnabledAndTheUserDoesNotHaveAccess() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
         setUser("user2@example.com");
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);

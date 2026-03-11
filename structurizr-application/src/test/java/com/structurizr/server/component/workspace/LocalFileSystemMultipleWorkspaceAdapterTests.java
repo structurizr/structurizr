@@ -30,8 +30,7 @@ class LocalFileSystemMultipleWorkspaceAdapterTests extends AbstractWorkspaceAdap
 
         Properties properties = new Properties();
         properties.setProperty(DATA_DIRECTORY, dataDirectory.getAbsolutePath());
-
-        Configuration.init(Profile.Local, properties);
+        configureAsLocal(properties);
 
         workspaceAdapter = new LocalFileSystemMultipleWorkspaceAdapter();
     }

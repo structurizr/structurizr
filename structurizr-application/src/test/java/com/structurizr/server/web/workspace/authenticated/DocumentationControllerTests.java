@@ -26,7 +26,7 @@ public class DocumentationControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedDocumentation_ReturnsTheDocumentationPageForSoftwareSystem()  {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
 
@@ -53,7 +53,7 @@ public class DocumentationControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedDocumentation_ReturnsTheDocumentationPageForContainer()  {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
 
@@ -80,7 +80,7 @@ public class DocumentationControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedDocumentation_ReturnsTheDocumentationPageForComponent()  {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
 

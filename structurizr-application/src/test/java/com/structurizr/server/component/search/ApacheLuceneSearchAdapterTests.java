@@ -21,7 +21,7 @@ public class ApacheLuceneSearchAdapterTests extends AbstractSearchAdapterTests {
 
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.DATA_DIRECTORY, dataDirectory.getAbsolutePath());
-        Configuration.init(Profile.Local, properties);
+        configureAsLocal(properties);
 
         searchAdapter = new ApacheLuceneSearchAdapter();
         searchAdapter.start();

@@ -29,7 +29,7 @@ public class RegenerateApiCredentialsControllerTests extends ControllerTestsBase
 
     @Test
     void regenerateApiCredentials_ReturnsThe404Page_WhenTheWorkspaceDoesNotExist() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
@@ -46,7 +46,7 @@ public class RegenerateApiCredentialsControllerTests extends ControllerTestsBase
     void regenerateApiCredentials_DoesNothingAndRedirectsToTheWorkspaceSettingsPage_WhenAuthenticationIsEnabledAndTheUserDoesNotHaveAdminPermission() {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "admin@example.com");
-        enableAuthentication(properties);
+        configureAsServerWithAuthenticationEnabled(properties);
         setUser("user@example.com");
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
@@ -74,7 +74,7 @@ public class RegenerateApiCredentialsControllerTests extends ControllerTestsBase
     void regenerateApiCredentials_RegeneratesApiCredentials_WhenAuthenticationIsEnabledAndTheUserHasAdminPermission() {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "admin@example.com");
-        enableAuthentication(properties);
+        configureAsServerWithAuthenticationEnabled(properties);
         setUser("admin@example.com");
 
         final WorkspaceMetadata workspaceMetadata = new WorkspaceMetadata(1);

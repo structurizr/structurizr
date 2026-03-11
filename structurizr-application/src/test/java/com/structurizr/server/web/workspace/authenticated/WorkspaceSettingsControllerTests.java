@@ -26,7 +26,7 @@ public class WorkspaceSettingsControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedWorkspaceSettings_ReturnsThe404Page_WhenTheWorkspaceDoesNotExist()  {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
@@ -41,7 +41,7 @@ public class WorkspaceSettingsControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedWorkspaceSettings_ReturnsTheWorkspaceSettingsPage_WhenAuthenticationIsDisabled()  {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
@@ -67,7 +67,7 @@ public class WorkspaceSettingsControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedWorkspaceSettings_ReturnsTheWorkspaceSettingsPage_WhenAuthenticationIsEnabled_AdminPermission()  {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
         setUser("write@example.com");
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
@@ -98,7 +98,7 @@ public class WorkspaceSettingsControllerTests extends ControllerTestsBase {
     void showAuthenticatedWorkspaceSettings_ReturnsTheWorkspaceSettingsPage_WhenAuthenticationIsEnabled_WritePermission()  {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "admin@example.com");
-        enableAuthentication(properties);
+        configureAsServerWithAuthenticationEnabled(properties);
         setUser("write@example.com");
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
@@ -127,7 +127,7 @@ public class WorkspaceSettingsControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedWorkspaceSettings_ReturnsThe404Page_WhenAuthenticationIsEnabled_ReadPermission()  {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
         setUser("read@example.com");
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);

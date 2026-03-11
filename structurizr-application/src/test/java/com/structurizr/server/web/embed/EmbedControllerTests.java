@@ -28,7 +28,7 @@ public class EmbedControllerTests extends ControllerTestsBase {
 
     @Test
     void embedDiagrams_ReturnsThe404Page_WhenTheWorkspaceDoesNotExist() {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
@@ -43,7 +43,7 @@ public class EmbedControllerTests extends ControllerTestsBase {
 
     @Test
     void embedDiagrams_ReturnsThe404Page_WhenTheWorkspaceIsNotPublic() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
@@ -61,7 +61,7 @@ public class EmbedControllerTests extends ControllerTestsBase {
 
     @Test
     void embedDiagrams_ReturnsTheBranchesNotEnabledPage_WhenTheBranchesAreNotEnabled() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
@@ -79,7 +79,7 @@ public class EmbedControllerTests extends ControllerTestsBase {
 
     @Test
     void embedDiagrams_ReturnsThe404Page_WhenTheBranchDoesNotExist() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
         Configuration.getInstance().setFeatureEnabled(Features.WORKSPACE_BRANCHES);
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
@@ -98,7 +98,7 @@ public class EmbedControllerTests extends ControllerTestsBase {
 
     @Test
     void embedDiagrams_ReturnsTheDiagramsPage_WhenAuthenticationIsEnabledAndTheWorkspaceIsPublic() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
@@ -124,7 +124,7 @@ public class EmbedControllerTests extends ControllerTestsBase {
 
     @Test
     void embedDiagrams_ReturnsTheDiagramsPageForABranch_WhenAuthenticationIsEnabledAndTheWorkspaceIsPublic() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
         Configuration.getInstance().setFeatureEnabled(Features.WORKSPACE_BRANCHES);
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
@@ -156,7 +156,7 @@ public class EmbedControllerTests extends ControllerTestsBase {
 
     @Test
     void embedDiagrams_ReturnsTheDiagramsPage_WhenAuthenticationIsDisabled() {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override

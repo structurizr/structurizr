@@ -23,7 +23,7 @@ public class Server extends AbstractServer {
 			properties.setProperty(DATA_DIRECTORY, structurizrDataDirectory.getAbsolutePath());
 		}
 
-		Configuration.init(Profile.Server, properties);
+		Configuration.initServer(properties);
 		ThemeUtils.installThemes(new File(Configuration.getInstance().getProperty(THEMES)));
 
 		SpringApplication app = new SpringApplication(Server.class);

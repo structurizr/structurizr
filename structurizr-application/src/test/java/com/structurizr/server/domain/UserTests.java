@@ -3,6 +3,7 @@ package com.structurizr.server.domain;
 import com.structurizr.configuration.Configuration;
 import com.structurizr.configuration.Profile;
 import com.structurizr.configuration.StructurizrProperties;
+import com.structurizr.server.web.AbstractTestsBase;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -12,7 +13,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UserTests {
+public class UserTests extends AbstractTestsBase {
 
     private User user;
 
@@ -141,23 +142,23 @@ public class UserTests {
 
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "");
-        Configuration.init(Profile.Server, properties);
+        configureAsServer(properties);
         assertFalse(user.isAdmin());
 
         properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "user@google.com");
-        Configuration.init(Profile.Server, properties);
+        configureAsServer(properties);
         assertFalse(user.isAdmin()); // not a named user
 
         properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "user@example.com");
-        Configuration.init(Profile.Server, properties);
+        configureAsServer(properties);
         assertTrue(user.isAdmin()); // a named user
 
         properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "role1");
-        Configuration.init(Profile.Server, properties);
+        configureAsServer(properties);
         assertTrue(user.isAdmin()); // a named role
 
         properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "role2");
-        Configuration.init(Profile.Server, properties);
+        configureAsServer(properties);
         assertFalse(user.isAdmin()); // not a named role
     }
 

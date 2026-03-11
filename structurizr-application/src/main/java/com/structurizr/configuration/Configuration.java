@@ -62,27 +62,49 @@ public class Configuration {
             setAdminUsersAndRoles(getProperty(ADMIN_USERS_AND_ROLES).split(COMMA));
         }
 
-        if (!getDataDirectory().exists()) {
-            boolean result = getDataDirectory().mkdirs();
-            if (!result) {
-                log.fatal("Could not create data directory at " + getDataDirectory().getAbsolutePath());
+        if (profile == Profile.Local || profile == Profile.Server) {
+            if (!getDataDirectory().exists()) {
+                boolean result = getDataDirectory().mkdirs();
+                if (!result) {
+                    log.fatal("Could not create data directory at " + getDataDirectory().getAbsolutePath());
+                    System.exit(1);
+                }
+            } else if (!getDataDirectory().isDirectory()) {
+                log.fatal("Data directory " + getDataDirectory().getAbsolutePath() + " is not a directory");
+                System.exit(1);
             }
-        }
 
-        if (!getWorkDirectory().exists()) {
-            boolean result = getWorkDirectory().mkdirs();
-            if (!result) {
-                log.fatal("Could not create work directory at " + getWorkDirectory().getAbsolutePath());
+            if (!getDataDirectory().canWrite()) {
+                log.fatal("Data directory " + getDataDirectory().getAbsolutePath() + " is not writable");
+                System.exit(1);
+            }
+
+            if (!getWorkDirectory().exists()) {
+                boolean result = getWorkDirectory().mkdirs();
+                if (!result) {
+                    log.fatal("Could not create work directory at " + getWorkDirectory().getAbsolutePath());
+                    System.exit(1);
+                }
             }
         }
 
         configureLogging();
     }
 
-    public static Configuration init(Profile profile, Properties properties) {
-        INSTANCE = new Configuration(profile, properties);
+    public static void initPlayground(Properties properties) {
+        Configuration.init(Profile.Playground, properties);
+    }
 
-        return INSTANCE;
+    public static void initLocal(Properties properties) {
+        Configuration.init(Profile.Local, properties);
+    }
+
+    public static void initServer(Properties properties) {
+        Configuration.init(Profile.Server, properties);
+    }
+
+    private static void init(Profile profile, Properties properties) {
+        INSTANCE = new Configuration(profile, properties);
     }
 
     public static Configuration getInstance() {
@@ -380,16 +402,6 @@ public class Configuration {
             log.info(" - " + theme);
         }
         log.info("***********************************************************************************");
-
-        if (!getDataDirectory().exists()) {
-            log.fatal("Data directory " + getDataDirectory().getAbsolutePath() + " does not exist");
-        } else if (!getDataDirectory().isDirectory()) {
-            log.fatal("Data directory " + getDataDirectory().getAbsolutePath() + " is not a directory");
-        } else {
-            if (!getDataDirectory().canWrite()) {
-                log.fatal("Data directory " + getDataDirectory().getAbsolutePath() + " is not writable");
-            }
-        }
     }
 
     private void logAllProperties(Log log, Properties properties) {

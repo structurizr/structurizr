@@ -49,7 +49,7 @@ public class Server extends SpringBootServletInitializer {
 		Properties properties = new Properties();
 		properties.setProperty(DATA_DIRECTORY, structurizrDataDirectory.getAbsolutePath());
 
-		Configuration.init(Profile.Playground, properties);
+		Configuration.initPlayground(properties);
 		ThemeUtils.installThemes(new File(Configuration.getInstance().getProperty(THEMES)));
 
 		SpringApplication app = new SpringApplication(Server.class);

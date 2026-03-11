@@ -24,7 +24,7 @@ public class DeleteBranchControllerTests extends ControllerTestsBase {
 
     @Test
     void deleteBranch_ReturnsThe404Page_WhenTheWorkspaceBranchesAreNotEnabled() {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
         Configuration.getInstance().setFeatureDisabled(Features.WORKSPACE_BRANCHES);
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {});
@@ -35,7 +35,7 @@ public class DeleteBranchControllerTests extends ControllerTestsBase {
 
     @Test
     void deleteBranch_ReturnsThe404Page_WhenTryingToDeleteTheMainBranch() {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
         Configuration.getInstance().setFeatureEnabled(Features.WORKSPACE_BRANCHES);
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {});
@@ -49,7 +49,7 @@ public class DeleteBranchControllerTests extends ControllerTestsBase {
 
     @Test
     void deleteBranch_ReturnsThe404Page_WhenTheWorkspaceDoesNotExist() {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
         Configuration.getInstance().setFeatureEnabled(Features.WORKSPACE_BRANCHES);
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
@@ -65,7 +65,7 @@ public class DeleteBranchControllerTests extends ControllerTestsBase {
 
     @Test
     void deleteBranch_DeletesTheBranch_WhenAuthenticationIsDisabled() {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
         Configuration.getInstance().setFeatureEnabled(Features.WORKSPACE_BRANCHES);
 
         final StringBuilder buf = new StringBuilder();
@@ -89,7 +89,7 @@ public class DeleteBranchControllerTests extends ControllerTestsBase {
 
     @Test
     void deleteBranch_DeletesTheBranch_WhenAuthenticationIsEnabledAndNoUsersAreConfigured() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
         Configuration.getInstance().setFeatureEnabled(Features.WORKSPACE_BRANCHES);
         setUser("user@example.com");
 
@@ -114,7 +114,7 @@ public class DeleteBranchControllerTests extends ControllerTestsBase {
 
     @Test
     void deleteBranch_DeletesTheBranch_WhenAuthenticationIsEnabledAndTheUserHasWriteAccess() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
         Configuration.getInstance().setFeatureEnabled(Features.WORKSPACE_BRANCHES);
         setUser("user@example.com");
 
@@ -142,7 +142,7 @@ public class DeleteBranchControllerTests extends ControllerTestsBase {
 
     @Test
     void deleteBranch_ReturnsThe404Page_WhenAuthenticationIsEnabledAndTheUserHasReadAccess() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
         Configuration.getInstance().setFeatureEnabled(Features.WORKSPACE_BRANCHES);
         setUser("user@example.com");
 
@@ -170,7 +170,7 @@ public class DeleteBranchControllerTests extends ControllerTestsBase {
 
     @Test
     void deleteBranch_ReturnsThe404Page_WhenAuthenticationIsEnabledAndTheUserDoesNotHaveAccess() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
         Configuration.getInstance().setFeatureEnabled(Features.WORKSPACE_BRANCHES);
         setUser("user2@example.com");
 

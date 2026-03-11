@@ -27,12 +27,12 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
 
     @BeforeEach
     void setUp() {
-        Configuration.init(Profile.Local, new Properties());
+        configureAsLocal();
     }
 
     @Test
     void getWorkspaces_WhenThereAreNoWorkspaces() {
-        Configuration.init(Profile.Local, new Properties());
+        configureAsLocal();
 
         workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
@@ -46,9 +46,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
 
     @Test
     void getWorkspacesForUser_WhenAuthenticationDisabled() {
-        Properties properties = new Properties();
-        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_NONE);
-        Configuration.init(Profile.Server, properties);
+        configureAsServerWithAuthenticationDisabled();
 
         Map<Long, WorkspaceMetadata> workspaceMap = new HashMap<>();
 
@@ -108,9 +106,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
 
     @Test
     void getWorkspacesForUser_WhenAuthenticationEnabledAndUnauthenticated() {
-        Properties properties = new Properties();
-        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
-        Configuration.init(Profile.Server, properties);
+        configureAsServerWithAuthenticationEnabled();
 
         Map<Long, WorkspaceMetadata> workspaceMap = new HashMap<>();
 
@@ -147,9 +143,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
 
     @Test
     void getWorkspacesForUser_WhenAuthenticationEnabledAndAuthenticated() {
-        Properties properties = new Properties();
-        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
-        Configuration.init(Profile.Server, properties);
+        configureAsServerWithAuthenticationEnabled();
 
         Map<Long, WorkspaceMetadata> workspaceMap = new HashMap<>();
 
@@ -211,7 +205,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
         properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "admin@example.com");
-        Configuration.init(Profile.Server, properties);
+        configureAsServerWithAuthenticationEnabled(properties);
 
         Map<Long, WorkspaceMetadata> workspaceMap = new HashMap<>();
 
@@ -406,7 +400,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
     void getWorkspace_WhenServerSideEncryptionIsEnabled() {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.ENCRYPTION_PASSPHRASE, "password");
-        Configuration.init(Profile.Server, properties);
+        configureAsServer(properties);
 
         WorkspaceComponent workspaceComponent = new WorkspaceComponentImpl(new MockWorkspaceAdapter() {
             @Override
@@ -512,7 +506,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
     void putWorkspace_WhenServerSideEncryptionIsEnabled() throws Exception {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.ENCRYPTION_PASSPHRASE, "password");
-        Configuration.init(Profile.Server, properties);
+        configureAsServer(properties);
 
         Workspace workspace = new Workspace("Name", "Description");
         String json = WorkspaceUtils.toJson(workspace, false);
@@ -587,9 +581,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
 
     @Test
     void test_putWorkspace_UpdatesTheVisibility_WhenTheVisibilityIsSpecified() throws Exception {
-        Properties properties = new Properties();
-        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
-        Configuration.init(Profile.Server, properties);
+        configureAsServerWithAuthenticationEnabled();
 
         Workspace workspace = new Workspace("Name", "Description");
         workspace.getConfiguration().setVisibility(Visibility.Public);
@@ -614,9 +606,8 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
     @Test
     void test_putWorkspace_DoesNotUpdateTheVisibility_WhenAuthenticationIsEnabledAndAdminUsersAreDefined() throws Exception {
         Properties properties = new Properties();
-        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
         properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "admin@example.com");
-        Configuration.init(Profile.Server, properties);
+        configureAsServerWithAuthenticationEnabled(properties);
 
         Workspace workspace = new Workspace("Name", "Description");
         workspace.getConfiguration().setVisibility(Visibility.Public);
@@ -661,9 +652,7 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
 
     @Test
     void test_putWorkspace_UpdatesTheRoleBasedSecurity_WhenUsersAreDefined() throws Exception {
-        Properties properties = new Properties();
-        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
-        Configuration.init(Profile.Server, properties);
+        configureAsServerWithAuthenticationEnabled();
 
         Workspace workspace = new Workspace("Name", "Description");
         workspace.getConfiguration().addUser("user1@example.com", Role.ReadWrite);
@@ -720,9 +709,8 @@ public class WorkspaceComponentImplTests extends AbstractTestsBase {
     @Test
     void putWorkspace_DoesNotUpdateTheRoleBasedSecurity_WhenAuthenticationIsEnabledAndAdminUsersAreDefined() throws Exception {
         Properties properties = new Properties();
-        properties.setProperty(StructurizrProperties.AUTHENTICATION_IMPLEMENTATION, StructurizrProperties.AUTHENTICATION_VARIANT_FILE);
         properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "admin@example.com");
-        Configuration.init(Profile.Server, properties);
+        configureAsServerWithAuthenticationEnabled(properties);
 
         Workspace workspace = new Workspace("Name", "Description");
         workspace.getConfiguration().addUser("user1@example.com", Role.ReadWrite);

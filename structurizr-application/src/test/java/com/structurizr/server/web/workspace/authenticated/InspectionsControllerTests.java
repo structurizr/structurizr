@@ -26,7 +26,7 @@ public class InspectionsControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedInspections() throws Exception {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         Workspace workspace = new Workspace("Name", "Description");

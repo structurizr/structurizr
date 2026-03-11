@@ -26,7 +26,7 @@ public class DecisionsControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedDecisions_ReturnsTheDecisionsPageForSoftwareSystem()  {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
 
@@ -53,7 +53,7 @@ public class DecisionsControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedDecisions_ReturnsTheDecisionsPageForContainer()  {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
 
@@ -80,7 +80,7 @@ public class DecisionsControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedDecisions_ReturnsTheDecisionsPageForComponent()  {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
 

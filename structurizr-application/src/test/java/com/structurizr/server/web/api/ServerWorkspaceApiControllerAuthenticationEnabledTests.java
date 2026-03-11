@@ -48,7 +48,7 @@ public class ServerWorkspaceApiControllerAuthenticationEnabledTests extends Cont
             }
         });
 
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
         clearUser();
     }
 
@@ -156,7 +156,7 @@ public class ServerWorkspaceApiControllerAuthenticationEnabledTests extends Cont
     void getWorkspace_ReturnsTheWorkspace_WhenTheApiKeyIsCorrectAndTheAdminApiKeyIsUsed() {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.API_KEY, new BCryptPasswordEncoder().encode("admin-1234567890"));
-        enableAuthentication(properties);
+        configureAsServerWithAuthenticationEnabled(properties);
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
@@ -248,7 +248,7 @@ public class ServerWorkspaceApiControllerAuthenticationEnabledTests extends Cont
     void putWorkspace_PutsTheWorkspace_WhenTheApiKeyIsCorrectAndTheAdminApiKeyIsUsed() throws Exception {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.API_KEY, new BCryptPasswordEncoder().encode("admin-1234567890"));
-        enableAuthentication(properties);
+        configureAsServerWithAuthenticationEnabled(properties);
 
         Workspace workspace = new Workspace("Name", "Description");
         String json = WorkspaceUtils.toJson(workspace, false);

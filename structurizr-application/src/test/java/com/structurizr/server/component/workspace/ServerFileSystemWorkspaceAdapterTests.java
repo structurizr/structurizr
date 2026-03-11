@@ -28,7 +28,7 @@ class ServerFileSystemWorkspaceAdapterTests extends AbstractWorkspaceAdapterTest
 
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.DATA_DIRECTORY, dataDirectory.getAbsolutePath());
-        Configuration.init(Profile.Server, properties);
+        configureAsServer(properties);
 
         workspaceAdapter = new ServerFileSystemWorkspaceAdapter();
     }
@@ -56,7 +56,7 @@ class ServerFileSystemWorkspaceAdapterTests extends AbstractWorkspaceAdapterTest
 
         Properties properties = Configuration.getInstance().getProperties();
         properties.setProperty(StructurizrProperties.MAX_WORKSPACE_VERSIONS, "30");
-        Configuration.init(Profile.Server, properties);
+        configureAsServer(properties);
 
         workspaceAdapter.removeOldWorkspaceVersions();
 
@@ -70,7 +70,7 @@ class ServerFileSystemWorkspaceAdapterTests extends AbstractWorkspaceAdapterTest
 
         properties = Configuration.getInstance().getProperties();
         properties.setProperty(StructurizrProperties.MAX_WORKSPACE_VERSIONS, "10");
-        Configuration.init(Profile.Server, properties);
+        configureAsServer(properties);
 
         workspaceAdapter.removeOldWorkspaceVersions();
         files = workspaceDirectory.listFiles((dir, name) -> name.matches(ServerFileSystemWorkspaceAdapter.WORKSPACE_VERSION_JSON_FILENAME_REGEX));

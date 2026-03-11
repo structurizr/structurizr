@@ -23,7 +23,7 @@ public class Local extends AbstractServer {
 			properties.setProperty(DATA_DIRECTORY, structurizrDataDirectory.getAbsolutePath());
 		}
 
-		Configuration.init(Profile.Local, properties);
+		Configuration.initLocal(properties);
 		ThemeUtils.installThemes(new File(Configuration.getInstance().getProperty(THEMES)));
 
 		SpringApplication app = new SpringApplication(Local.class);

@@ -26,7 +26,7 @@ public class CreateWorkspaceControllerTests extends ControllerTestsBase {
 
     @Test
     public void createWorkspace_CreatesAWorkspace_WhenAuthenticationIsDisabled() {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
@@ -41,7 +41,7 @@ public class CreateWorkspaceControllerTests extends ControllerTestsBase {
 
     @Test
     void createWorkspace_CreatesAWorkspace_WhenAuthenticationIsEnabledAndNoAdminUsersAreDefined() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
         setUser("user@example.com");
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
@@ -59,7 +59,7 @@ public class CreateWorkspaceControllerTests extends ControllerTestsBase {
     void createWorkspace_CreatesAWorkspace_WhenAuthenticationIsEnabledAndAnAdminUserIsDefined() {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "admin@example.com");
-        enableAuthentication(properties);
+        configureAsServerWithAuthenticationEnabled(properties);
         setUser("admin@example.com");
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
@@ -77,7 +77,7 @@ public class CreateWorkspaceControllerTests extends ControllerTestsBase {
     void createWorkspace_ReturnsThe404Page_WhenAuthenticationIsEnabledAndTheUserIsNotAnAdmin() {
         Properties properties = new Properties();
         properties.setProperty(StructurizrProperties.ADMIN_USERS_AND_ROLES, "admin@example.com");
-        enableAuthentication(properties);
+        configureAsServerWithAuthenticationEnabled(properties);
         setUser("user@example.com");
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {});

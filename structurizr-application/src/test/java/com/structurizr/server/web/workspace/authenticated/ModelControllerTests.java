@@ -24,7 +24,7 @@ public class ModelControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedModel()  {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
 

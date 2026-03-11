@@ -6,7 +6,6 @@ import com.structurizr.server.domain.WorkspaceMetadata;
 import com.structurizr.server.web.ControllerTestsBase;
 import com.structurizr.server.web.MockHttpServletResponse;
 import com.structurizr.server.web.MockWorkspaceComponent;
-import com.structurizr.server.web.api.ApiException;
 import com.structurizr.server.web.api.ApiResponse;
 import com.structurizr.server.web.api.NotFoundApiException;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +15,6 @@ import org.springframework.core.io.Resource;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -54,7 +52,7 @@ public class ImageControllerTests extends ControllerTestsBase {
 
     @Test
     void getAuthenticatedPngImage_ReturnsA404_WhenTheImageDoesNotExist() throws Exception {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
@@ -80,7 +78,7 @@ public class ImageControllerTests extends ControllerTestsBase {
 
     @Test
     void getAuthenticatedPngImage_ReturnsA404_WhenTheUserDoesNotHaveAccessToTheWorkspace() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addWriteUser("user2@example.com");
@@ -104,7 +102,7 @@ public class ImageControllerTests extends ControllerTestsBase {
 
     @Test
     void getAuthenticatedPngImage_ReturnsTheImage_WhenTheUserHasAccessToTheWorkspace() throws Exception {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
         setUser("user@example.com");
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
@@ -149,7 +147,7 @@ public class ImageControllerTests extends ControllerTestsBase {
 
     @Test
     void getAuthenticatedSvgImage_ReturnsA404_WhenTheImageDoesNotExist() throws Exception {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
@@ -171,7 +169,7 @@ public class ImageControllerTests extends ControllerTestsBase {
 
     @Test
     void getAuthenticatedSvgImage_ReturnsA404_WhenTheUserDoesNotHaveAccessToTheWorkspace() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
         setUser("user1@example.com");
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
@@ -191,7 +189,7 @@ public class ImageControllerTests extends ControllerTestsBase {
 
     @Test
     void getAuthenticatedSvgImage_ReturnsTheImage_WhenTheUserHasAccessToTheWorkspace() throws Exception {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
         setUser("user@example.com");
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
@@ -234,7 +232,7 @@ public class ImageControllerTests extends ControllerTestsBase {
 
     @Test
     void putImage_ReturnsA404_WhenTheUserDoeNotHaveAccessToTheWorkspace() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
         setUser("user@example.com");
 
         final WorkspaceMetadata workspaceMetadata = new WorkspaceMetadata(1);
@@ -257,7 +255,7 @@ public class ImageControllerTests extends ControllerTestsBase {
 
     @Test
     void putImage_ReturnsA404_WhenPuttingAnImageThatIsNotAPngOrSvg() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
         setUser("user@example.com");
 
         final WorkspaceMetadata workspaceMetadata = new WorkspaceMetadata(1);
@@ -285,7 +283,7 @@ public class ImageControllerTests extends ControllerTestsBase {
 
     @Test
     void putImage_SavesThePngImage_WhenTheUserHasAccessToTheWorkspace() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
         setUser("user@example.com");
 
         WorkspaceMetadata workspaceMetadata = new WorkspaceMetadata(1);
@@ -318,7 +316,7 @@ public class ImageControllerTests extends ControllerTestsBase {
 
     @Test
     void putImage_SavesThePngImageOnABranch_WhenTheUserHasAccessToTheWorkspace() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
         setUser("user@example.com");
 
         WorkspaceMetadata workspaceMetadata = new WorkspaceMetadata(1);
@@ -351,7 +349,7 @@ public class ImageControllerTests extends ControllerTestsBase {
 
     @Test
     void putImage_SavesTheSvgImage_WhenTheUserHasAccessToTheWorkspace() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
         setUser("user@example.com");
 
         WorkspaceMetadata workspaceMetadata = new WorkspaceMetadata(1);
@@ -384,7 +382,7 @@ public class ImageControllerTests extends ControllerTestsBase {
 
     @Test
     void putImage_SavesTheSvgImageOnABranch_WhenTheUserHasAccessToTheWorkspace() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
         setUser("user@example.com");
 
         WorkspaceMetadata workspaceMetadata = new WorkspaceMetadata(1);

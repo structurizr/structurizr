@@ -27,7 +27,7 @@ public class DiagramViewerControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedDiagramViewer_ReturnsTheDiagramViewerPageWhenAuthenticationIsDisabled()  {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
@@ -53,7 +53,7 @@ public class DiagramViewerControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedDiagramViewer_ReturnsTheDiagramViewerPage_WhenAuthenticationIsEnabledAndTheWorkspaceHasNoUsersConfigured()  {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
@@ -80,7 +80,7 @@ public class DiagramViewerControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedDiagramViewer_ReturnsTheDiagramViewerPage_WhenAuthenticationIsEnabledTheUserHasWriteAccess()  {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addWriteUser("user1@example.com");
@@ -109,7 +109,7 @@ public class DiagramViewerControllerTests extends ControllerTestsBase {
 
     @Test
     public void showAuthenticatedDiagramViewer_ReturnsTheDiagramViewerPage_WhenAuthenticationIsEnabledAndTheUserHasReadAccess()  {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addReadUser("user1@example.com");

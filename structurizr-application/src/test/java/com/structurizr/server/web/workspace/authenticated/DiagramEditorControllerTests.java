@@ -26,7 +26,7 @@ public class DiagramEditorControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedDiagramEditor_ReturnsThe404Page_WhenTheWorkspaceDoesNotExist() {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
@@ -42,7 +42,7 @@ public class DiagramEditorControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedDiagramEditor_ReturnsThe404Page_WhenTheUserDoesNotHaveAccess() {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addWriteUser("user2@example.com");
@@ -79,7 +79,7 @@ public class DiagramEditorControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedDiagramEditor_ReturnsTheDiagramEditorPage_WhenAuthenticationIsDisabled()  {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
@@ -116,7 +116,7 @@ public class DiagramEditorControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedDiagramEditor_ReturnsTheDiagramEditorPage_WhenTheWorkspaceHasNoUsersConfigured()  {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
@@ -153,7 +153,7 @@ public class DiagramEditorControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedDiagramEditor_ReturnsTheDiagramEditorPage_WhenTheUserHasWriteAccess()  {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addWriteUser("user1@example.com");
@@ -192,7 +192,7 @@ public class DiagramEditorControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedDiagramEditor_ReturnsAnErrorPage_WhenTheUserHasReadAccess()  {
-        enableAuthentication();
+        configureAsServerWithAuthenticationEnabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
         workspaceMetaData.addReadUser("user1@example.com");

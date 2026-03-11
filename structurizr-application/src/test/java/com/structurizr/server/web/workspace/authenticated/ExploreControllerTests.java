@@ -24,7 +24,7 @@ public class ExploreControllerTests extends ControllerTestsBase {
 
     @Test
     void showAuthenticatedExplorePage()  {
-        disableAuthentication();
+        configureAsServerWithAuthenticationDisabled();
 
         final WorkspaceMetadata workspaceMetaData = new WorkspaceMetadata(1);
 
