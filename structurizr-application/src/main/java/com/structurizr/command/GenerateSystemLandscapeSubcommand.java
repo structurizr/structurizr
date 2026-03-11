@@ -17,6 +17,8 @@ public class GenerateSystemLandscapeSubcommand extends AbstractCommand {
 
     private static final Log log = LogFactory.getLog(GenerateSystemLandscapeSubcommand.class);
 
+    private static final String DEFAULT_INCLUDE_FILTER_REGEX = ".*workspace.(json|dsl)";
+
     public GenerateSystemLandscapeSubcommand() {
         super("generate");
     }
@@ -40,7 +42,7 @@ public class GenerateSystemLandscapeSubcommand extends AbstractCommand {
         option.setRequired(false);
         options.addOption(option);
 
-        option = new Option("o", "output", true, "Filename of output workspace");
+        option = new Option("o", "output", true, "Path of output workspace");
         option.setRequired(true);
         options.addOption(option);
 
@@ -58,7 +60,7 @@ public class GenerateSystemLandscapeSubcommand extends AbstractCommand {
 
             String includeFilter = cmd.getOptionValue("include");
             if (StringUtils.isNullOrEmpty(includeFilter)) {
-                includeFilter = ".*workspace.(json|dsl)";
+                includeFilter = DEFAULT_INCLUDE_FILTER_REGEX;
             }
             log.info(" - include: " + includeFilter);
 
