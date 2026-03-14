@@ -8,6 +8,7 @@ import com.structurizr.export.plantuml.C4PlantUMLExporter;
 import com.structurizr.export.plantuml.StructurizrPlantUMLExporter;
 import com.structurizr.export.websequencediagrams.WebSequenceDiagramsExporter;
 import com.structurizr.http.HttpClient;
+import com.structurizr.util.StringUtils;
 import com.structurizr.util.WorkspaceUtils;
 import com.structurizr.view.ColorScheme;
 import com.structurizr.view.ThemeUtils;
@@ -41,6 +42,8 @@ public class ExportCommand extends AbstractCommand {
     private static final String WEBSEQUENCEDIAGRAMS_FORMAT = "websequencediagrams";
     private static final String MERMAID_FORMAT = "mermaid";
     private static final String STATIC_FORMAT = "static";
+    private static final String PNG_FORMAT = "png";
+    private static final String SVG_FORMAT = "svg";
     private static final String CUSTOM_FORMAT = "fqcn";
 
     private static final Map<String,Exporter> EXPORTERS = new HashMap<>();
@@ -74,7 +77,7 @@ public class ExportCommand extends AbstractCommand {
         Options options = new Options();
 
         Option option = new Option("w", "workspace", true, "Path or URL to the workspace JSON file/DSL file(s)");
-        option.setRequired(true);
+        option.setRequired(false);
         options.addOption(option);
 
         option = new Option("f", "format", true, String.format("Export format: %s[/%s|%s]|%s|%s|%s|%s|%s|%s", PLANTUML_FORMAT, PLANTUML_STRUCTURIZR_SUBFORMAT, PLANTUML_C4PLANTUML_SUBFORMAT, WEBSEQUENCEDIAGRAMS_FORMAT, MERMAID_FORMAT, JSON_FORMAT, THEME_FORMAT, STATIC_FORMAT, CUSTOM_FORMAT));
@@ -89,25 +92,75 @@ public class ExportCommand extends AbstractCommand {
         option.setRequired(false);
         options.addOption(option);
 
+        option = new Option("url", "url", true, "Structurizr diagram page URL (for PNG/SVG exports)");
+        option.setRequired(false);
+        options.addOption(option);
+
+        option = new Option("animation", "animation", true, "Animation: true|false");
+        option.setRequired(false);
+        options.addOption(option);
+
+        option = new Option("mode", "mode", true, "Rendering mode: light|dark (for PNG/SVG exports)");
+        option.setRequired(false);
+        options.addOption(option);
+
         CommandLineParser commandLineParser = new DefaultParser();
 
         String workspacePathAsString = null;
         File workspacePath = null;
         long workspaceId = 1;
         String format = "";
+        String mode = "";
+        String url = null;
+        boolean animation = false;
         String outputPath = null;
 
         try {
             CommandLine cmd = commandLineParser.parse(options, args);
 
             workspacePathAsString = cmd.getOptionValue("workspace");
-            format = cmd.getOptionValue("format");
+            format = cmd.getOptionValue("format").toLowerCase();
+            mode = cmd.getOptionValue("mode", "light").toLowerCase();
+            url = cmd.getOptionValue("url");
+            animation = Boolean.parseBoolean(cmd.getOptionValue("animation"));
             outputPath = cmd.getOptionValue("output");
-
         } catch (ParseException e) {
             log.error(e.getMessage());
             showHelp(options);
             System.exit(1);
+        }
+
+        if (PNG_FORMAT.equals(format) || SVG_FORMAT.equals(format)) {
+            if (StringUtils.isNullOrEmpty(url)) {
+                throw new IllegalArgumentException("The url parameter must not be null or empty");
+            }
+
+            ColorScheme colorScheme;
+            if (ColorScheme.Light.toString().equalsIgnoreCase(mode)) {
+                colorScheme = ColorScheme.Light;
+            } else if (ColorScheme.Dark.toString().equalsIgnoreCase(mode)) {
+                colorScheme = ColorScheme.Dark;
+            } else {
+                throw new IllegalArgumentException("Invalid mode " + mode + " - expected light or dark");
+            }
+
+            if ("false".equalsIgnoreCase(System.getProperty("structurizr.playwright"))) {
+                throw new UnsupportedOperationException("Exporting to PNG/SVG is not supported in this environment");
+            }
+
+            if (outputPath == null) {
+                outputPath = ".";
+            }
+
+            File outputDir = new File(outputPath);
+            outputDir.mkdirs();
+
+            new PlaywrightExporter().run(url, format, colorScheme, animation, outputDir);
+            return;
+        }
+
+        if (StringUtils.isNullOrEmpty(workspacePathAsString)) {
+            throw new IllegalArgumentException("The workspace path parameter must not be null or empty");
         }
 
         log.info("Exporting workspace from " + workspacePathAsString);
@@ -120,14 +173,14 @@ public class ExportCommand extends AbstractCommand {
             workspacePath = new File(workspacePathAsString);
         }
 
-        workspaceId = workspace.getId();
-
         if (outputPath == null) {
             outputPath = new File(workspacePath.getCanonicalPath()).getParent();
         }
-        
+
         File outputDir = new File(outputPath);
         outputDir.mkdirs();
+
+        workspaceId = workspace.getId();
 
         if (STATIC_FORMAT.equals(format)) {
             generateStaticSite(workspace, outputDir);
@@ -145,7 +198,7 @@ public class ExportCommand extends AbstractCommand {
                     // load the themes so that the styles can be applied to the diagram exports
                     ThemeUtils.loadThemes(workspace, httpClient);
 
-                    DiagramExporter diagramExporter = (DiagramExporter) exporter;
+                    DiagramExporter diagramExporter = (DiagramExporter)exporter;
 
                     if (workspace.getViews().isEmpty()) {
                         log.info(" - the workspace contains no views");
