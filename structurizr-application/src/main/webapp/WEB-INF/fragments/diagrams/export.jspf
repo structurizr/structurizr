@@ -131,24 +131,29 @@
                 $('#exportAnimation').addClass('hidden');
             }
 
-            exportDiagrams(
+            const originalView = structurizr.diagram.getCurrentViewOrFilter();
+            exportViews(
                 selectedValues,
                 {
                     format: format,
                     metadata: $('#exportMetadata').is(':checked') === true,
-                    animations: $('#exportAnimationSteps').is(':checked') === true,
+                    animation: $('#exportAnimationSteps').is(':checked') === true,
                     crop: $('#exportCrop').is(':checked') === true,
                     download: $('#exportDownload').is(':checked') === true,
                     prefix: $('#exportFilenamePrefix').val(),
                     publish: $('#exportPublish').is(':checked') === true
                 },
-                structurizr.diagram.getCurrentViewOrFilter());
+                addDiagramExportToPage,
+                function() {
+                    changeView(originalView);
+                }
+            );
         }
     }
 
-    function exportDiagrams(viewsToExport, options, originalView) {
+    function exportViews(viewsToExport, options, viewCallback, finishedCallback) {
         const format = options.format;
-        const includeDiagramAnimations = options.animations;
+        const includeDiagramAnimations = options.animation;
         const download = options.download;
         const publish = options.publish;
 
@@ -160,13 +165,13 @@
 
             changeView(viewToExport, function () {
                 if (includeDiagramAnimations === true && !structurizr.diagram.currentViewIsImage() && structurizr.diagram.currentViewHasAnimation()) {
-                    structurizr.diagram.exportCurrentDiagramKey(options, function(diagramKeyExport) {
+                    structurizr.diagram.exportCurrentDiagramKey(options, function(diagramKeyContent) {
 
                         var stepNumber = 1;
                         structurizr.diagram.startAnimation(false);
 
                         const f = function () {
-                            structurizr.diagram.exportCurrentDiagram(options, function(diagramExport) {
+                            structurizr.diagram.exportCurrentDiagram(options, function(diagramContent) {
 
                                 var paddedStepNumber = ("00" + stepNumber);
                                 paddedStepNumber = paddedStepNumber.substr(paddedStepNumber.length-3);
@@ -174,20 +179,25 @@
                                 const diagramFilename = options.prefix + viewToExport.key + colorScheme + '-' + paddedStepNumber + '.' + format;
 
                                 if (format === 'svg') {
-                                    diagramExport = 'data:image/svg+xml;base64,' + structurizr.util.btoa(diagramExport);
+                                    diagramContent = 'data:image/svg+xml;base64,' + structurizr.util.btoa(diagramContent);
                                 }
 
-                                addDiagramExportToPage(viewToExport, diagramExport, diagramFilename, undefined, undefined, download);
+                                viewCallback(
+                                    viewToExport,
+                                    { filename: diagramFilename, content: diagramContent },
+                                    undefined,
+                                    download
+                                );
 
                                 if (publish) {
-                                    publishImage(diagramFilename, diagramExport);
+                                    publishImage(diagramFilename, diagramContent);
                                 }
 
                                 structurizr.diagram.stepForwardInAnimation();
                                 stepNumber++;
 
                                 if (structurizr.diagram.animationStarted() === false) {
-                                    structurizr.diagram.exportCurrentDiagram(options, function(diagramExport) {
+                                    structurizr.diagram.exportCurrentDiagram(options, function(diagramContent) {
                                         var paddedStepNumber = ("00" + stepNumber);
                                         paddedStepNumber = paddedStepNumber.substr(paddedStepNumber.length-3);
 
@@ -195,21 +205,26 @@
                                         const diagramKeyFilename = options.prefix + viewToExport.key + colorScheme + '-key.' + format;
 
                                         if (format === 'svg') {
-                                            diagramExport = 'data:image/svg+xml;base64,' + structurizr.util.btoa(diagramExport);
-                                            if (diagramKeyExport !== undefined) {
-                                                diagramKeyExport = 'data:image/svg+xml;base64,' + structurizr.util.btoa(diagramKeyExport);
+                                            diagramContent = 'data:image/svg+xml;base64,' + structurizr.util.btoa(diagramContent);
+                                            if (diagramKeyContent !== undefined) {
+                                                diagramKeyContent = 'data:image/svg+xml;base64,' + structurizr.util.btoa(diagramKeyContent);
                                             }
                                         }
 
-                                        addDiagramExportToPage(viewToExport, diagramExport, diagramFilename, diagramKeyExport, diagramKeyFilename, download);
+                                        viewCallback(
+                                            viewToExport,
+                                            { filename: diagramFilename, content: diagramContent },
+                                            { filename: diagramKeyFilename, content: diagramKeyContent },
+                                            download
+                                        );
 
                                         if (publish) {
-                                            publishImage(diagramFilename, diagramExport);
-                                            publishImage(diagramKeyFilename, diagramKeyExport);
+                                            publishImage(diagramFilename, diagramContent);
+                                            publishImage(diagramKeyFilename, diagramKeyContent);
                                         }
 
                                         viewsToExport.splice(0, 1);
-                                        exportDiagrams(viewsToExport, options, originalView);
+                                        exportViews(viewsToExport, options, viewCallback, finishedCallback);
                                     });
                                 } else {
                                     f();
@@ -220,31 +235,36 @@
                         f();
                     });
                 } else {
-                    structurizr.diagram.exportCurrentDiagram(options, function(diagramExport) {
-                        structurizr.diagram.exportCurrentDiagramKey(options, function(diagramKeyExport) {
+                    structurizr.diagram.exportCurrentDiagram(options, function(diagramContent) {
+                        structurizr.diagram.exportCurrentDiagramKey(options, function(diagramKeyContent) {
                             const diagramFileName = options.prefix + viewToExport.key + colorScheme + '.' + format;
                             const diagramKeyFilename = options.prefix + viewToExport.key + colorScheme + '-key.' + format;
 
                             if (format === 'svg') {
-                                diagramExport = 'data:image/svg+xml;base64,' + structurizr.util.btoa(diagramExport);
-                                if (diagramKeyExport !== undefined) {
-                                    diagramKeyExport = 'data:image/svg+xml;base64,' + structurizr.util.btoa(diagramKeyExport);
+                                diagramContent = 'data:image/svg+xml;base64,' + structurizr.util.btoa(diagramContent);
+                                if (diagramKeyContent !== undefined) {
+                                    diagramKeyContent = 'data:image/svg+xml;base64,' + structurizr.util.btoa(diagramKeyContent);
                                 }
                             }
 
-                            addDiagramExportToPage(viewToExport, diagramExport, diagramFileName, diagramKeyExport, diagramKeyFilename, download);
+                            viewCallback(
+                                viewToExport,
+                                { filename: diagramFileName, content: diagramContent },
+                                { filename: diagramKeyFilename, content: diagramKeyContent },
+                                download
+                            );
 
                             if (publish) {
-                                publishImage(diagramFileName, diagramExport);
+                                publishImage(diagramFileName, diagramContent);
 
-                                if (diagramKeyExport !== undefined) {
+                                if (diagramKeyContent !== undefined) {
                                     // image view
-                                    publishImage(diagramKeyFilename, diagramKeyExport);
+                                    publishImage(diagramKeyFilename, diagramKeyContent);
                                 }
                             }
 
                             viewsToExport.splice(0, 1);
-                            exportDiagrams(viewsToExport, options, originalView);
+                            exportViews(viewsToExport, options, viewCallback, finishedCallback);
                         });
                     });
                 }
@@ -252,12 +272,12 @@
         } else {
             setTimeout(function() {
                 structurizr.diagram.onViewChanged(viewChanged);
-                changeView(originalView);
+                finishedCallback();
             }, 1000);
         }
     }
 
-    function addDiagramExportToPage(view, diagramExport, diagramFilename, diagramKeyExport, diagramKeyFilename, download) {
+    function addDiagramExportToPage(view, diagram, diagramKey, download) {
         const viewTitle = structurizr.ui.getTitleForView(view);
 
         const exportedImageElement = document.getElementById("exportedDiagrams");
@@ -271,18 +291,17 @@
         div.appendChild(title);
 
         var filename = document.createElement('div');
-        filename.appendChild(document.createTextNode(diagramFilename));
+        filename.appendChild(document.createTextNode(diagram.filename));
         filename.style = "font-size: 8px; margin-bottom: 10px";
 
         var link = document.createElement("a");
-        link.download = diagramFilename;
-
         const img = document.createElement('img');
-        img.className = "img-thumbnail img-" + diagramFilename.substring(diagramFilename.lastIndexOf('.')+1);
+        img.className = "img-thumbnail img-" + diagram.filename.substring(diagram.filename.lastIndexOf('.')+1);
         img.style = "display: block; margin: 0 auto 5px auto; width: 200px;";
 
-        img.src = diagramExport;
-        link.href = URL.createObjectURL(structurizr.util.dataURIToBlob(diagramExport));
+        link.download = diagram.filename;
+        img.src = diagram.content;
+        link.href = URL.createObjectURL(structurizr.util.dataURIToBlob(diagram.content));
 
         link.appendChild(img);
         div.appendChild(link);
@@ -292,22 +311,23 @@
             link.click();
         }
 
-        if (diagramKeyExport !== undefined) {
+        if (diagramKey !== undefined && diagramKey.content !== undefined) {
             var imgKey = document.createElement('img');
             imgKey.className = "img-thumbnail";
             imgKey.style = "display: block; margin: 0 auto 5px auto; width: 200px;";
+
             var linkKey = document.createElement("a");
             linkKey.appendChild(imgKey);
             div.appendChild(linkKey);
 
             filename = document.createElement('div');
-            filename.appendChild(document.createTextNode(diagramKeyFilename));
+            filename.appendChild(document.createTextNode(diagramKey.filename));
             filename.style = "font-size: 8px; margin-bottom: 10px";
             div.appendChild(filename);
 
-            imgKey.src = diagramKeyExport;
-            linkKey.download = diagramKeyFilename;
-            linkKey.href = URL.createObjectURL(structurizr.util.dataURIToBlob(diagramKeyExport));
+            linkKey.download = diagramKey.filename;
+            imgKey.src = diagramKey.content;
+            linkKey.href = URL.createObjectURL(structurizr.util.dataURIToBlob(diagramKey.content));
 
             if (download) {
                 linkKey.click();
