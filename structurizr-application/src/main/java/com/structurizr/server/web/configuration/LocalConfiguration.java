@@ -1,5 +1,6 @@
 package com.structurizr.server.web.configuration;
 
+import com.structurizr.configuration.Configuration;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -52,12 +53,16 @@ class LocalConfiguration {
             @Override
             public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
                 HttpServletRequest request = (HttpServletRequest)servletRequest;
+                String protocol = request.getScheme();
                 String serverName = request.getServerName();
+                int port = request.getServerPort();
 
                 if (!PERMITTED_LOCAL_SERVER_NAMES.contains(serverName)) {
                     throw new RuntimeException("Local mode is only designed to run via localhost URLs (actual URL was " + serverName + ")");
                 }
 
+                Configuration.getInstance().setWebUrl(protocol + "://" + serverName + ":" + port);
+                
                 filterChain.doFilter(servletRequest, servletResponse);
             }
         });
