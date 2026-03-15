@@ -2,14 +2,24 @@ package com.structurizr.server.component.workspace;
 
 import org.junit.jupiter.api.Test;
 
+import java.text.DecimalFormat;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WorkspaceTooLargeExceptionTests {
 
     @Test
     void message() {
-        Exception exception = new WorkspaceTooLargeException(1234, (long)(2.01 * 1024 * 1024), (long)(2.00 * 1024 * 1024));
-        assertEquals("Workspace 1234 is 2.010 MB, which exceeds the maximum size of 2.000 MB", exception.getMessage());
+        double size = 2.01;
+        double max = 2.00;
+        Exception exception = new WorkspaceTooLargeException(1234, (long)(size * 1024 * 1024), (long)(max * 1024 * 1024));
+        assertEquals(
+                String.format(
+                        "Workspace 1234 is %s MB, which exceeds the maximum size of %s MB",
+                        new DecimalFormat("#0.000").format(size),
+                        new DecimalFormat("#0.000").format(max)
+                ),
+                exception.getMessage());
     }
 
 }
