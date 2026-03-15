@@ -3,7 +3,7 @@ package com.structurizr.server.web.home;
 import com.structurizr.configuration.StructurizrProperties;
 import com.structurizr.server.domain.User;
 import com.structurizr.server.domain.WorkspaceMetadata;
-import com.structurizr.server.web.ControllerTestsBase;
+import com.structurizr.server.web.AbstractTestsBase;
 import com.structurizr.server.web.MockWorkspaceComponent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ import java.util.Properties;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ServerHomeControllerTests extends ControllerTestsBase {
+public class ServerHomeControllerTests extends AbstractTestsBase {
 
     private ServerHomeController controller;
     private ModelMap model;

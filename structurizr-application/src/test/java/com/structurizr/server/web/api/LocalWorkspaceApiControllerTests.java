@@ -4,7 +4,7 @@ import com.structurizr.Workspace;
 import com.structurizr.api.HttpHeaders;
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
 import com.structurizr.server.domain.WorkspaceMetadata;
-import com.structurizr.server.web.ControllerTestsBase;
+import com.structurizr.server.web.AbstractTestsBase;
 import com.structurizr.server.web.MockHttpServletRequest;
 import com.structurizr.server.web.MockHttpServletResponse;
 import com.structurizr.server.web.MockWorkspaceComponent;
@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class LocalWorkspaceApiControllerTests extends ControllerTestsBase {
+public class LocalWorkspaceApiControllerTests extends AbstractTestsBase {
 
     private LocalWorkspaceApiController controller;
     private final MockHttpServletRequest request = new MockHttpServletRequest();

@@ -4,7 +4,7 @@ import com.structurizr.Workspace;
 import com.structurizr.dsl.DslUtils;
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
 import com.structurizr.server.domain.WorkspaceMetadata;
-import com.structurizr.server.web.ControllerTestsBase;
+import com.structurizr.server.web.AbstractTestsBase;
 import com.structurizr.server.web.MockHttpServletResponse;
 import com.structurizr.server.web.MockWorkspaceComponent;
 import com.structurizr.util.WorkspaceUtils;
@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class DslControllerTests extends ControllerTestsBase {
+public class DslControllerTests extends AbstractTestsBase {
 
     private DslController controller;
     private MockHttpServletResponse response;

@@ -8,7 +8,7 @@ import com.structurizr.server.component.workspace.WorkspaceBranch;
 import com.structurizr.server.component.workspace.WorkspaceComponentException;
 import com.structurizr.server.component.workspace.WorkspaceVersion;
 import com.structurizr.server.domain.WorkspaceMetadata;
-import com.structurizr.server.web.ControllerTestsBase;
+import com.structurizr.server.web.AbstractTestsBase;
 import com.structurizr.server.web.MockWorkspaceComponent;
 import com.structurizr.util.DateUtils;
 import com.structurizr.util.ImageUtils;
@@ -26,7 +26,7 @@ import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ServerWorkspaceApiControllerAuthenticationEnabledTests extends ControllerTestsBase {
+public class ServerWorkspaceApiControllerAuthenticationEnabledTests extends AbstractTestsBase {
 
     private ServerWorkspaceApiController controller;
     private WorkspaceMetadata workspaceMetadata;
