@@ -169,10 +169,12 @@ public class ServerWorkspaceApiController extends AbstractWorkspaceApiController
         if (workspaceMetadata.isLockedBy(user, agent)) {
             if (workspaceComponent.unlockWorkspace(workspaceId)) {
                 return new ApiResponse("OK");
+            } else {
+                return new ApiResponse(false, "Could not unlock workspace");
             }
+        } else {
+            return new ApiResponse(false, "Workspace is not locked by " + user);
         }
-
-        return new ApiResponse(false, "Could not unlock workspace");
     }
 
     @RequestMapping(value = "/api/workspace/{workspaceId}/images/{filename:.+}", method = RequestMethod.PUT, consumes = "text/plain", produces = "application/json; charset=UTF-8")

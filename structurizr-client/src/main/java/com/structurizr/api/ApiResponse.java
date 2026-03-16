@@ -3,6 +3,8 @@ package com.structurizr.api;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.IOException;
+
 /**
  * Represents a response returned by the Structurizr API.
  */
@@ -39,7 +41,7 @@ final class ApiResponse {
         this.revision = revision;
     }
 
-    static ApiResponse parse(String json) throws Exception {
+    static ApiResponse parse(String json) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

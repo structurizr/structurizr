@@ -168,14 +168,13 @@ public class WorkspaceApiClient extends AbstractApiClient {
             checkResponseIsJson(result.getContent());
             ApiResponse apiResponse = ApiResponse.parse(result.getContent());
 
-            if (result.isSuccess()) {
-                return apiResponse.isSuccess();
+            if (result.isSuccess() && apiResponse.isSuccess()) {
+                return true;
             } else {
                 throw new StructurizrClientException(apiResponse.getMessage());
             }
-        } catch (Exception e) {
-            log.error(e);
-            throw new StructurizrClientException(e);
+        } catch (IOException ioe) {
+            throw new StructurizrClientException(ioe.getMessage());
         }
     }
 

@@ -256,7 +256,7 @@ public class ServerWorkspaceApiControllerAuthenticationDisabledTests extends Abs
 
         ApiResponse apiResponse = controller.unlockWorkspace(1, "user2@example.com", "agent", "");
 
-        assertEquals("Could not unlock workspace", apiResponse.getMessage());
+        assertEquals("Workspace is not locked by user2@example.com", apiResponse.getMessage());
         assertTrue(workspaceMetaData.isLockedBy("user1@example.com", "agent"));
     }
 
