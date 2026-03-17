@@ -2,6 +2,14 @@
 
 ## unreleased
 
+### local
+
+- Fixes https://github.com/structurizr/structurizr/issues/51 (window.location.hash not scrolled to on refresh).
+
+### server
+
+- Fixes https://github.com/structurizr/structurizr/issues/51 (window.location.hash not scrolled to on refresh).
+
 ### pull
 
 - Don't create archive versions of workspace.

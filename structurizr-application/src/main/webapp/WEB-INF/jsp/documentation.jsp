@@ -178,6 +178,10 @@
         structurizr.ui.applyWorkspaceLogo();
         resize();
         progressMessage.hide();
+
+        if (window.location.hash !== undefined) {
+            scrollToHash();
+        }
     }
 
     function initDocumentationScopeAndSections() {
@@ -266,7 +270,7 @@
             hash = hash.substring(1);
             const anchor = $('a[name="' + hash + '"]');
             if (anchor && anchor.length > 0) {
-                anchor[0].scrollIntoView(true);
+                anchor[0].scrollIntoView({ behavior: 'instant' });
             }
         } else {
             $('#documentationScopeName')[0].scrollIntoView(false);
@@ -339,10 +343,6 @@
             structurizr.ui.setRenderingMode(structurizr.ui.RENDERING_MODE_SYSTEM);
             setDarkModeOnEmbeddedDiagrams();
         });
-
-        if (window.location.hash !== undefined) {
-            scrollToHash();
-        }
 
         $("#documentationContent a").each(function() {
             const a = $(this);
