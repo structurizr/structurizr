@@ -11,6 +11,8 @@ structurizr.ui.ContentRenderer = function(workspace, host, urlPrefix, branch, sa
         html: !safeMode
     });
 
+    md.use(window.markdownitFootnote);
+
     md.renderer.rules.image = function(tokens, idx, options, env, self) {
         var token = tokens[idx];
         var srcIndex = token.attrIndex('src');

@@ -5,10 +5,12 @@
 ### local
 
 - Fixes https://github.com/structurizr/structurizr/issues/51 (window.location.hash not scrolled to on refresh).
+- Adds support for Markdown footnotes (https://github.com/structurizr/structurizr/issues/38).
 
 ### server
 
 - Fixes https://github.com/structurizr/structurizr/issues/51 (window.location.hash not scrolled to on refresh).
+- Adds support for Markdown footnotes (https://github.com/structurizr/structurizr/issues/38).
 
 ### pull
 

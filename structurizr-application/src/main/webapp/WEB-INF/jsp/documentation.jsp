@@ -128,10 +128,6 @@
             initDocumentationScopeAndSections();
             show();
 
-            window.onhashchange = function() {
-                scrollToHash();
-            };
-
             document.addEventListener("keydown", changeDocumentation);
 
             $('#documentationPanel').scroll(function() {
