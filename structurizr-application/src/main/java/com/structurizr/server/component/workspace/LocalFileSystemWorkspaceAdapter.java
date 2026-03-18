@@ -262,7 +262,7 @@ abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspa
 
     @Override
     protected File getPathToWorkspaceImages(long workspaceId, String branch) {
-        File path = new File(new File(Configuration.getInstance().getWorkDirectory(), "" + workspaceId), IMAGES_DIRECTORY_NAME);
+        File path = new File(getDataDirectory(workspaceId), IMAGES_DIRECTORY_NAME);
         if (!path.exists()) {
             try {
                 Files.createDirectories(path.toPath());
