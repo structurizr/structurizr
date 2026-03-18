@@ -52,6 +52,7 @@ public class DiagramEditorController extends AbstractWorkspaceController {
         }
 
         model.addAttribute("publishThumbnails", StringUtils.isNullOrEmpty(version));
+        model.addAttribute("publishImages", false);
         model.addAttribute("createReviews", true);
         model.addAttribute("quickNavigationPath", "diagram-editor");
 

@@ -68,6 +68,7 @@ abstract class AbstractEmbedController extends AbstractWorkspaceController {
         model.addAttribute("embed", true);
         model.addAttribute("health", health);
         model.addAttribute("publishThumbnails", false);
+        model.addAttribute("publishImages", false);
 
         return Views.DIAGRAMS;
     }

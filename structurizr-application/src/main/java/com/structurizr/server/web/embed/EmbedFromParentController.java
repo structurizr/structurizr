@@ -60,9 +60,11 @@ EmbedFromParentController extends AbstractWorkspaceController {
             }
 
             if (!StringUtils.isNullOrEmpty(urlPrefix) && urlPrefix.startsWith("/workspace")) {
-                model.addAttribute("publishThumbnails", StringUtils.isNullOrEmpty(branch) && StringUtils.isNullOrEmpty(version));
+                model.addAttribute("publishThumbnails", StringUtils.isNullOrEmpty(version));
+                model.addAttribute("publishImages", false);
             } else {
                 model.addAttribute("publishThumbnails", false);
+                model.addAttribute("publishImages", false);
             }
 
             model.addAttribute("showToolbar", editable);

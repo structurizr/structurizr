@@ -49,6 +49,8 @@ public class DiagramViewerControllerTests extends AbstractTestsBase {
         assertEquals("/workspace/1", model.getAttribute("urlPrefix"));
         assertEquals("/workspace/1/images/", model.getAttribute("thumbnailUrl"));
         assertEquals(true, model.getAttribute("includeEditButton"));
+        assertEquals(false, model.get("publishThumbnails"));
+        assertEquals(true, model.get("publishImages"));
     }
 
     @Test
@@ -76,6 +78,8 @@ public class DiagramViewerControllerTests extends AbstractTestsBase {
         assertEquals("/workspace/1", model.getAttribute("urlPrefix"));
         assertEquals("/workspace/1/images/", model.getAttribute("thumbnailUrl"));
         assertEquals(true, model.getAttribute("includeEditButton"));
+        assertEquals(false, model.get("publishThumbnails"));
+        assertEquals(true, model.get("publishImages"));
     }
 
     @Test
@@ -105,6 +109,8 @@ public class DiagramViewerControllerTests extends AbstractTestsBase {
         assertEquals("/workspace/1", model.getAttribute("urlPrefix"));
         assertEquals("/workspace/1/images/", model.getAttribute("thumbnailUrl"));
         assertEquals(true, model.getAttribute("includeEditButton"));
+        assertEquals(false, model.get("publishThumbnails"));
+        assertEquals(true, model.get("publishImages"));
     }
 
     @Test
@@ -134,6 +140,8 @@ public class DiagramViewerControllerTests extends AbstractTestsBase {
         assertEquals("/workspace/1", model.getAttribute("urlPrefix"));
         assertEquals("/workspace/1/images/", model.getAttribute("thumbnailUrl"));
         assertEquals(false, model.getAttribute("includeEditButton"));
+        assertEquals(false, model.get("publishThumbnails"));
+        assertEquals(true, model.get("publishImages"));
     }
 
     @Test
@@ -168,6 +176,9 @@ public class DiagramViewerControllerTests extends AbstractTestsBase {
 
         assertEquals(12345, model.getAttribute("autoRefreshInterval"));
         assertEquals(1234567890L, model.getAttribute("autoRefreshLastModifiedDate"));
+
+        assertEquals(false, model.get("publishThumbnails"));
+        assertEquals(false, model.get("publishImages"));
     }
 
     @Test
@@ -204,6 +215,9 @@ public class DiagramViewerControllerTests extends AbstractTestsBase {
 
         assertEquals(12345, model.getAttribute("autoRefreshInterval"));
         assertEquals(1234567890L, model.getAttribute("autoRefreshLastModifiedDate"));
+
+        assertEquals(false, model.get("publishThumbnails"));
+        assertEquals(false, model.get("publishImages"));
     }
 
 }

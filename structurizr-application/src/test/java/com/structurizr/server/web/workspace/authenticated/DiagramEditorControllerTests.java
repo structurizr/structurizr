@@ -112,6 +112,8 @@ public class DiagramEditorControllerTests extends AbstractTestsBase {
         assertEquals("1234567890", workspaceMetaData.getLockedUser());
         assertTrue(workspaceMetaData.getLockedAgent().startsWith("structurizr/diagrams/"));
         assertEquals(true, model.getAttribute("retainWorkspaceLock"));
+        assertEquals(false, model.get("publishThumbnails"));
+        assertEquals(false, model.get("publishImages"));
     }
 
     @Test
@@ -149,6 +151,8 @@ public class DiagramEditorControllerTests extends AbstractTestsBase {
         assertEquals("user@example.com", workspaceMetaData.getLockedUser());
         assertTrue(workspaceMetaData.getLockedAgent().startsWith("structurizr/diagrams/"));
         assertEquals(true, model.getAttribute("retainWorkspaceLock"));
+        assertEquals(false, model.get("publishThumbnails"));
+        assertEquals(false, model.get("publishImages"));
     }
 
     @Test
@@ -188,6 +192,8 @@ public class DiagramEditorControllerTests extends AbstractTestsBase {
         assertEquals("user1@example.com", workspaceMetaData.getLockedUser());
         assertTrue(workspaceMetaData.getLockedAgent().startsWith("structurizr/diagrams/"));
         assertEquals(true, model.getAttribute("retainWorkspaceLock"));
+        assertEquals(false, model.get("publishThumbnails"));
+        assertEquals(false, model.get("publishImages"));
     }
 
     @Test

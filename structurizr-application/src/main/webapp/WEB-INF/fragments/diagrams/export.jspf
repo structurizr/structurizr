@@ -30,7 +30,7 @@
                         Download
                     </label>
 
-                    <c:if test="${embed ne true && fn:startsWith(urlPrefix, '/workspace') && not workspace.clientEncrypted && structurizrConfiguration.profile eq 'Server'}">
+                    <c:if test="${publishImages}">
                     <label style="margin-right: 20px">
                         <input type="checkbox" id="exportPublish" checked="checked" class="form-check-input" />
                         Publish
@@ -155,7 +155,7 @@
         const format = options.format;
         const includeDiagramAnimations = options.animation;
         const download = options.download;
-        const publish = options.publish;
+        const publish = options.publish && ${publishImages};
 
         const colorScheme = structurizr.ui.isDarkMode() ? '-dark' : '';
         structurizr.diagram.onViewChanged(undefined);

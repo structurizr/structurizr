@@ -14,6 +14,7 @@ import org.springframework.ui.ModelMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class EmbedControllerTests extends AbstractTestsBase {
 
@@ -152,6 +153,8 @@ public class EmbedControllerTests extends AbstractTestsBase {
         assertEquals("diagrams", view);
         assertEquals("/share/1", model.get("urlPrefix"));
         assertEquals("?branch=branch1", model.get("urlSuffix"));
+        assertEquals(false, model.get("publishThumbnails"));
+        assertEquals(false, model.get("publishImages"));
     }
 
     @Test
@@ -175,6 +178,8 @@ public class EmbedControllerTests extends AbstractTestsBase {
         assertEquals("diagrams", view);
         assertEquals("/workspace/1", model.get("urlPrefix"));
         assertEquals("", model.get("urlSuffix"));
+        assertEquals(false, model.get("publishThumbnails"));
+        assertEquals(false, model.get("publishImages"));
     }
 
 }
