@@ -531,8 +531,6 @@
         $('#documentationPanel').css('height', contentHeight + 'px');
         documentationNavigationPanel.css('height', contentHeight + 'px');
 
-        $('.img-thumbnail').css('max-height', 0.8 * contentHeight);
-
         if (graph !== undefined && $('#graphContent').is(':visible')) {
             resizeGraph();
         }
