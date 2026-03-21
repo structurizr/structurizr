@@ -131,8 +131,12 @@ public class ExportCommand extends AbstractCommand {
         }
 
         if (PNG_FORMAT.equals(format) || SVG_FORMAT.equals(format)) {
-            if (StringUtils.isNullOrEmpty(url)) {
-                throw new IllegalArgumentException("The url parameter must not be null or empty");
+            if ("false".equalsIgnoreCase(System.getProperty("structurizr.playwright"))) {
+                throw new UnsupportedOperationException("Exporting to PNG/SVG is not supported in this environment");
+            }
+
+            if (StringUtils.isNullOrEmpty(workspacePathAsString) && StringUtils.isNullOrEmpty(url)) {
+                throw new IllegalArgumentException("One of url or workspace must be provided");
             }
 
             ColorScheme colorScheme;
@@ -144,10 +148,6 @@ public class ExportCommand extends AbstractCommand {
                 throw new IllegalArgumentException("Invalid mode " + mode + " - expected light or dark");
             }
 
-            if ("false".equalsIgnoreCase(System.getProperty("structurizr.playwright"))) {
-                throw new UnsupportedOperationException("Exporting to PNG/SVG is not supported in this environment");
-            }
-
             if (outputPath == null) {
                 outputPath = ".";
             }
@@ -155,8 +155,23 @@ public class ExportCommand extends AbstractCommand {
             File outputDir = new File(outputPath);
             outputDir.mkdirs();
 
-            new PlaywrightExporter().run(url, format, colorScheme, animation, outputDir);
-            return;
+            if (!StringUtils.isNullOrEmpty(workspacePathAsString)) {
+                try {
+                    Workspace workspace = loadWorkspace(workspacePathAsString);
+                    File tempDir = Files.createTempDirectory("structurizr").toFile();
+                    tempDir.deleteOnExit();
+
+                    new StaticSiteExporter().run(workspace, tempDir);
+                    new PlaywrightExporter().run("file://" + new File(tempDir, "index.html").getAbsolutePath(), format, colorScheme, animation, outputDir);
+                    return;
+                } catch (Exception e) {
+                    log.error(e.getMessage());
+                    System.exit(1);
+                }
+            } else {
+                new PlaywrightExporter().run(url, format, colorScheme, animation, outputDir);
+                return;
+            }
         }
 
         if (StringUtils.isNullOrEmpty(workspacePathAsString)) {
@@ -183,7 +198,7 @@ public class ExportCommand extends AbstractCommand {
         workspaceId = workspace.getId();
 
         if (STATIC_FORMAT.equals(format)) {
-            generateStaticSite(workspace, outputDir);
+            new StaticSiteExporter().run(workspace, outputDir);
         } else {
             Exporter exporter = findExporter(format, workspacePath);
             if (exporter == null) {
@@ -245,65 +260,6 @@ public class ExportCommand extends AbstractCommand {
         log.info(" - finished");
     }
 
-    private void generateStaticSite(Workspace workspace, File outputDir) throws Exception {
-        ThemeUtils.inlineStylesUsedFromInstalledThemes(workspace);
-
-        log.info(" - writing static site to " + outputDir.getAbsolutePath());
-        writeStaticFile("static.html", outputDir, "index.html");
-
-        writeStaticFile("js/jquery-3.7.1.min.js", outputDir);
-        writeStaticFile("js/bootstrap-5.3.7.min.js", outputDir);
-        writeStaticFile("js/jointjs-Core-4.1.3.js", outputDir);
-        writeStaticFile("js/jointjs-DirectedGraph-4.1.3.min.js", outputDir);
-        writeStaticFile("js/dagre-1.1.8.js", outputDir);
-        writeStaticFile("js/graphlib-2.2.4.min.js", outputDir);
-        writeStaticFile("js/jointjs-DirectedGraph-4.1.3.min.js", outputDir);
-        writeStaticFile("js/structurizr.js", outputDir);
-        writeStaticFile("js/structurizr-util.js", outputDir);
-        writeStaticFile("js/structurizr-ui.js", outputDir);
-        writeStaticFile("js/structurizr-workspace.js", outputDir);
-        writeStaticFile("js/structurizr-diagram.js", outputDir);
-        writeStaticFile("js/structurizr-quick-navigation.js", outputDir);
-        writeStaticFile("js/structurizr-navigation.js", outputDir);
-        writeStaticFile("js/structurizr-tooltip.js", outputDir);
-        writeStaticFile("js/structurizr-embed.js", outputDir);
-
-        writeStaticFile("css/bootstrap-5.3.7.min.css", outputDir);
-        writeStaticFile("css/structurizr.css", outputDir);
-        writeStaticFile("css/structurizr-static.css", outputDir);
-        writeStaticFile("css/structurizr-static-dark.css", outputDir);
-
-        writeStaticFile("img/favicon.png", outputDir);
-        writeStaticFile("img/structurizr-banner-light.png", outputDir);
-        writeStaticFile("img/structurizr-banner-dark.png", outputDir);
-
-        // clear all documentation - this isn't supported by the static site
-        workspace.getDocumentation().clear();
-        workspace.getModel().getElements().stream().filter(e -> e instanceof Documentable).map(e -> (Documentable)e).forEach(e -> e.getDocumentation().clear());
-
-        String json = WorkspaceUtils.toJson(workspace, false);
-        String base64 = Base64.getEncoder().encodeToString(json.getBytes(StandardCharsets.UTF_8));
-
-        writeToFile(
-                new File(outputDir, "workspace.js"),
-                String.format("const jsonAsString = '%s';", base64)
-        );
-    }
-
-    private void writeStaticFile(String filename, File outputDir) throws IOException {
-        writeStaticFile(filename, outputDir, filename);
-    }
-
-    private void writeStaticFile(String filename, File outputDir, String outputFilename) throws IOException {
-        InputStream in = getClass().getResourceAsStream("/static/static/" + filename);
-        if (in != null) {
-            File outputFile = new File(outputDir, outputFilename);
-            outputFile.mkdirs();
-            Files.copy(in, outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        } else {
-            log.error(String.format("Unable to find static file: %s", filename));
-        }
-    }
 
     private Exporter findExporter(String format, File workspacePath) {
         if (EXPORTERS.containsKey(format.toLowerCase())) {

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="./js/jquery-3.7.1.min.js"></script>
-    <script src="./js/bootstrap-5.3.7.min.js"></script>
+    <script type="text/javascript" src="./js/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="./js/bootstrap-5.3.7.min.js"></script>
+    <script type="text/javascript" src="./js/crypto-js-4.1.1.min.js"></script>
     <script type="text/javascript" src="./js/jointjs-Core-4.1.3.js"></script>
     <script type="text/javascript" src="./js/dagre-1.1.8.js"></script>
     <script type="text/javascript" src="./js/graphlib-2.2.4.min.js"></script>
@@ -183,6 +184,61 @@
         structurizr.diagram.onRelationshipDoubleClicked(relationshipDoubleClicked);
         structurizr.diagram.setTooltip(tooltip);
         structurizr.diagram.onViewChanged(viewChanged);
+
+        structurizr.scripting = new function() {
+
+            this.isDiagramRendered = function() {
+                return structurizr.diagram.isRendered();
+            };
+
+            this.exportViews = function(views, options, viewCallback, finishedCallback) {
+                structurizr.diagram.exportViews(views, options, viewCallback, finishedCallback);
+            };
+
+            this.getViews = function() {
+                const views = [];
+
+                structurizr.workspace.getViews().forEach(function(view) {
+                    views.push(
+                        {
+                            key: view.key,
+                            name: structurizr.ui.getTitleForView(view),
+                            description: view.description ? view.description : '',
+                            type: view.type
+                        }
+                    )
+                });
+
+                return views;
+            };
+
+            this.getViewKey = function() {
+                return structurizr.diagram.getCurrentViewOrFilter().key;
+            };
+
+            this.getView = function() {
+                return structurizr.diagram.getCurrentViewOrFilter();
+            }
+
+            this.changeView = function(viewKey, callback) {
+                const view = structurizr.workspace.findViewByKey(viewKey);
+                if (view) {
+                    changeView(view, callback);
+                } else {
+                    throw 'A view with the key "' + viewKey + '" could not be found.';
+                }
+            };
+
+            this.setDarkMode = function(bool) {
+                if (bool) {
+                    structurizr.ui.setRenderingMode(structurizr.ui.RENDERING_MODE_DARK);
+                    structurizr.diagram.setDarkMode(true);
+                } else {
+                    structurizr.ui.setRenderingMode(structurizr.ui.RENDERING_MODE_LIGHT);
+                    structurizr.diagram.setDarkMode(false);
+                }
+            };
+        };
 
         const perspective = getParameter('perspective');
         if (perspective) {
@@ -605,4 +661,5 @@
             });
         }
     }
+
 </script>

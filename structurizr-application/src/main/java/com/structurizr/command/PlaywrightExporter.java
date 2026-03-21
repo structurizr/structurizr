@@ -13,9 +13,9 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 
-public class PlaywrightExporter {
+class PlaywrightExporter {
 
-    public void run(String url, String format, ColorScheme colorScheme, boolean animation, File outputDir) {
+    void run(String url, String format, ColorScheme colorScheme, boolean animation, File outputDir) {
         List<Diagram> diagrams = new ArrayList<>();
 
         try (Playwright playwright = Playwright.create()) {

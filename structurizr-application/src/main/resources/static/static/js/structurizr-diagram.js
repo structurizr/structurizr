@@ -5361,6 +5361,109 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         }
     };
 
+    this.exportViews = function(viewsToExport, options, viewCallback, finishedCallback) {
+        const format = options.format;
+        const includeDiagramAnimations = options.animation;
+
+        const colorScheme = structurizr.ui.isDarkMode() ? '-dark' : '';
+        structurizr.diagram.onViewChanged(undefined);
+
+        if (viewsToExport && viewsToExport.length > 0) {
+            const viewToExport = structurizr.workspace.findViewByKey(viewsToExport[0]);
+
+            structurizr.diagram.changeView(viewToExport.key, function () {
+                if (includeDiagramAnimations === true && !structurizr.diagram.currentViewIsImage() && structurizr.diagram.currentViewHasAnimation()) {
+                    structurizr.diagram.exportCurrentDiagramKey(options, function(diagramKeyContent) {
+
+                        var stepNumber = 1;
+                        structurizr.diagram.startAnimation(false);
+
+                        const f = function () {
+                            structurizr.diagram.exportCurrentDiagram(options, function(diagramContent) {
+
+                                var paddedStepNumber = ("00" + stepNumber);
+                                paddedStepNumber = paddedStepNumber.substr(paddedStepNumber.length-3);
+
+                                const diagramFilename = options.prefix + viewToExport.key + colorScheme + '-' + paddedStepNumber + '.' + format;
+
+                                if (format === 'svg') {
+                                    diagramContent = 'data:image/svg+xml;base64,' + structurizr.util.btoa(diagramContent);
+                                }
+
+                                viewCallback(
+                                    viewToExport,
+                                    { filename: diagramFilename, content: diagramContent },
+                                    undefined
+                                );
+
+                                structurizr.diagram.stepForwardInAnimation();
+                                stepNumber++;
+
+                                if (structurizr.diagram.animationStarted() === false) {
+                                    structurizr.diagram.exportCurrentDiagram(options, function(diagramContent) {
+                                        var paddedStepNumber = ("00" + stepNumber);
+                                        paddedStepNumber = paddedStepNumber.substr(paddedStepNumber.length-3);
+
+                                        const diagramFilename = options.prefix + viewToExport.key + colorScheme + '-' + paddedStepNumber + '.' + format;
+                                        const diagramKeyFilename = options.prefix + viewToExport.key + colorScheme + '-key.' + format;
+
+                                        if (format === 'svg') {
+                                            diagramContent = 'data:image/svg+xml;base64,' + structurizr.util.btoa(diagramContent);
+                                            if (diagramKeyContent !== undefined) {
+                                                diagramKeyContent = 'data:image/svg+xml;base64,' + structurizr.util.btoa(diagramKeyContent);
+                                            }
+                                        }
+
+                                        viewCallback(
+                                            viewToExport,
+                                            { filename: diagramFilename, content: diagramContent },
+                                            { filename: diagramKeyFilename, content: diagramKeyContent }
+                                        );
+
+                                        viewsToExport.splice(0, 1);
+                                        structurizr.diagram.exportViews(viewsToExport, options, viewCallback, finishedCallback);
+                                    });
+                                } else {
+                                    f();
+                                }
+                            });
+                        }
+
+                        f();
+                    });
+                } else {
+                    structurizr.diagram.exportCurrentDiagram(options, function(diagramContent) {
+                        structurizr.diagram.exportCurrentDiagramKey(options, function(diagramKeyContent) {
+                            const diagramFileName = options.prefix + viewToExport.key + colorScheme + '.' + format;
+                            const diagramKeyFilename = options.prefix + viewToExport.key + colorScheme + '-key.' + format;
+
+                            if (format === 'svg') {
+                                diagramContent = 'data:image/svg+xml;base64,' + structurizr.util.btoa(diagramContent);
+                                if (diagramKeyContent !== undefined) {
+                                    diagramKeyContent = 'data:image/svg+xml;base64,' + structurizr.util.btoa(diagramKeyContent);
+                                }
+                            }
+
+                            viewCallback(
+                                viewToExport,
+                                { filename: diagramFileName, content: diagramContent },
+                                { filename: diagramKeyFilename, content: diagramKeyContent }
+                            );
+
+                            viewsToExport.splice(0, 1);
+                            structurizr.diagram.exportViews(viewsToExport, options, viewCallback, finishedCallback);
+                        });
+                    });
+                }
+            });
+        } else {
+            setTimeout(function() {
+                structurizr.diagram.onViewChanged(viewChanged);
+                finishedCallback();
+            }, 1000);
+        }
+    };
+
     this.currentViewIsDynamic = function() {
         return currentView.type === structurizr.constants.DYNAMIC_VIEW_TYPE;
     };

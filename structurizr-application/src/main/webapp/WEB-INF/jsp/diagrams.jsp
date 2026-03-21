@@ -239,6 +239,7 @@
         structurizr.diagram.onViewChanged(viewChanged);
         structurizr.diagram.onAnimationStarted(animationStarted);
         structurizr.diagram.onAnimationStopped(animationStopped);
+
         structurizr.scripting = new function() {
 
             this.isDiagramRendered = function() {
@@ -286,7 +287,7 @@
             };
 
             this.exportViews = function(views, options, viewCallback, finishedCallback) {
-                exportViews(views, options, viewCallback, finishedCallback);
+                structurizr.diagram.exportViews(views, options, viewCallback, finishedCallback);
             };
 
             this.getViews = function() {
