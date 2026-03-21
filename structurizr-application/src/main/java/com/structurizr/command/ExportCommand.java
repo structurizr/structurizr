@@ -202,9 +202,9 @@ public class ExportCommand extends AbstractCommand {
         } else {
             Exporter exporter = findExporter(format, workspacePath);
             if (exporter == null) {
-                log.info(" - unknown export format: " + format);
+                log.info("Unknown export format: " + format);
             } else {
-                log.info(" - exporting with " + exporter.getClass().getSimpleName());
+                log.info("Exporting with " + exporter.getClass().getSimpleName());
 
                 if (exporter instanceof DiagramExporter) {
                     HttpClient httpClient = new HttpClient();
@@ -216,7 +216,7 @@ public class ExportCommand extends AbstractCommand {
                     DiagramExporter diagramExporter = (DiagramExporter)exporter;
 
                     if (workspace.getViews().isEmpty()) {
-                        log.info(" - the workspace contains no views");
+                        log.error("The workspace contains no views");
                     } else {
                         Collection<Diagram> diagrams = diagramExporter.export(workspace);
 
@@ -257,7 +257,7 @@ public class ExportCommand extends AbstractCommand {
             }
         }
 
-        log.info(" - finished");
+        log.info("Finished");
     }
 
 
@@ -272,9 +272,9 @@ public class ExportCommand extends AbstractCommand {
                 return (Exporter) clazz.getDeclaredConstructor().newInstance();
             }
         } catch (ClassNotFoundException e) {
-            log.error(" - unknown export format: " + format);
+            log.error("Unknown export format: " + format);
         } catch (Exception e) {
-            log.error(" - error creating instance of " + format, e);
+            log.error("Error creating instance of " + format, e);
         }
 
         return null;
@@ -289,7 +289,7 @@ public class ExportCommand extends AbstractCommand {
     }
 
     private void writeToFile(File file, String content) throws Exception {
-        log.info(" - writing " + file.getCanonicalPath());
+        log.info("Writing " + file.getCanonicalPath());
 
         BufferedWriter writer = Files.newBufferedWriter(file.toPath(), StandardCharsets.UTF_8);
         writer.write(content);

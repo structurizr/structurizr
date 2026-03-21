@@ -23,7 +23,7 @@ class StaticSiteExporter {
     void run(Workspace workspace, File outputDir) throws Exception {
         ThemeUtils.inlineStylesUsedFromInstalledThemes(workspace);
 
-        log.info(" - writing static site to " + outputDir.getAbsolutePath());
+        log.info("Writing static site to " + outputDir.getCanonicalPath());
         writeStaticFile("static.html", outputDir, "index.html");
 
         writeStaticFile("js/jquery-3.7.1.min.js", outputDir);
@@ -75,6 +75,8 @@ class StaticSiteExporter {
         if (in != null) {
             File outputFile = new File(outputDir, outputFilename);
             outputFile.mkdirs();
+
+            log.debug("Writing " + outputFile.getCanonicalPath());
             Files.copy(in, outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         } else {
             log.error(String.format("Unable to find static file: %s", filename));
@@ -82,7 +84,7 @@ class StaticSiteExporter {
     }
 
     private void writeToFile(File file, String content) throws Exception {
-        log.info(" - writing " + file.getCanonicalPath());
+        log.info("Writing " + file.getCanonicalPath());
 
         BufferedWriter writer = Files.newBufferedWriter(file.toPath(), StandardCharsets.UTF_8);
         writer.write(content);

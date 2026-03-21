@@ -3,6 +3,8 @@ package com.structurizr.command;
 import com.microsoft.playwright.*;
 import com.structurizr.util.StringUtils;
 import com.structurizr.view.ColorScheme;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +17,8 @@ import java.util.List;
 
 class PlaywrightExporter {
 
+    private static final Log log = LogFactory.getLog(PlaywrightExporter.class);
+
     void run(String url, String format, ColorScheme colorScheme, boolean animation, File outputDir) {
         List<Diagram> diagrams = new ArrayList<>();
 
@@ -22,6 +26,7 @@ class PlaywrightExporter {
             Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
             BrowserContext context = browser.newContext(new Browser.NewContextOptions().setBypassCSP(true));
 
+            log.info("Visiting " + url);
             Page page = context.newPage();
             page.navigate(url);
 
@@ -75,7 +80,7 @@ class PlaywrightExporter {
         if (diagram != null && !StringUtils.isNullOrEmpty(diagram.getContent())) {
             try {
                 File file = new File(outputDir, diagram.getFilename());
-                System.out.println(" - " + file.getAbsolutePath());
+                log.info("Writing " + file.getCanonicalPath());
                 String base64Image = diagram.getContent().split(",")[1];
                 byte[] decodedImage = Base64.getDecoder().decode(base64Image.getBytes(StandardCharsets.UTF_8));
                 Files.write(file.toPath(), decodedImage);
