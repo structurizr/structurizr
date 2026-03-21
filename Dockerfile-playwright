@@ -1,17 +1,10 @@
-FROM eclipse-temurin:21.0.9_10-jre-noble
+FROM mcr.microsoft.com/playwright/java:v1.58.0-noble
 
-ENV PORT=8080
-ENV STRUCTURIZR_PLAYWRIGHT=false
-
-RUN set -eux; \
-	apt-get update;
+ENV STRUCTURIZR_PLAYWRIGHT=true
 
 COPY structurizr-application/target/structurizr-*.war /usr/local/structurizr.war
-COPY structurizr-mcp/target/structurizr-*.war /usr/local/structurizr-mcp.war
 COPY structurizr-themes /usr/local/structurizr-themes
 COPY entrypoint.sh /usr/local/entrypoint.sh
-
-EXPOSE ${PORT}
 
 WORKDIR /usr/local/structurizr
 
