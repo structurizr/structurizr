@@ -148,18 +148,24 @@ public class ExportCommand extends AbstractCommand {
                 throw new IllegalArgumentException("Invalid mode " + mode + " - expected light or dark");
             }
 
-            if (outputPath == null) {
-                outputPath = ".";
-            }
-
-            File outputDir = new File(outputPath);
-            outputDir.mkdirs();
-
             if (!StringUtils.isNullOrEmpty(workspacePathAsString)) {
                 try {
                     Workspace workspace = loadWorkspace(workspacePathAsString);
                     File tempDir = Files.createTempDirectory("structurizr").toFile();
                     tempDir.deleteOnExit();
+
+                    if (workspacePathAsString.startsWith("http://") || workspacePathAsString.startsWith("https://")) {
+                        workspacePath = new File(".");
+                    } else {
+                        workspacePath = new File(workspacePathAsString);
+                    }
+
+                    if (outputPath == null) {
+                        outputPath = new File(workspacePath.getCanonicalPath()).getParent();
+                    }
+
+                    File outputDir = new File(outputPath);
+                    outputDir.mkdirs();
 
                     new StaticSiteExporter().run(workspace, tempDir);
                     new PlaywrightExporter().run("file://" + new File(tempDir, "index.html").getAbsolutePath(), format, colorScheme, animation, outputDir);
@@ -169,6 +175,13 @@ public class ExportCommand extends AbstractCommand {
                     System.exit(1);
                 }
             } else {
+                if (outputPath == null) {
+                    outputPath = ".";
+                }
+
+                File outputDir = new File(outputPath);
+                outputDir.mkdirs();
+
                 new PlaywrightExporter().run(url, format, colorScheme, animation, outputDir);
                 return;
             }
