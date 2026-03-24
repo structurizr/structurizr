@@ -16,6 +16,15 @@
 
 - Don't create archive versions of workspace.
 
+### export
+
+- Adds support for `export -format png|svg -url <url>`
+- Adds support for `export -format png|svg -workspace <file>`
+
+### generate
+
+- Adds a `generate system-landscape` command - see https://docs.structurizr.com/generate.
+
 ## 2026.03.06
 
 - Adds [perspective specific styles](https://docs.structurizr.com/dsl/cookbook/perspectives-static/) for elements and relationships.
