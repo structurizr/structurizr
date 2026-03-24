@@ -1,0 +1,12 @@
+FROM dhi.io/eclipse-temurin:21-alpine3.23
+
+ENV PORT=8080
+
+COPY structurizr-application/target/structurizr-*.war /usr/local/structurizr.war
+COPY structurizr-themes /usr/local/structurizr-themes
+
+EXPOSE ${PORT}
+
+WORKDIR /usr/local/structurizr
+
+ENTRYPOINT ["java", "-Dserver.port=${PORT}", "-Dstructurizr.playwright=false", "--enable-native-access=ALL-UNNAMED", "-jar", "/usr/local/structurizr.war"]
