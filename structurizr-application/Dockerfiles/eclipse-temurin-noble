@@ -1,0 +1,12 @@
+FROM eclipse-temurin:21.0.9_10-jre-noble
+
+ENV PORT=8080
+
+COPY structurizr-application/target/structurizr-*.war /usr/local/structurizr.war
+COPY structurizr-themes /usr/local/structurizr-themes
+
+EXPOSE ${PORT}
+
+WORKDIR /usr/local/structurizr
+
+ENTRYPOINT ["java", "-Dserver.port=${PORT}", "-Dstructurizr.playwright=false", "--enable-native-access=ALL-UNNAMED", "-jar", "/usr/local/structurizr.war"]
