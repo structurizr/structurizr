@@ -392,7 +392,7 @@ public class Configuration {
         log.info(" ____) | |_| |  | |_| | (__| |_| |_| | |  | |/ /| |   ");
         log.info("|_____/ \\__|_|   \\__,_|\\___|\\__|\\__,_|_|  |_/___|_|   ");
         log.info("                                                      ");
-        log.info("v" + new Version().getBuildNumber());
+        log.info(getProfile() + " v" + new Version().getBuildNumber());
 
         logAllProperties(log, getProperties());
         log.info("***********************************************************************************");
