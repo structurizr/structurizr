@@ -125,8 +125,13 @@ public class ExportCommand extends AbstractCommand {
         }
 
         if (PNG_FORMAT.equals(format) || SVG_FORMAT.equals(format)) {
-            if ("false".equalsIgnoreCase(System.getProperty("structurizr.playwright"))) {
-                log.fatal("Exporting to PNG/SVG is not supported in this environment");
+            // check the build includes the Playwright exporter
+            PlaywrightExporter playwrightExporter = null;
+            try {
+                Class<?> clazz = Class.forName(PlaywrightExporter.class.getName() + "Impl");
+                playwrightExporter = (PlaywrightExporter)clazz.getDeclaredConstructor().newInstance();
+            } catch (ClassNotFoundException e) {
+                log.fatal("Exporting to PNG/SVG is not supported in this build");
                 System.exit(1);
             }
 
@@ -165,7 +170,8 @@ public class ExportCommand extends AbstractCommand {
                     outputDir.mkdirs();
 
                     new StaticSiteExporter().run(workspace, tempDir);
-                    new PlaywrightExporter().run("file://" + new File(tempDir, "index.html").getAbsolutePath(), format, colorScheme, animation, outputDir);
+
+                    playwrightExporter.run("file://" + new File(tempDir, "index.html").getAbsolutePath(), format, colorScheme, animation, outputDir);
                     return;
                 } catch (Exception e) {
                     log.error(e.getMessage());
@@ -179,7 +185,7 @@ public class ExportCommand extends AbstractCommand {
                 File outputDir = new File(outputPath);
                 outputDir.mkdirs();
 
-                new PlaywrightExporter().run(url, format, colorScheme, animation, outputDir);
+                playwrightExporter.run(url, format, colorScheme, animation, outputDir);
                 return;
             }
         }

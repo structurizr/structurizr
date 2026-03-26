@@ -219,12 +219,6 @@
     </dependency>
 
     <dependency>
-      <groupId>com.microsoft.playwright</groupId>
-      <artifactId>playwright</artifactId>
-      <version>1.58.0</version>
-    </dependency>
-
-    <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>elasticsearch</artifactId>
       <version>1.21.4</version>
@@ -232,6 +226,31 @@
     </dependency>
 
   </dependencies>
+
+  <profiles>
+    <profile>
+      <id>exclude-playwright</id>
+      <properties>
+        <playwright.src>**/PlaywrightExporterImpl.java</playwright.src>
+      </properties>
+    </profile>
+    <profile>
+      <id>include-playwright</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <playwright.src></playwright.src>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>com.microsoft.playwright</groupId>
+          <artifactId>playwright</artifactId>
+          <version>1.58.0</version>
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
 
   <build>
     <plugins>
@@ -285,7 +304,12 @@
         <configuration>
           <compilerArgs>
             <arg>-parameters</arg>
+            <arg>-sourcepath</arg>
+            <arg>doesnotexist</arg>
           </compilerArgs>
+          <excludes>
+            <exclude>${playwright.src}</exclude>
+          </excludes>
         </configuration>
       </plugin>
       <plugin>
