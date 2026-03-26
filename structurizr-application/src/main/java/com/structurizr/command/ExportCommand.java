@@ -135,8 +135,10 @@ public class ExportCommand extends AbstractCommand {
                 System.exit(1);
             }
 
-            ColorScheme colorScheme = ColorScheme.Light;
-            if (ColorScheme.Dark.toString().equalsIgnoreCase(mode)) {
+            ColorScheme colorScheme = null;
+            if (ColorScheme.Light.toString().equalsIgnoreCase(mode)) {
+                colorScheme = ColorScheme.Light;
+            } else if (ColorScheme.Dark.toString().equalsIgnoreCase(mode)) {
                 colorScheme = ColorScheme.Dark;
             } else {
                 log.fatal("Invalid mode " + mode + " - expected light or dark");
