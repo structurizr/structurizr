@@ -18,8 +18,8 @@
 
 ### export
 
-- Adds support for `export -format png|svg -url <url>`
-- Adds support for `export -format png|svg -workspace <file>`
+- Adds support for `export -format png|svg -url <url>` - see https://docs.structurizr.com/export
+- Adds support for `export -format png|svg -workspace <file>` - see https://docs.structurizr.com/export
 
 ### generate
 
