@@ -114,7 +114,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   }
                 </style>
                 
-                rectangle "Big Bank plc" <<Group-QmlnIEJhbmsgcGxj>> as groupQmlnIEJhbmsgcGxj {
+                rectangle "Big Bank plc" <<Group-QmlnIEJhbmsgcGxj>> as group1 {
                   person "==Customer Service Staff\\n<size:15>[Person]</size>\\n\\nCustomer service staff within the bank." <<Element-RWxlbWVudCxQZXJzb24sQmFuayBTdGFmZg==>> as CustomerServiceStaff
                   person "==Back Office Staff\\n<size:15>[Person]</size>\\n\\nAdministration and support staff within the bank." <<Element-RWxlbWVudCxQZXJzb24sQmFuayBTdGFmZg==>> as BackOfficeStaff
                   rectangle "==Mainframe Banking System\\n<size:16>[Software System]</size>\\n\\nStores all of the core banking information about customers, accounts, transactions, etc." <<Element-RWxlbWVudCxTb2Z0d2FyZSBTeXN0ZW0sRXhpc3RpbmcgU3lzdGVt>> as MainframeBankingSystem
@@ -210,7 +210,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   }
                 </style>
                 
-                rectangle "Big Bank plc" <<Group-QmlnIEJhbmsgcGxj>> as groupQmlnIEJhbmsgcGxj {
+                rectangle "Big Bank plc" <<Group-QmlnIEJhbmsgcGxj>> as group2 {
                   rectangle "==Mainframe Banking System\\n<size:16>[Software System]</size>\\n\\nStores all of the core banking information about customers, accounts, transactions, etc." <<Element-RWxlbWVudCxTb2Z0d2FyZSBTeXN0ZW0sRXhpc3RpbmcgU3lzdGVt>> as MainframeBankingSystem
                   rectangle "==E-mail System\\n<size:16>[Software System]</size>\\n\\nThe internal Microsoft Exchange e-mail system." <<Element-RWxlbWVudCxTb2Z0d2FyZSBTeXN0ZW0sRXhpc3RpbmcgU3lzdGVt>> as EmailSystem
                   rectangle "==Internet Banking System\\n<size:16>[Software System]</size>\\n\\nAllows customers to view information about their bank accounts, and make payments." <<Element-RWxlbWVudCxTb2Z0d2FyZSBTeXN0ZW0=>> as InternetBankingSystem
@@ -1933,13 +1933,13 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   }
                 </style>
                 
-                rectangle "Group 1" <<Group-R3JvdXAgMQ==>> as groupR3JvdXAgMQ== {
+                rectangle "Group 1" <<Group-R3JvdXAgMQ==>> as group1 {
                   rectangle "==B\\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as B
                 }
                 
-                rectangle "Group 2" <<Group-R3JvdXAgMg==>> as groupR3JvdXAgMg== {
+                rectangle "Group 2" <<Group-R3JvdXAgMg==>> as group2 {
                   rectangle "==C\\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as C
-                    rectangle "Group 3" <<Group-R3JvdXAgMi9Hcm91cCAz>> as groupR3JvdXAgMi9Hcm91cCAz {
+                    rectangle "Group 3" <<Group-R3JvdXAgMi9Hcm91cCAz>> as group3 {
                       rectangle "==D\\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as D
                     }
                 
@@ -2016,7 +2016,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                 rectangle "==C\\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as C
                 
                 rectangle "D\\n<size:16>[Software System]</size>" <<Boundary-RA==>> {
-                  rectangle "Group 4" <<Group-R3JvdXAgNA==>> as groupR3JvdXAgNA== {
+                  rectangle "Group 4" <<Group-R3JvdXAgNA==>> as group4 {
                     rectangle "==F\\n<size:16>[Container]</size>" <<Element-RWxlbWVudA==>> as D.F
                   }
                 
@@ -2103,7 +2103,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                 
                 rectangle "D\\n<size:16>[Software System]</size>" <<Boundary-RA==>> {
                   rectangle "F\\n<size:16>[Container]</size>" <<Boundary-Rg==>> {
-                    rectangle "Group 5" <<Group-R3JvdXAgNQ==>> as groupR3JvdXAgNQ== {
+                    rectangle "Group 5" <<Group-R3JvdXAgNQ==>> as group5 {
                       rectangle "==H\\n<size:16>[Component]</size>" <<Element-RWxlbWVudA==>> as D.F.H
                     }
                 
@@ -2230,15 +2230,15 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   }
                 </style>
                 
-                rectangle "Organisation 1" <<Group-T3JnYW5pc2F0aW9uIDE=>> as groupT3JnYW5pc2F0aW9uIDE= {
+                rectangle "Organisation 1" <<Group-T3JnYW5pc2F0aW9uIDE=>> as group1 {
                   rectangle "==Organisation 1\\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as Organisation1
-                    rectangle "Department 1" <<Group-T3JnYW5pc2F0aW9uIDEvRGVwYXJ0bWVudCAx>> as groupT3JnYW5pc2F0aW9uIDEvRGVwYXJ0bWVudCAx {
+                    rectangle "Department 1" <<Group-T3JnYW5pc2F0aW9uIDEvRGVwYXJ0bWVudCAx>> as group2 {
                       rectangle "==Department 1\\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as Department1
-                        rectangle "Team 1" <<Group-T3JnYW5pc2F0aW9uIDEvRGVwYXJ0bWVudCAxL1RlYW0gMQ==>> as groupT3JnYW5pc2F0aW9uIDEvRGVwYXJ0bWVudCAxL1RlYW0gMQ== {
+                        rectangle "Team 1" <<Group-T3JnYW5pc2F0aW9uIDEvRGVwYXJ0bWVudCAxL1RlYW0gMQ==>> as group3 {
                           rectangle "==Team 1\\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as Team1
                         }
                 
-                        rectangle "Team 2" <<Group-T3JnYW5pc2F0aW9uIDEvRGVwYXJ0bWVudCAxL1RlYW0gMg==>> as groupT3JnYW5pc2F0aW9uIDEvRGVwYXJ0bWVudCAxL1RlYW0gMg== {
+                        rectangle "Team 2" <<Group-T3JnYW5pc2F0aW9uIDEvRGVwYXJ0bWVudCAxL1RlYW0gMg==>> as group4 {
                           rectangle "==Team 2\\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as Team2
                         }
                 
@@ -2246,7 +2246,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                 
                 }
                 
-                rectangle "Organisation 2" <<Group-T3JnYW5pc2F0aW9uIDI=>> as groupT3JnYW5pc2F0aW9uIDI= {
+                rectangle "Organisation 2" <<Group-T3JnYW5pc2F0aW9uIDI=>> as group5 {
                   rectangle "==Organisation 2\\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as Organisation2
                 }
                 
@@ -3044,11 +3044,11 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   }
                 </style>
                 
-                rectangle "Group 1" <<Group-R3JvdXAgMQ==>> as groupR3JvdXAgMQ== {
+                rectangle "Group 1" <<Group-R3JvdXAgMQ==>> as group1 {
                   rectangle "==A\\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as A
                 }
                 
-                rectangle "Group 2" <<Group-R3JvdXAgMg==>> as groupR3JvdXAgMg== {
+                rectangle "Group 2" <<Group-R3JvdXAgMg==>> as group2 {
                   rectangle "==B\\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as B
                 }
                 
@@ -3154,14 +3154,14 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                 </style>
                 
                 rectangle "A\\n<size:16>[Software System]</size>" <<Boundary-QQ==>> {
-                  rectangle "Group 1" <<Group-R3JvdXAgMQ==>> as groupR3JvdXAgMQ== {
+                  rectangle "Group 1" <<Group-R3JvdXAgMQ==>> as group1 {
                     rectangle "==A\\n<size:16>[Container]</size>" <<Element-RWxlbWVudA==>> as A.A
                   }
                 
                 }
                 
                 rectangle "B\\n<size:16>[Software System]</size>" <<Boundary-Qg==>> {
-                  rectangle "Group 2" <<Group-R3JvdXAgMg==>> as groupR3JvdXAgMg== {
+                  rectangle "Group 2" <<Group-R3JvdXAgMg==>> as group2 {
                     rectangle "==B\\n<size:16>[Container]</size>" <<Element-RWxlbWVudA==>> as B.B
                   }
                 
@@ -3271,7 +3271,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                 
                 rectangle "A\\n<size:16>[Software System]</size>" <<Boundary-QQ==>> {
                   rectangle "A\\n<size:16>[Container]</size>" <<Boundary-QQ==>> {
-                    rectangle "Group 1" <<Group-R3JvdXAgMQ==>> as groupR3JvdXAgMQ== {
+                    rectangle "Group 1" <<Group-R3JvdXAgMQ==>> as group1 {
                       rectangle "==A\\n<size:16>[Component]</size>" <<Element-RWxlbWVudA==>> as A.A.A
                     }
                 
@@ -3281,7 +3281,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                 
                 rectangle "B\\n<size:16>[Software System]</size>" <<Boundary-Qg==>> {
                   rectangle "B\\n<size:16>[Container]</size>" <<Boundary-Qg==>> {
-                    rectangle "Group 2" <<Group-R3JvdXAgMg==>> as groupR3JvdXAgMg== {
+                    rectangle "Group 2" <<Group-R3JvdXAgMg==>> as group2 {
                       rectangle "==B\\n<size:16>[Component]</size>" <<Element-RWxlbWVudA==>> as B.B.B
                     }
                 
@@ -3376,9 +3376,9 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   }
                 </style>
                 
-                rectangle "Group 1" <<Group-R3JvdXAgMQ==>> as groupR3JvdXAgMQ== {
+                rectangle "Group 1" <<Group-R3JvdXAgMQ==>> as group1 {
                   rectangle "Server 1\\n<size:16>[Deployment Node]</size>" <<DeploymentNode-RWxlbWVudA==>> as Default.Server1 {
-                    rectangle "Group 2" <<Group-R3JvdXAgMg==>> as groupR3JvdXAgMg== {
+                    rectangle "Group 2" <<Group-R3JvdXAgMg==>> as group2 {
                       rectangle "==Infrastructure Node 2\\n<size:16>[Infrastructure Node]</size>" <<Element-RWxlbWVudA==>> as Default.Server1.InfrastructureNode2
                       rectangle "==Software System\\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as Default.Server1.SoftwareSystem_1
                     }
@@ -3440,7 +3440,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   }
                 </style>
                 
-                rectangle "Name" <<Group-TmFtZQ==>> as groupTmFtZQ== {
+                rectangle "Name" <<Group-TmFtZQ==>> as group1 {
                   rectangle "==Name\\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as Name
                 }
                 
@@ -3497,7 +3497,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   }
                 </style>
                 
-                rectangle "Name" <<Group-TmFtZQ==>> as groupTmFtZQ== {
+                rectangle "Name" <<Group-TmFtZQ==>> as group1 {
                   rectangle "==Name\\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as Name
                 }
                 

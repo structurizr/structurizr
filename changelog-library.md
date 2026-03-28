@@ -1,10 +1,14 @@
 # Changelog
 
-## (unreleased)
+## v6.1.1 (unreleased)
 
 ### structurizr-dsl
 
 - Throws an exception when an identifier is already in use, irrespective of whether the same element/relationship is being registered again.
+
+### structurizr-export
+
+- Fixes https://github.com/structurizr/structurizr/issues/61 (support multiple groups having the same name when using PlantUML).
 
 ## v6.1.0 (6th March 2026)
 

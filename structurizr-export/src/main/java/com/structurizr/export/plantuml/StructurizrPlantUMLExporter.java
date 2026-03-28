@@ -23,6 +23,8 @@ public class StructurizrPlantUMLExporter extends AbstractPlantUMLExporter {
 
     private Set<PlantUMLStyle> plantUMLStyles;
 
+    private int groupId = 0;
+
     public StructurizrPlantUMLExporter() {
         this(ColorScheme.Light);
     }
@@ -140,7 +142,7 @@ public class StructurizrPlantUMLExporter extends AbstractPlantUMLExporter {
                             groupName,
                             icon,
                             classSelectorForGroup(group),
-                            Base64.getEncoder().encodeToString(group.getBytes()))
+                            ++groupId)
             );
             writer.indent();
         }
