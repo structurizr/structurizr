@@ -5,17 +5,13 @@ import com.structurizr.export.Diagram;
 import com.structurizr.export.IndentingWriter;
 import com.structurizr.model.*;
 import com.structurizr.util.StringUtils;
-import com.structurizr.view.ColorScheme;
-import com.structurizr.view.ElementStyle;
-import com.structurizr.view.ModelView;
-import com.structurizr.view.Shape;
+import com.structurizr.view.*;
 
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.net.URL;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 import static java.lang.String.format;
 
@@ -27,6 +23,7 @@ public abstract class AbstractPlantUMLExporter extends AbstractDiagramExporter {
     public static final String PLANTUML_INCLUDES_PROPERTY = "plantuml.includes";
     public static final String PLANTUML_ANIMATION_PROPERTY = "plantuml.animation";
     public static final String PLANTUML_SEQUENCE_DIAGRAM_PROPERTY = "plantuml.sequenceDiagram";
+    public static final String PLANTUML_BOUNDARIES = "plantuml.boundaries";
 
     public static final String DIAGRAM_TITLE_TAG = "Diagram:Title";
     public static final String DIAGRAM_DESCRIPTION_TAG = "Diagram:Description";
@@ -254,6 +251,109 @@ public abstract class AbstractPlantUMLExporter extends AbstractDiagramExporter {
             }
             writer.writeLine();
         }
+    }
+
+    protected boolean renderAsSequenceDiagram(ModelView view) {
+        return view instanceof DynamicView && "true".equalsIgnoreCase(getViewOrViewSetProperty(view, PLANTUML_SEQUENCE_DIAGRAM_PROPERTY, "false"));
+    }
+
+    @Override
+    public Diagram export(DynamicView view) {
+        if (renderAsSequenceDiagram(view)) {
+            IndentingWriter writer = new IndentingWriter();
+            writeHeader(view, writer);
+
+            Set<Element> elements = new LinkedHashSet<>();
+            for (RelationshipView relationshipView : view.getRelationships()) {
+                elements.add(relationshipView.getRelationship().getSource());
+                elements.add(relationshipView.getRelationship().getDestination());
+            }
+
+            if ("true".equalsIgnoreCase(getViewOrViewSetProperty(view, PLANTUML_BOUNDARIES, "true"))) {
+                List<Element> elementsInWriteOrder = new ArrayList<>();
+                for (Element element : elements) {
+                    if (element.getParent() == null) {
+                        elementsInWriteOrder.add(element);
+                    } else {
+                        List<Element> parents = new ArrayList<>();
+                        Element parent = element.getParent();
+                        while (parent != null) {
+                            parents.add(parent);
+                            parent = parent.getParent();
+                        }
+
+                        for (Element p : parents.reversed()) {
+                            if (!elementsInWriteOrder.contains(p)) {
+                                elementsInWriteOrder.add(p);
+                            }
+                        }
+
+                        int index = 0;
+                        List<Element> siblings = elementsInWriteOrder.stream().filter(e -> e.getCanonicalName().contains(element.getParent().getCanonicalName().substring(element.getParent().getCanonicalName().indexOf("://")))).toList();
+                        if (siblings.isEmpty()) {
+                            index = elementsInWriteOrder.indexOf(element.getParent()) + 1;
+                            elementsInWriteOrder.add(index, element);
+                        } else {
+                            index = elementsInWriteOrder.indexOf(siblings.getLast()) + 1;
+                            elementsInWriteOrder.add(index, element);
+                        }
+                    }
+                }
+
+                Stack<Element> stack = new Stack<>();
+                for (Element element : elementsInWriteOrder) {
+                    if (elements.contains(element)) {
+                        if (stack.isEmpty() || stack.peek() == element.getParent()) {
+                            writeElement(view, element, writer);
+                        } else {
+                            while (!stack.isEmpty() && stack.peek() != element.getParent()) {
+                                stack.pop();
+                                endBoundary(view, writer);
+                            }
+                            writeElement(view, element, writer);
+                        }
+                    } else {
+                        while (!stack.isEmpty() && stack.peek() != element.getParent()) {
+                            stack.pop();
+                            endBoundary(view, writer);
+                        }
+
+                        startBoundary(view, element, writer);
+                        stack.push(element);
+                    }
+                }
+
+                while (!stack.isEmpty()) {
+                    stack.pop();
+                    endBoundary(view, writer);
+                }
+            } else {
+                for (Element element : elements) {
+                    writeElement(view, element, writer);
+                }
+            }
+
+            if (!elements.isEmpty()) {
+                writer.writeLine();
+            }
+
+            writeRelationships(view, writer);
+            writeFooter(view, writer);
+
+            Diagram diagram = createDiagram(view, writer.toString());
+            diagram.setLegend(createLegend(view));
+
+            return diagram;
+        } else {
+            return super.export(view);
+        }
+    }
+
+    protected abstract void startBoundary(DynamicView view, Element element, IndentingWriter writer);
+
+    void endBoundary(DynamicView view, IndentingWriter writer) {
+        writer.outdent();
+        writer.writeLine("end box");
     }
 
     @Override

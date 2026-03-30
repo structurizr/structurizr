@@ -1,6 +1,6 @@
 # Changelog
 
-## v6.1.1 (unreleased)
+## v6.2.0 (unreleased)
 
 ### structurizr-dsl
 
@@ -9,6 +9,7 @@
 ### structurizr-export
 
 - Fixes https://github.com/structurizr/structurizr/issues/61 (support multiple groups having the same name when using PlantUML).
+- Adds support for software system/container boundaries on PlantUML sequence diagrams, configurable via a property named `plantuml.boundaries` (https://github.com/structurizr/structurizr/issues/63).
 
 ## v6.1.0 (6th March 2026)
 

@@ -901,6 +901,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                 title <size:24>Dynamic View: Internet Banking System - API Application</size>\\n<size:24>Summarises how the sign in feature works in the single-page application.</size>
                 
                 set separator none
+                !pragma teoz true
                 hide stereotype
                 
                 <style>
@@ -952,12 +953,38 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     FontColor: #444444;
                     FontSize: 24;
                   }
+                  // API Application
+                  .Boundary-QVBJIEFwcGxpY2F0aW9u {
+                    BackgroundColor: #ffffff;
+                    LineColor: #2e6295;
+                    LineStyle: 0;
+                    LineThickness: 2;
+                    FontColor: #438dd5;
+                    FontSize: 24;
+                    HorizontalAlignment: center;
+                    Shadowing: 0;
+                  }
+                  // Internet Banking System
+                  .Boundary-SW50ZXJuZXQgQmFua2luZyBTeXN0ZW0= {
+                    BackgroundColor: #ffffff;
+                    LineColor: #0b4884;
+                    LineStyle: 0;
+                    LineThickness: 2;
+                    FontColor: #0b4884;
+                    FontSize: 24;
+                    HorizontalAlignment: center;
+                    Shadowing: 0;
+                  }
                 </style>
                 
-                participant "Single-Page Application\\n<size:16>[Container: JavaScript and Angular]</size>" as InternetBankingSystem.SinglePageApplication <<Element-RWxlbWVudCxDb250YWluZXIsV2ViIEJyb3dzZXI=>>
-                participant "Sign In Controller\\n<size:16>[Component: Spring MVC Rest Controller]</size>" as InternetBankingSystem.APIApplication.SignInController <<Element-RWxlbWVudCxDb21wb25lbnQ=>>
-                participant "Security Component\\n<size:16>[Component: Spring Bean]</size>" as InternetBankingSystem.APIApplication.SecurityComponent <<Element-RWxlbWVudCxDb21wb25lbnQ=>>
-                database "Database\\n<size:16>[Container: Oracle Database Schema]</size>" as InternetBankingSystem.Database <<Element-RWxlbWVudCxDb250YWluZXIsRGF0YWJhc2U=>>
+                box "Internet Banking System\\n<size:16>[Software System]</size>" <<Boundary-SW50ZXJuZXQgQmFua2luZyBTeXN0ZW0=>>
+                  participant "Single-Page Application\\n<size:16>[Container: JavaScript and Angular]</size>" as InternetBankingSystem.SinglePageApplication <<Element-RWxlbWVudCxDb250YWluZXIsV2ViIEJyb3dzZXI=>>
+                  box "API Application\\n<size:16>[Container: Java and Spring MVC]</size>" <<Boundary-QVBJIEFwcGxpY2F0aW9u>>
+                    participant "Sign In Controller\\n<size:16>[Component: Spring MVC Rest Controller]</size>" as InternetBankingSystem.APIApplication.SignInController <<Element-RWxlbWVudCxDb21wb25lbnQ=>>
+                    participant "Security Component\\n<size:16>[Component: Spring Bean]</size>" as InternetBankingSystem.APIApplication.SecurityComponent <<Element-RWxlbWVudCxDb21wb25lbnQ=>>
+                  end box
+                  database "Database\\n<size:16>[Container: Oracle Database Schema]</size>" as InternetBankingSystem.Database <<Element-RWxlbWVudCxDb250YWluZXIsRGF0YWJhc2U=>>
+                end box
                 
                 InternetBankingSystem.SinglePageApplication -> InternetBankingSystem.APIApplication.SignInController <<Relationship-UmVsYXRpb25zaGlw>> : 1: Submits credentials to\\n<size:16>[JSON/HTTPS]</size>
                 InternetBankingSystem.APIApplication.SignInController -> InternetBankingSystem.APIApplication.SecurityComponent <<Relationship-UmVsYXRpb25zaGlw>> : 2: Validates credentials using
@@ -1637,6 +1664,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                 title <size:24>Dynamic View</size>\\n<size:24>Description</size>
                 
                 set separator none
+                !pragma teoz true
                 hide stereotype
                 
                 <style>
@@ -1745,6 +1773,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                 title <size:24>Dynamic View</size>\\n<size:24>Description</size>
                 
                 set separator none
+                !pragma teoz true
                 hide stereotype
                 
                 <style>
@@ -4261,6 +4290,194 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                 rectangle "==A\\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as A
                 
                 @enduml""", diagram.getDefinition());
+    }
+
+    @Test
+    void sequenceDiagramsWithBoundaries() {
+        Workspace workspace = new Workspace("Name");
+        Person user = workspace.getModel().addPerson("User");
+        SoftwareSystem softwareSystem1 = workspace.getModel().addSoftwareSystem("Software System 1");
+        Container application = softwareSystem1.addContainer("Application 1");
+        Component component1 = application.addComponent("Component 1");
+        Component component2 = application.addComponent("Component 2");
+        Container database1 = softwareSystem1.addContainer("Database 1");
+
+        SoftwareSystem softwareSystem2 = workspace.getModel().addSoftwareSystem("Software System 2");
+        Component component3 = softwareSystem2.addContainer("Application 2").addComponent("Component 3");
+        Container database2 = softwareSystem2.addContainer("Database 2");
+
+        user.uses(component1, "");
+        component1.uses(database1, "");
+        component2.uses(database1, "");
+        component1.uses(component2, "");
+        component2.uses(component3, "");
+        component3.uses(database2, "");
+
+        DynamicView dynamicView = workspace.getViews().createDynamicView(application, "key");
+        dynamicView.add(user, component1);
+        dynamicView.add(component1, database1);
+        dynamicView.add(component1, component2);
+        dynamicView.add(component2, component3);
+        dynamicView.add(component3, database2);
+
+        workspace.getViews().getConfiguration().addProperty(StructurizrPlantUMLExporter.PLANTUML_SEQUENCE_DIAGRAM_PROPERTY, "true");
+        StructurizrPlantUMLExporter exporter = new StructurizrPlantUMLExporter();
+        Collection<Diagram> diagrams = exporter.export(workspace);
+
+        assertEquals("""
+                @startuml
+                title <size:24>Dynamic View: Software System 1 - Application 1</size>
+                
+                set separator none
+                !pragma teoz true
+                hide stereotype
+                
+                <style>
+                  root {
+                    BackgroundColor: #ffffff;
+                    FontColor: #444444;
+                  }
+                  // Element
+                  .Element-RWxlbWVudA== {
+                    BackgroundColor: #ffffff;
+                    LineColor: #444444;
+                    LineStyle: 0;
+                    LineThickness: 2;
+                    FontColor: #444444;
+                    FontSize: 24;
+                    HorizontalAlignment: center;
+                    Shadowing: 0;
+                    MaximumWidth: 450;
+                  }
+                  // Relationship
+                  .Relationship-UmVsYXRpb25zaGlw {
+                    LineThickness: 2;
+                    LineStyle: 10-10;
+                    LineColor: #444444;
+                    FontColor: #444444;
+                    FontSize: 24;
+                  }
+                  // Application 1
+                  .Boundary-QXBwbGljYXRpb24gMQ== {
+                    BackgroundColor: #ffffff;
+                    LineColor: #444444;
+                    LineStyle: 0;
+                    LineThickness: 2;
+                    FontColor: #444444;
+                    FontSize: 24;
+                    HorizontalAlignment: center;
+                    Shadowing: 0;
+                  }
+                  // Application 2
+                  .Boundary-QXBwbGljYXRpb24gMg== {
+                    BackgroundColor: #ffffff;
+                    LineColor: #444444;
+                    LineStyle: 0;
+                    LineThickness: 2;
+                    FontColor: #444444;
+                    FontSize: 24;
+                    HorizontalAlignment: center;
+                    Shadowing: 0;
+                  }
+                  // Software System 1
+                  .Boundary-U29mdHdhcmUgU3lzdGVtIDE= {
+                    BackgroundColor: #ffffff;
+                    LineColor: #444444;
+                    LineStyle: 0;
+                    LineThickness: 2;
+                    FontColor: #444444;
+                    FontSize: 24;
+                    HorizontalAlignment: center;
+                    Shadowing: 0;
+                  }
+                  // Software System 2
+                  .Boundary-U29mdHdhcmUgU3lzdGVtIDI= {
+                    BackgroundColor: #ffffff;
+                    LineColor: #444444;
+                    LineStyle: 0;
+                    LineThickness: 2;
+                    FontColor: #444444;
+                    FontSize: 24;
+                    HorizontalAlignment: center;
+                    Shadowing: 0;
+                  }
+                </style>
+                
+                participant "User\\n<size:16>[Person]</size>" as User <<Element-RWxlbWVudA==>>
+                box "Software System 1\\n<size:16>[Software System]</size>" <<Boundary-U29mdHdhcmUgU3lzdGVtIDE=>>
+                  box "Application 1\\n<size:16>[Container]</size>" <<Boundary-QXBwbGljYXRpb24gMQ==>>
+                    participant "Component 1\\n<size:16>[Component]</size>" as SoftwareSystem1.Application1.Component1 <<Element-RWxlbWVudA==>>
+                    participant "Component 2\\n<size:16>[Component]</size>" as SoftwareSystem1.Application1.Component2 <<Element-RWxlbWVudA==>>
+                  end box
+                  participant "Database 1\\n<size:16>[Container]</size>" as SoftwareSystem1.Database1 <<Element-RWxlbWVudA==>>
+                end box
+                box "Software System 2\\n<size:16>[Software System]</size>" <<Boundary-U29mdHdhcmUgU3lzdGVtIDI=>>
+                  box "Application 2\\n<size:16>[Container]</size>" <<Boundary-QXBwbGljYXRpb24gMg==>>
+                    participant "Component 3\\n<size:16>[Component]</size>" as SoftwareSystem2.Application2.Component3 <<Element-RWxlbWVudA==>>
+                  end box
+                  participant "Database 2\\n<size:16>[Container]</size>" as SoftwareSystem2.Database2 <<Element-RWxlbWVudA==>>
+                end box
+                
+                User -> SoftwareSystem1.Application1.Component1 <<Relationship-UmVsYXRpb25zaGlw>> : 1:\s
+                SoftwareSystem1.Application1.Component1 -> SoftwareSystem1.Database1 <<Relationship-UmVsYXRpb25zaGlw>> : 2:\s
+                SoftwareSystem1.Application1.Component1 -> SoftwareSystem1.Application1.Component2 <<Relationship-UmVsYXRpb25zaGlw>> : 3:\s
+                SoftwareSystem1.Application1.Component2 -> SoftwareSystem2.Application2.Component3 <<Relationship-UmVsYXRpb25zaGlw>> : 4:\s
+                SoftwareSystem2.Application2.Component3 -> SoftwareSystem2.Database2 <<Relationship-UmVsYXRpb25zaGlw>> : 5:\s
+                
+                @enduml""", diagrams.iterator().next().getDefinition());
+
+        workspace.getViews().getConfiguration().addProperty(StructurizrPlantUMLExporter.PLANTUML_BOUNDARIES, "false");
+        exporter = new StructurizrPlantUMLExporter();
+        diagrams = exporter.export(workspace);
+
+        assertEquals("""
+                @startuml
+                title <size:24>Dynamic View: Software System 1 - Application 1</size>
+                
+                set separator none
+                hide stereotype
+                
+                <style>
+                  root {
+                    BackgroundColor: #ffffff;
+                    FontColor: #444444;
+                  }
+                  // Element
+                  .Element-RWxlbWVudA== {
+                    BackgroundColor: #ffffff;
+                    LineColor: #444444;
+                    LineStyle: 0;
+                    LineThickness: 2;
+                    FontColor: #444444;
+                    FontSize: 24;
+                    HorizontalAlignment: center;
+                    Shadowing: 0;
+                    MaximumWidth: 450;
+                  }
+                  // Relationship
+                  .Relationship-UmVsYXRpb25zaGlw {
+                    LineThickness: 2;
+                    LineStyle: 10-10;
+                    LineColor: #444444;
+                    FontColor: #444444;
+                    FontSize: 24;
+                  }
+                </style>
+                
+                participant "User\\n<size:16>[Person]</size>" as User <<Element-RWxlbWVudA==>>
+                participant "Component 1\\n<size:16>[Component]</size>" as SoftwareSystem1.Application1.Component1 <<Element-RWxlbWVudA==>>
+                participant "Database 1\\n<size:16>[Container]</size>" as SoftwareSystem1.Database1 <<Element-RWxlbWVudA==>>
+                participant "Component 2\\n<size:16>[Component]</size>" as SoftwareSystem1.Application1.Component2 <<Element-RWxlbWVudA==>>
+                participant "Component 3\\n<size:16>[Component]</size>" as SoftwareSystem2.Application2.Component3 <<Element-RWxlbWVudA==>>
+                participant "Database 2\\n<size:16>[Container]</size>" as SoftwareSystem2.Database2 <<Element-RWxlbWVudA==>>
+                
+                User -> SoftwareSystem1.Application1.Component1 <<Relationship-UmVsYXRpb25zaGlw>> : 1:\s
+                SoftwareSystem1.Application1.Component1 -> SoftwareSystem1.Database1 <<Relationship-UmVsYXRpb25zaGlw>> : 2:\s
+                SoftwareSystem1.Application1.Component1 -> SoftwareSystem1.Application1.Component2 <<Relationship-UmVsYXRpb25zaGlw>> : 3:\s
+                SoftwareSystem1.Application1.Component2 -> SoftwareSystem2.Application2.Component3 <<Relationship-UmVsYXRpb25zaGlw>> : 4:\s
+                SoftwareSystem2.Application2.Component3 -> SoftwareSystem2.Database2 <<Relationship-UmVsYXRpb25zaGlw>> : 5:\s
+                
+                @enduml""", diagrams.iterator().next().getDefinition());
     }
 
 }
