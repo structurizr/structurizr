@@ -51,7 +51,7 @@
     <dependency>
       <groupId>com.structurizr</groupId>
       <artifactId>structurizr-dsl</artifactId>
-      <version>6.1.0</version>
+      <version>6.2.0</version>
       <exclusions>
         <exclusion>
           <groupId>commons-logging</groupId>
@@ -62,7 +62,7 @@
     <dependency>
       <groupId>com.structurizr</groupId>
       <artifactId>structurizr-export</artifactId>
-      <version>6.1.0</version>
+      <version>6.2.0</version>
       <exclusions>
         <exclusion>
           <groupId>commons-logging</groupId>
@@ -73,7 +73,7 @@
     <dependency>
       <groupId>com.structurizr</groupId>
       <artifactId>structurizr-inspection</artifactId>
-      <version>6.1.0</version>
+      <version>6.2.0</version>
       <exclusions>
         <exclusion>
           <groupId>commons-logging</groupId>
