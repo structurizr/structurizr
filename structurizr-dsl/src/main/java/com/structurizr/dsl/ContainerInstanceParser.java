@@ -8,7 +8,7 @@ import com.structurizr.model.Element;
 import java.util.HashSet;
 import java.util.Set;
 
-final class ContainerInstanceParser extends StaticStructureInstanceParser {
+final class ContainerInstanceParser extends DeploymentElementParser {
 
     private static final String GRAMMAR = "containerInstance <identifier> [deploymentGroups] [tags]";
 

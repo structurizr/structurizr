@@ -181,8 +181,7 @@ public class SoftwareSystemInstanceTests extends AbstractWorkspaceTestBase {
     void getDeploymentGroups_WhenNoGroupsHaveBeenSpecified() {
         SoftwareSystemInstance instance = deploymentNode.add(softwareSystem);
 
-        assertEquals(1, instance.getDeploymentGroups().size());
-        assertTrue(instance.getDeploymentGroups().contains("Default"));
+        assertEquals(0, instance.getDeploymentGroups().size());
     }
 
     @Test

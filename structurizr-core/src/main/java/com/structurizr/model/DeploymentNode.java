@@ -2,6 +2,7 @@ package com.structurizr.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.structurizr.util.StringUtils;
 
 import java.util.*;
 
@@ -30,6 +31,8 @@ public final class DeploymentNode extends DeploymentElement {
     private Set<SoftwareSystemInstance> softwareSystemInstances = new TreeSet<>();
     private Set<ContainerInstance> containerInstances = new TreeSet<>();
 
+    private Set<String> deploymentGroups = new TreeSet<>();
+
     /**
      * Adds a software system instance to this deployment node, replicating relationships.
      *
@@ -37,7 +40,7 @@ public final class DeploymentNode extends DeploymentElement {
      * @return a SoftwareSystemInstance object
      */
     public SoftwareSystemInstance add(SoftwareSystem softwareSystem) {
-        return add(softwareSystem, DEFAULT_DEPLOYMENT_GROUP);
+        return add(softwareSystem, new String[]{});
     }
 
     /**
@@ -73,7 +76,7 @@ public final class DeploymentNode extends DeploymentElement {
      * @return a ContainerInstance object
      */
     public ContainerInstance add(Container container) {
-        return add(container, DEFAULT_DEPLOYMENT_GROUP);
+        return add(container, new String[]{});
     }
 
     /**
@@ -443,6 +446,36 @@ public final class DeploymentNode extends DeploymentElement {
         }
 
         this.instances = instances;
+    }
+
+    /**
+     * Gets the deployment groups associated with this deployment node.
+     *
+     * @return  a Set of deployment group names
+     */
+    public Set<String> getDeploymentGroups() {
+        return new TreeSet<>(deploymentGroups);
+    }
+
+    void setDeploymentGroups(Set<String> deploymentGroups) {
+        if (deploymentGroups != null) {
+            this.deploymentGroups = new TreeSet<>(deploymentGroups);
+        } else {
+            this.deploymentGroups = new TreeSet<>();
+        }
+    }
+
+    /**
+     * Adds a deployment group to this deployment node.
+     *
+     * @param deploymentGroup       the deployment group name
+     */
+    public void addDeploymentGroup(String deploymentGroup) {
+        if (StringUtils.isNullOrEmpty(deploymentGroup)) {
+            throw new IllegalArgumentException("A deployment group name must be specified.");
+        }
+
+        this.deploymentGroups.add(deploymentGroup);
     }
 
     @JsonIgnore

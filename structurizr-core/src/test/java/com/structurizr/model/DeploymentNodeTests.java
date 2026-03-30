@@ -277,4 +277,28 @@ public class DeploymentNodeTests extends AbstractWorkspaceTestBase {
         assertEquals("1..*", deploymentNode.getInstances());
     }
 
+    @Test
+    void addDeploymentGroup_ThrowsAnException_WhenPassedNull() {
+        try {
+            DeploymentNode deploymentNode = new DeploymentNode();
+            deploymentNode.addDeploymentGroup(null);
+
+            fail();
+        } catch (Exception e) {
+            assertEquals("A deployment group name must be specified.", e.getMessage());
+        }
+    }
+
+    @Test
+    void addDeploymentGroup_ThrowsAnException_WhenPassedAnEmptyString() {
+        try {
+            DeploymentNode deploymentNode = new DeploymentNode();
+            deploymentNode.addDeploymentGroup(" ");
+
+            fail();
+        } catch (Exception e) {
+            assertEquals("A deployment group name must be specified.", e.getMessage());
+        }
+    }
+
 }

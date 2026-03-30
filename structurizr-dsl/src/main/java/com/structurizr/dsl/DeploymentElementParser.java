@@ -5,7 +5,7 @@ import com.structurizr.model.Element;
 import java.util.HashSet;
 import java.util.Set;
 
-abstract class StaticStructureInstanceParser extends AbstractParser {
+abstract class DeploymentElementParser extends AbstractParser {
 
     protected Set<String> getDeploymentGroups(DeploymentNodeDslContext context, String token) {
         Set<String> deploymentGroups = new HashSet<>();

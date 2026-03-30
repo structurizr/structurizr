@@ -19,7 +19,7 @@ workspace {
             }
         }
 
-        deploymentEnvironment "WithDeploymentGroups" {
+        deploymentEnvironment "WithSpecifiedDeploymentGroups" {
             serviceInstance1 = deploymentGroup "Service Instance 1"
             serviceInstance2 = deploymentGroup "Service Instance 2"
             deploymentNode "Server 1" {
@@ -29,6 +29,19 @@ workspace {
             deploymentNode "Server 2" {
                 containerInstance api serviceInstance2
                 containerInstance database serviceInstance2
+            }
+        }
+
+        deploymentEnvironment "WithInheritedDeploymentGroups" {
+            deploymentNode "Server 1" {
+                deploymentGroup serviceInstance1
+                containerInstance api
+                containerInstance database
+            }
+            deploymentNode "Server 2" {
+                deploymentGroup serviceInstance2
+                containerInstance api
+                containerInstance database
             }
         }
     }

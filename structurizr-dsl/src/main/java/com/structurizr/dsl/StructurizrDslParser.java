@@ -960,6 +960,9 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                         registerIdentifier(identifier, new DeploymentGroup(getContext(DeploymentEnvironmentDslContext.class).getEnvironment(), group));
 
+                    } else if (DEPLOYMENT_GROUP_TOKEN.equalsIgnoreCase(firstToken) && inContext(DeploymentNodeDslContext.class)) {
+                        new DeploymentGroupParser().parse(getContext(DeploymentNodeDslContext.class), tokens.withoutContextStartToken());
+
                     } else if (isElementKeywordOrArchetype(firstToken, DEPLOYMENT_NODE_TOKEN) && inContext(DeploymentEnvironmentDslContext.class)) {
                         Archetype archetype = getArchetype(DEPLOYMENT_NODE_TOKEN, firstToken);
                         DeploymentNode deploymentNode = new DeploymentNodeParser().parse(getContext(DeploymentEnvironmentDslContext.class), tokens.withoutContextStartToken(), archetype);

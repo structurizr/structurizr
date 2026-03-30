@@ -144,7 +144,7 @@ public class RelationshipTests extends AbstractWorkspaceTestBase {
     }
 
     @Test
-    void setTechnology_OverridesTheTechnologyForARelationshipeBetweenStaticStructureElementInstancess() {
+    void setTechnology_OverridesTheTechnologyForARelationshipBetweenStaticStructureElementInstances() {
         SoftwareSystem a = model.addSoftwareSystem("A");
         SoftwareSystem b = model.addSoftwareSystem("B");
         a.uses(b, "Description", "HTTP");

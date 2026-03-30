@@ -506,6 +506,38 @@ public class ModelTests extends AbstractWorkspaceTestBase {
     }
 
     @Test
+    void addElementInstance_AddsElementInstancesAndReplicatesRelationshipsWithinTheDeploymentEnvironmentAndInheritedGroup() {
+        // in this test, container instances are added to two deployment groups set on the deployment nodes: "Instance 1" and "Instance 2"
+        // relationships are not replicated between element instances in other groups
+
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
+        Container api = softwareSystem.addContainer("API");
+        Container database = softwareSystem.addContainer("Database");
+        api.uses(database, "Uses");
+
+        DeploymentNode deploymentNodeInstance1 = model.addDeploymentNode("Live", "Deployment Node - Instance 1", "Description", "Technology");
+        deploymentNodeInstance1.addDeploymentGroup("Instance 1");
+        ContainerInstance apiInstance1 = deploymentNodeInstance1.add(api);
+        ContainerInstance databaseInstance1 = deploymentNodeInstance1.add(database);
+
+        DeploymentNode deploymentNodeInstance2 = model.addDeploymentNode("Live", "Deployment Node - Instance 2", "Description", "Technology");
+        deploymentNodeInstance2.addDeploymentGroup("Instance 2");
+        ContainerInstance apiInstance2 = deploymentNodeInstance2.add(api);
+        ContainerInstance databaseInstance2 = deploymentNodeInstance2.add(database);
+
+        assertEquals(1, apiInstance1.getRelationships().size());
+        assertEquals(1, apiInstance2.getRelationships().size());
+
+        // apiInstance1 -> databaseInstance1
+        Relationship relationship = apiInstance1.getEfferentRelationshipWith(databaseInstance1);
+        assertEquals("Uses", relationship.getDescription());
+
+        // apiInstance2 -> databaseInstance2
+        relationship = apiInstance2.getEfferentRelationshipWith(databaseInstance2);
+        assertEquals("Uses", relationship.getDescription());
+    }
+
+    @Test
     void addElementInstance_AddsElementInstancesAndReplicatesRelationshipsWithinTheDeploymentEnvironmentAndSpecifiedGroups() {
         // in this test:
         // - API container instances are added to "Instance 1", "Instance 2" and "Shared"

@@ -2,9 +2,15 @@
 
 ## v6.2.0 (unreleased)
 
+### structurizr-core
+
+- Adds support for setting deployment groups on deployment nodes, which are inherited by software system instances and container instances when added.
+- Removes the default deployment group of "Default".
+
 ### structurizr-dsl
 
 - Throws an exception when an identifier is already in use, irrespective of whether the same element/relationship is being registered again.
+- Adds support for setting the deployment group on a deployment node (https://github.com/structurizr/structurizr/issues/62).
 
 ### structurizr-export
 

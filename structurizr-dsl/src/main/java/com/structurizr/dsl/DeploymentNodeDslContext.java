@@ -49,6 +49,7 @@ final class DeploymentNodeDslContext extends GroupableElementDslContext {
                 StructurizrDslTokens.URL_TOKEN,
                 StructurizrDslTokens.PROPERTIES_TOKEN,
                 StructurizrDslTokens.PERSPECTIVES_TOKEN,
+                StructurizrDslTokens.DEPLOYMENT_GROUP_TOKEN
         };
     }
 

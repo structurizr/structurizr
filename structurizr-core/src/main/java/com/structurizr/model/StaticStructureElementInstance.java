@@ -39,26 +39,18 @@ public abstract class StaticStructureElementInstance extends DeploymentElement {
                 }
             }
         }
-
-        if (this.deploymentGroups.isEmpty()) {
-            this.deploymentGroups.add(DEFAULT_DEPLOYMENT_GROUP);
-        }
     }
 
     @JsonIgnore
     public abstract StaticStructureElement getElement();
 
     /**
-     * Gets the deployment group of this element instance.
+     * Gets the deployment groups associated with this element instance.
      *
-     * @return  a deployment group name
+     * @return  a Set of deployment group names
      */
     public Set<String> getDeploymentGroups() {
-        if (deploymentGroups.isEmpty()) {
-            return Collections.singleton(DEFAULT_DEPLOYMENT_GROUP);
-        } else {
-            return new TreeSet<>(deploymentGroups);
-        }
+        return new TreeSet<>(deploymentGroups);
     }
 
     void setDeploymentGroups(Set<String> deploymentGroups) {
@@ -74,9 +66,30 @@ public abstract class StaticStructureElementInstance extends DeploymentElement {
         this.deploymentGroups = Collections.singleton(deploymentGroup);
     }
 
+    private Set<String> getAllDeploymentGroups() {
+        Set<String> allDeploymentGroups = new TreeSet<>();
+
+        DeploymentNode parent = (DeploymentNode)getParent();
+        while (parent != null) {
+            allDeploymentGroups.addAll(parent.getDeploymentGroups());
+            parent = (DeploymentNode)parent.getParent();
+        }
+
+        allDeploymentGroups.addAll(getDeploymentGroups());
+
+        return allDeploymentGroups;
+    }
+
     boolean inSameDeploymentGroup(StaticStructureElementInstance ssei) {
-        for (String deploymentGroup : getDeploymentGroups()) {
-            if (ssei.getDeploymentGroups().contains(deploymentGroup)) {
+        Set<String> otherDeploymentGroups = ssei.getAllDeploymentGroups();
+        Set<String> myDeploymentGroups = getAllDeploymentGroups();
+
+        if (otherDeploymentGroups.isEmpty() && myDeploymentGroups.isEmpty()) {
+            return true;
+        }
+
+        for (String deploymentGroup : myDeploymentGroups) {
+            if (otherDeploymentGroups.contains(deploymentGroup)) {
                 return true;
             }
         }

@@ -85,8 +85,7 @@ public class ContainerInstanceTests extends AbstractWorkspaceTestBase {
     void getDeploymentGroups_WhenNoGroupsHaveBeenSpecified() {
         ContainerInstance instance = deploymentNode.add(database);
 
-        assertEquals(1, instance.getDeploymentGroups().size());
-        assertTrue(instance.getDeploymentGroups().contains("Default"));
+        assertEquals(0, instance.getDeploymentGroups().size());
     }
 
     @Test

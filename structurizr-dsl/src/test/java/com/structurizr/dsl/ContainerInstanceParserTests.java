@@ -72,8 +72,7 @@ class ContainerInstanceParserTests extends AbstractTests {
         assertSame(container, containerInstance.getContainer());
         assertEquals("Container Instance", containerInstance.getTags());
         assertEquals("Live", containerInstance.getEnvironment());
-        assertEquals(1, containerInstance.getDeploymentGroups().size());
-        assertEquals("Default", containerInstance.getDeploymentGroups().iterator().next());
+        assertEquals(0, containerInstance.getDeploymentGroups().size());
     }
 
     @Test
@@ -94,8 +93,7 @@ class ContainerInstanceParserTests extends AbstractTests {
         assertSame(container, containerInstance.getContainer());
         assertEquals("Container Instance,Tag 1,Tag 2", containerInstance.getTags());
         assertEquals("Live", containerInstance.getEnvironment());
-        assertEquals(1, containerInstance.getDeploymentGroups().size());
-        assertEquals("Default", containerInstance.getDeploymentGroups().iterator().next());
+        assertEquals(0, containerInstance.getDeploymentGroups().size());
     }
 
     @Test
