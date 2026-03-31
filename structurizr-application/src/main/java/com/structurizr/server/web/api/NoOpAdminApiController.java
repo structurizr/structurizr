@@ -2,6 +2,7 @@ package com.structurizr.server.web.api;
 
 import com.structurizr.api.HttpHeaders;
 import com.structurizr.server.web.AbstractController;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,4 +40,11 @@ public class NoOpAdminApiController extends AbstractController {
         throw new ApiException(MESSAGE);
     }
 
+    @ExceptionHandler(ApiException.class)
+    @ResponseBody
+    public ApiResponse handleCustomException(ApiException exception, HttpServletResponse response) {
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        return new ApiResponse(exception);
+    }
+    
 }
