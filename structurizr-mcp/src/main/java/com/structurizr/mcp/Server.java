@@ -13,7 +13,10 @@ import java.util.List;
 public class Server {
 
 	private static final String DSL = "dsl";
-	private static final String SERVER = "server";
+	private static final String SERVER_CREATE = "server-create";
+	private static final String SERVER_READ = "server-read";
+	private static final String SERVER_UPDATE = "server-update";
+	private static final String SERVER_DELETE = "server-delete";
 	private static final String PLANTUML = "plantuml";
 	private static final String MERMAID = "mermaid";
 
@@ -39,7 +42,19 @@ public class Server {
 		option.setRequired(false);
 		options.addOption(option);
 
-		option = new Option(SERVER, SERVER, false, "Structurizr server tools - see https://docs.structurizr.com/server");
+		option = new Option(SERVER_CREATE, SERVER_CREATE, false, "Structurizr server create tools - see https://docs.structurizr.com/server");
+		option.setRequired(false);
+		options.addOption(option);
+
+		option = new Option(SERVER_READ, SERVER_READ, false, "Structurizr server read tools - see https://docs.structurizr.com/server");
+		option.setRequired(false);
+		options.addOption(option);
+
+		option = new Option(SERVER_UPDATE, SERVER_UPDATE, false, "Structurizr server update tools - see https://docs.structurizr.com/server");
+		option.setRequired(false);
+		options.addOption(option);
+
+		option = new Option(SERVER_DELETE, SERVER_DELETE, false, "Structurizr server delete tools - see https://docs.structurizr.com/server");
 		option.setRequired(false);
 		options.addOption(option);
 
@@ -59,8 +74,20 @@ public class Server {
 				profiles.add(DSL);
 			}
 
-			if (cmd.hasOption(SERVER)) {
-				profiles.add(SERVER);
+			if (cmd.hasOption(SERVER_CREATE)) {
+				profiles.add(SERVER_CREATE);
+			}
+
+			if (cmd.hasOption(SERVER_READ)) {
+				profiles.add(SERVER_READ);
+			}
+
+			if (cmd.hasOption(SERVER_UPDATE)) {
+				profiles.add(SERVER_UPDATE);
+			}
+
+			if (cmd.hasOption(SERVER_DELETE)) {
+				profiles.add(SERVER_DELETE);
 			}
 
 			if (cmd.hasOption(PLANTUML)) {

@@ -16,15 +16,12 @@ import java.util.Collection;
 import java.util.List;
 
 @Service
-@Profile("server")
-public class ServerTools {
+@Profile("server-read")
+public class ServerReadTools extends AbstractServerTools {
 
-    private static final String API_PATH = "api";
-    private static final String WORKSPACE_PATH = "workspace";
+    private static final Log log = LogFactory.getLog(ServerReadTools.class);
 
-    private static final Log log = LogFactory.getLog(ServerTools.class);
-
-    public ServerTools() {
+    public ServerReadTools() {
         log.info("Registering");
     }
 
@@ -38,18 +35,14 @@ public class ServerTools {
             @McpToolParam(description = "Workspace ID", required = true) long workspaceId,
             @McpToolParam(description = "API key", required = false) String apiKey
     ) throws Exception {
-        if (!url.endsWith("/")) {
-            url = url + "/";
-        }
+        log.info("Getting workspace " + workspaceId + " from server at " + url);
 
-        log.info("Getting workspace " + workspaceId + " from " + url);
-
-        String apiUrl = url + API_PATH;
-        String workspaceApi = url + WORKSPACE_PATH + "/" + workspaceId;
+        String apiUrl = apiUrl(url);
+        String workspaceUrl = workspaceUrl(url, workspaceId);
 
         WorkspaceApiClient workspaceApiClient = new WorkspaceApiClient(apiUrl, workspaceId, apiKey);
         Workspace workspace = workspaceApiClient.getWorkspace();
-        workspace.addProperty("structurizr.url", workspaceApi);
+        workspace.addProperty("structurizr.url", workspaceUrl);
 
         return workspace;
     }
@@ -63,15 +56,11 @@ public class ServerTools {
             @McpToolParam(description = "URL", required = true) String url,
             @McpToolParam(description = "API key", required = false) String apiKey
     ) throws Exception {
+
+        log.info("Getting all workspaces from server at " + url);
+
+        String apiUrl = apiUrl(url);
         List<Workspace> workspaces = new ArrayList<>();
-
-        if (!url.endsWith("/")) {
-            url = url + "/";
-        }
-
-        log.info("Getting all workspaces from " + url);
-
-        String apiUrl = url + API_PATH;
 
         AdminApiClient adminApiClient = new AdminApiClient(apiUrl, apiKey);
         List<WorkspaceMetadata> workspaceMetadataList = adminApiClient.getWorkspaces();
