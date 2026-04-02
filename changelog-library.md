@@ -6,6 +6,7 @@
 
 - Adds support for setting deployment groups on deployment nodes, which are inherited by software system instances and container instances when added.
 - Removes the default deployment group of "Default".
+- Fixes https://github.com/structurizr/structurizr/issues/64 (responses cannot be added if the request is not present in the view).
 
 ### structurizr-dsl
 

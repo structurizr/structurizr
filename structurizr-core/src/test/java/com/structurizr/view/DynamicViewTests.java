@@ -480,7 +480,8 @@ public class DynamicViewTests extends AbstractWorkspaceTestBase {
 
         DynamicView view = workspace.getViews().createDynamicView("key", "Description");
         view.add(softwareSystem1, "Asks for X", softwareSystem2);
-        view.add(softwareSystem2, "Returns X", softwareSystem1); // this relationship doesn't exist, so is assumed to be a response
+        // this relationship doesn't exist, so is assumed to be a response because the opposite relationship is present in the view
+        view.add(softwareSystem2, "Returns X", softwareSystem1);
 
         List<RelationshipView> list = new ArrayList<>(view.getRelationships());
         RelationshipView relationshipView = list.get(0);
@@ -492,6 +493,25 @@ public class DynamicViewTests extends AbstractWorkspaceTestBase {
         assertSame(relationship, relationshipView.getRelationship());
         assertEquals("Returns X", relationshipView.getDescription());
         assertTrue(relationshipView.isResponse());
+    }
+
+    @Test
+    void responseWithoutRequest_ThrowsAnException() {
+        workspace = new Workspace("Name", "Description");
+        model = workspace.getModel();
+
+        SoftwareSystem softwareSystem1 = model.addSoftwareSystem("Software System 1", "Description");
+        SoftwareSystem softwareSystem2 = model.addSoftwareSystem("Software System 2", "Description");
+        Relationship relationship = softwareSystem1.uses(softwareSystem2, "Uses");
+
+        DynamicView view = workspace.getViews().createDynamicView("key", "Description");
+        try {
+            // the following relationship doesn't exist in the model
+            view.add(softwareSystem2, "Returns X", softwareSystem1);
+            fail();
+        } catch (Exception e) {
+            assertEquals("A relationship between Software System 2 and Software System 1 does not exist in model.", e.getMessage());
+        }
     }
 
 }
