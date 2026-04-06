@@ -14,12 +14,12 @@
     <dependency>
       <groupId>org.apache.bcel</groupId>
       <artifactId>bcel</artifactId>
-      <version>6.11.0</version>
+      <version>6.12.0</version>
     </dependency>
     <dependency>
       <groupId>com.github.javaparser</groupId>
       <artifactId>javaparser-symbol-solver-core</artifactId>
-      <version>3.26.2</version>
+      <version>3.28.0</version>
     </dependency>
     <dependency>
       <groupId>com.structurizr</groupId>
