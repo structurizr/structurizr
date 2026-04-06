@@ -3,8 +3,8 @@ package com.structurizr.mcp;
 import com.structurizr.api.AdminApiClient;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springaicommunity.mcp.annotation.McpTool;
-import org.springaicommunity.mcp.annotation.McpToolParam;
+import org.springframework.ai.mcp.annotation.McpTool;
+import org.springframework.ai.mcp.annotation.McpToolParam;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
