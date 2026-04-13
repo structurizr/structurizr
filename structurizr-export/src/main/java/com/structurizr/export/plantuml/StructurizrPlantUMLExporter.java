@@ -64,7 +64,7 @@ public class StructurizrPlantUMLExporter extends AbstractPlantUMLExporter {
 
         writer.writeLine("hide stereotype");
 
-        writeSkinParams(writer);
+        writeSkinParams(view, writer);
 
         writer.writeLine("<style></style>");
         writer.writeLine();

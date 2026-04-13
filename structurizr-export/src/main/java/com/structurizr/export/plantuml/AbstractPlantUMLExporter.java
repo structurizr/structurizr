@@ -21,6 +21,7 @@ public abstract class AbstractPlantUMLExporter extends AbstractDiagramExporter {
 
     public static final String PLANTUML_TITLE_PROPERTY = "plantuml.title";
     public static final String PLANTUML_INCLUDES_PROPERTY = "plantuml.includes";
+    public static final String PLANTUML_SKINPARAMS_PROPERTY = "plantuml.skinparams";
     public static final String PLANTUML_ANIMATION_PROPERTY = "plantuml.animation";
     public static final String PLANTUML_SEQUENCE_DIAGRAM_PROPERTY = "plantuml.sequenceDiagram";
     public static final String PLANTUML_BOUNDARIES = "plantuml.boundaries";
@@ -223,14 +224,27 @@ public abstract class AbstractPlantUMLExporter extends AbstractDiagramExporter {
         writer.writeLine("set separator none");
     }
 
-    protected void writeSkinParams(IndentingWriter writer) {
-        if (!skinParams.isEmpty()) {
+    protected void writeSkinParams(ModelView view, IndentingWriter writer) {
+        String commaSeparatedSkinParams = getViewOrViewSetProperty(view, PLANTUML_SKINPARAMS_PROPERTY, "");
+
+        if (!skinParams.isEmpty() || !StringUtils.isNullOrEmpty(commaSeparatedSkinParams)) {
             writer.writeLine();
             writer.writeLine("skinparam {");
             writer.indent();
+
             for (final String name : skinParams.keySet()) {
                 writer.writeLine(format("%s %s", name, skinParams.get(name)));
             }
+
+            String[] skinparams = commaSeparatedSkinParams.split(",");
+            for (String skinparam : skinparams) {
+                if (!StringUtils.isNullOrEmpty(skinparam) && skinparam.contains("=")) {
+                    skinparam = skinparam.trim();
+                    String[] parts = skinparam.split("=");
+                    writer.writeLine(format("%s %s", parts[0], parts[1]));
+                }
+            }
+
             writer.outdent();
             writer.writeLine("}");
         }

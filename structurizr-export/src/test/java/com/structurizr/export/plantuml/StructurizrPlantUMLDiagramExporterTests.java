@@ -4480,4 +4480,65 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                 @enduml""", diagrams.iterator().next().getDefinition());
     }
 
+    @Test
+    void skinParamsAsViewSetProperty() {
+        Workspace workspace = new Workspace("Name");
+        SoftwareSystem a = workspace.getModel().addSoftwareSystem("A");
+        SoftwareSystem b = workspace.getModel().addSoftwareSystem("B");
+        a.uses(b, "Uses");
+
+        SystemLandscapeView view = workspace.getViews().createSystemLandscapeView("key");
+        view.addAllElements();
+
+        workspace.getViews().getConfiguration().addProperty(StructurizrPlantUMLExporter.PLANTUML_SKINPARAMS_PROPERTY, "maxMessageSize=100");
+        StructurizrPlantUMLExporter exporter = new StructurizrPlantUMLExporter();
+        Diagram diagram = exporter.export(view);
+
+        assertEquals("""
+                @startuml
+                title <size:24>System Landscape View</size>
+                
+                set separator none
+                top to bottom direction
+                hide stereotype
+                
+                skinparam {
+                  maxMessageSize 100
+                }
+                
+                <style>
+                  root {
+                    BackgroundColor: #ffffff;
+                    FontColor: #444444;
+                  }
+                  // Element
+                  .Element-RWxlbWVudA== {
+                    BackgroundColor: #ffffff;
+                    LineColor: #444444;
+                    LineStyle: 0;
+                    LineThickness: 2;
+                    FontColor: #444444;
+                    FontSize: 24;
+                    HorizontalAlignment: center;
+                    Shadowing: 0;
+                    MaximumWidth: 450;
+                  }
+                  // Relationship
+                  .Relationship-UmVsYXRpb25zaGlw {
+                    LineThickness: 2;
+                    LineStyle: 10-10;
+                    LineColor: #444444;
+                    FontColor: #444444;
+                    FontSize: 24;
+                  }
+                </style>
+                
+                rectangle "==A\\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as A
+                rectangle "==B\\n<size:16>[Software System]</size>" <<Element-RWxlbWVudA==>> as B
+                
+                A --> B <<Relationship-UmVsYXRpb25zaGlw>> : "Uses"
+                
+                @enduml""", diagram.getDefinition());
+    }
+
 }
