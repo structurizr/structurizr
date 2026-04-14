@@ -12,6 +12,7 @@
 
 - Throws an exception when an identifier is already in use, irrespective of whether the same element/relationship is being registered again.
 - Adds support for setting the deployment group on a deployment node (https://github.com/structurizr/structurizr/issues/62).
+- Adds a way to exclude files when using `!docs` and `!adrs` (https://github.com/structurizr/structurizr/issues/72).
 
 ### structurizr-export
 

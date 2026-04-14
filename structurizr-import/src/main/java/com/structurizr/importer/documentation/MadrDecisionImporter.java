@@ -63,14 +63,16 @@ public class MadrDecisionImporter extends AbstractDecisionImporter {
                 Arrays.sort(markdownFiles, Comparator.comparing(File::getName));
 
                 for (File file : markdownFiles) {
-                    try {
-                        Decision decision = importDecision(file);
-                        documentable.getDocumentation().addDecision(decision);
+                    if (!excluded(file)) {
+                        try {
+                            Decision decision = importDecision(file);
+                            documentable.getDocumentation().addDecision(decision);
 
-                        decisionsById.put(decision.getId(), decision);
-                        decisionsByFilename.put(file.getName(), decision);
-                    } catch (Exception e) {
-                        throw new DocumentationImportException("Error importing decision from + " + file.getAbsolutePath(), e);
+                            decisionsById.put(decision.getId(), decision);
+                            decisionsByFilename.put(file.getName(), decision);
+                        } catch (Exception e) {
+                            throw new DocumentationImportException("Error importing decision from + " + file.getAbsolutePath(), e);
+                        }
                     }
                 }
 

@@ -1211,59 +1211,113 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                     } else if (DOCS_TOKEN.equalsIgnoreCase(firstToken) && inContext(WorkspaceDslContext.class)) {
                         if (features.isEnabled(Features.DOCUMENTATION)) {
-                            new DocsParser().parse(getContext(WorkspaceDslContext.class), dslFile, tokens);
+                            DocumentationDslContext context = new DocumentationDslContext(getContext(WorkspaceDslContext.class).getWorkspace(), dslFile);
+                            new DocsParser().parse(context, tokens.withoutContextStartToken());
+
+                            startContext(context);
+                            if (!shouldStartContext(tokens)) {
+                                endContext();
+                            }
                         } else {
                             throw new FeatureNotEnabledException(Features.DOCUMENTATION, firstToken + " is not permitted");
                         }
 
                     } else if (DOCS_TOKEN.equalsIgnoreCase(firstToken) && inContext(SoftwareSystemDslContext.class)) {
                         if (features.isEnabled(Features.DOCUMENTATION)) {
-                            new DocsParser().parse(getContext(SoftwareSystemDslContext.class), dslFile, tokens);
+                            DocumentationDslContext context = new DocumentationDslContext(getContext(SoftwareSystemDslContext.class).getSoftwareSystem(), dslFile);
+                            new DocsParser().parse(context, tokens.withoutContextStartToken());
+
+                            startContext(context);
+                            if (!shouldStartContext(tokens)) {
+                                endContext();
+                            }
                         } else {
                             throw new FeatureNotEnabledException(Features.DOCUMENTATION, firstToken + " is not permitted");
                         }
 
                     } else if (DOCS_TOKEN.equalsIgnoreCase(firstToken) && inContext(ContainerDslContext.class)) {
                         if (features.isEnabled(Features.DOCUMENTATION)) {
-                            new DocsParser().parse(getContext(ContainerDslContext.class), dslFile, tokens);
+                            DocumentationDslContext context = new DocumentationDslContext(getContext(ContainerDslContext.class).getContainer(), dslFile);
+                            new DocsParser().parse(context, tokens.withoutContextStartToken());
+
+                            startContext(context);
+                            if (!shouldStartContext(tokens)) {
+                                endContext();
+                            }
                         } else {
                             throw new FeatureNotEnabledException(Features.DOCUMENTATION, firstToken + " is not permitted");
                         }
 
                     } else if (DOCS_TOKEN.equalsIgnoreCase(firstToken) && inContext(ComponentDslContext.class)) {
                         if (features.isEnabled(Features.DOCUMENTATION)) {
-                            new DocsParser().parse(getContext(ComponentDslContext.class), dslFile, tokens);
+                            DocumentationDslContext context = new DocumentationDslContext(getContext(ComponentDslContext.class).getComponent(), dslFile);
+                            new DocsParser().parse(context, tokens.withoutContextStartToken());
+
+                            startContext(context);
+                            if (!shouldStartContext(tokens)) {
+                                endContext();
+                            }
                         } else {
                             throw new FeatureNotEnabledException(Features.DOCUMENTATION, firstToken + " is not permitted");
                         }
 
+                    } else if (DOCS_EXCLUDE.equalsIgnoreCase(firstToken) && inContext(DocumentationDslContext.class)) {
+                        new DocsParser().parseExclude(getContext(DocumentationDslContext.class), tokens);
+
                     } else if ((ADRS_TOKEN.equalsIgnoreCase(firstToken) || DECISIONS_TOKEN.equalsIgnoreCase(firstToken)) && inContext(WorkspaceDslContext.class)) {
                         if (features.isEnabled(Features.DECISIONS)) {
-                            new DecisionsParser().parse(getContext(WorkspaceDslContext.class), dslFile, tokens);
+                            DecisionsDslContext context = new DecisionsDslContext(getContext(WorkspaceDslContext.class).getWorkspace(), dslFile);
+                            new DecisionsParser().parse(context, tokens.withoutContextStartToken());
+
+                            startContext(context);
+                            if (!shouldStartContext(tokens)) {
+                                endContext();
+                            }
                         } else {
                             throw new FeatureNotEnabledException(Features.DECISIONS, firstToken + " is not permitted");
                         }
 
                     } else if ((ADRS_TOKEN.equalsIgnoreCase(firstToken) || DECISIONS_TOKEN.equalsIgnoreCase(firstToken)) && inContext(SoftwareSystemDslContext.class)) {
                         if (features.isEnabled(Features.DECISIONS)) {
-                            new DecisionsParser().parse(getContext(SoftwareSystemDslContext.class), dslFile, tokens);
+                            DecisionsDslContext context = new DecisionsDslContext(getContext(SoftwareSystemDslContext.class).getSoftwareSystem(), dslFile);
+                            new DecisionsParser().parse(context, tokens.withoutContextStartToken());
+
+                            startContext(context);
+                            if (!shouldStartContext(tokens)) {
+                                endContext();
+                            }
                         } else {
                             throw new FeatureNotEnabledException(Features.DECISIONS, firstToken + " is not permitted");
                         }
 
                     } else if ((ADRS_TOKEN.equalsIgnoreCase(firstToken) || DECISIONS_TOKEN.equalsIgnoreCase(firstToken)) && inContext(ContainerDslContext.class)) {
                         if (features.isEnabled(Features.DECISIONS)) {
-                            new DecisionsParser().parse(getContext(ContainerDslContext.class), dslFile, tokens);
+                            DecisionsDslContext context = new DecisionsDslContext(getContext(ContainerDslContext.class).getContainer(), dslFile);
+                            new DecisionsParser().parse(context, tokens.withoutContextStartToken());
+
+                            startContext(context);
+                            if (!shouldStartContext(tokens)) {
+                                endContext();
+                            }
                         } else {
                             throw new FeatureNotEnabledException(Features.DECISIONS, firstToken + " is not permitted");
                         }
 
                     } else if ((ADRS_TOKEN.equalsIgnoreCase(firstToken) || DECISIONS_TOKEN.equalsIgnoreCase(firstToken)) && inContext(ComponentDslContext.class)) {
                         if (features.isEnabled(Features.DECISIONS)) {
-                            new DecisionsParser().parse(getContext(ComponentDslContext.class), dslFile, tokens);
+                            DecisionsDslContext context = new DecisionsDslContext(getContext(ComponentDslContext.class).getComponent(), dslFile);
+                            new DecisionsParser().parse(context, tokens.withoutContextStartToken());
+
+                            startContext(context);
+                            if (!shouldStartContext(tokens)) {
+                                endContext();
+                            }
                         } else {
                             throw new FeatureNotEnabledException(Features.DECISIONS, firstToken + " is not permitted");
                         }
+
+                    } else if (DECISIONS_EXCLUDE.equalsIgnoreCase(firstToken) && inContext(DecisionsDslContext.class)) {
+                        new DecisionsParser().parseExclude(getContext(DecisionsDslContext.class), tokens);
 
                     } else if (CONSTANT_TOKEN.equalsIgnoreCase(firstToken)) {
                         throw new RuntimeException("!constant was previously deprecated, and has now been removed - please use !const or !var instead");

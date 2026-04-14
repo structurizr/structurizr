@@ -110,8 +110,10 @@ class StructurizrDslTokens {
 
     static final String INCLUDE_FILE_TOKEN = "!include";
     static final String DOCS_TOKEN = "!docs";
+    static final String DOCS_EXCLUDE = "exclude";
     static final String ADRS_TOKEN = "!adrs";
     static final String DECISIONS_TOKEN = "!decisions";
+    static final String DECISIONS_EXCLUDE = "exclude";
     static final String CONSTANT_TOKEN = "!constant";
     static final String CONST_TOKEN = "!const";
     static final String VAR_TOKEN = "!var";

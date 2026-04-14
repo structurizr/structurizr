@@ -63,12 +63,14 @@ public class Log4brainsDecisionImporter extends AbstractDecisionImporter {
 
                 int decisionId = 1;
                 for (File file : markdownFiles) {
-                    Decision decision = importDecision(decisionId, file);
-                    documentable.getDocumentation().addDecision(decision);
+                    if (!excluded(file)) {
+                        Decision decision = importDecision(decisionId, file);
+                        documentable.getDocumentation().addDecision(decision);
 
-                    decisionsById.put(decision.getId(), decision);
-                    decisionsByFilename.put(file.getName(), decision);
-                    decisionId++;
+                        decisionsById.put(decision.getId(), decision);
+                        decisionsByFilename.put(file.getName(), decision);
+                        decisionId++;
+                    }
                 }
 
                 for (Decision decision : decisionsById.values()) {

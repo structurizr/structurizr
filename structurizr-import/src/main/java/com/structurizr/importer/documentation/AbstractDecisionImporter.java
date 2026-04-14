@@ -38,6 +38,31 @@ public abstract class AbstractDecisionImporter implements DocumentationImporter 
     protected TimeZone timeZone = TimeZone.getDefault();
     protected Charset characterEncoding = StandardCharsets.UTF_8;
 
+    private final Set<String> excludes = new HashSet<>();
+
+    /**
+     * Adds a regex to exclude files from the import process.
+     *
+     * @param regex     a regex as a String
+     */
+    public void exclude(String regex) {
+        if (StringUtils.isNullOrEmpty(regex)) {
+            throw new IllegalArgumentException("A regex must be provided.");
+        }
+
+        excludes.add(regex);
+    }
+
+    protected boolean excluded(File file) {
+        for (String exclude : excludes) {
+            if (file.getName().matches(exclude)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * Sets the time zone to use when parsing dates (the default is UTC)
      *

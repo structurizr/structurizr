@@ -1,0 +1,1 @@
+This file should be ignored when importing decisions from this folder.
