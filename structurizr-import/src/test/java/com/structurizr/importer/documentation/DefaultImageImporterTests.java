@@ -30,7 +30,7 @@ public class DefaultImageImporterTests {
             imageImporter.importDocumentation(null, null);
             fail();
         } catch (IllegalArgumentException e) {
-            assertEquals("A workspace or software system must be specified.", e.getMessage());
+            assertEquals("A workspace, software system, container, or component must be specified.", e.getMessage());
         }
     }
 
