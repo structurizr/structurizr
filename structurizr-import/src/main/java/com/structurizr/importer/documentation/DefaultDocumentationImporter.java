@@ -98,7 +98,7 @@ public class DefaultDocumentationImporter implements DocumentationImporter {
 
     private boolean excluded(File file) {
         for (String exclude : excludes) {
-            if (file.getName().matches(exclude)) {
+            if (file.getName().equals(exclude) || file.getName().matches(exclude)) {
                 return true;
             }
         }

@@ -24,7 +24,7 @@ class DocsParserTests extends AbstractTests {
             parser.parseExclude(new DocumentationDslContext(null, null), tokens("exclude"));
             fail();
         } catch (Exception e) {
-            assertEquals("Expected: exclude <regex> [regex]", e.getMessage());
+            assertEquals("Expected: exclude <filename|regex> [filename|regex]", e.getMessage());
         }
     }
 

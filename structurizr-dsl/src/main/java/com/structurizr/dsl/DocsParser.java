@@ -8,7 +8,7 @@ final class DocsParser extends AbstractParser {
     private static final int PATH_INDEX = 1;
     private static final int FQN_INDEX = 2;
 
-    private static final String EXCLUDE_GRAMMAR = "exclude <regex> [regex]";
+    private static final String EXCLUDE_GRAMMAR = "exclude <filename|regex> [filename|regex]";
     private static final int REGEX_INDEX = 1;
 
     void parse(DocumentationDslContext context, Tokens tokens) {
@@ -36,7 +36,7 @@ final class DocsParser extends AbstractParser {
     }
 
     void parseExclude(DocumentationDslContext context, Tokens tokens) {
-        // exclude <regex> [regex]
+        // exclude <filename|regex> [filename|regex]
         if (!tokens.includes(REGEX_INDEX)) {
             throw new RuntimeException("Expected: " + EXCLUDE_GRAMMAR);
         }

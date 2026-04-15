@@ -12,7 +12,7 @@ workspace {
 
             container "Container" {
                 !decisions madr madr {
-                    exclude "README.md"
+                    exclude "README.*"
                 }
 
                 component "Component" {
