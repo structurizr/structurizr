@@ -60,7 +60,7 @@ class DocumentationDslContext extends DslContext {
                 documentationImporter.importDocumentation(documentable, docsPath);
 
                 if (docsPath.isDirectory()) {
-                    DefaultImageImporter imageImporter = new DefaultImageImporter();
+                    DefaultImageImporter imageImporter = new DefaultImageImporter(true);
                     imageImporter.importDocumentation(documentable, docsPath);
                 }
             } catch (ClassNotFoundException cnfe) {

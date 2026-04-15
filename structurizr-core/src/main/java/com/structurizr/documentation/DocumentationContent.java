@@ -1,9 +1,21 @@
 package com.structurizr.documentation;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Represents a piece of documentation content ... a section or a decision.
  */
 public abstract class DocumentationContent {
+
+    // ![alt](image.png)
+    private static final Pattern IMAGE_IN_MARKDOWN_PATTERN = Pattern.compile("!\\[.*]\\((.*)\\)");
+
+    // image::image.jpg[alt]
+    // image:image.jpg[alt]
+    private static final Pattern IMAGE_IN_ASCIIDOC_PATTERN = Pattern.compile("image:{1,2}(.*)\\[.*]");
 
     // elementId is here for backwards compatibility
     private String elementId;
@@ -54,6 +66,30 @@ public abstract class DocumentationContent {
 
     public void setFormat(Format format) {
         this.format = format;
+    }
+
+    /**
+     * Finds the images in this documentation content.
+     *
+     * @return      a Set of image names
+     */
+    public Set<String> findImages() {
+        Set<String> images = new HashSet<>();
+
+        Pattern pattern;
+        if (format == Format.Markdown) {
+            pattern = IMAGE_IN_MARKDOWN_PATTERN;
+        } else {
+            pattern = IMAGE_IN_ASCIIDOC_PATTERN;
+        }
+
+        Matcher matcher = pattern.matcher(content);
+        while (matcher.find()) {
+            String image = matcher.group(1);
+            images.add(image);
+        }
+
+        return images;
     }
 
 }

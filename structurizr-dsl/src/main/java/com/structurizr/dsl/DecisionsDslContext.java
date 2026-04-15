@@ -60,7 +60,7 @@ class DecisionsDslContext extends DslContext {
                 documentationImporter.importDocumentation(documentable, decisionsPath);
 
                 if (decisionsPath.isDirectory()) {
-                    DefaultImageImporter imageImporter = new DefaultImageImporter();
+                    DefaultImageImporter imageImporter = new DefaultImageImporter(true);
                     imageImporter.importDocumentation(documentable, decisionsPath);
                 }
             } catch (ClassNotFoundException cnfe) {

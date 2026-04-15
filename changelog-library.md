@@ -13,12 +13,17 @@
 - Throws an exception when an identifier is already in use, irrespective of whether the same element/relationship is being registered again.
 - Adds support for setting the deployment group on a deployment node (https://github.com/structurizr/structurizr/issues/62).
 - Adds a way to exclude files by filename or regex when using `!docs` and `!adrs` (https://github.com/structurizr/structurizr/issues/72).
+- `!docs` and `!adrs` now uses the reluctant version of the `DefaultImageImporter` (see below).
 
 ### structurizr-export
 
 - Fixes https://github.com/structurizr/structurizr/issues/61 (support multiple groups having the same name when using PlantUML).
 - Adds support for software system/container boundaries on PlantUML sequence diagrams, configurable via a property named `plantuml.boundaries` (https://github.com/structurizr/structurizr/issues/63).
 - Adds support for specifying `name=value` skinparam pairs via a view/viewset property named `plantuml.skinparams` (workaround for https://github.com/structurizr/structurizr/issues/75).
+
+### structurizr-import
+
+- Adds a `reluctant` property to the `DefaultImageImporter`, providing a way to only import images that are referenced in the documentation/decisions.
 
 ## v6.1.0 (6th March 2026)
 

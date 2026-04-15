@@ -1,8 +1,7 @@
 package com.structurizr.importer.documentation;
 
 import com.structurizr.Workspace;
-import com.structurizr.documentation.Documentation;
-import com.structurizr.documentation.Image;
+import com.structurizr.documentation.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -176,6 +175,54 @@ public class DefaultImageImporterTests {
 
         imageImporter.importDocumentation(workspace, tempDirectory);
         assertEquals(0, documentation.getImages().size());
+    }
+
+    @Test
+    public void test_importDocumentation_AddsRequiredImagesInReluctantMode() {
+        Documentation documentation = workspace.getDocumentation();
+        Set<Image> images = documentation.getImages();
+
+        assertTrue(images.isEmpty());
+
+        imageImporter = new DefaultImageImporter(true);
+        imageImporter.importDocumentation(workspace, new File("./src/test/resources/docs/images/images"));
+
+        // no images because there's no content referencing any images
+        assertEquals(0, documentation.getImages().size());
+
+        // add a documentation section and decision
+        documentation.addSection(new Section(Format.Markdown, """
+                # Heading
+                
+                ![alt](image.png)
+                """));
+
+        Decision decision = new Decision("1");
+        decision.setTitle("Title");
+        decision.setStatus("Accepted");
+        decision.setFormat(Format.AsciiDoc);
+        decision.setContent("""
+                = Heading
+                
+                image::image.jpg[alt]
+                """);
+        documentation.addDecision(decision);
+
+        // try again
+        imageImporter.importDocumentation(workspace, new File("./src/test/resources/docs/images/images"));
+
+        images = documentation.getImages();
+        assertEquals(2, images.size());
+
+        Image png = documentation.getImages().stream().filter(i -> i.getName().equals("image.png")).findFirst().get();
+        assertEquals("image/png", png.getType());
+        assertTrue(png.getContent().startsWith("iVBORw0KGgoAAAANSUhEUgAAACAAAAAaCAYAAADWm14/AAAD"));
+        assertTrue(images.contains(png));
+
+        Image jpg = documentation.getImages().stream().filter(i -> i.getName().equals("image.jpg")).findFirst().get();
+        assertEquals("image/jpeg", jpg.getType());
+        assertEquals("/9j/4AAQSkZJRgABAgAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAAaACADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDxzUdRu9Vv5r69nea4mcu7uxJyTnv2GeBT49I1CWNXS1cqwyDkDP5mqLfdP0NeueF9Pt9Q1AR3Kb40h3begJ4HNerhqEal+boebiK0qdra3PNP7D1L/nzf/vpf8afbnVvD17BqEPnWs0UgZJVbHIOccHvjoete8/8ACP6R/wA+EP5V598R9Ot9PttttHsSRUbaOgIcDitZ4anytpszhXqcyTS1PNHVl3KykMMgg8c16n4b1q20+6W5dt8MkWwlCCR05x+Fc78UraC1+IGqx28EcKeYW2xoFGSTk4Hc1x5RSCSoz9KwoV/Zpu17m9ah7RpXtY99/wCEy0j+9N/3x/8AXrhfH+swavEotwf4I0U43Md2ScCvPPLT+4v5V2XwttLa5+IOlRz28UqeaG2yIGGQRg4NVPFrlaUfxFHC2km5bH//2Q==", jpg.getContent());
+        assertTrue(images.contains(jpg));
     }
 
 }
