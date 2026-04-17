@@ -228,6 +228,8 @@ public class Configuration {
 
                 for (String key : propertiesFromFile.stringPropertyNames()) {
                     String name = key.toLowerCase();
+                    name = name.replace('-', '.');
+
                     if (name.startsWith(PROPERTY_NAME_PREFIX)) {
                         properties.setProperty(name, propertiesFromFile.getProperty(key));
                     } else {
@@ -242,20 +244,24 @@ public class Configuration {
     }
 
     private void loadSystemProperties() {
-        for (String name : System.getProperties().stringPropertyNames()) {
-            String lowerCaseName = name.toLowerCase();
-            if (lowerCaseName.startsWith(PROPERTY_NAME_PREFIX)) {
-                properties.setProperty(lowerCaseName, System.getProperty(name));
+        for (String propertyName : System.getProperties().stringPropertyNames()) {
+            String name = propertyName.toLowerCase();
+            name = name.replace('-', '.');
+
+            if (name.startsWith(PROPERTY_NAME_PREFIX)) {
+                properties.setProperty(name, System.getProperty(propertyName));
             }
         }
     }
 
     private void loadEnvironmentVariables() {
-        for (String name : System.getenv().keySet()) {
-            String lowerCaseName = name.toLowerCase();
-            if (lowerCaseName.startsWith(ENVIRONMENT_VARIABLE_NAME_PREFIX)) {
-                lowerCaseName = lowerCaseName.replace('_', '.');
-                properties.setProperty(lowerCaseName, System.getenv(name));
+        for (String environmentVariableName : System.getenv().keySet()) {
+            String name = environmentVariableName.toLowerCase();
+
+            if (name.startsWith(ENVIRONMENT_VARIABLE_NAME_PREFIX)) {
+                name = name.replace('-', '.');
+                name = name.replace('_', '.');
+                properties.setProperty(name, System.getenv(environmentVariableName));
             }
         }
     }
@@ -407,7 +413,7 @@ public class Configuration {
     private void logAllProperties(Log log, Properties properties) {
         log.info("***********************************************************************************");
 
-        String propertiesToMask = ".*encryption|.*key|.*password|.*license";
+        String propertiesToMask = ".*encryption|.*key|.*keyid|.*password|.*license";
 
         Set<String> propertyNames = new TreeSet<>(properties.stringPropertyNames());
         for (String name : propertyNames) {

@@ -11,6 +11,7 @@
 
 - Fixes https://github.com/structurizr/structurizr/issues/51 (window.location.hash not scrolled to on refresh).
 - Adds support for Markdown footnotes (https://github.com/structurizr/structurizr/issues/38).
+- Replaces `-` with `.` in configuration property names.
 
 ### pull
 
