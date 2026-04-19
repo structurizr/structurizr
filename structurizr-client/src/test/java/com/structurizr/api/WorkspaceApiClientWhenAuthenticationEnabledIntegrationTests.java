@@ -16,6 +16,7 @@ public class WorkspaceApiClientWhenAuthenticationEnabledIntegrationTests extends
         properties.setProperty("structurizr.authentication", "fixed");
         properties.setProperty("structurizr.username", "structurizr");
         properties.setProperty("structurizr.password", "{noop}password");
+        properties.setProperty("structurizr.license", System.getenv("STRUCTURIZR_LICENSE"));
         StringWriter stringWriter = new StringWriter();
         properties.store(stringWriter, null);
         Files.writeString(new File(structurizrDataDirectory, STRUCTURIZR_PROPERTIES).toPath(), stringWriter.toString());

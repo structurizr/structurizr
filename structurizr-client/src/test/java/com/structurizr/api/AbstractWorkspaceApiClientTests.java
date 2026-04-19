@@ -7,6 +7,7 @@ import com.structurizr.io.json.EncryptedJsonReader;
 import com.structurizr.io.json.JsonReader;
 import com.structurizr.util.ImageUtils;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.EnabledIf;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
@@ -32,36 +33,42 @@ abstract class AbstractWorkspaceApiClientTests {
 
     private WorkspaceApiClient client;
 
+    protected static boolean isEnabled() {
+        return System.getenv("STRUCTURIZR_LICENSE") != null;
+    }
+
     @BeforeAll
     void startStructurizrServer() throws Exception {
-        structurizrDataDirectory = Files.createTempDirectory(AbstractWorkspaceApiClientTests.class.getSimpleName()).toFile();
-        structurizrDataDirectory.deleteOnExit();
+        if (isEnabled()) {
+            structurizrDataDirectory = Files.createTempDirectory(AbstractWorkspaceApiClientTests.class.getSimpleName()).toFile();
+            structurizrDataDirectory.deleteOnExit();
 
-        configureServer(structurizrDataDirectory);
+            configureServer(structurizrDataDirectory);
 
-        workspaceArchiveLocation = new File(structurizrDataDirectory.getAbsolutePath(), "archive");
-        workspaceArchiveLocation.mkdirs();
+            workspaceArchiveLocation = new File(structurizrDataDirectory.getAbsolutePath(), "archive");
+            workspaceArchiveLocation.mkdirs();
 
-        File workspaceDirectory = new File(structurizrDataDirectory, "1");
-        workspaceDirectory.mkdirs();
+            File workspaceDirectory = new File(structurizrDataDirectory, "1");
+            workspaceDirectory.mkdirs();
 
-        Properties properties = new Properties();
-        properties.setProperty("name", "Name");
-        properties.setProperty("description", "Description");
-        properties.setProperty("apiKey", "1234567890");
-        StringWriter stringWriter = new StringWriter();
-        properties.store(stringWriter, null);
-        Files.writeString(new File(workspaceDirectory, WORKSPACE_PROPERTIES).toPath(), stringWriter.toString());
+            Properties properties = new Properties();
+            properties.setProperty("name", "Name");
+            properties.setProperty("description", "Description");
+            properties.setProperty("apiKey", "1234567890");
+            StringWriter stringWriter = new StringWriter();
+            properties.store(stringWriter, null);
+            Files.writeString(new File(workspaceDirectory, WORKSPACE_PROPERTIES).toPath(), stringWriter.toString());
 
-        dockerContainer = new StructurizrContainer(structurizrDataDirectory);
-        dockerContainer.start();
+            dockerContainer = new StructurizrContainer(structurizrDataDirectory);
+            dockerContainer.start();
 
-        int port = dockerContainer.getMappedPort(8080);
-        structurizrApiUrl = "http://localhost:" + port + "/api";
+            int port = dockerContainer.getMappedPort(8080);
+            structurizrApiUrl = "http://localhost:" + port + "/api";
 
-        Logger logger = LoggerFactory.getLogger(StructurizrContainer.class);
-        Slf4jLogConsumer logConsumer = new Slf4jLogConsumer(logger);
-        dockerContainer.followOutput(logConsumer);
+            Logger logger = LoggerFactory.getLogger(StructurizrContainer.class);
+            Slf4jLogConsumer logConsumer = new Slf4jLogConsumer(logger);
+            dockerContainer.followOutput(logConsumer);
+        }
     }
 
     protected void configureServer(File structurizrDataDirectory) throws Exception {
@@ -106,6 +113,7 @@ abstract class AbstractWorkspaceApiClientTests {
 
     @Test
     @Tag("IntegrationTest")
+    @EnabledIf(value="isEnabled")
     void putAndGetWorkspace_WithoutEncryption() throws Exception {
         Workspace workspace = new Workspace("Name", "Description");
         workspace.getModel().addSoftwareSystem("Name");
@@ -126,6 +134,7 @@ abstract class AbstractWorkspaceApiClientTests {
 
     @Test
     @Tag("IntegrationTest")
+    @EnabledIf(value="isEnabled")
     void putAndGetWorkspace_WithEncryption() throws Exception {
         client.setEncryptionStrategy(new AesEncryptionStrategy("password"));
         Workspace workspace = new Workspace("Name", "Description");
@@ -147,6 +156,7 @@ abstract class AbstractWorkspaceApiClientTests {
 
     @Test
     @Tag("IntegrationTest")
+    @EnabledIf(value="isEnabled")
     void putImage() throws Exception {
         File localImage = new File("src/test/resources/structurizr-logo.png");
         assertTrue(localImage.exists());

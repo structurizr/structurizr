@@ -1,6 +1,24 @@
 package com.structurizr.api;
 
+import java.io.File;
+import java.io.StringWriter;
+import java.nio.file.Files;
+import java.util.Properties;
+
 public class WorkspaceApiClientWhenAuthenticationDisabledIntegrationTests extends AbstractWorkspaceApiClientTests {
+
+    private static final String STRUCTURIZR_PROPERTIES = "structurizr.properties";
+
+    @Override
+    protected void configureServer(File structurizrDataDirectory) throws Exception {
+        // enable authentication
+        Properties properties = new Properties();
+        properties.setProperty("structurizr.authentication", "none");
+        properties.setProperty("structurizr.license", System.getenv("STRUCTURIZR_LICENSE"));
+        StringWriter stringWriter = new StringWriter();
+        properties.store(stringWriter, null);
+        Files.writeString(new File(structurizrDataDirectory, STRUCTURIZR_PROPERTIES).toPath(), stringWriter.toString());
+    }
 
     @Override
     protected WorkspaceApiClient createWorkspaceApiClient(String apiUrl, long workspaceId) {
