@@ -1,6 +1,9 @@
 # Changelog
 
-## unreleased
+## 2026.04.19
+
+- Updates Structurizr for Java library to [v6.2.0](https://github.com/structurizr/structurizr/releases/tag/v6.2.0).
+- There are now two versions of the prebuilt binaries - see [Prebuilt binaries](https://docs.structurizr.com/binaries) for details. 
 
 ### local
 
