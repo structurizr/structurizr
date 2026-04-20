@@ -1,11 +1,14 @@
 package com.structurizr.mcp;
 
+import com.structurizr.util.StringUtils;
+import com.structurizr.view.ThemeUtils;
 import org.apache.commons.cli.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +22,8 @@ public class Server {
 	private static final String SERVER_DELETE = "server-delete";
 	private static final String PLANTUML = "plantuml";
 	private static final String MERMAID = "mermaid";
+
+	private static final String THEMES_ENVIRONMENT_VARIABLE_NAME = "STRUCTURIZR_THEMES";
 
 	public static void main(String[] args) throws Exception {
 		Log log = LogFactory.getLog(Server.class);
@@ -104,6 +109,16 @@ public class Server {
 		if (profiles.isEmpty()) {
 			log.warn("No tools were configured - configuring DSL tools");
 			profiles.add(DSL);
+		}
+
+		// load themes via the STRUCTURIZR_THEMES environment variable
+		String themesEnvironmentVariable = System.getenv(THEMES_ENVIRONMENT_VARIABLE_NAME);
+		if (!StringUtils.isNullOrEmpty(themesEnvironmentVariable)) {
+			File themesDirectory = new File(themesEnvironmentVariable);
+			if (themesDirectory.exists()) {
+				log.info("Installing themes from " + themesDirectory.getAbsolutePath());
+				ThemeUtils.installThemes(themesDirectory);
+			}
 		}
 
 		SpringApplication app = new SpringApplication(Server.class);

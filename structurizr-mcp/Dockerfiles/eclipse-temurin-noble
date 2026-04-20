@@ -3,6 +3,7 @@ FROM eclipse-temurin:21.0.9_10-jre-noble
 ENV PORT=8080
 
 COPY structurizr-mcp/target/structurizr-*.war /usr/local/structurizr-mcp.war
+COPY structurizr-themes /usr/local/structurizr-themes
 
 EXPOSE ${PORT}
 
