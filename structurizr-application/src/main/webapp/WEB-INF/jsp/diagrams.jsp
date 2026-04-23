@@ -81,6 +81,7 @@
             <%@ include file="/WEB-INF/fragments/quick-navigation.jspf" %>
             <%@ include file="/WEB-INF/fragments/tooltip.jspf" %>
             <%@ include file="/WEB-INF/fragments/diagrams/navigation.jspf" %>
+            <%@ include file="/WEB-INF/fragments/diagrams/navigator.jspf" %>
 
             <div id="embeddedControls" style="text-align: right; position: absolute; bottom: 10px; right: 10px; opacity: 0.1; z-index: 100;">
                 <div class="btn-group">
@@ -369,6 +370,7 @@
 
     function viewChanged(key) {
         $('#keyModal').modal('hide');
+        highlightViewInDiagramNavigator(key);
 
         // set the view key in the embed code modal
         $('.diagramEmbedDiagramId').text(key);
@@ -629,9 +631,9 @@
             </c:otherwise>
             </c:choose>
 
-            html += '<div>';
+            html += '<div style="font-size: 14px;">';
             html += title;
-            html += '<br /><span class="small">#' + structurizr.util.escapeHtml(view.key) + '</span>';
+            html += '<div class="small">#' + structurizr.util.escapeHtml(view.key) + '</div>';
             html += '</div>'
 
             html += '<div class="diagramLevelWrapper">';
@@ -650,6 +652,8 @@
         });
 
         $('#diagramNavigation').append(html);
+
+        renderDiagramNavigator();
 
         $('.viewThumbnail').on('error', function() {
             $(this).on('error', undefined);
@@ -899,10 +903,15 @@
             } else if (e.which === b) {
                 back();
                 return;
-            } else if (e.which === l && structurizr.diagram.isEditable()) {
-                openAutoLayoutModal();
-                e.preventDefault();
-                return;
+            } else if (e.which === l) {
+                if (structurizr.diagram.isEditable()) {
+                    openAutoLayoutModal();
+                    e.preventDefault();
+                    return;
+                } else {
+                    openDiagramNavigator();
+                    return;
+                }
             }
         });
     }

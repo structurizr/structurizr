@@ -929,6 +929,25 @@ structurizr.Workspace = class Workspace {
         return views;
     };
 
+    findDeploymentViewsForSoftwareSystem(softwareSystemId) {
+        const views = [];
+
+        for (var i = 0; i < this.#views.length; i++) {
+            var view = this.#views[i];
+
+            if (view.type === structurizr.constants.DEPLOYMENT_VIEW_TYPE && view.softwareSystemId === softwareSystemId) {
+                views.push(view);
+            } else if (view.type === structurizr.constants.FILTERED_VIEW_TYPE) {
+                var baseView = this.findViewByKey(view.baseViewKey);
+                if (baseView.type === structurizr.constants.DEPLOYMENT_VIEW_TYPE && baseView.softwareSystemId === softwareSystemId) {
+                    views.push(view);
+                }
+            }
+        }
+
+        return views;
+    };
+
     #sortViews() {
         var listOfViews = [];
         var filters = [];
