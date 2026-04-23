@@ -171,6 +171,22 @@ hr {
     border: solid 1px #333333;
 }
 
+.diagramLevel {
+    background: #444444;
+}
+.diagramLevel1 {
+    background: #08427B;
+}
+.diagramLevel2 {
+    background: #3066B7;
+}
+.diagramLevel3 {
+    background: #85BBF0;
+}
+.diagramLevel4 {
+    background: #BFDBF7;
+}
+
 #filterModal .tagOn {
     background: #aaaaaa;
     color: #ffffff;

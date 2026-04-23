@@ -750,6 +750,57 @@ structurizr.Workspace = class Workspace {
         this.#sortViews();
     }
 
+    #calculateLevel(view) {
+        if (view.type === structurizr.constants.SYSTEM_LANDSCAPE_VIEW_TYPE) {
+            return 1;
+        } else if (view.type === structurizr.constants.SYSTEM_CONTEXT_VIEW_TYPE) {
+            return 1;
+        } else if (view.type === structurizr.constants.CONTAINER_VIEW_TYPE) {
+            return 2;
+        } else if (view.type === structurizr.constants.COMPONENT_VIEW_TYPE) {
+            return 3;
+        } else if (view.type === structurizr.constants.DYNAMIC_VIEW_TYPE) {
+            if (view.elementId === undefined) {
+                return 1;
+            } else {
+                const element = this.findElementById(view.elementId);
+                if (element.type === structurizr.constants.SOFTWARE_SYSTEM_ELEMENT_TYPE) {
+                    return 2;
+                } else {
+                    return 3;
+                }
+            }
+        } else if (view.type === structurizr.constants.DEPLOYMENT_VIEW_TYPE) {
+            var level = 1
+            const self = this;
+            view.elements.forEach(function(elementView) {
+                const element = self.findElementById(elementView.id);
+                if (element.type === structurizr.constants.CONTAINER_INSTANCE_ELEMENT_TYPE) {
+                    level = 2;
+                }
+            });
+
+            return level;
+
+        } else if (view.type === structurizr.constants.IMAGE_VIEW_TYPE) {
+            if (view.elementId === undefined) {
+                return 1;
+            } else {
+                const element = this.findElementById(view.elementId);
+                if (element.type === structurizr.constants.SOFTWARE_SYSTEM_ELEMENT_TYPE) {
+                    return 2;
+                } else if (element.type === structurizr.constants.CONTAINER_ELEMENT_TYPE) {
+                    return 3;
+                } else {
+                    return 4;
+                }
+            }
+        } else if (view.type === structurizr.constants.FILTERED_VIEW_TYPE) {
+            const baseView = this.findViewByKey(view.baseViewKey);
+            return this.#calculateLevel(baseView);
+        }
+    }
+
     #registerView(view) {
         this.#allViews.push(view);
 
@@ -781,6 +832,8 @@ structurizr.Workspace = class Workspace {
                 });
             }
         }
+
+        view.level = this.#calculateLevel(view);
     }
 
     hasViews() {

@@ -534,7 +534,7 @@
             // don't generate thumbnail
         } else {
             structurizr.diagram.exportCurrentThumbnailToPNG(function (thumbnail) {
-                const domId = '#diagram' + (viewKeys.indexOf(viewKey) + 1) + 'Thumbnail';
+                const domId = '.diagram' + (viewKeys.indexOf(viewKey)) + 'Thumbnail';
                 var suffix;
 
                 if (structurizr.ui.isDarkMode()) {
@@ -573,10 +573,10 @@
     function selectDiagramByView(view) {
         if (structurizr.workspace.id > 0) {
             $('.diagramThumbnail').removeClass('diagramThumbnailActive');
-            var index = 1;
+            var index = 0;
             views.forEach(function (v) {
                 if (view.key === v.key) {
-                    const thumbnail = $('#diagram' + index + 'Thumbnail');
+                    const thumbnail = $('.diagram' + index + 'Thumbnail');
                     thumbnail.addClass('diagramThumbnailActive');
                 }
                 index++;
@@ -591,7 +591,7 @@
     function scrollActiveThumbnailIntoView() {
         // scroll the thumbnail into view
         var diagramNavigation = $('#diagramNavigationPanel');
-        var thumbnail = $('.diagramThumbnailActive');
+        var thumbnail = $('#diagramNavigationPanel .diagramThumbnailActive');
         if (diagramNavigation.length > 0 && thumbnail.length > 0) {
             if (thumbnail.offset().top < diagramNavigation.offset().top) {
                 thumbnail[0].scrollIntoView(true);
@@ -611,13 +611,13 @@
 
     function initThumbnails() {
         var html = '';
-        var index = 1;
+        var index = 0;
         views.forEach(function(view) {
             viewKeys.push(view.key);
-            var id = 'diagram' + index;
-            var title = structurizr.util.escapeHtml(structurizr.ui.getTitleForView(view));
+            const id = 'diagram' + index + 'Thumbnail';
+            const title = structurizr.util.escapeHtml(structurizr.ui.getTitleForView(view));
 
-            html += '<div id="' + id + 'Thumbnail" class="diagramThumbnail centered small">';
+            html += '<div class="diagramThumbnail ' + id + ' centered small">';
 
             <c:choose>
             <c:when test="${not empty param.version or embed eq true}">
@@ -632,7 +632,19 @@
             html += '<div>';
             html += title;
             html += '<br /><span class="small">#' + structurizr.util.escapeHtml(view.key) + '</span>';
-            html += '</div></div>';
+            html += '</div>'
+
+            html += '<div class="diagramLevelWrapper">';
+            for (var i = 1; i <= 4; i++) {
+                if (view.level === i) {
+                    html += '<span class="diagramLevel diagramLevel' + i + '"></span>';
+                } else {
+                    html += '<span class="diagramLevel"></span>';
+                }
+            }
+            html += '</div>';
+
+            html += '</div>';
 
             index++;
         });
@@ -644,11 +656,11 @@
             $(this).attr('src', '/static/img/thumbnail-not-available.png');
         });
 
-        index = 1;
+        index = 0;
         views.forEach(function(view) {
-            document.getElementById('diagram' + index + 'Thumbnail').onclick = function() {
+            $('.diagram' + index + 'Thumbnail').click(function() {
                 window.location.hash = encodeURIComponent(view.key);
-            };
+            });
 
             index++;
         });

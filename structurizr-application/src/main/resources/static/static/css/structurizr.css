@@ -466,7 +466,7 @@ hr {
 
 .diagramThumbnail {
     cursor: pointer;
-    margin: 0 0 40px 0;
+    margin: 0 0 10px 0;
     padding: 10px;
     border-radius: 5px;
 }
@@ -475,12 +475,41 @@ hr {
     max-height: 160px;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 10px;
+    margin-bottom: 0;
 }
 
 .diagramThumbnailActive {
     background: #aaaaaa;
     color: #ffffff;
+}
+
+.diagramLevelWrapper {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.diagramLevel {
+    width: 25%;
+    height: 5px;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    background: #eeeeee;
+}
+.diagramLevel1 {
+    background: #08427B;
+}
+.diagramLevel2 {
+    background: #3066B7;
+}
+.diagramLevel3 {
+    background: #85BBF0;
+}
+.diagramLevel4 {
+    background: #BFDBF7;
 }
 
 .structurizrDiagramViewport {
