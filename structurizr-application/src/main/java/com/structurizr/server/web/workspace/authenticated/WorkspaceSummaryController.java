@@ -35,7 +35,7 @@ class WorkspaceSummaryController extends AbstractWorkspaceController {
                             model.addAttribute("branches", workspaceComponent.getWorkspaceBranches(workspaceId));
                         }
 
-                        model.addAttribute("versions", workspaceComponent.getWorkspaceVersions(workspaceId, workspaceMetadata.getBranch()));
+                        model.addAttribute("versions", workspaceComponent.getWorkspaceVersions(workspaceId, branch));
                     }
                 },
                 branch, version, model, true, true
