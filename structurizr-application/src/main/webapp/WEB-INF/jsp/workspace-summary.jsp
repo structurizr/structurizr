@@ -35,12 +35,24 @@
                 <c:if test="${not empty workspace.branch}">
                 <div style="margin-bottom: 10px">
                     <span class="label label-branch btn-warning"><img src="/static/bootstrap-icons/bezier2.svg" class="icon-sm icon-white" /> ${workspace.branch}</span>
+
+                    <c:if test="${workspace.editable && not workspace.locked && branchesEnabled}">
+                    <form id="deleteBranchForm" action="/workspace/${workspace.id}/branch/${branch}/delete" method="post" class="form-inline" style="display: inline-block">
+                        <button class="btn btn-danger" style="padding: 2px 10px 1px 10px; border-radius: 4px;" type="submit"><img src="/static/bootstrap-icons/trash.svg" class="icon-sm icon-white" /></button>
+                    </form>
+                    </c:if>
                 </div>
                 </c:if>
                 <c:if test="${not empty param.version}">
                 <div style="margin-bottom: 10px">
                     <span class="label label-version"><img src="/static/bootstrap-icons/clock-history.svg" class="icon-sm icon-white" /> ${workspace.userFriendlyInternalVersion}</span>
                 </div>
+
+                <c:if test="${workspace.editable && not workspace.locked}">
+                <div class="navigationItem">
+                <a id="revertToVersionLink" href=""><img src="/static/bootstrap-icons/arrow-counterclockwise.svg" class="icon-sm" /> Revert to this version</a>
+                </div>
+                </c:if>
                 </c:if>
             </div>
 
@@ -105,6 +117,7 @@
             </c:if>
 
             <c:if test="${structurizrConfiguration.profile == 'Server'}">
+
             <div id="imagesLink" class="navigationItem hidden">
                 <a href="<c:out value="${urlPrefix}" />/images<c:out value="${urlSuffix}" escapeXml="false" />"><img src="/static/bootstrap-icons/filetype-png.svg" class="icon-sm" /> Published images</a>
             </div>
@@ -149,19 +162,24 @@
             </div>
             </c:if>
             </c:if>
+
+            <div class="navigationItemSeparator"></div>
+
+            <c:if test="${workspace.editable && not workspace.locked && branchesEnabled}">
+            <div class="navigationItem">
+            <a id="copyToBranchLink" href=""><img src="/static/bootstrap-icons/bezier2.svg" class="icon-sm" /> Copy to branch</a>
+            </div>
+            </c:if>
+            
             </c:if>
         </div>
     </div>
 
     <div class="col-10">
-        <div class="section" style="padding-bottom: 20px">
-            <div class="container centered">
-                <h1><span id="workspaceName" class="workspace${workspace.id}Name"><c:out value="${workspace.name}" escapeXml="true" /></span></h1>
-                <p id="workspaceDescription" class="workspace${workspace.id}Description">
-                    <c:out value="${workspace.description}" escapeXml="true" />
-                </p>
 
-                <div class="centered" style="margin-top: 20px">
+        <div class="section workspaceContent" style="padding-top: 10px; padding-bottom: 0;">
+            <div class="container centered">
+                <div class="centered" style="margin-top: 10px">
                     <c:if test="${not empty branches}">
                     <form id="workspaceBranchForm" class="form-inline" style="display: inline-block" method="get" action="<c:out value="${urlPrefix}" />">
                         <select id="workspaceBranch" name="branch" class="form-select">
@@ -186,62 +204,57 @@
                         </select>
                     </form>
                     </c:if>
-
-                    <div style="margin-top: 10px">
-                    <c:if test="${not empty param.version && workspace.editable && not workspace.locked}">
-                        <button id="revertButton" class="btn btn-secondary small"><img src="/static/bootstrap-icons/clock-history.svg" class="icon-btn icon-white" /> Revert to this version</button>
-                    </c:if>
-
-                    <c:if test="${workspace.editable && not workspace.locked && branchesEnabled}">
-                    <button id="copyToBranchButton" class="btn btn-secondary small"><img src="/static/bootstrap-icons/bezier2.svg" class="icon-btn icon-white" /> Copy to branch</button>
-                    </c:if>
-
-                    <c:if test="${workspace.editable && not workspace.locked && branchesEnabled && not empty branch}">
-                    <form id="deleteBranchForm" action="/workspace/${workspace.id}/branch/${branch}/delete" method="post" class="form-inline" style="display: inline-block">
-                        <button class="btn btn-danger small" type="submit"><img src="/static/bootstrap-icons/trash.svg" class="icon-btn icon-white" /> Delete branch</button>
-                    </form>
-                    </c:if>
-                    </div>
                 </div>
                 </c:if>
-
-                <div id="gettingStarted" class="centered hidden">
-                    <c:if test="${workspace.editable && not workspace.locked}">
-                    <br />
-                    <p>
-                        This is your workspace summary page from where you can access your diagrams, documentation, and architecture decision records.
-                        We recommend that a workspace contains the model, views, and documentation for a single software system
-                        - see <a href="https://docs.structurizr.com/workspaces" target="_blank">usage recommendations</a> for more details.
-                    </p>
-
-                    <div class="row" style="margin-top: 20px; margin-bottom: 20px">
-                        <div class="col-6 centered">
-                            <div style="padding: 10px; margin: 10px">
-                                <div style="margin-top: 5px; font-size: 20px">
-                                    <a id="importJsonLink2" href=""><img src="/static/bootstrap-icons/cloud-upload.svg" class="icon-lg" /> Import JSON</a>
-                                </div>
-                                <div class="small">
-                                    Import an existing workspace from a JSON file.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 centered">
-                            <div style="padding: 10px; margin: 10px">
-                                <div style="margin-top: 5px; font-size: 20px">
-                                    <a href="<c:out value="${urlPrefix}" />/settings"><img src="/static/bootstrap-icons/gear.svg" class="icon-lg" /> Settings</a>
-                                </div>
-                                <div class="small">
-                                    Use the workspace settings page to generate an API key to upload your workspace with the Structurizr <a href="https://docs.structurizr.com/push" target="_blank">push</a> command, the <a href="https://docs.structurizr.com/java" target="_blank">Structurizr Java library</a>, or other compatible tools.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </c:if>
-                </div>
             </div>
         </div>
 
-        <div class="section workspaceContent">
+        <div class="section" style="padding-top: 0; padding-bottom: 20px">
+            <div class="container centered">
+                <h1><span id="workspaceName" class="workspace${workspace.id}Name" style="font-size: 30px;"><c:out value="${workspace.name}" escapeXml="true" /></span></h1>
+                <p id="workspaceDescription" class="workspace${workspace.id}Description">
+                    <c:out value="${workspace.description}" escapeXml="true" />
+                </p>
+            </div>
+        </div>
+
+        <div id="gettingStarted" class="section hidden" style="padding-top: 0;">
+            <div class="container centered ">
+                <c:if test="${workspace.editable && not workspace.locked}">
+                <br />
+                <p>
+                    This is your workspace summary page from where you can access your diagrams, documentation, and architecture decision records.
+                    We recommend that a workspace contains the model, views, and documentation for a single software system
+                    - see <a href="https://docs.structurizr.com/workspaces" target="_blank">usage recommendations</a> for more details.
+                </p>
+
+                <div class="row" style="margin-top: 20px; margin-bottom: 20px">
+                    <div class="col-6 centered">
+                        <div style="padding: 10px; margin: 10px">
+                            <div style="margin-top: 5px; font-size: 20px">
+                                <a id="importJsonLink2" href=""><img src="/static/bootstrap-icons/cloud-upload.svg" class="icon-lg" /> Import JSON</a>
+                            </div>
+                            <div class="small">
+                                Import an existing workspace from a JSON file.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 centered">
+                        <div style="padding: 10px; margin: 10px">
+                            <div style="margin-top: 5px; font-size: 20px">
+                                <a href="<c:out value="${urlPrefix}" />/settings"><img src="/static/bootstrap-icons/gear.svg" class="icon-lg" /> Settings</a>
+                            </div>
+                            <div class="small">
+                                Use the workspace settings page to generate an API key to upload your workspace with the Structurizr <a href="https://docs.structurizr.com/push" target="_blank">push</a> command, the <a href="https://docs.structurizr.com/java" target="_blank">Structurizr Java library</a>, or other compatible tools.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </c:if>
+            </div>
+        </div>
+
+        <div class="section workspaceContent" style="padding-top: 0; padding-bottom: 20px">
             <div class="container centered">
                 <div id="diagrams"></div>
             </div>
@@ -278,8 +291,16 @@
         }
     }
 
-    addOnClickHandler('copyToBranchButton', copyWorkspaceToBranch);
-    addOnClickHandler('revertButton', revertToLoadedVersion);
+    addOnClickHandler('copyToBranchLink', function(e) {
+        copyWorkspaceToBranch();
+        e.preventDefault();
+    });
+    
+    addOnClickHandler('revertToVersionLink', function(e) {
+        revertToLoadedVersion();
+        e.preventDefault();
+    });
+
     $('#deleteBranchForm').on('submit', function() { return deleteBranch(); });
 
     addOnClickHandler('exportJsonLink', function (e) {
@@ -332,7 +353,7 @@
                 var title = structurizr.util.escapeHtml(structurizr.ui.getTitleForView(view));
 
                 if (count <= maxNumberOfViews) {
-                    html += '<div class="centered" style="display: inline-block; margin: 10px 10px 40px 10px; width: ' + thumbnailSize + 'px;">';
+                    html += '<div class="centered" style="display: inline-block; margin: 10px 10px 40px 10px; width: ' + thumbnailSize + 'px; font-size: 14px;">';
 
                     <c:choose>
                     <c:when test="${not empty param.version}">
@@ -340,16 +361,27 @@
                     </c:when>
                     <c:otherwise>
                     html += '  <a href="' + url + '">';
-                    html += '<img src="${thumbnailUrl}' + structurizr.util.escapeHtml(view.key) + '-thumbnail.png" class="img-light img-thumbnail viewThumbnail" style="margin-bottom: 10px; max-height: ' + thumbnailSize + 'px" />';
-                    html += '<img src="${thumbnailUrl}' + structurizr.util.escapeHtml(view.key) + '-thumbnail-dark.png" class="img-dark img-thumbnail viewThumbnail" style="margin-bottom: 10px; max-height: ' + thumbnailSize + 'px" />';
+                    html += '<img src="${thumbnailUrl}' + structurizr.util.escapeHtml(view.key) + '-thumbnail.png" class="img-light img-thumbnail viewThumbnail" style="margin-bottom: 10px; margin-left: auto; margin-right: auto; max-height: ' + thumbnailSize + 'px" />';
+                    html += '<img src="${thumbnailUrl}' + structurizr.util.escapeHtml(view.key) + '-thumbnail-dark.png" class="img-dark img-thumbnail viewThumbnail" style="margin-bottom: 10px; margin-left: auto; margin-right: max-height: ' + thumbnailSize + 'px" />';
                     html += '</a>';
                     </c:otherwise>
                     </c:choose>
 
-                    html += '  <div class="smaller">';
-                    html += '    <a href="' + url + '">' + title + '</a><br />';
-                    html += '    #' + structurizr.util.escapeHtml(view.key) + '';
+                    html += '  <div>';
+                    html += '    <a href="' + url + '">' + title + '</a>';
+                    html += '    <div class="small">#' + structurizr.util.escapeHtml(view.key) + '</div>';
                     html += '  </div>';
+
+                    html += '<div class="diagramLevelWrapper">';
+                    for (var i = 1; i <= 4; i++) {
+                        if (view.level === i) {
+                            html += '<span class="diagramLevel diagramLevel' + i + '"></span>';
+                        } else {
+                            html += '<span class="diagramLevel"></span>';
+                        }
+                    }
+                    html += '</div>';
+
                     html += '</div>';
                 }
                 count++;
@@ -390,8 +422,7 @@
             $('.workspaceContent').addClass('hidden');
             $('#inspectionsLink').addClass('hidden');
             $('#exportJsonLink').addClass('hidden');
-            $('#copyToBranchButton').addClass('hidden');
-
+            $('#copyToBranchLink').addClass('hidden');
         }
 
         if (structurizr.workspace.getProperty('structurizr.dsl') === undefined) {
@@ -516,7 +547,7 @@
     }
 
     $("#workspaceVersion").change(function () {
-        $('#revertButton').prop('disabled', true);
+        $('#revertToVersionLink').prop('disabled', true);
     });
 </script>
 
