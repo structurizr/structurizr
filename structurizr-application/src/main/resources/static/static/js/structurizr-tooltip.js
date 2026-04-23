@@ -13,6 +13,7 @@ structurizr.ui.Tooltip = function() {
     var tooltipProperties = $('#tooltipProperties');
     var tooltipUrl = $('#tooltipUrl');
     var tooltipAdditionalContent = $('#tooltipAdditionalContent');
+    var tooltipSeparator = $('#tooltipSeparator');
 
     this.reposition = function(x, y) {
         var windowWidth = window.innerWidth;
@@ -62,6 +63,7 @@ structurizr.ui.Tooltip = function() {
         tooltipName.html(structurizr.util.escapeHtml(name));
         tooltipDescription.html(structurizr.util.escapeHtml(description));
         tooltipMetadata.html(structurizr.util.escapeHtml(metadata));
+        tooltipSeparator.addClass('hidden');
 
         tooltip.css("background", background);
         tooltip.css("border-color", structurizr.util.shadeColor(background, -20));
@@ -144,6 +146,7 @@ structurizr.ui.Tooltip = function() {
             renderAdditionalContent(additionalContent);
         }
 
+        tooltipSeparator.removeClass('hidden');
         show();
         this.reposition(x, y);
 
@@ -259,6 +262,7 @@ structurizr.ui.Tooltip = function() {
             renderAdditionalContent(additionalContent);
         }
 
+        tooltipSeparator.removeClass('hidden');
         show();
         this.reposition(x, y);
 

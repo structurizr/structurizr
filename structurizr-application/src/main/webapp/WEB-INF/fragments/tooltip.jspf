@@ -6,7 +6,7 @@
         padding: 10px;
         margin: 10px;
         position: fixed;
-        z-index: 10;
+        z-index: 9999;
         opacity: 0.98;
         border: 2px #666666 solid;
         border-radius: 5px;
@@ -65,7 +65,7 @@
         <div id="tooltipParent"></div>
         <div id="tooltipMetadata"></div>
         <div id="tooltipDescription"></div>
-        <hr />
+        <hr id="tooltipSeparator" />
     </div>
     <div id="tooltipTags"></div>
     <div id="tooltipProperties"></div>
