@@ -570,8 +570,7 @@
         }
     }
 
-    function selectDiagramByView(view)
-    {
+    function selectDiagramByView(view) {
         if (structurizr.workspace.id > 0) {
             $('.diagramThumbnail').removeClass('diagramThumbnailActive');
             var index = 1;
@@ -583,7 +582,9 @@
                 index++;
             });
 
-            scrollActiveThumbnailIntoView();
+            setTimeout(function() {
+                scrollActiveThumbnailIntoView();
+            }, 10);
         }
     }
 
