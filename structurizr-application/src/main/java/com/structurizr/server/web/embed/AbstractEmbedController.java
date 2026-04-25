@@ -60,6 +60,13 @@ abstract class AbstractEmbedController extends AbstractWorkspaceController {
         addCommonAttributes(model, "", false);
         addUrlSuffix(branch, WorkspaceVersion.LATEST_VERSION, model);
 
+        String urlPrefix = (String)model.getAttribute("urlPrefix");
+        if (!StringUtils.isNullOrEmpty(branch)) {
+            model.addAttribute("thumbnailUrl", urlPrefix + "/branch/" + branch + "/images/");
+        } else {
+            model.addAttribute("thumbnailUrl", urlPrefix + "/images/");
+        }
+
         workspaceMetadata.setEditable(false);
         model.addAttribute("workspace", workspaceMetadata);
 
