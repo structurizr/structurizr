@@ -682,7 +682,7 @@
         }
 
         const perspective = structurizr.diagram.getPerspective();
-        if (perspective.length > 0) {
+        if (perspective && perspective.length > 0) {
             if (url.indexOf('?') === -1) {
                 url = url + '?perspective=' + perspective;
             } else {
@@ -690,12 +690,14 @@
             }
         }
 
-        const tags = structurizr.diagram.getFilter().tags;
-        if (tags.length > 0) {
-            if (url.indexOf('?') === -1) {
-                url = url + '?tags=' + tags.join(',');
-            } else {
-                url = url + '&tags=' + tags.join(',');
+        if (structurizr.diagram.getFilter().active) {
+            const tags = structurizr.diagram.getFilter().tags;
+            if (tags.length > 0) {
+                if (url.indexOf('?') === -1) {
+                    url = url + '?tags=' + tags.join(',');
+                } else {
+                    url = url + '&tags=' + tags.join(',');
+                }
             }
         }
 
