@@ -106,14 +106,14 @@
                     </script>
 
                     <div class="btn-group">
-                        <button id="backEmbeddedButton" class="btn btn-default backButton" title="Go back to previous diagram"><img src="/static/bootstrap-icons/arrow-90deg-left.svg" class="icon-btn" /></button>
+                        <button id="locationEmbeddedButton" class="btn btn-default" title="Diagram navigator"><img src="/static/bootstrap-icons/geo-alt.svg" class="icon-btn" /></button>
 
                         <c:if test="${workspace.id > 0 && (embed eq true && workspace.editable eq false)}">
                             <button id="openCurrentDiagramInNewWindowEmbeddedButton" class="btn btn-default" title="Link to this diagram"><img src="/static/bootstrap-icons/link.svg" class="icon-btn" /></button>
                         </c:if>
                     </div>
                     <script nonce="${scriptNonce}">
-                        $('#backEmbeddedButton').click(function() { back(); });
+                        $('#locationEmbeddedButton').click(function() { openDiagramNavigator(); });
                         $('#openCurrentDiagramInNewWindowEmbeddedButton').click(function() { openCurrentDiagramInNewWindow(); });
                     </script>
                 </c:if>
