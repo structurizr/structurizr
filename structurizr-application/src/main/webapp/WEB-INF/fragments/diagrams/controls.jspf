@@ -3,10 +3,9 @@
         <div class="btn-group">
             <button id="homeButton" class="btn btn-default" title="Return to home page"><img src="/static/bootstrap-icons/house.svg" class="icon-btn" /></button>
             <button id="workspaceSummaryButton" class="btn btn-default" title="Workspace summary"><img src="/static/bootstrap-icons/folder.svg" class="icon-btn" /></button>
-            <button id="locationButton" class="btn btn-default" title="Location finder"><img src="/static/bootstrap-icons/geo-alt.svg" class="icon-btn" /></button>
         </div>
         <div class="btn-group">
-            <button id="backButton" class="btn btn-default backButton" title="Go back to the last viewed diagram [b]"><img src="/static/bootstrap-icons/arrow-90deg-left.svg" class="icon-btn" /></button>
+            <button id="locationButton" class="btn btn-default" title="Diagram navigator"><img src="/static/bootstrap-icons/geo-alt.svg" class="icon-btn" /></button>
         </div>
 
         <div class="modelViewButtons btn-group">
@@ -24,7 +23,6 @@
         <script nonce="${scriptNonce}">
             $('#homeButton').click(function() { window.location.href='/'; });
             $('#locationButton').click(function() { openDiagramNavigator(); });
-            $('#backButton').click(function() { back(); });
             $('#workspaceSummaryButton').click(function() { window.location.href='<c:out value="${urlPrefix}" /><c:out value="${urlSuffix}" escapeXml="false" />'; });
             $('#diagramKeyButton').click(function() { showKey(); });
             $('#diagramTooltipOnButton').click(function() { toggleTooltip(); });
@@ -47,15 +45,12 @@
             <button id="exportImagesButton" class="btn btn-default" title="Export diagram and key/legend to PNG/SVG"><img src="/static/bootstrap-icons/file-earmark-image.svg" class="icon-btn" /></button>
 
             <c:if test="${structurizrConfiguration.profile eq 'Server'}">
-            <button id="embedDiagramButton" class="btn btn-default" title="Embed"><img src="/static/bootstrap-icons/code-slash.svg" class="icon-btn" /></button>
             <script nonce="${scriptNonce}">$('#embedDiagramButton').click(function() { openEmbedModal(); });</script>
+            <button id="embedDiagramButton" class="btn btn-default" title="Embed"><img src="/static/bootstrap-icons/code-slash.svg" class="icon-btn" /></button>
             </c:if>
-
-            <button id="helpButton" class="btn btn-default" title="Help"><img src="/static/bootstrap-icons/question-circle.svg" class="icon-btn" /></button>
         </div>
         <script nonce="${scriptNonce}">
             $('#exportImagesButton').click(function() { exportToImages(); });
-            $('#helpButton').click(function() { window.open('https://docs.structurizr.com/ui/diagrams'); });
         </script>
 
         <c:if test="${includeEditButton eq true}">
@@ -147,7 +142,7 @@
         </c:if>
 
         </span>
-        <span id="diagramNotEditableMessage" class="smaller hidden" style="margin-left: 10px">This diagram is not editable because automatic layout is enabled - see <a href="https://docs.structurizr.com/ui/diagrams/automatic-layout" target="_blank">Help - Automatic layout</a> for more details.</span>
+        <span id="diagramNotEditableMessage" class="smaller hidden" style="margin-left: 10px">This diagram is not editable because automatic layout is enabled.</span>
     </div>
 </div>
 </c:if>
