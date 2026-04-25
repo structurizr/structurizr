@@ -106,16 +106,20 @@
                     </script>
 
                     <div class="btn-group">
+                        <c:if test="${workspace.id > 0}">
                         <button id="locationEmbeddedButton" class="btn btn-default" title="Diagram navigator"><img src="/static/bootstrap-icons/geo-alt.svg" class="icon-btn" /></button>
+                        <script nonce="${scriptNonce}">
+                            $('#locationEmbeddedButton').click(function() { openDiagramNavigator(); });
+                        </script>
+                        </c:if>
 
                         <c:if test="${workspace.id > 0 && (embed eq true && workspace.editable eq false)}">
-                            <button id="openCurrentDiagramInNewWindowEmbeddedButton" class="btn btn-default" title="Link to this diagram"><img src="/static/bootstrap-icons/link.svg" class="icon-btn" /></button>
+                        <button id="openCurrentDiagramInNewWindowEmbeddedButton" class="btn btn-default" title="Link to this diagram"><img src="/static/bootstrap-icons/link.svg" class="icon-btn" /></button>
+                        <script nonce="${scriptNonce}">
+                            $('#openCurrentDiagramInNewWindowEmbeddedButton').click(function() { openCurrentDiagramInNewWindow(); });
+                        </script>
                         </c:if>
                     </div>
-                    <script nonce="${scriptNonce}">
-                        $('#locationEmbeddedButton').click(function() { openDiagramNavigator(); });
-                        $('#openCurrentDiagramInNewWindowEmbeddedButton').click(function() { openCurrentDiagramInNewWindow(); });
-                    </script>
                 </c:if>
 
                 <c:if test="${structurizrConfiguration.profile == 'Playground'}">
@@ -370,7 +374,10 @@
 
     function viewChanged(key) {
         $('#keyModal').modal('hide');
-        highlightViewInDiagramNavigator(key);
+
+        if (structurizr.workspace.id > 0) { // i.e. not a playground page
+            highlightViewInDiagramNavigator(key);
+        }
 
         // set the view key in the embed code modal
         $('.diagramEmbedDiagramId').text(key);
@@ -937,7 +944,7 @@
     }
 
     function diagramCreated() {
-        if (structurizr.workspace.id > 0) { // i.e. not a demo page
+        if (structurizr.workspace.id > 0) { // i.e. not a playground page
             initThumbnails();
         }
 
