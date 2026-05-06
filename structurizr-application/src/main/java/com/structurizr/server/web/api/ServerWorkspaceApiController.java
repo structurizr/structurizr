@@ -177,6 +177,28 @@ public class ServerWorkspaceApiController extends AbstractWorkspaceApiController
         }
     }
 
+    @RequestMapping(value = "/api/workspace/{workspaceId}/apikey/regenerate", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    public @ResponseBody ApiResponse regenerateApiKey(@PathVariable("workspaceId") long workspaceId,
+                                                      @RequestHeader(name = HttpHeaders.X_AUTHORIZATION, required = false) String apiKey) {
+
+        if (!Configuration.getInstance().isAuthenticationEnabled()) {
+            throw new ApiException("API keys are not active because authentication is disabled");
+        }
+
+        authoriseRequest(workspaceId, Permission.Write, apiKey);
+
+        WorkspaceMetadata workspaceMetadata = workspaceComponent.getWorkspaceMetadata(workspaceId);
+
+        if (workspaceMetadata.isLocked()) {
+            throw new ApiException("Workspace " + workspaceId + " is locked");
+        }
+
+        String newApiKey = workspaceMetadata.regenerateApiKey();
+        workspaceComponent.putWorkspaceMetadata(workspaceMetadata);
+
+        return new ApiResponse(true, newApiKey);
+    }
+
     @RequestMapping(value = "/api/workspace/{workspaceId}/images/{filename:.+}", method = RequestMethod.PUT, consumes = "text/plain", produces = "application/json; charset=UTF-8")
     public @ResponseBody ApiResponse putImage(@PathVariable("workspaceId")long workspaceId,
                                               @PathVariable("filename")String filename,

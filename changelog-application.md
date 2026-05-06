@@ -1,5 +1,11 @@
 # Changelog
 
+## unreleased
+
+### server
+
+- Adds an endpoint to regenerate the workspace API key (`POST /api/workspace/{workspaceId}/apikey/regenerate`).
+
 ## 2026.04.19
 
 - Updates Structurizr for Java library to [v6.2.0](https://github.com/structurizr/structurizr/releases/tag/v6.2.0).

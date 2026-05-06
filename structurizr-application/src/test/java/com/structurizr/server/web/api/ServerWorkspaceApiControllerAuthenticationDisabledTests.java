@@ -439,4 +439,14 @@ public class ServerWorkspaceApiControllerAuthenticationDisabledTests extends Abs
         assertEquals("deleteBranch(1, branch1)", buf.toString());
     }
 
+    @Test
+    void regenerateApiKey_ReturnsAnError() {
+        try {
+            controller.regenerateApiKey(1, "");
+            fail();
+        } catch (ApiException e) {
+            assertEquals("API keys are not active because authentication is disabled", e.getMessage());
+        }
+    }
+
 }
