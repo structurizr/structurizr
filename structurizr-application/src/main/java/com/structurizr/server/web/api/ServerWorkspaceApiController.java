@@ -178,7 +178,7 @@ public class ServerWorkspaceApiController extends AbstractWorkspaceApiController
     }
 
     @RequestMapping(value = "/api/workspace/{workspaceId}/apikey/regenerate", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
-    public @ResponseBody ApiResponse regenerateApiKey(@PathVariable("workspaceId") long workspaceId,
+    public @ResponseBody WorkspaceApiKeyApiResponse regenerateApiKey(@PathVariable("workspaceId") long workspaceId,
                                                       @RequestHeader(name = HttpHeaders.X_AUTHORIZATION, required = false) String apiKey) {
 
         if (!Configuration.getInstance().isAuthenticationEnabled()) {
@@ -196,7 +196,7 @@ public class ServerWorkspaceApiController extends AbstractWorkspaceApiController
         String newApiKey = workspaceMetadata.regenerateApiKey();
         workspaceComponent.putWorkspaceMetadata(workspaceMetadata);
 
-        return new ApiResponse(true, newApiKey);
+        return new WorkspaceApiKeyApiResponse(workspaceId, newApiKey);
     }
 
     @RequestMapping(value = "/api/workspace/{workspaceId}/images/{filename:.+}", method = RequestMethod.PUT, consumes = "text/plain", produces = "application/json; charset=UTF-8")

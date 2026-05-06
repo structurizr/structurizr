@@ -690,12 +690,12 @@ public class ServerWorkspaceApiControllerAuthenticationEnabledTests extends Abst
 
     @Test
     void regenerateApiKey_RegeneratesTheApiKey_WhenTheApiKeyIsCorrectAndTheWorkspaceIsUnlocked() {
-        ApiResponse response = controller.regenerateApiKey(1, "1234567890");
+        WorkspaceApiKeyApiResponse response = controller.regenerateApiKey(1, "1234567890");
 
-        assertTrue(response.isSuccess());
+        assertEquals(1, response.getId());
         assertNotEquals("1234567890", workspaceMetadata.getApiKey());
-        assertNotNull(UUID.fromString(response.getMessage()));
-        assertTrue(workspaceMetadata.isApiKeyValid(response.getMessage()));
+        assertNotNull(UUID.fromString(response.getApiKey()));
+        assertTrue(workspaceMetadata.isApiKeyValid(response.getApiKey()));
     }
 
 }
