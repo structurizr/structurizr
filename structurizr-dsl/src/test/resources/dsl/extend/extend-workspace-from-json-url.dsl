@@ -1,4 +1,4 @@
-workspace extends https://raw.githubusercontent.com/structurizr/dsl/master/src/test/dsl/extend/workspace.json {
+workspace extends https://raw.githubusercontent.com/structurizr/structurizr/refs/heads/main/structurizr-dsl/src/test/resources/dsl/extend/workspace.json {
 
     model {
         // !element with DSL identifier
