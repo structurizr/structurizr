@@ -99,13 +99,13 @@ public class AdminApiClient extends AbstractApiClient {
             });
 
             checkResponseIsJson(result.getContent());
-            ApiResponse apiResponse = ApiResponse.parse(result.getContent());
 
             if (result.isSuccess()) {
                 ObjectMapper objectMapper = new ObjectMapper();
                 objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
                 return objectMapper.readValue(result.getContent(), WorkspaceMetadata.class);
             } else {
+                ApiResponse apiResponse = ApiResponse.parse(result.getContent());
                 throw new StructurizrClientException(apiResponse.getMessage());
             }
         } catch (Exception e) {
