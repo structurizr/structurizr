@@ -23,6 +23,7 @@ public class Application {
 		register(new BranchesCommand());
 		register(new CreateCommand());
 		register(new DeleteCommand());
+		register(new RegenerateApiKeyCommand());
 
 		register(new ExportCommand());
 		register(new GenerateCommand());

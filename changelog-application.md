@@ -6,6 +6,10 @@
 
 - Adds an endpoint to regenerate the workspace API key (`POST /api/workspace/{workspaceId}/apikey/regenerate`).
 
+### regenerate-apikey
+
+- Adds a `regenerate-apikey` command to regenerate the API key for a server workspace.
+
 ## 2026.04.19
 
 - Updates Structurizr for Java library to [v6.2.0](https://github.com/structurizr/structurizr/releases/tag/v6.2.0).

@@ -1,5 +1,6 @@
 package com.structurizr.api;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.structurizr.Workspace;
 import com.structurizr.encryption.EncryptedWorkspace;
@@ -14,10 +15,7 @@ import com.structurizr.util.ImageUtils;
 import com.structurizr.util.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.hc.client5.http.classic.methods.HttpDelete;
-import org.apache.hc.client5.http.classic.methods.HttpGet;
-import org.apache.hc.client5.http.classic.methods.HttpPut;
-import org.apache.hc.client5.http.classic.methods.HttpUriRequestBase;
+import org.apache.hc.client5.http.classic.methods.*;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.ContentType;
@@ -513,6 +511,44 @@ public class WorkspaceApiClient extends AbstractApiClient {
             });
 
             if (!result.isSuccess()) {
+                ApiResponse apiResponse = ApiResponse.parse(result.getContent());
+                throw new StructurizrClientException(apiResponse.getMessage());
+            }
+        } catch (Exception e) {
+            log.error(e);
+            throw new StructurizrClientException(e);
+        }
+    }
+
+    /**
+     * Regenerates the API key.
+     *
+     * @return  a WorkspaceMetadata object representing the workspace and API key
+     * @throws StructurizrClientException   if an error occurs
+     */
+    public WorkspaceMetadata regenerateApiKey() throws StructurizrClientException {
+        try (CloseableHttpClient httpClient = HttpClients.createSystem()) {
+            log.debug("Regenerating API key for workspace " + workspaceId);
+
+            HttpUriRequestBase httpRequest = new HttpPost(url + WORKSPACE_PATH + "/" + workspaceId + "/apikey/regenerate");
+
+            addHeaders(httpRequest, "");
+            debugRequest(httpRequest, null);
+
+            HttpClientResult result = httpClient.execute(httpRequest, response -> {
+                String json = EntityUtils.toString(response.getEntity());
+                debugResponse(response, json);
+
+                return new HttpClientResult(response.getCode() == HttpStatus.SC_OK, json);
+            });
+
+            checkResponseIsJson(result.getContent());
+
+            if (result.isSuccess()) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+                return objectMapper.readValue(result.getContent(), WorkspaceMetadata.class);
+            } else {
                 ApiResponse apiResponse = ApiResponse.parse(result.getContent());
                 throw new StructurizrClientException(apiResponse.getMessage());
             }
