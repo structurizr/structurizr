@@ -8,7 +8,17 @@ structurizr.ui.ContentRenderer = function(workspace, host, urlPrefix, branch, sa
     var embedIndex = 0;
 
     var md = window.markdownit({
-        html: !safeMode
+        html: !safeMode,
+        highlight: function (str, lang) {
+            if (lang && hljs.getLanguage(lang)) {
+                try {
+                    return '<pre><code class="hljs">' +
+                        hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
+                        '</code></pre>';
+                } catch (__) {}
+            }
+            return '<pre><code class="hljs">' + md.utils.escapeHtml(str) + '</code></pre>';
+        }
     });
 
     md.use(window.markdownitFootnote);

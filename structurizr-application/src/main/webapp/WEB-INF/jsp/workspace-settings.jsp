@@ -29,9 +29,9 @@
             </div>
             <div class="col-10">
                 <p>
-                    Workspace ID: <span id="workspace${workspace.id}Id" style="font-family: 'Courier New', Courier, monospace; cursor: pointer">${workspace.id}</span>
+                    Workspace ID: <span id="workspace${workspace.id}Id" style="cursor: pointer">${workspace.id}</span>
                     <br />
-                    API URL: <span id="workspace${workspace.id}ApiUrl" style="font-family: 'Courier New', Courier, monospace; cursor: pointer"><span class="baseUrl"></span>/api</span>
+                    API URL: <span id="workspace${workspace.id}ApiUrl" style="cursor: pointer"><span class="baseUrl"></span>/api</span>
                     <br />
                     <c:choose>
                     <c:when test="${apiKeyRequired}">
@@ -50,14 +50,14 @@
                 <p>
                     Structurizr parameters for <a href="https://docs.structurizr.com/push" target="_blank">push</a> and <a href="https://docs.structurizr.com/push" target="_blank">pull</a> via the workspace API:
                     <br />
-                    <pre id="workspace${workspace.id}Push" style="font-family: 'Courier New', Courier, monospace; cursor: pointer; text-align: left">push -url <span class="baseUrl"></span>/api -id ${workspace.id} -key KEY</pre>
-                    <pre id="workspace${workspace.id}Pull" style="font-family: 'Courier New', Courier, monospace; cursor: pointer; text-align: left">pull -url <span class="baseUrl"></span>/api -id ${workspace.id} -key KEY</pre>
+                    <pre id="workspace${workspace.id}Push" style="cursor: pointer; text-align: left">push -url <span class="baseUrl"></span>/api -id ${workspace.id} -key KEY</pre>
+                    <pre id="workspace${workspace.id}Pull" style="cursor: pointer; text-align: left">pull -url <span class="baseUrl"></span>/api -id ${workspace.id} -key KEY</pre>
                 </p>
 
                 <p>
                     Or when using <code>curl</code>:
                     <br />
-                    <pre id="workspace${workspace.id}Curl" style="font-family: 'Courier New', Courier, monospace; cursor: pointer; text-align: left">curl <span class="baseUrl"></span>/api/workspace/${workspace.id} --header 'X-Authorization: KEY'</pre>
+                    <pre id="workspace${workspace.id}Curl" style="cursor: pointer; text-align: left">curl <span class="baseUrl"></span>/api/workspace/${workspace.id} --header 'X-Authorization: KEY'</pre>
                 </p>
 
                 <c:if test="${showAdminFeatures}">
@@ -74,14 +74,14 @@
                 <p>
                     Structurizr parameters for <a href="https://docs.structurizr.com/push" target="_blank">push</a> and <a href="https://docs.structurizr.com/push" target="_blank">pull</a> via the workspace API:
                     <br />
-                    <pre id="workspace${workspace.id}Push" style="font-family: 'Courier New', Courier, monospace; cursor: pointer; text-align: left">push -url <span class="baseUrl"></span>/api -id ${workspace.id}</pre>
-                    <pre id="workspace${workspace.id}Pull" style="font-family: 'Courier New', Courier, monospace; cursor: pointer; text-align: left">pull -url <span class="baseUrl"></span>/api -id ${workspace.id}</pre>
+                    <pre id="workspace${workspace.id}Push" style="cursor: pointer; text-align: left">push -url <span class="baseUrl"></span>/api -id ${workspace.id}</pre>
+                    <pre id="workspace${workspace.id}Pull" style="cursor: pointer; text-align: left">pull -url <span class="baseUrl"></span>/api -id ${workspace.id}</pre>
                 </p>
 
                 <p>
                     Or when using <code>curl</code>:
                     <br />
-                    <pre id="workspace${workspace.id}Curl" style="font-family: 'Courier New', Courier, monospace; cursor: pointer; text-align: left">curl <span class="baseUrl"></span>/api/workspace/${workspace.id}</pre>
+                    <pre id="workspace${workspace.id}Curl" style="cursor: pointer; text-align: left">curl <span class="baseUrl"></span>/api/workspace/${workspace.id}</pre>
                 </p>
 
                 </c:otherwise>

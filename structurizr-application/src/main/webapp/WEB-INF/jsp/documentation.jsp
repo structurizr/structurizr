@@ -3,6 +3,7 @@
 <script type="text/javascript" src="<c:url value="/static/js/structurizr-embed.js" />"></script>
 <script type="text/javascript" src="<c:url value="/static/js/structurizr-content.js" />"></script>
 <script type="text/javascript" src="<c:url value="/static/js/structurizr-documentation.js" />"></script>
+<script type="text/javascript" src="/static/js/highlight-11.11.1.min.js" type="module"></script>
 <script type="text/javascript" src="/static/js/markdown-it-14.1.1.min.js"></script>
 <script text="text/javascript" src="/static/js/markdown-it-footnote-4.0.0.min.js"></script>
 <script type="text/javascript" src="/static/js/katex-0.16.27.min.js"></script>
