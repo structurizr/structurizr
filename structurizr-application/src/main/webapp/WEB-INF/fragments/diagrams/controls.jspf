@@ -79,27 +79,27 @@
         </script>
 
         <div class="btn-group">
-            <button id="alignSelectedElementsLeftButton" class="btn btn-default multipleElementsSelectedButton" disabled="disabled" title="Align left"><img src="/static/bootstrap-icons/align-start.svg" class="icon-btn" /></button>
-            <button id="alignSelectedElementsVerticalCentreButton" class="btn btn-default multipleElementsSelectedButton" disabled="disabled" title="Align centre"><img src="/static/bootstrap-icons/align-center.svg" class="icon-btn" /></button>
-            <button id="alignSelectedElementsRightButton" class="btn btn-default multipleElementsSelectedButton" disabled="disabled" title="Align right"><img src="/static/bootstrap-icons/align-end.svg" class="icon-btn" /></button>
-            <button id="distributeSelectedElementsHorizontallyButton" class="btn btn-default multipleElementsSelectedButton" disabled="disabled" title="Distribute horizontally"><img src="/static/bootstrap-icons/distribute-horizontal.svg" class="icon-btn" /></button>
+            <button id="alignSelectedElementsLeftButton" class="btn btn-default multipleElementsSelectedButton" disabled="disabled" title="Align left [l]"><img src="/static/bootstrap-icons/align-start.svg" class="icon-btn" /></button>
+            <button id="alignSelectedElementsCentreButton" class="btn btn-default multipleElementsSelectedButton" disabled="disabled" title="Align centre [c]"><img src="/static/bootstrap-icons/align-center.svg" class="icon-btn" /></button>
+            <button id="alignSelectedElementsRightButton" class="btn btn-default multipleElementsSelectedButton" disabled="disabled" title="Align right [r]"><img src="/static/bootstrap-icons/align-end.svg" class="icon-btn" /></button>
+            <button id="distributeSelectedElementsHorizontallyButton" class="btn btn-default multipleElementsSelectedButton" disabled="disabled" title="Distribute horizontally [h]"><img src="/static/bootstrap-icons/distribute-horizontal.svg" class="icon-btn" /></button>
         </div>
         <script nonce="${scriptNonce}">
             $('#alignSelectedElementsLeftButton').click(function() { structurizr.diagram.alignSelectedElementsLeft(); });
-            $('#alignSelectedElementsVerticalCentreButton').click(function() { structurizr.diagram.alignSelectedElementsVerticalCentre(); });
+            $('#alignSelectedElementsCentreButton').click(function() { structurizr.diagram.alignSelectedElementsCentre(); });
             $('#alignSelectedElementsRightButton').click(function() { structurizr.diagram.alignSelectedElementsRight(); });
             $('#distributeSelectedElementsHorizontallyButton').click(function() { structurizr.diagram.distributeSelectedElementsHorizontally(); });
         </script>
 
         <div class="btn-group">
-            <button id="alignSelectedElementsTopButton" class="btn btn-default multipleElementsSelectedButton" disabled="disabled" title="Align top"><img src="/static/bootstrap-icons/align-top.svg" class="icon-btn" /></button>
-            <button id="alignSelectedElementsHorizontalCentreButton" class="btn btn-default multipleElementsSelectedButton" disabled="disabled" title="Align middle"><img src="/static/bootstrap-icons/align-middle.svg" class="icon-btn" /></button>
-            <button id="alignSelectedElementsBottomButton" class="btn btn-default multipleElementsSelectedButton" disabled="disabled" title="Align bottom"><img src="/static/bootstrap-icons/align-bottom.svg" class="icon-btn" /></button>
-            <button id="distributeSelectedElementsVerticallyButton" class="btn btn-default multipleElementsSelectedButton" disabled="disabled" title="Distribute vertically"><img src="/static/bootstrap-icons/distribute-vertical.svg" class="icon-btn" /></button>
+            <button id="alignSelectedElementsTopButton" class="btn btn-default multipleElementsSelectedButton" disabled="disabled" title="Align top [t]"><img src="/static/bootstrap-icons/align-top.svg" class="icon-btn" /></button>
+            <button id="alignSelectedElementsMiddleButton" class="btn btn-default multipleElementsSelectedButton" disabled="disabled" title="Align middle [m]"><img src="/static/bootstrap-icons/align-middle.svg" class="icon-btn" /></button>
+            <button id="alignSelectedElementsBottomButton" class="btn btn-default multipleElementsSelectedButton" disabled="disabled" title="Align bottom [b]"><img src="/static/bootstrap-icons/align-bottom.svg" class="icon-btn" /></button>
+            <button id="distributeSelectedElementsVerticallyButton" class="btn btn-default multipleElementsSelectedButton" disabled="disabled" title="Distribute vertically [v]"><img src="/static/bootstrap-icons/distribute-vertical.svg" class="icon-btn" /></button>
         </div>
         <script nonce="${scriptNonce}">
             $('#alignSelectedElementsTopButton').click(function() { structurizr.diagram.alignSelectedElementsTop(); });
-            $('#alignSelectedElementsHorizontalCentreButton').click(function() { structurizr.diagram.alignSelectedElementsHorizontalCentre(); });
+            $('#alignSelectedElementsMiddleButton').click(function() { structurizr.diagram.alignSelectedElementsMiddle(); });
             $('#alignSelectedElementsBottomButton').click(function() { structurizr.diagram.alignSelectedElementsBottom(); });
             $('#distributeSelectedElementsVerticallyButton').click(function() { structurizr.diagram.distributeSelectedElementsVertically(); });
         </script>
