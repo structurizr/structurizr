@@ -533,6 +533,10 @@ hr {
     stroke-dasharray: 10 10;
 }
 
+.structurizrElement .firstHighlightedElement {
+    stroke-width: 10px;
+}
+
 .joint-element * {
     vector-effect: none;
 }

@@ -4664,12 +4664,25 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
     function selectElement(cellView) {
         cellView.selected = true;
-        var structurizrBox = $('#' + cellView.el.id + ' .structurizrHighlightableElement');
-        var classes = structurizrBox.attr('class');
-        structurizrBox.attr('class', classes + ' highlightedElement');
+
+        const structurizrBox = $('#' + cellView.el.id + ' .structurizrHighlightableElement');
+        structurizrBox.addClass('highlightedElement');
 
         selectedElements.push(cellView);
+
+        highlightFirstSelectedElement();
+
         fireElementsSelectedEvent();
+    }
+
+    function highlightFirstSelectedElement() {
+        $('.structurizrHighlightableElement').removeClass('firstHighlightedElement');
+
+        if (selectedElements.length > 1) {
+            const firstCellView = selectedElements[0];
+            const structurizrBox = $('#' + firstCellView.el.id + ' .structurizrHighlightableElement');
+            structurizrBox.addClass('firstHighlightedElement');
+        }
     }
 
     this.selectElementsWithName = function(regex) {
@@ -4705,18 +4718,17 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
     function deselectElement(cellView) {
         cellView.selected = false;
-        var structurizrBox = $('#' + cellView.el.id + ' .structurizrHighlightableElement');
-        var classes = structurizrBox.attr('class');
 
-        var highlightedElement = classes.indexOf(' highlightedElement');
-        if (highlightedElement > -1) {
-            structurizrBox.attr('class', classes.substring(0, highlightedElement));
-        }
+        const structurizrBox = $('#' + cellView.el.id + ' .structurizrHighlightableElement');
+        structurizrBox.removeClass('firstHighlightedElement');
+        structurizrBox.removeClass('highlightedElement');
 
         var index = selectedElements.indexOf(cellView);
         if (index > -1) {
             selectedElements.splice(index, 1);
         }
+
+        highlightFirstSelectedElement();
 
         fireElementsSelectedEvent();
     }
@@ -6406,9 +6418,11 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             bottom: Math.max(lassoStart.y, lassoEnd.y)
         };
 
+        const elementsLassoed = [];
+
         graph.getElements().forEach(function(cell) {
             if (cell.elementInView && cell.positionCalculated === false) {
-                var elementBoundingBox = cell.getBBox();
+                const elementBoundingBox = cell.getBBox();
                 elementBoundingBox.left = elementBoundingBox.x;
                 elementBoundingBox.top = elementBoundingBox.y;
                 elementBoundingBox.right = elementBoundingBox.left + elementBoundingBox.width;
@@ -6421,9 +6435,26 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                     lassoBoundingBox.bottom < elementBoundingBox.top) {
                     // do nothing
                 } else {
-                    selectElement(paper.findViewByModel(cell));
+                    elementsLassoed.push(cell);
                 }
             }
+        });
+
+        // sort elements - closest to lasso start point to furthest away from it
+        const lassoPoint = new g.Point(lassoStart.x, lassoStart.y);
+        elementsLassoed.sort(function(a, b) {
+            const centerA = a.getBBox().center();
+            const distanceA = lassoPoint.distance(centerA);
+
+            const centerB = b.getBBox().center();
+            const distanceB = lassoPoint.distance(centerB);
+
+            return distanceA - distanceB;
+        });
+
+        // and select all elements
+        elementsLassoed.forEach(function(cell) {
+            selectElement(paper.findViewByModel(cell));
         });
 
         lassoStart = undefined;
