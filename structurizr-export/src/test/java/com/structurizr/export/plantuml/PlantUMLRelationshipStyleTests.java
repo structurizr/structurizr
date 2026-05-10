@@ -9,7 +9,7 @@ public class PlantUMLRelationshipStyleTests {
 
     @Test
     void solid() {
-        PlantUMLRelationshipStyle style = new PlantUMLRelationshipStyle("Relationship", "#ff0000", LineStyle.Solid, 3, 24);
+        PlantUMLRelationshipStyle style = new PlantUMLRelationshipStyle("Relationship", "#ff0000", LineStyle.Solid, 3, 24, 200);
 
         assertEquals("""
                 // Relationship
@@ -19,13 +19,14 @@ public class PlantUMLRelationshipStyleTests {
                   LineColor: #ff0000;
                   FontColor: #ff0000;
                   FontSize: 24;
+                  MaximumWidth: 200;
                 }
               """, style.toString());
     }
 
     @Test
     void dashed() {
-        PlantUMLRelationshipStyle style = new PlantUMLRelationshipStyle("Relationship", "#ff0000", LineStyle.Dashed, 3, 24);
+        PlantUMLRelationshipStyle style = new PlantUMLRelationshipStyle("Relationship", "#ff0000", LineStyle.Dashed, 3, 24, 200);
 
         assertEquals("""
                 // Relationship
@@ -35,13 +36,14 @@ public class PlantUMLRelationshipStyleTests {
                   LineColor: #ff0000;
                   FontColor: #ff0000;
                   FontSize: 24;
+                  MaximumWidth: 200;
                 }
               """, style.toString());
     }
 
     @Test
     void dotted() {
-        PlantUMLRelationshipStyle style = new PlantUMLRelationshipStyle("Relationship", "#ff0000", LineStyle.Dotted, 3, 24);
+        PlantUMLRelationshipStyle style = new PlantUMLRelationshipStyle("Relationship", "#ff0000", LineStyle.Dotted, 3, 24, 200);
 
         assertEquals("""
                 // Relationship
@@ -51,6 +53,7 @@ public class PlantUMLRelationshipStyleTests {
                   LineColor: #ff0000;
                   FontColor: #ff0000;
                   FontSize: 24;
+                  MaximumWidth: 200;
                 }
               """, style.toString());
     }

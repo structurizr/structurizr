@@ -1,5 +1,11 @@
 # Changelog
 
+## unreleased
+
+### structurizr-export
+
+- StructurizrPlantUMLExporter: Adds support for the `MaximumWidth` style property for arrow CSS styles (https://github.com/structurizr/structurizr/issues/75).
+
 ## v6.2.0 (18th April 2026)
 
 ### structurizr-core

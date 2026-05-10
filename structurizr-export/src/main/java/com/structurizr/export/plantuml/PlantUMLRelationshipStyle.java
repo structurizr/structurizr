@@ -13,8 +13,9 @@ class PlantUMLRelationshipStyle extends PlantUMLStyle {
     private final String lineStyle;
     private final int thickness;
     private final int fontSize;
+    private final int width;
 
-    PlantUMLRelationshipStyle(String name, String color, LineStyle lineStyle, int thickness, int fontSize) {
+    PlantUMLRelationshipStyle(String name, String color, LineStyle lineStyle, int thickness, int fontSize, int width) {
         super(name);
 
         this.color = color;
@@ -32,6 +33,8 @@ class PlantUMLRelationshipStyle extends PlantUMLStyle {
                 this.lineStyle = "0";
                 break;
         }
+
+        this.width = width;
     }
 
     @Override
@@ -59,6 +62,7 @@ class PlantUMLRelationshipStyle extends PlantUMLStyle {
         writer.writeLine(String.format("LineColor: %s;", color));
         writer.writeLine(String.format("FontColor: %s;", color));
         writer.writeLine(String.format("FontSize: %s;", fontSize));
+        writer.writeLine(String.format("MaximumWidth: %s;", width));
 
         writer.outdent();
         writer.writeLine("}");

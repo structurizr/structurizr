@@ -100,6 +100,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // Big Bank plc
                   .Group-QmlnIEJhbmsgcGxj {
@@ -196,6 +197,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // Big Bank plc
                   .Group-QmlnIEJhbmsgcGxj {
@@ -320,6 +322,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // Internet Banking System
                   .Boundary-SW50ZXJuZXQgQmFua2luZyBTeXN0ZW0= {
@@ -442,6 +445,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // API Application
                   .Boundary-QVBJIEFwcGxpY2F0aW9u {
@@ -560,6 +564,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // API Application
                   .Boundary-QVBJIEFwcGxpY2F0aW9u {
@@ -678,6 +683,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // Element
                   .DeploymentNode-RWxlbWVudA== {
@@ -811,6 +817,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // Element
                   .DeploymentNode-RWxlbWVudA== {
@@ -952,6 +959,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // API Application
                   .Boundary-QVBJIEFwcGxpY2F0aW9u {
@@ -1041,6 +1049,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                 </style>
                 
@@ -1081,6 +1090,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // transparent element for relationships in legend
                   .Element-Transparent {
@@ -1143,6 +1153,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #cccccc;
                     FontColor: #cccccc;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                 </style>
                 
@@ -1183,6 +1194,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #cccccc;
                     FontColor: #cccccc;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // transparent element for relationships in legend
                   .Element-Transparent {
@@ -1245,6 +1257,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                 </style>
                 
@@ -1302,6 +1315,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // Software System A
                   .Boundary-U29mdHdhcmUgU3lzdGVtIEE= {
@@ -1373,6 +1387,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // Container
                   .Boundary-Q29udGFpbmVy {
@@ -1523,6 +1538,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                 </style>
                 
@@ -1585,6 +1601,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                 </style>
                 
@@ -1630,6 +1647,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                 </style>
                 
@@ -1691,6 +1709,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                 </style>
                 
@@ -1731,6 +1750,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // transparent element for relationships in legend
                   .Element-Transparent {
@@ -1812,6 +1832,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                 </style>
                 
@@ -1864,6 +1885,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // transparent element for relationships in legend
                   .Element-Transparent {
@@ -1926,6 +1948,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // Group 1
                   .Group-R3JvdXAgMQ== {
@@ -2017,6 +2040,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // D
                   .Boundary-RA== {
@@ -2092,6 +2116,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // D
                   .Boundary-RA== {
@@ -2330,6 +2355,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // Software System 1
                   .Boundary-U29mdHdhcmUgU3lzdGVtIDE= {
@@ -2417,6 +2443,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // Container 1
                   .Boundary-Q29udGFpbmVyIDE= {
@@ -2514,6 +2541,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // Container 1
                   .Boundary-Q29udGFpbmVyIDE= {
@@ -2630,6 +2658,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // Software System 1
                   .Boundary-U29mdHdhcmUgU3lzdGVtIDE= {
@@ -2724,6 +2753,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // Container 1
                   .Boundary-Q29udGFpbmVyIDE= {
@@ -2911,6 +2941,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                 </style>
                 
@@ -3048,6 +3079,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // Group 1
                   .Group-R3JvdXAgMQ== {
@@ -3135,6 +3167,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // A
                   .Boundary-QQ== {
@@ -3251,6 +3284,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // A
                   .Boundary-QQ== {
@@ -3618,6 +3652,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // Element,Amazon Web Services - Auto Scaling
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQXV0byBTY2FsaW5n {
@@ -3782,6 +3817,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // Element,Amazon Web Services - Auto Scaling
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQXV0byBTY2FsaW5n {
@@ -3973,6 +4009,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #cccccc;
                     FontColor: #cccccc;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // Element,Amazon Web Services - Auto Scaling
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQXV0byBTY2FsaW5n {
@@ -4137,6 +4174,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #cccccc;
                     FontColor: #cccccc;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // Element,Amazon Web Services - Auto Scaling
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQXV0byBTY2FsaW5n {
@@ -4356,6 +4394,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                   // Application 1
                   .Boundary-QXBwbGljYXRpb24gMQ== {
@@ -4461,6 +4500,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                 </style>
                 
@@ -4530,6 +4570,7 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                     LineColor: #444444;
                     FontColor: #444444;
                     FontSize: 24;
+                    MaximumWidth: 200;
                   }
                 </style>
                 
