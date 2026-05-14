@@ -5207,7 +5207,8 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         if (options === undefined) {
             options = {
                 metadata: true,
-                crop: false
+                crop: false,
+                dimensions: true
             }
         }
 
@@ -5265,7 +5266,13 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         height = contentArea.maxY - contentArea.minY;
 
         const viewbox = ' viewBox="' + contentArea.minX + " " + contentArea.minY + " " + width + " " + height + '"';
-        const svgOpeningTag = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="' + width +'" height="' + height + '" style="width: ' + width + 'px; height: ' + height + 'px; background: ' + canvasColor + '"' + viewbox + '>';
+        var svgOpeningTag;
+
+        if (options.dimensions) {
+            svgOpeningTag = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="' + width +'" height="' + height + '" style="width: ' + width + 'px; height: ' + height + 'px; background: ' + canvasColor + '"' + viewbox + '>';
+        } else {
+            svgOpeningTag = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" style="background: ' + canvasColor + '"' + viewbox + '>';
+        }
 
         // replace opening tag with dimensions (some browsers seem to require this)
         svgMarkup = svgOpeningTag + svgMarkup.substring(svgMarkup.indexOf('>') + 1, svgMarkup.length);
