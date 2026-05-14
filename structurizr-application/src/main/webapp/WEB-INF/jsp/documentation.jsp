@@ -323,6 +323,9 @@
         assignSectionNumbers();
         renderNavigation();
 
+        // syntax highlighting
+        hljs.highlightAll();
+
         $('#renderingModeLightLink').click(function(event) {
             event.preventDefault();
             structurizr.ui.setRenderingMode(structurizr.ui.RENDERING_MODE_LIGHT);

@@ -470,6 +470,9 @@
 
             rewriteInternalWorkspaceLinks();
             highlightNavigation();
+
+            // syntax highlighting
+            hljs.highlightAll();
         }
     }
 

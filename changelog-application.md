@@ -5,6 +5,11 @@
 ### server
 
 - Adds an endpoint to regenerate the workspace API key (`POST /api/workspace/{workspaceId}/apikey/regenerate`).
+- Adds highlight.js support for code blocks in Markdown/AsciiDoc documentation and decisions.
+
+### local
+
+- Adds highlight.js support for code blocks in Markdown/AsciiDoc documentation and decisions.
 
 ### regenerate-apikey
 

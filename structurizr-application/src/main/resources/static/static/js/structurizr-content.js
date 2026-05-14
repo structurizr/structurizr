@@ -8,17 +8,7 @@ structurizr.ui.ContentRenderer = function(workspace, host, urlPrefix, branch, sa
     var embedIndex = 0;
 
     var md = window.markdownit({
-        html: !safeMode,
-        highlight: function (str, lang) {
-            if (lang && hljs.getLanguage(lang)) {
-                try {
-                    return '<pre><code class="hljs">' +
-                        hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
-                        '</code></pre>';
-                } catch (__) {}
-            }
-            return '<pre><code class="hljs">' + md.utils.escapeHtml(str) + '</code></pre>';
-        }
+        html: !safeMode
     });
 
     md.use(window.markdownitFootnote);
@@ -239,7 +229,7 @@ structurizr.ui.ContentRenderer = function(workspace, host, urlPrefix, branch, sa
                 preparsedContent += "\n";
             }
 
-            return new Asciidoctor().$convert(preparsedContent);
+            return new Asciidoctor().convert(preparsedContent);
         } else {
             // default to Markdown
             return md.render(section.content);
