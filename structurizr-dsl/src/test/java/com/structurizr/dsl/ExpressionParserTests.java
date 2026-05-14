@@ -444,6 +444,18 @@ class ExpressionParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parseExpression_ReturnsElements_WhenUsingAnElementGroupEqualsExpression() {
+        SoftwareSystem a = model.addSoftwareSystem("A");
+        a.setGroup("Group 1");
+        SoftwareSystem b = model.addSoftwareSystem("B");
+        b.setGroup("Group 2");
+
+        Set<ModelItem> elements = parser.parseExpression("element.group==Group 1", context());
+        assertEquals(1, elements.size());
+        assertTrue(elements.contains(a));
+    }
+
+    @Test
     void test_parseExpression_ReturnsElements_WhenUsingAnElementTypeExpression() {
         model.addPerson("User");
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");

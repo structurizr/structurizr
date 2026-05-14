@@ -26,6 +26,7 @@ class ExpressionParser {
                 token.startsWith(ELEMENT_TECHNOLOGY_EQUALS_EXPRESSION.toLowerCase()) ||
                 token.startsWith(ELEMENT_TECHNOLOGY_NOT_EQUALS_EXPRESSION.toLowerCase()) ||
                 token.matches(ELEMENT_PROPERTY_EQUALS_EXPRESSION) ||
+                token.startsWith(ELEMENT_GROUP_EQUALS_EXPRESSION.toLowerCase()) ||
                 token.startsWith(ELEMENT_PARENT_EQUALS_EXPRESSION.toLowerCase()) ||
                 token.startsWith(RELATIONSHIP) || token.endsWith(RELATIONSHIP) || token.contains(RELATIONSHIP) ||
                 token.startsWith(RELATIONSHIP_TAG_EQUALS_EXPRESSION.toLowerCase()) ||
@@ -209,6 +210,13 @@ class ExpressionParser {
 
             context.getWorkspace().getModel().getElements().forEach(element -> {
                 if (hasProperty(element, propertyName, propertyValue)) {
+                    modelItems.add(element);
+                }
+            });
+        } else if (expr.toLowerCase().startsWith(ELEMENT_GROUP_EQUALS_EXPRESSION.toLowerCase())) {
+            String groupName = expr.substring(expr.indexOf("==")+2);
+            context.getWorkspace().getModel().getElements().stream().filter(e -> e instanceof GroupableElement).map(e -> (GroupableElement)e).forEach(element -> {
+                if (groupName.equals(element.getGroup())) {
                     modelItems.add(element);
                 }
             });

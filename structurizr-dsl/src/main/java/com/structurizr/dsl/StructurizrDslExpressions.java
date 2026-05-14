@@ -8,6 +8,7 @@ class StructurizrDslExpressions {
     static final String ELEMENT_TAG_EQUALS_EXPRESSION = "element.tag==";
     static final String ELEMENT_TAG_NOT_EQUALS_EXPRESSION = "element.tag!=";
     static final String ELEMENT_PROPERTY_EQUALS_EXPRESSION = "element\\.properties\\[.*]==.*";
+    static final String ELEMENT_GROUP_EQUALS_EXPRESSION = "element.group==";
 
     static final String ELEMENT_EQUALS_EXPRESSION = "element==";
     static final String ELEMENT_NOT_EQUALS_EXPRESSION = "element!=";

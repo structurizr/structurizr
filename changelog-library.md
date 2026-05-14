@@ -2,6 +2,10 @@
 
 ## unreleased
 
+### structurizr-dsl
+
+- Adds support for `element.group==name` expressions (for use with `include` and `!elements`).
+
 ### structurizr-export
 
 - StructurizrPlantUMLExporter: Adds support for the `MaximumWidth` style property for arrow CSS styles (https://github.com/structurizr/structurizr/issues/75).
