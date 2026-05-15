@@ -1,6 +1,6 @@
 # Changelog
 
-## unreleased
+## v6.2.1 (15th May 2026)
 
 ### structurizr-dsl
 
