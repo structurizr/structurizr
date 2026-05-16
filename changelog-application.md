@@ -7,10 +7,12 @@
 ### server
 
 - Adds an endpoint to regenerate the workspace API key (`POST /api/workspace/{workspaceId}/apikey/regenerate`).
+- Adds a [diagram level indicator](https://docs.structurizr.com/server/diagrams/viewer#diagram-level-indicator) and [diagram navigator](https://docs.structurizr.com/server/diagrams/viewer#diagram-navigator) to the diagram viewer.
 - Adds highlight.js support for code blocks in Markdown/AsciiDoc documentation and decisions.
 
 ### local
 
+- Adds a [diagram level indicator](https://docs.structurizr.com/server/diagrams/viewer#diagram-level-indicator) and [diagram navigator](https://docs.structurizr.com/server/diagrams/viewer#diagram-navigator) to the diagram viewer.
 - Adds highlight.js support for code blocks in Markdown/AsciiDoc documentation and decisions.
 
 ### regenerate-apikey
