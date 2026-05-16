@@ -1,0 +1,1 @@
+java -jar structurizr-mcp/target/structurizr-mcp-1.0.0.war $@
