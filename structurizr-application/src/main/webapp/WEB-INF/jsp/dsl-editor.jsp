@@ -71,7 +71,7 @@
             </div>
         </div>
         <div id="diagramsPanel" class="col-7 centered">
-            <div id="viewListPanel" style="margin-bottom: 10px">
+            <div id="viewListPanel">
                 <div class="form-inline">
                         <span id="diagramNavButtons" class="hidden">
                             <button id="viewSourceButton" class="btn btn-primary" title="Source" style="margin-top: -4px;"><img src="/static/bootstrap-icons/code-slash.svg" class="icon-btn icon-white" /> View source</button>

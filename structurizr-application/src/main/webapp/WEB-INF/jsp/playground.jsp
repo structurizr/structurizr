@@ -67,7 +67,7 @@
             </c:when>
             <c:otherwise>
 
-            <div id="viewListPanel" style="margin-bottom: 10px">
+            <div id="viewListPanel">
                 <div class="form-inline">
                     <select id="viewsList" class="form-select" style="width: auto; display: inline-block;"></select>
                 </div>
