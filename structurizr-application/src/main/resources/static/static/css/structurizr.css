@@ -449,6 +449,8 @@ hr {
 #topNavigation .row, #workspaceSummaryControls .row, #diagramControls .row, #explorationControls .row, #documentationControls .row, #decisionLogControls .row, #healthControls .row {
     margin-left: 0;
     margin-right: 0;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 #diagramNavigationPanel {
@@ -592,8 +594,7 @@ hr {
 }
 
 .workspaceLogo {
-    max-height: 48px;
-    margin-top: 5px;
+    max-height: 40px;
 }
 
 .btn {

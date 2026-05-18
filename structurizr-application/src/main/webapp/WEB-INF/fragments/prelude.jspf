@@ -56,7 +56,7 @@
         <div id="banner"></div>
         
         <div class="row">
-            <div class="col-2" style="padding: 18px 20px 10px 20px">
+            <div class="col-2">
                 <c:choose>
                     <c:when test="${not empty workspace}">
                     <a id="workspaceLogoAnchor" class="hidden" href="<c:out value="${urlPrefix}" /><c:out value="${urSuffix}" />">
@@ -67,11 +67,11 @@
                 </c:choose>
                 <img src="/static/img/structurizr-banner-light.png" alt="Structurizr" class="img-light img-responsive workspaceLogo" /><img src="/static/img/structurizr-banner-dark.png" alt="Structurizr" class="img-dark img-responsive workspaceLogo" /></a>
             </div>
-            <div class="col-10 centered" style="padding: 20px 20px 10px 20px; text-align: right;">
+            <div class="col-10 centered" style="text-align: right;">
                 <c:if test="${searchEnabled}">
                 <span class="topNavigationItem" style="margin-right: 0">
                     <form id="searchForm" method="get" action="/search" style="display: inline-block">
-                        <div class="form-inline" style="margin-top: 8px">
+                        <div class="form-inline">
                             <div class="form-group">
                                 <input type="text" name="query" class="form-control" placeholder="Search" value="${query}" style="width: 300px" />
                             </div>

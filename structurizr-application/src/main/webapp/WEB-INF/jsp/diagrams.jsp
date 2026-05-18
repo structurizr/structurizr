@@ -25,17 +25,17 @@
         <div id="diagramControls">
             <c:choose>
                 <c:when test="${workspace.editable || embed eq true}">
-                    <div class="centered" style="padding: 20px 10px 20px 10px">
+                    <div class="centered" style="padding: 15px 5px 15px 5px">
                         <%@ include file="/WEB-INF/fragments/diagrams/controls.jspf" %>
                     </div>
                 </c:when>
                 <c:otherwise>
                     <div id="banner"></div>
                     <div class="row">
-                        <div class="col-2" style="padding: 18px 20px 10px 20px">
+                        <div class="col-2">
                             <a href="<c:out value="${urlPrefix}" /><c:out value="${urlSuffix}" escapeXml="false" />"><img src="/static/img/structurizr-banner-light.png" alt="Structurizr" class="img-light img-responsive workspaceLogo" /><img src="/static/img/structurizr-banner-dark.png" alt="Structurizr" class="img-dark img-responsive workspaceLogo" /></a>
                         </div>
-                        <div class="col-10 centered" style="padding: 20px 30px 0px 30px">
+                        <div class="col-10 centered">
                             <div class="centered">
                                 <%@ include file="/WEB-INF/fragments/diagrams/controls.jspf" %>
                             </div>
