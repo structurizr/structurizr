@@ -63,7 +63,12 @@
     <dependency>
       <groupId>org.apache.tomcat.embed</groupId>
       <artifactId>tomcat-embed-jasper</artifactId>
-      <version>10.1.54</version>
+      <version>10.1.55</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.tomcat.embed</groupId>
+      <artifactId>tomcat-embed-core</artifactId>
+      <version>10.1.55</version>
     </dependency>
     <dependency>
       <groupId>jakarta.servlet.jsp.jstl</groupId>
@@ -157,6 +162,11 @@
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-saml2-service-provider</artifactId>
       <version>6.5.10</version>
+    </dependency>
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcpkix-jdk18on</artifactId>
+      <version>1.84</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.session</groupId>
