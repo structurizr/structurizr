@@ -5210,6 +5210,10 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                 crop: false,
                 dimensions: true
             }
+        } else {
+            if (options.dimensions === undefined) {
+                options.dimensions = true;
+            }
         }
 
         const includeDiagramMetadata = options.metadata;
