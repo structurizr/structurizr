@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026.05.22
+
+- Security updates and minor bug fixes.
+
 ## 2026.05.16
 
 - Updates Structurizr for Java library to [v6.2.1](https://github.com/structurizr/structurizr/releases/tag/v6.2.1).
