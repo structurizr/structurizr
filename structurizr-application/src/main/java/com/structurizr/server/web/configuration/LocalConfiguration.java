@@ -1,9 +1,5 @@
 package com.structurizr.server.web.configuration;
 
-import com.structurizr.configuration.Configuration;
-import jakarta.servlet.*;
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,15 +8,10 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
-import java.io.IOException;
-import java.util.Set;
-
 @org.springframework.context.annotation.Configuration
 @EnableWebSecurity
 @Profile("command-local")
 class LocalConfiguration {
-
-    private static final Set<String> PERMITTED_LOCAL_SERVER_NAMES = Set.of("localhost", "127.0.0.1");
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -36,39 +27,6 @@ class LocalConfiguration {
                 );
 
         return http.build();
-    }
-
-    @Bean
-    public FilterRegistrationBean<? extends Filter> localFilterRegistration() {
-        FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setFilter(new Filter() {
-            @Override
-            public void init(FilterConfig filterConfig) throws ServletException {
-            }
-
-            @Override
-            public void destroy() {
-            }
-
-            @Override
-            public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-                HttpServletRequest request = (HttpServletRequest)servletRequest;
-                String protocol = request.getScheme();
-                String serverName = request.getServerName();
-                int port = request.getServerPort();
-
-                if (!PERMITTED_LOCAL_SERVER_NAMES.contains(serverName)) {
-                    throw new RuntimeException("Local mode is only designed to run via localhost URLs (actual URL was " + serverName + ")");
-                }
-
-                Configuration.getInstance().setWebUrl(protocol + "://" + serverName + ":" + port);
-                
-                filterChain.doFilter(servletRequest, servletResponse);
-            }
-        });
-        registrationBean.addUrlPatterns("/*");
-
-        return registrationBean;
     }
 
 }
