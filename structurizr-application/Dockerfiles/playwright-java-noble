@@ -4,9 +4,11 @@ ENV PORT=8080
 
 COPY structurizr-application/target/structurizr-*.war /usr/local/structurizr.war
 COPY structurizr-themes /usr/local/structurizr-themes
+COPY structurizr-application/Dockerfiles/structurizr.sh /usr/local/structurizr.sh
+RUN chmod +x /usr/local/structurizr.sh
 
 EXPOSE ${PORT}
 
 WORKDIR /usr/local/structurizr
 
-ENTRYPOINT ["java", "-Dserver.port=${PORT}", "--enable-native-access=ALL-UNNAMED", "-jar", "/usr/local/structurizr.war"]
+ENTRYPOINT ["/usr/local/structurizr.sh"]
