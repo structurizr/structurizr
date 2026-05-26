@@ -5,4 +5,4 @@ if [ "$#" -eq 0 ]; then
     exit 1
 fi
 
-java -Dserver.port=${PORT} --enable-native-access=ALL-UNNAMED -jar /usr/local/structurizr.war $@
+java -Dserver.port=${PORT} -Dio.netty.noUnsafe=true --enable-native-access=ALL-UNNAMED -jar /usr/local/structurizr.war $@
