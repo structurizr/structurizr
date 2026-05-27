@@ -511,7 +511,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             domElement.attr('style', 'cursor: default !important');
 
             view.dimensions = {
-                width: imageWidth,
+                width: Math.max(imageWidth, diagramMetadataWidth),
                 height: imageHeight + (diagramMetadataHeight * 1.5)
             }
 
@@ -3049,6 +3049,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         const showTitle = getViewOrViewSetProperty(viewOrFilter, 'structurizr.title', 'true') === 'true';
         const showDescription = getViewOrViewSetProperty(viewOrFilter, 'structurizr.description', 'true') === 'true';
         const showMetadata = getViewOrViewSetProperty(viewOrFilter, 'structurizr.metadata', 'true') === 'true';
+        const horizontalPadding = 40;
 
         diagramTitle = '';
         diagramDescription = '';
@@ -3071,7 +3072,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             }});
         graph.addCell(diagramTitleElement);
         diagramTitleElement.toBack();
-        diagramMetadataWidth = Math.max(diagramMetadataWidth, calculateWidth(diagramTitle, elementStyleForDiagramTitle.fontSize));
+        diagramMetadataWidth = Math.max(diagramMetadataWidth, horizontalPadding + calculateWidth(diagramTitle, font.name, elementStyleForDiagramTitle.fontSize));
 
         if (showDescription) {
             if (currentFilter && currentFilter.description) {
@@ -3096,7 +3097,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
             graph.addCell(diagramDescriptionElement);
             diagramDescriptionElement.toBack();
-            diagramMetadataWidth = Math.max(diagramMetadataWidth, calculateWidth(diagramDescription, elementStyleForDiagramDescription.fontSize));
+            diagramMetadataWidth = Math.max(diagramMetadataWidth, horizontalPadding + calculateWidth(diagramDescription, font.name, elementStyleForDiagramDescription.fontSize));
         } else {
             diagramDescriptionElement = undefined;
         }
@@ -3148,7 +3149,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             }});
         graph.addCell(diagramMetadataElement);
         diagramMetadataElement.toBack();
-        diagramMetadataWidth = Math.max(diagramMetadataWidth, calculateWidth(diagramMetadata, elementStyleForDiagramMetadata.fontSize));
+        diagramMetadataWidth = Math.max(diagramMetadataWidth, horizontalPadding + calculateWidth(diagramMetadata, font.name, elementStyleForDiagramMetadata.fontSize));
 
         const padding = 10;
         const titleHeight = calculateHeight(diagramTitle, elementStyleForDiagramTitle.fontSize, 0) + padding;
@@ -3268,20 +3269,14 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         }
     }
 
-    function calculateWidth(text, fontSize) {
+    function calculateWidth(text, fontName, fontSize) {
         if (text) {
             text = text.trim();
 
-            if (text.length === 0) {
-                return 0;
-            } else {
-                var length = 0;
-                text.split('\n').forEach(function(line) {
-                    length = Math.max(length, line.length * (0.6 * fontSize));
-                });
-
-                return length;
-            }
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            context.font = fontSize + 'px ' + fontName;
+            return context.measureText(text).width;
         } else {
             return 0;
         }
