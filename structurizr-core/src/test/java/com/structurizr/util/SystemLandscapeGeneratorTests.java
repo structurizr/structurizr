@@ -69,6 +69,10 @@ public class SystemLandscapeGeneratorTests {
         b = workspace.getModel().getSoftwareSystemWithName("B");
         c = workspace.getModel().getSoftwareSystemWithName("C");
 
+        assertEquals("Element,Software System", a.getTags());
+        assertEquals("Element,Software System", b.getTags());
+        assertEquals("Element,Software System", c.getTags());
+
         assertEquals(3, workspace.getModel().getRelationships().size());
         assertTrue(user.hasEfferentRelationshipWith(a, "User-A"));
         assertTrue(a.hasEfferentRelationshipWith(b, "A-B"));

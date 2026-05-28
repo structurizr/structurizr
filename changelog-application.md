@@ -1,5 +1,11 @@
 # Changelog
 
+## unreleased
+
+### generate
+
+- Fixes https://github.com/structurizr/structurizr/issues/106 ("generate system-landscape" is repeating tags).
+
 ## 2026.05.22
 
 - Security updates and minor bug fixes.
