@@ -49,13 +49,19 @@ public class SystemLandscapeGeneratorTests {
         Workspace workspace1 = new Workspace("1");
         Person user = workspace1.getModel().addPerson("User");
         SoftwareSystem a = workspace1.getModel().addSoftwareSystem("A");
+        a.addTags("Tag A - Workspace1");
+
         SoftwareSystem b = workspace1.getModel().addSoftwareSystem("B");
+        b.addTags("Tag B - Workspace1");
         user.uses(a, "User-A");
         a.uses(b, "A-B");
 
         Workspace workspace2 = new Workspace("2");
         b = workspace2.getModel().addSoftwareSystem("B");
+        b.addTags("Tag B - Workspace2");
+
         SoftwareSystem c = workspace2.getModel().addSoftwareSystem("C");
+        c.addTags("Tag C - Workspace2");
         b.uses(c, "B-C");
 
         Workspace workspace = generator.generate(List.of(workspace1, workspace2));
@@ -69,9 +75,9 @@ public class SystemLandscapeGeneratorTests {
         b = workspace.getModel().getSoftwareSystemWithName("B");
         c = workspace.getModel().getSoftwareSystemWithName("C");
 
-        assertEquals("Element,Software System", a.getTags());
-        assertEquals("Element,Software System", b.getTags());
-        assertEquals("Element,Software System", c.getTags());
+        assertEquals("Element,Software System,Tag A - Workspace1", a.getTags());
+        assertEquals("Element,Software System,Tag B - Workspace1,Tag B - Workspace2", b.getTags());
+        assertEquals("Element,Software System,Tag C - Workspace2", c.getTags());
 
         assertEquals(3, workspace.getModel().getRelationships().size());
         assertTrue(user.hasEfferentRelationshipWith(a, "User-A"));

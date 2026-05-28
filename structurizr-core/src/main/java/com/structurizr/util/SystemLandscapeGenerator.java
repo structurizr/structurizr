@@ -154,7 +154,7 @@ public class SystemLandscapeGenerator {
 
     private void clone(ModelItem source, ModelItem destination) {
         destination.setUrl(source.getUrl());
-        destination.addTags(destination.getTagsAsSet().toArray(new String[0]));
+        destination.addTags(source.getTagsAsSet().toArray(new String[0]));
 
         for (String name : source.getProperties().keySet()) {
             destination.addProperty(name, source.getProperties().get(name));
