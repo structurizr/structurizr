@@ -2,6 +2,10 @@
 
 ## unreleased
 
+### export
+
+- Fixes https://github.com/structurizr/structurizr/issues/109 (Exporting static site with embedded themes fails when using workspace in JSON format).
+
 ### generate
 
 - Fixes https://github.com/structurizr/structurizr/issues/106 ("generate system-landscape" is repeating tags).

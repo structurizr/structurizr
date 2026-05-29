@@ -82,10 +82,6 @@ public class ExportCommand extends AbstractCommand {
         option.setRequired(false);
         options.addOption(option);
 
-        option = new Option("t", "themes", true, "Path to themes");
-        option.setRequired(false);
-        options.addOption(option);
-
         option = new Option("url", "url", true, "Structurizr diagram page URL (for PNG/SVG exports)");
         option.setRequired(false);
         options.addOption(option);
