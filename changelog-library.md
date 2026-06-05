@@ -1,5 +1,11 @@
 # Changelog
 
+## v6.2.2 (unreleased)
+
+### structurizr-client
+
+- Bumps dependencies.
+
 ## v6.2.1 (15th May 2026)
 
 ### structurizr-dsl

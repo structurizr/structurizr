@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.structurizr</groupId>
   <artifactId>structurizr</artifactId>
-  <version>6.2.1</version>
+  <version>6.2.2</version>
   <packaging>pom</packaging>
   <name>structurizr</name>
   <description>Structurizr</description>
