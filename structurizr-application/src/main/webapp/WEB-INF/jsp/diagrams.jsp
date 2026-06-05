@@ -1062,7 +1062,6 @@
     function initQuickNavigation() {
         views.forEach(function(view) {
             const title = structurizr.util.escapeHtml(structurizr.ui.getTitleForView(view));
-            <%--quickNavigation.addItem(title + ' <span class="viewKey">(#' + structurizr.util.escapeHtml(view.key) + ')</span>', '<c:out value="${urlPrefix}" />/${quickNavigationPath}<c:out value="${urlSuffix}" escapeXml="false" />#' + structurizr.util.escapeHtml(view.key));--%>
             quickNavigation.addHandler(title + ' <span class="viewKey">(#' + structurizr.util.escapeHtml(view.key) + ')</span>',
             function() {
                 window.location.hash = structurizr.util.escapeHtml(view.key);
