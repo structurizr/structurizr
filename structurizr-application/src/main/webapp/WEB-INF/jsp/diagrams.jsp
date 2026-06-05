@@ -115,9 +115,6 @@
 
                         <c:if test="${workspace.id > 0 && (embed eq true && workspace.editable eq false)}">
                         <button id="openCurrentDiagramInNewWindowEmbeddedButton" class="btn btn-default" title="Link to this diagram"><img src="/static/bootstrap-icons/link.svg" class="icon-btn" /></button>
-                        <script nonce="${scriptNonce}">
-                            $('#openCurrentDiagramInNewWindowEmbeddedButton').click(function() { openCurrentDiagramInNewWindow(); });
-                        </script>
                         </c:if>
                     </div>
                 </c:if>
@@ -134,6 +131,10 @@
                 <button id="exitFullScreenButton" class="btn btn-default hidden" title="Exit Full Screen [Escape]"><img src="/static/bootstrap-icons/fullscreen-exit.svg" class="icon-btn" /></button>
 
                 <script nonce="${scriptNonce}">
+                    <c:if test="${workspace.id > 0 && (embed eq true && workspace.editable eq false)}">
+                    $('#openCurrentDiagramInNewWindowEmbeddedButton').click(function() { openCurrentDiagramInNewWindow(); });
+                    </c:if>
+
                     $('#embeddedExportButton').click(function() { exportToImages(); });
 
                     $('#zoomOutButton').click(function() { structurizr.diagram.zoomOut(); });
@@ -678,8 +679,16 @@
     }
 
     function openCurrentDiagramInNewWindow() {
+        var prefix;
+        
+        if (getParameter('linkTo') === 'authenticated') {
+            prefix = '/workspace/' + ${workspace.id};
+        } else {
+            prefix = '<c:out value="${urlPrefix}" />';
+        }
+
         const hash = window.location.hash;
-        var url = '<c:out value="${urlPrefix}" />/diagrams<c:out value="${urlSuffix}" escapeXml="false" />';
+        var url = prefix + '/diagrams<c:out value="${urlSuffix}" escapeXml="false" />';
         var diagramIdentifier = '';
 
         if (hash === undefined || hash.trim().length === 0) {
