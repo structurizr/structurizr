@@ -45,11 +45,14 @@
             <button id="exportImagesButton" class="btn btn-default" title="Export diagram and key/legend to PNG/SVG"><img src="/static/bootstrap-icons/file-earmark-image.svg" class="icon-btn" /></button>
 
             <c:if test="${structurizrConfiguration.profile eq 'Server'}">
-            <script nonce="${scriptNonce}">$('#embedDiagramButton').click(function() { openEmbedModal(); });</script>
             <button id="embedDiagramButton" class="btn btn-default" title="Embed"><img src="/static/bootstrap-icons/code-slash.svg" class="icon-btn" /></button>
             </c:if>
         </div>
+
         <script nonce="${scriptNonce}">
+        <c:if test="${structurizrConfiguration.profile eq 'Server'}">
+            $('#embedDiagramButton').click(function() { openEmbedModal(); });
+        </c:if>
             $('#exportImagesButton').click(function() { exportToImages(); });
         </script>
 
