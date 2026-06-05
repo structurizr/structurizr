@@ -680,8 +680,8 @@
 
     function openCurrentDiagramInNewWindow() {
         var prefix;
-        
-        if (getParameter('linkTo') === 'authenticated') {
+
+        if (getParameter('link') === 'authenticated') {
             prefix = '/workspace/' + ${workspace.id};
         } else {
             prefix = '<c:out value="${urlPrefix}" />';
