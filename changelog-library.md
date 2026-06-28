@@ -1,6 +1,6 @@
 # Changelog
 
-## v6.2.2 (unreleased)
+## v6.2.2 (28th June 2026)
 
 ### structurizr-client
 
