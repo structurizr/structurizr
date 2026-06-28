@@ -1,6 +1,10 @@
 # Changelog
 
-## unreleased
+## 2026.06.28
+
+### server
+
+- Fixes https://github.com/structurizr/structurizr/issues/110 ("Link to diagram" in embed diagram lead to different URL between Structurizr SaaS and Structurizr self-hosted instance).
 
 ### export
 
