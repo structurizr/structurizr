@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.5.14</version>
+    <version>3.5.16</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
 
@@ -41,14 +41,14 @@
       <dependency>
         <groupId>io.netty</groupId>
         <artifactId>netty-bom</artifactId>
-        <version>4.1.133.Final</version>
+        <version>4.2.17.Final</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>org.junit</groupId>
         <artifactId>junit-bom</artifactId>
-        <version>5.11.0</version>
+        <version>5.14.4</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -63,12 +63,12 @@
     <dependency>
       <groupId>org.apache.tomcat.embed</groupId>
       <artifactId>tomcat-embed-jasper</artifactId>
-      <version>10.1.55</version>
+      <version>10.1.59</version>
     </dependency>
     <dependency>
       <groupId>org.apache.tomcat.embed</groupId>
       <artifactId>tomcat-embed-core</artifactId>
-      <version>10.1.55</version>
+      <version>10.1.59</version>
     </dependency>
     <dependency>
       <groupId>jakarta.servlet.jsp.jstl</groupId>
@@ -88,7 +88,7 @@
     <dependency>
       <groupId>com.structurizr</groupId>
       <artifactId>structurizr-dsl</artifactId>
-      <version>6.2.2</version>
+      <version>6.3.0</version>
       <exclusions>
         <exclusion>
           <groupId>commons-logging</groupId>
@@ -99,7 +99,7 @@
     <dependency>
       <groupId>com.structurizr</groupId>
       <artifactId>structurizr-inspection</artifactId>
-      <version>6.2.2</version>
+      <version>6.3.0</version>
       <exclusions>
         <exclusion>
           <groupId>commons-logging</groupId>
@@ -125,12 +125,12 @@
     <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-core</artifactId>
-      <version>10.3.2</version>
+      <version>10.5.1</version>
     </dependency>
     <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-queryparser</artifactId>
-      <version>10.3.2</version>
+      <version>10.5.1</version>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -146,22 +146,22 @@
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-web</artifactId>
-      <version>6.5.10</version>
+      <version>6.5.11</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-config</artifactId>
-      <version>6.5.10</version>
+      <version>6.5.11</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-ldap</artifactId>
-      <version>6.5.10</version>
+      <version>6.5.11</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-saml2-service-provider</artifactId>
-      <version>6.5.10</version>
+      <version>6.5.11</version>
     </dependency>
     <dependency>
       <groupId>org.bouncycastle</groupId>
@@ -177,7 +177,7 @@
     <dependency>
       <groupId>redis.clients</groupId>
       <artifactId>jedis</artifactId>
-      <version>7.5.0</version>
+      <version>7.5.3</version>
     </dependency>
 
     <dependency>
@@ -187,21 +187,39 @@
     </dependency>
 
     <dependency>
+      <groupId>org.apache.httpcomponents.client5</groupId>
+      <artifactId>httpclient5</artifactId>
+      <version>5.6.4</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.httpcomponents.core5</groupId>
+      <artifactId>httpcore5</artifactId>
+      <version>5.4.3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.httpcomponents.core5</groupId>
+      <artifactId>httpcore5-h2</artifactId>
+      <version>5.4.3</version>
+    </dependency>
+
+    <dependency>
       <groupId>software.amazon.awssdk</groupId>
       <artifactId>s3</artifactId>
-      <version>2.44.5</version>
+      <version>2.54.7</version>
     </dependency>
 
     <dependency>
       <groupId>software.amazon.awssdk</groupId>
       <artifactId>sts</artifactId>
-      <version>2.44.5</version>
+      <version>2.54.7</version>
     </dependency>
 
     <dependency>
       <groupId>com.azure</groupId>
       <artifactId>azure-storage-blob</artifactId>
-      <version>12.33.4</version>
+      <version>12.35.1</version>
     </dependency>
 
     <dependency>
@@ -219,7 +237,7 @@
     <dependency>
       <groupId>org.redisson</groupId>
       <artifactId>redisson</artifactId>
-      <version>4.4.0</version>
+      <version>4.7.0</version>
     </dependency>
 
     <dependency>

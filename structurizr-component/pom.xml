@@ -4,7 +4,7 @@
   <parent>
     <artifactId>structurizr</artifactId>
     <groupId>com.structurizr</groupId>
-    <version>6.2.2</version>
+    <version>6.3.0</version>
   </parent>
 
   <artifactId>structurizr-component</artifactId>
@@ -19,7 +19,7 @@
     <dependency>
       <groupId>com.github.javaparser</groupId>
       <artifactId>javaparser-symbol-solver-core</artifactId>
-      <version>3.28.0</version>
+      <version>3.28.2</version>
     </dependency>
     <dependency>
       <groupId>com.structurizr</groupId>
