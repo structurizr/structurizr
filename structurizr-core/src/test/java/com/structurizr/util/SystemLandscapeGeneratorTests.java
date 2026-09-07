@@ -8,8 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SystemLandscapeGeneratorTests {
 
@@ -48,11 +47,16 @@ public class SystemLandscapeGeneratorTests {
 
         Workspace workspace1 = new Workspace("1");
         Person user = workspace1.getModel().addPerson("User");
+        user.setGroup("People");
+
         SoftwareSystem a = workspace1.getModel().addSoftwareSystem("A");
         a.addTags("Tag A - Workspace1");
+        a.setGroup("Group 1");
 
         SoftwareSystem b = workspace1.getModel().addSoftwareSystem("B");
         b.addTags("Tag B - Workspace1");
+        b.setGroup("Group 2");
+
         user.uses(a, "User-A");
         a.uses(b, "A-B");
 
@@ -78,6 +82,11 @@ public class SystemLandscapeGeneratorTests {
         assertEquals("Element,Software System,Tag A - Workspace1", a.getTags());
         assertEquals("Element,Software System,Tag B - Workspace1,Tag B - Workspace2", b.getTags());
         assertEquals("Element,Software System,Tag C - Workspace2", c.getTags());
+
+        assertEquals("People", user.getGroup());
+        assertEquals("Group 1", a.getGroup());
+        assertEquals("Group 2", b.getGroup());
+        assertNull(c.getGroup());
 
         assertEquals(3, workspace.getModel().getRelationships().size());
         assertTrue(user.hasEfferentRelationshipWith(a, "User-A"));

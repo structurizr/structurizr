@@ -2,7 +2,9 @@
 
 ## v6.3.0 (unreleased)
 
-- ...
+### structurizr-core
+
+- Fixes https://github.com/structurizr/structurizr/issues/119 ("generate system-landscape" missing group attributes).
 
 ## v6.2.2 (28th June 2026)
 

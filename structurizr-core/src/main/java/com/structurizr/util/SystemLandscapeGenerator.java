@@ -139,6 +139,11 @@ public class SystemLandscapeGenerator {
         }
 
         person.setDescription(source.getDescription());
+
+        if (StringUtils.isNullOrEmpty(person.getGroup())) {
+            person.setGroup(source.getGroup());
+        }
+
         clone(source, person);
     }
 
@@ -149,6 +154,11 @@ public class SystemLandscapeGenerator {
         }
 
         softwareSystem.setDescription(source.getDescription());
+
+        if (StringUtils.isNullOrEmpty(softwareSystem.getGroup())) {
+            softwareSystem.setGroup(source.getGroup());
+        }
+
         clone(source, softwareSystem);
     }
 
