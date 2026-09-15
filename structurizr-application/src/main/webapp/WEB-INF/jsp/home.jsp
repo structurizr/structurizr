@@ -100,7 +100,6 @@
     });
 
     <c:forEach var="workspace" items="${quickNavigationItems}">
-    console.log('${workspace.id}');
-    quickNavigation.addItem('${workspace.id} - <c:out value="${workspace.name}" escapeXml="true" />', '${workspace.urlPrefix}/${workspace.id}');
+    quickNavigation.addItem('<c:out value="${workspace.name}" escapeXml="true" />&nbsp;<span class="workspaceId">(#${workspace.id})</span>', '${workspace.urlPrefix}/${workspace.id}');
     </c:forEach>
 </script>

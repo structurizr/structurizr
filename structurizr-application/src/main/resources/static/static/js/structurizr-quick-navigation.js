@@ -5,7 +5,6 @@ structurizr.ui.QuickNavigation = class QuickNavigation {
     #navigationLinksClass = '.quickNavigationItem';
 
     #selectedIndex = -1;
-    #maxItems = 10;
     #enabled = true;
 
     #onOpenCallback;
@@ -76,21 +75,13 @@ structurizr.ui.QuickNavigation = class QuickNavigation {
     }
 
     #filterItems() {
-        const self = this;
         const filter = this.#filterTextBox.val().trim().toLowerCase();
-        var count = 0;
 
         const navigationLinks = $(this.#navigationLinksClass);
         navigationLinks.each(function(index) {
             if ($(this).text().toLowerCase().indexOf(filter) > -1) {
-                count++;
-                if (count <= self.#maxItems) {
-                    $(this).removeClass('hidden');
-                    $(this).removeClass('selected');
-                } else {
-                    $(this).addClass('hidden');
-                    $(this).removeClass('selected');
-                }
+                $(this).removeClass('hidden');
+                $(this).removeClass('selected');
             } else {
                 $(this).addClass('hidden');
                 $(this).removeClass('selected');
@@ -106,6 +97,7 @@ structurizr.ui.QuickNavigation = class QuickNavigation {
             this.#selectedIndex = index;
             items.removeClass('selected');
             items.eq(this.#selectedIndex).addClass('selected');
+            items.eq(this.#selectedIndex)[0].scrollIntoView();
         }
     }
 

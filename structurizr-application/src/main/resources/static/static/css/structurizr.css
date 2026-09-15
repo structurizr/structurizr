@@ -584,8 +584,13 @@ hr {
     border: solid 1px #777777;
 }
 
-#quickFindModal .viewKey {
+#quickFindModal .viewKey, #quickFindModal .workspaceId {
     font-size: 75%;
+}
+
+#quickFindModalItems {
+    max-height: 400px;
+    overflow-y: auto;
 }
 
 #banner {
