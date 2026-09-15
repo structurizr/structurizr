@@ -27,6 +27,11 @@ final class ServerHomeController extends AbstractHomeController {
 
         List<WorkspaceMetadata> workspaces = workspaceComponent.getWorkspaces(user);
         sort = determineSort(sort);
+
+        // workspaces for quick navigation
+        model.addAttribute("quickNavigationItems", sortAndPaginate(new ArrayList<>(workspaces), sort, 1, workspaces.size(), model));
+
+        // workspaces to display
         workspaces = sortAndPaginate(new ArrayList<>(workspaces), sort, pageNumber, pageSize, model);
 
         model.addAttribute("workspaces", workspaces);

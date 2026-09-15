@@ -13,8 +13,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ServerHomeControllerTests extends AbstractTestsBase {
 
@@ -33,18 +32,25 @@ public class ServerHomeControllerTests extends AbstractTestsBase {
         configureAsServerWithAuthenticationDisabled();
 
         WorkspaceMetadata workspace1 = new WorkspaceMetadata(1);
+        WorkspaceMetadata workspace2 = new WorkspaceMetadata(2);
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
             public List<WorkspaceMetadata> getWorkspaces(User user) {
-                return List.of(workspace1);
+                return List.of(workspace1, workspace2);
             }
         });
 
-        String result = controller.showHomePage("", 1, 20, model);
+        String result = controller.showHomePage("", 1, 1, model);
 
         assertEquals(1, model.getAttribute("numberOfWorkspaces"));
+
         assertTrue(((Collection)model.getAttribute("workspaces")).contains(workspace1));
+        assertFalse(((Collection)model.getAttribute("workspaces")).contains(workspace2));
+
+        assertTrue(((Collection)model.getAttribute("quickNavigationItems")).contains(workspace1));
+        assertTrue(((Collection)model.getAttribute("quickNavigationItems")).contains(workspace2));
+
         assertEquals("home", result);
         assertEquals(true, model.getAttribute("userCanCreateWorkspace"));
     }
@@ -80,18 +86,25 @@ public class ServerHomeControllerTests extends AbstractTestsBase {
         setUser("user@example.com");
 
         WorkspaceMetadata workspace1 = new WorkspaceMetadata(1);
+        WorkspaceMetadata workspace2 = new WorkspaceMetadata(2);
 
         controller.setWorkspaceComponent(new MockWorkspaceComponent() {
             @Override
             public List<WorkspaceMetadata> getWorkspaces(User user) {
-                return List.of(workspace1);
+                return List.of(workspace1, workspace2);
             }
         });
 
-        String result = controller.showHomePage("", 1, 20, model);
+        String result = controller.showHomePage("", 1, 1, model);
 
         assertEquals(1, model.getAttribute("numberOfWorkspaces"));
+
         assertTrue(((Collection)model.getAttribute("workspaces")).contains(workspace1));
+        assertFalse(((Collection)model.getAttribute("workspaces")).contains(workspace2));
+
+        assertTrue(((Collection)model.getAttribute("quickNavigationItems")).contains(workspace1));
+        assertTrue(((Collection)model.getAttribute("quickNavigationItems")).contains(workspace2));
+
         assertEquals("home", result);
         assertEquals(false, model.getAttribute("userCanCreateWorkspace"));
     }

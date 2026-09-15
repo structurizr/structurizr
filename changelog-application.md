@@ -1,5 +1,15 @@
 # Changelog
 
+## unreleased
+
+### local
+
+- Enhances quick navigation feature to include all workspaces on home page, irrespective of pagination (https://github.com/structurizr/structurizr/discussions/128).
+
+### server
+
+- Enhances quick navigation feature to include all workspaces on home page, irrespective of pagination (https://github.com/structurizr/structurizr/discussions/128).
+
 ## 2026.06.28
 
 ### server
