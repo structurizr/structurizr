@@ -1,6 +1,6 @@
 # Changelog
 
-## v6.3.0 (unreleased)
+## v6.2.3 (17th September 2026)
 
 ### structurizr-core
 
