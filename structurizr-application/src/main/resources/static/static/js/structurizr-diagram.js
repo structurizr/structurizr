@@ -1448,7 +1448,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             });
         }
 
-        if (p === false) {
+        if (p === undefined) {
             if (relationship.linkedRelationshipId) {
                 p = getPerspectiveForRelationship(structurizr.workspace.findRelationshipById(relationship.linkedRelationshipId));
             }

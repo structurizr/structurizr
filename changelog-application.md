@@ -5,10 +5,16 @@
 ### local
 
 - Enhances quick navigation feature to include all workspaces on home page, irrespective of pagination (https://github.com/structurizr/structurizr/discussions/128).
+- Fixes a bug preventing perspectives from being shown when defined on linked relationships. 
 
 ### server
 
 - Enhances quick navigation feature to include all workspaces on home page, irrespective of pagination (https://github.com/structurizr/structurizr/discussions/128).
+- Fixes a bug preventing perspectives from being shown when defined on linked relationships.
+
+### playground
+
+- Fixes a bug preventing perspectives from being shown when defined on linked relationships.
 
 ## 2026.06.28
 
