@@ -1,4 +1,4 @@
-FROM dhi.io/eclipse-temurin:21-alpine3.23
+FROM dhi.io/eclipse-temurin:21-alpine3.24
 
 ENV PORT=8080
 
