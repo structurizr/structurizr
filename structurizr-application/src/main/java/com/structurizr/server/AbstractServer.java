@@ -35,7 +35,7 @@ public abstract class AbstractServer extends SpringBootServletInitializer {
 	public FilterRegistrationBean<? extends Filter> characterEncodingFilterRegistration() {
 		CharacterEncodingFilter filter = new CharacterEncodingFilter();
 		filter.setEncoding(StandardCharsets.UTF_8.name());
-		filter.setForceEncoding(true);
+		filter.setForceResponseEncoding(false);
 
 		FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<>();
 		registrationBean.setFilter(filter);

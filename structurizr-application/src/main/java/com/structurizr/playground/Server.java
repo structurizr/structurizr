@@ -61,7 +61,7 @@ public class Server extends SpringBootServletInitializer {
 	FilterRegistrationBean<? extends Filter> characterEncodingFilterRegistration() {
 		CharacterEncodingFilter filter = new CharacterEncodingFilter();
 		filter.setEncoding(StandardCharsets.UTF_8.name());
-		filter.setForceEncoding(true);
+		filter.setForceResponseEncoding(false);
 
 		FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<>();
 		registrationBean.setFilter(filter);
