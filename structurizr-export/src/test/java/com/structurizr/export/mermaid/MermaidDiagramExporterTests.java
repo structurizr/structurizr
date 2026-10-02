@@ -476,4 +476,27 @@ public class MermaidDiagramExporterTests extends AbstractExporterTests {
                   end""", diagram.getDefinition());
     }
 
+    @Test
+    public void test_semicolonInSequenceDiagram() {
+        Workspace workspace = new Workspace("Name", "Description");
+        Model model = workspace.getModel();
+
+        SoftwareSystem a = model.addSoftwareSystem("A");
+        SoftwareSystem b = model.addSoftwareSystem("B");
+        Relationship r = a.uses(b, "Event 1; Event 2");
+
+        DynamicView view = workspace.getViews().createDynamicView("key", "Description");
+        view.add(r);
+        view.addProperty("mermaid.sequenceDiagram", "true");
+
+        Diagram diagram = new MermaidDiagramExporter().export(view);
+        assertEquals("""
+                sequenceDiagram
+                
+                  participant 1 as A<br />[Software System]
+                  participant 2 as B<br />[Software System]
+                
+                  1->>2: Event 1#59; Event 2""", diagram.getDefinition());
+    }
+
 }

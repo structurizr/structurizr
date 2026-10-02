@@ -234,14 +234,20 @@ public class MermaidDiagramExporter extends AbstractDiagramExporter {
                         sourceId,
                         arrow,
                         destinationId,
-                        description,
-                        technology));
+                        escapeSemicolon(description),
+                        escapeSemicolon(technology)
+                ));
             }
 
             return createDiagram(view, writer.toString());
         } else {
             return super.export(view);
         }
+    }
+
+    private String escapeSemicolon(String s) {
+        // semicolons break sequence diagrams -> https://github.com/mermaid-js/mermaid/issues/1445
+        return s.replace(";", "#59;");
     }
 
     @Override

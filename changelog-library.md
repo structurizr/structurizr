@@ -1,5 +1,11 @@
 # Changelog
 
+## unreleased
+
+### structurizr-export
+
+- Fixes https://github.com/structurizr/structurizr/issues/132 (Mermaid sequence export fails to render messages containing semicolons).
+
 ## v6.2.3 (17th September 2026)
 
 ### structurizr-core
