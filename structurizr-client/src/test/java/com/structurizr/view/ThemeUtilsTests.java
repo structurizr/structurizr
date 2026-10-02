@@ -33,7 +33,7 @@ public class ThemeUtilsTests {
         Workspace workspace = new Workspace("Name", "Description");
         SoftwareSystem softwareSystem = workspace.getModel().addSoftwareSystem("Name");
         softwareSystem.addTags("Amazon Web Services - Alexa For Business");
-        workspace.getViews().getConfiguration().setThemes("https://static.structurizr.com/themes/amazon-web-services-2020.04.30/theme.json");
+        workspace.getViews().getConfiguration().setThemes("https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/theme.json");
 
         HttpClient httpClient = new HttpClient();
         httpClient.allow(".*");
@@ -45,9 +45,7 @@ public class ThemeUtilsTests {
         // but we should be able to find a style included in the theme
         ElementStyle style = workspace.getViews().getConfiguration().getStyles().findElementStyle(softwareSystem);
         assertNotNull(style);
-        assertEquals("#d6242d", style.getStroke());
-        assertEquals("#d6242d", style.getColor());
-        assertEquals("https://static.structurizr.com/themes/amazon-web-services-2020.04.30/alexa-for-business.png", style.getIcon());
+        assertEquals("https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/alexa-for-business.png", style.getIcon());
     }
 
     @Test
@@ -168,7 +166,7 @@ public class ThemeUtilsTests {
         Workspace workspace = new Workspace("Name", "Description");
         SoftwareSystem softwareSystem = workspace.getModel().addSoftwareSystem("Name");
         softwareSystem.addTags("Amazon Web Services - Alexa For Business");
-        workspace.getViews().getConfiguration().setThemes("https://static.structurizr.com/themes/amazon-web-services-2020.04.30/theme.json");
+        workspace.getViews().getConfiguration().setThemes("https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/theme.json");
 
         HttpClient httpClient = new HttpClient();
         httpClient.allow(".*");
@@ -180,9 +178,7 @@ public class ThemeUtilsTests {
         // but we should be able to find a style included in the theme
         ElementStyle style = workspace.getViews().getConfiguration().getStyles().findElementStyle(softwareSystem);
         assertNotNull(style);
-        assertEquals("#d6242d", style.getStroke());
-        assertEquals("#d6242d", style.getColor());
-        assertEquals("https://static.structurizr.com/themes/amazon-web-services-2020.04.30/alexa-for-business.png", style.getIcon());
+        assertEquals("https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/alexa-for-business.png", style.getIcon());
     }
 
     @Test

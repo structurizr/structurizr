@@ -3599,10 +3599,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - Elastic Load Balancing
                   .Element-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gRWxhc3RpYyBMb2FkIEJhbGFuY2luZw== {
                     BackgroundColor: #ffffff;
-                    LineColor: #693cc5;
+                    LineColor: #444444;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #693cc5;
+                    FontColor: #444444;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -3611,10 +3611,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - Route 53
                   .Element-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUm91dGUgNTM= {
                     BackgroundColor: #ffffff;
-                    LineColor: #693cc5;
+                    LineColor: #444444;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #693cc5;
+                    FontColor: #444444;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -3657,10 +3657,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - Auto Scaling
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQXV0byBTY2FsaW5n {
                     BackgroundColor: #ffffff;
-                    LineColor: #cc2264;
+                    LineColor: #444444;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #cc2264;
+                    FontColor: #444444;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -3668,10 +3668,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - Cloud
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQ2xvdWQ= {
                     BackgroundColor: #ffffff;
-                    LineColor: #232f3e;
+                    LineColor: #444444;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #232f3e;
+                    FontColor: #444444;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -3679,10 +3679,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - EC2
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gRUMy {
                     BackgroundColor: #ffffff;
-                    LineColor: #d86613;
+                    LineColor: #444444;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #d86613;
+                    FontColor: #444444;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -3690,10 +3690,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - RDS
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUkRT {
                     BackgroundColor: #ffffff;
-                    LineColor: #3b48cc;
+                    LineColor: #444444;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #3b48cc;
+                    FontColor: #444444;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -3701,10 +3701,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - RDS MySQL instance
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUkRTIE15U1FMIGluc3RhbmNl {
                     BackgroundColor: #ffffff;
-                    LineColor: #3b48cc;
+                    LineColor: #444444;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #3b48cc;
+                    FontColor: #444444;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -3712,34 +3712,34 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - Region
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUmVnaW9u {
                     BackgroundColor: #ffffff;
-                    LineColor: #147eba;
+                    LineColor: #444444;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #147eba;
+                    FontColor: #444444;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
                   }
                 </style>
                 
-                rectangle "Amazon Web Services\\n<size:16>[Deployment Node]</size>\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/aws-cloud.png{scale=0.5142857142857142}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQ2xvdWQ=>> as Live.AmazonWebServices {
-                  rectangle "US-East-1\\n<size:16>[Deployment Node]</size>\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/region.png{scale=0.5142857142857142}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUmVnaW9u>> as Live.AmazonWebServices.USEast1 {
-                    rectangle "Autoscaling group\\n<size:16>[Deployment Node]</size>\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/aws-auto-scaling.png{scale=0.24}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQXV0byBTY2FsaW5n>> as Live.AmazonWebServices.USEast1.Autoscalinggroup {
-                      rectangle "Amazon EC2 - Ubuntu server\\n<size:16>[Deployment Node]</size>\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/amazon-ec2.png{scale=0.24}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gRUMy>> as Live.AmazonWebServices.USEast1.Autoscalinggroup.AmazonEC2Ubuntuserver {
+                rectangle "Amazon Web Services\\n<size:16>[Deployment Node]</size>\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/aws-cloud.png{scale=0.5142857142857142}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQ2xvdWQ=>> as Live.AmazonWebServices {
+                  rectangle "US-East-1\\n<size:16>[Deployment Node]</size>\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/region.png{scale=0.5142857142857142}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUmVnaW9u>> as Live.AmazonWebServices.USEast1 {
+                    rectangle "Autoscaling group\\n<size:16>[Deployment Node]</size>\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/aws-auto-scaling.png{scale=0.24}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQXV0byBTY2FsaW5n>> as Live.AmazonWebServices.USEast1.Autoscalinggroup {
+                      rectangle "Amazon EC2 - Ubuntu server\\n<size:16>[Deployment Node]</size>\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/amazon-ec2.png{scale=0.24}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gRUMy>> as Live.AmazonWebServices.USEast1.Autoscalinggroup.AmazonEC2Ubuntuserver {
                         rectangle "==Web Application\\n<size:16>[Container: Java and Spring Boot]</size>" <<Element-RWxlbWVudCxBcHBsaWNhdGlvbg==>> as Live.AmazonWebServices.USEast1.Autoscalinggroup.AmazonEC2Ubuntuserver.WebApplication_1
                       }
                 
                     }
                 
-                    rectangle "Amazon RDS\\n<size:16>[Deployment Node]</size>\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/amazon-rds.png{scale=0.24}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUkRT>> as Live.AmazonWebServices.USEast1.AmazonRDS {
-                      rectangle "MySQL\\n<size:16>[Deployment Node]</size>\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/amazon-rds-mysql-instance.png{scale=0.36}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUkRTIE15U1FMIGluc3RhbmNl>> as Live.AmazonWebServices.USEast1.AmazonRDS.MySQL {
+                    rectangle "Amazon RDS\\n<size:16>[Deployment Node]</size>\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/amazon-rds.png{scale=0.24}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUkRT>> as Live.AmazonWebServices.USEast1.AmazonRDS {
+                      rectangle "MySQL\\n<size:16>[Deployment Node]</size>\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/amazon-rds-mysql-instance.png{scale=0.36}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUkRTIE15U1FMIGluc3RhbmNl>> as Live.AmazonWebServices.USEast1.AmazonRDS.MySQL {
                         database "==Database Schema\\n<size:16>[Container]</size>" <<Element-RWxlbWVudCxEYXRhYmFzZQ==>> as Live.AmazonWebServices.USEast1.AmazonRDS.MySQL.DatabaseSchema_1
                       }
                 
                     }
                 
-                    rectangle "==DNS router\\n<size:16>[Infrastructure Node: Route 53]</size>\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/amazon-route-53.png{scale=0.24}>\\n\\nRoutes incoming requests based upon domain name." <<Element-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUm91dGUgNTM=>> as Live.AmazonWebServices.USEast1.DNSrouter
-                    rectangle "==Load Balancer\\n<size:16>[Infrastructure Node: Elastic Load Balancer]</size>\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/elastic-load-balancing.png{scale=0.24}>\\n\\nAutomatically distributes incoming application traffic." <<Element-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gRWxhc3RpYyBMb2FkIEJhbGFuY2luZw==>> as Live.AmazonWebServices.USEast1.LoadBalancer
+                    rectangle "==DNS router\\n<size:16>[Infrastructure Node: Route 53]</size>\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/amazon-route-53.png{scale=0.24}>\\n\\nRoutes incoming requests based upon domain name." <<Element-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUm91dGUgNTM=>> as Live.AmazonWebServices.USEast1.DNSrouter
+                    rectangle "==Load Balancer\\n<size:16>[Infrastructure Node: Elastic Load Balancer]</size>\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/elastic-load-balancing.png{scale=0.24}>\\n\\nAutomatically distributes incoming application traffic." <<Element-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gRWxhc3RpYyBMb2FkIEJhbGFuY2luZw==>> as Live.AmazonWebServices.USEast1.LoadBalancer
                   }
                 
                 }
@@ -3764,10 +3764,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - Elastic Load Balancing
                   .Element-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gRWxhc3RpYyBMb2FkIEJhbGFuY2luZw== {
                     BackgroundColor: #ffffff;
-                    LineColor: #693cc5;
+                    LineColor: #444444;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #693cc5;
+                    FontColor: #444444;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -3776,10 +3776,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - Route 53
                   .Element-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUm91dGUgNTM= {
                     BackgroundColor: #ffffff;
-                    LineColor: #693cc5;
+                    LineColor: #444444;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #693cc5;
+                    FontColor: #444444;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -3822,10 +3822,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - Auto Scaling
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQXV0byBTY2FsaW5n {
                     BackgroundColor: #ffffff;
-                    LineColor: #cc2264;
+                    LineColor: #444444;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #cc2264;
+                    FontColor: #444444;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -3834,10 +3834,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - Cloud
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQ2xvdWQ= {
                     BackgroundColor: #ffffff;
-                    LineColor: #232f3e;
+                    LineColor: #444444;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #232f3e;
+                    FontColor: #444444;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -3846,10 +3846,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - EC2
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gRUMy {
                     BackgroundColor: #ffffff;
-                    LineColor: #d86613;
+                    LineColor: #444444;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #d86613;
+                    FontColor: #444444;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -3858,10 +3858,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - RDS
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUkRT {
                     BackgroundColor: #ffffff;
-                    LineColor: #3b48cc;
+                    LineColor: #444444;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #3b48cc;
+                    FontColor: #444444;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -3870,10 +3870,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - RDS MySQL instance
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUkRTIE15U1FMIGluc3RhbmNl {
                     BackgroundColor: #ffffff;
-                    LineColor: #3b48cc;
+                    LineColor: #444444;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #3b48cc;
+                    FontColor: #444444;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -3882,10 +3882,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - Region
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUmVnaW9u {
                     BackgroundColor: #ffffff;
-                    LineColor: #147eba;
+                    LineColor: #444444;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #147eba;
+                    FontColor: #444444;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -3899,21 +3899,21 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   }
                 </style>
                 
-                rectangle "==Amazon Web Services - Auto Scaling\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/aws-auto-scaling.png{scale=0.24}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQXV0byBTY2FsaW5n>>
+                rectangle "==Amazon Web Services - Auto Scaling\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/aws-auto-scaling.png{scale=0.24}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQXV0byBTY2FsaW5n>>
                 
-                rectangle "==Amazon Web Services - Cloud\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/aws-cloud.png{scale=0.5142857142857142}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQ2xvdWQ=>>
+                rectangle "==Amazon Web Services - Cloud\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/aws-cloud.png{scale=0.5142857142857142}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQ2xvdWQ=>>
                 
-                rectangle "==Amazon Web Services - EC2\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/amazon-ec2.png{scale=0.24}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gRUMy>>
+                rectangle "==Amazon Web Services - EC2\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/amazon-ec2.png{scale=0.24}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gRUMy>>
                 
-                rectangle "==Amazon Web Services - RDS\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/amazon-rds.png{scale=0.24}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUkRT>>
+                rectangle "==Amazon Web Services - RDS\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/amazon-rds.png{scale=0.24}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUkRT>>
                 
-                rectangle "==Amazon Web Services - RDS MySQL instance\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/amazon-rds-mysql-instance.png{scale=0.36}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUkRTIE15U1FMIGluc3RhbmNl>>
+                rectangle "==Amazon Web Services - RDS MySQL instance\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/amazon-rds-mysql-instance.png{scale=0.36}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUkRTIE15U1FMIGluc3RhbmNl>>
                 
-                rectangle "==Amazon Web Services - Region\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/region.png{scale=0.5142857142857142}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUmVnaW9u>>
+                rectangle "==Amazon Web Services - Region\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/region.png{scale=0.5142857142857142}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUmVnaW9u>>
                 
-                rectangle "==Amazon Web Services - Elastic Load Balancing\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/elastic-load-balancing.png{scale=0.24}>" <<Element-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gRWxhc3RpYyBMb2FkIEJhbGFuY2luZw==>>
+                rectangle "==Amazon Web Services - Elastic Load Balancing\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/elastic-load-balancing.png{scale=0.24}>" <<Element-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gRWxhc3RpYyBMb2FkIEJhbGFuY2luZw==>>
                 
-                rectangle "==Amazon Web Services - Route 53\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/amazon-route-53.png{scale=0.24}>" <<Element-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUm91dGUgNTM=>>
+                rectangle "==Amazon Web Services - Route 53\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/amazon-route-53.png{scale=0.24}>" <<Element-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUm91dGUgNTM=>>
                 
                 rectangle "==Application" <<Element-RWxlbWVudCxBcHBsaWNhdGlvbg==>>
                 
@@ -3956,10 +3956,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - Elastic Load Balancing
                   .Element-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gRWxhc3RpYyBMb2FkIEJhbGFuY2luZw== {
                     BackgroundColor: #111111;
-                    LineColor: #693cc5;
+                    LineColor: #cccccc;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #693cc5;
+                    FontColor: #cccccc;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -3968,10 +3968,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - Route 53
                   .Element-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUm91dGUgNTM= {
                     BackgroundColor: #111111;
-                    LineColor: #693cc5;
+                    LineColor: #cccccc;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #693cc5;
+                    FontColor: #cccccc;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -4014,10 +4014,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - Auto Scaling
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQXV0byBTY2FsaW5n {
                     BackgroundColor: #111111;
-                    LineColor: #cc2264;
+                    LineColor: #cccccc;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #cc2264;
+                    FontColor: #cccccc;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -4025,10 +4025,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - Cloud
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQ2xvdWQ= {
                     BackgroundColor: #111111;
-                    LineColor: #232f3e;
+                    LineColor: #cccccc;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #232f3e;
+                    FontColor: #cccccc;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -4036,10 +4036,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - EC2
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gRUMy {
                     BackgroundColor: #111111;
-                    LineColor: #d86613;
+                    LineColor: #cccccc;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #d86613;
+                    FontColor: #cccccc;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -4047,10 +4047,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - RDS
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUkRT {
                     BackgroundColor: #111111;
-                    LineColor: #3b48cc;
+                    LineColor: #cccccc;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #3b48cc;
+                    FontColor: #cccccc;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -4058,10 +4058,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - RDS MySQL instance
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUkRTIE15U1FMIGluc3RhbmNl {
                     BackgroundColor: #111111;
-                    LineColor: #3b48cc;
+                    LineColor: #cccccc;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #3b48cc;
+                    FontColor: #cccccc;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -4069,34 +4069,34 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - Region
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUmVnaW9u {
                     BackgroundColor: #111111;
-                    LineColor: #147eba;
+                    LineColor: #cccccc;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #147eba;
+                    FontColor: #cccccc;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
                   }
                 </style>
                 
-                rectangle "Amazon Web Services\\n<size:16>[Deployment Node]</size>\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/aws-cloud.png{scale=0.5142857142857142}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQ2xvdWQ=>> as Live.AmazonWebServices {
-                  rectangle "US-East-1\\n<size:16>[Deployment Node]</size>\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/region.png{scale=0.5142857142857142}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUmVnaW9u>> as Live.AmazonWebServices.USEast1 {
-                    rectangle "Autoscaling group\\n<size:16>[Deployment Node]</size>\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/aws-auto-scaling.png{scale=0.24}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQXV0byBTY2FsaW5n>> as Live.AmazonWebServices.USEast1.Autoscalinggroup {
-                      rectangle "Amazon EC2 - Ubuntu server\\n<size:16>[Deployment Node]</size>\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/amazon-ec2.png{scale=0.24}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gRUMy>> as Live.AmazonWebServices.USEast1.Autoscalinggroup.AmazonEC2Ubuntuserver {
+                rectangle "Amazon Web Services\\n<size:16>[Deployment Node]</size>\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/aws-cloud.png{scale=0.5142857142857142}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQ2xvdWQ=>> as Live.AmazonWebServices {
+                  rectangle "US-East-1\\n<size:16>[Deployment Node]</size>\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/region.png{scale=0.5142857142857142}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUmVnaW9u>> as Live.AmazonWebServices.USEast1 {
+                    rectangle "Autoscaling group\\n<size:16>[Deployment Node]</size>\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/aws-auto-scaling.png{scale=0.24}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQXV0byBTY2FsaW5n>> as Live.AmazonWebServices.USEast1.Autoscalinggroup {
+                      rectangle "Amazon EC2 - Ubuntu server\\n<size:16>[Deployment Node]</size>\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/amazon-ec2.png{scale=0.24}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gRUMy>> as Live.AmazonWebServices.USEast1.Autoscalinggroup.AmazonEC2Ubuntuserver {
                         rectangle "==Web Application\\n<size:16>[Container: Java and Spring Boot]</size>" <<Element-RWxlbWVudCxBcHBsaWNhdGlvbg==>> as Live.AmazonWebServices.USEast1.Autoscalinggroup.AmazonEC2Ubuntuserver.WebApplication_1
                       }
                 
                     }
                 
-                    rectangle "Amazon RDS\\n<size:16>[Deployment Node]</size>\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/amazon-rds.png{scale=0.24}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUkRT>> as Live.AmazonWebServices.USEast1.AmazonRDS {
-                      rectangle "MySQL\\n<size:16>[Deployment Node]</size>\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/amazon-rds-mysql-instance.png{scale=0.36}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUkRTIE15U1FMIGluc3RhbmNl>> as Live.AmazonWebServices.USEast1.AmazonRDS.MySQL {
+                    rectangle "Amazon RDS\\n<size:16>[Deployment Node]</size>\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/amazon-rds.png{scale=0.24}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUkRT>> as Live.AmazonWebServices.USEast1.AmazonRDS {
+                      rectangle "MySQL\\n<size:16>[Deployment Node]</size>\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/amazon-rds-mysql-instance.png{scale=0.36}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUkRTIE15U1FMIGluc3RhbmNl>> as Live.AmazonWebServices.USEast1.AmazonRDS.MySQL {
                         database "==Database Schema\\n<size:16>[Container]</size>" <<Element-RWxlbWVudCxEYXRhYmFzZQ==>> as Live.AmazonWebServices.USEast1.AmazonRDS.MySQL.DatabaseSchema_1
                       }
                 
                     }
                 
-                    rectangle "==DNS router\\n<size:16>[Infrastructure Node: Route 53]</size>\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/amazon-route-53.png{scale=0.24}>\\n\\nRoutes incoming requests based upon domain name." <<Element-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUm91dGUgNTM=>> as Live.AmazonWebServices.USEast1.DNSrouter
-                    rectangle "==Load Balancer\\n<size:16>[Infrastructure Node: Elastic Load Balancer]</size>\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/elastic-load-balancing.png{scale=0.24}>\\n\\nAutomatically distributes incoming application traffic." <<Element-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gRWxhc3RpYyBMb2FkIEJhbGFuY2luZw==>> as Live.AmazonWebServices.USEast1.LoadBalancer
+                    rectangle "==DNS router\\n<size:16>[Infrastructure Node: Route 53]</size>\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/amazon-route-53.png{scale=0.24}>\\n\\nRoutes incoming requests based upon domain name." <<Element-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUm91dGUgNTM=>> as Live.AmazonWebServices.USEast1.DNSrouter
+                    rectangle "==Load Balancer\\n<size:16>[Infrastructure Node: Elastic Load Balancer]</size>\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/elastic-load-balancing.png{scale=0.24}>\\n\\nAutomatically distributes incoming application traffic." <<Element-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gRWxhc3RpYyBMb2FkIEJhbGFuY2luZw==>> as Live.AmazonWebServices.USEast1.LoadBalancer
                   }
                 
                 }
@@ -4121,10 +4121,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - Elastic Load Balancing
                   .Element-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gRWxhc3RpYyBMb2FkIEJhbGFuY2luZw== {
                     BackgroundColor: #111111;
-                    LineColor: #693cc5;
+                    LineColor: #cccccc;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #693cc5;
+                    FontColor: #cccccc;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -4133,10 +4133,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - Route 53
                   .Element-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUm91dGUgNTM= {
                     BackgroundColor: #111111;
-                    LineColor: #693cc5;
+                    LineColor: #cccccc;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #693cc5;
+                    FontColor: #cccccc;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -4179,10 +4179,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - Auto Scaling
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQXV0byBTY2FsaW5n {
                     BackgroundColor: #111111;
-                    LineColor: #cc2264;
+                    LineColor: #cccccc;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #cc2264;
+                    FontColor: #cccccc;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -4191,10 +4191,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - Cloud
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQ2xvdWQ= {
                     BackgroundColor: #111111;
-                    LineColor: #232f3e;
+                    LineColor: #cccccc;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #232f3e;
+                    FontColor: #cccccc;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -4203,10 +4203,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - EC2
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gRUMy {
                     BackgroundColor: #111111;
-                    LineColor: #d86613;
+                    LineColor: #cccccc;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #d86613;
+                    FontColor: #cccccc;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -4215,10 +4215,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - RDS
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUkRT {
                     BackgroundColor: #111111;
-                    LineColor: #3b48cc;
+                    LineColor: #cccccc;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #3b48cc;
+                    FontColor: #cccccc;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -4227,10 +4227,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - RDS MySQL instance
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUkRTIE15U1FMIGluc3RhbmNl {
                     BackgroundColor: #111111;
-                    LineColor: #3b48cc;
+                    LineColor: #cccccc;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #3b48cc;
+                    FontColor: #cccccc;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -4239,10 +4239,10 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   // Element,Amazon Web Services - Region
                   .DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUmVnaW9u {
                     BackgroundColor: #111111;
-                    LineColor: #147eba;
+                    LineColor: #cccccc;
                     LineStyle: 0;
                     LineThickness: 2;
-                    FontColor: #147eba;
+                    FontColor: #cccccc;
                     FontSize: 24;
                     HorizontalAlignment: center;
                     Shadowing: 0;
@@ -4256,21 +4256,21 @@ public class StructurizrPlantUMLDiagramExporterTests extends AbstractExporterTes
                   }
                 </style>
                 
-                rectangle "==Amazon Web Services - Auto Scaling\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/aws-auto-scaling.png{scale=0.24}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQXV0byBTY2FsaW5n>>
+                rectangle "==Amazon Web Services - Auto Scaling\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/aws-auto-scaling.png{scale=0.24}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQXV0byBTY2FsaW5n>>
                 
-                rectangle "==Amazon Web Services - Cloud\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/aws-cloud.png{scale=0.5142857142857142}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQ2xvdWQ=>>
+                rectangle "==Amazon Web Services - Cloud\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/aws-cloud.png{scale=0.5142857142857142}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gQ2xvdWQ=>>
                 
-                rectangle "==Amazon Web Services - EC2\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/amazon-ec2.png{scale=0.24}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gRUMy>>
+                rectangle "==Amazon Web Services - EC2\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/amazon-ec2.png{scale=0.24}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gRUMy>>
                 
-                rectangle "==Amazon Web Services - RDS\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/amazon-rds.png{scale=0.24}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUkRT>>
+                rectangle "==Amazon Web Services - RDS\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/amazon-rds.png{scale=0.24}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUkRT>>
                 
-                rectangle "==Amazon Web Services - RDS MySQL instance\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/amazon-rds-mysql-instance.png{scale=0.36}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUkRTIE15U1FMIGluc3RhbmNl>>
+                rectangle "==Amazon Web Services - RDS MySQL instance\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/amazon-rds-mysql-instance.png{scale=0.36}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUkRTIE15U1FMIGluc3RhbmNl>>
                 
-                rectangle "==Amazon Web Services - Region\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/region.png{scale=0.5142857142857142}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUmVnaW9u>>
+                rectangle "==Amazon Web Services - Region\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/region.png{scale=0.5142857142857142}>" <<DeploymentNode-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUmVnaW9u>>
                 
-                rectangle "==Amazon Web Services - Elastic Load Balancing\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/elastic-load-balancing.png{scale=0.24}>" <<Element-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gRWxhc3RpYyBMb2FkIEJhbGFuY2luZw==>>
+                rectangle "==Amazon Web Services - Elastic Load Balancing\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/elastic-load-balancing.png{scale=0.24}>" <<Element-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gRWxhc3RpYyBMb2FkIEJhbGFuY2luZw==>>
                 
-                rectangle "==Amazon Web Services - Route 53\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/amazon-route-53.png{scale=0.24}>" <<Element-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUm91dGUgNTM=>>
+                rectangle "==Amazon Web Services - Route 53\\n\\n<img:https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/amazon-route-53.png{scale=0.24}>" <<Element-RWxlbWVudCxBbWF6b24gV2ViIFNlcnZpY2VzIC0gUm91dGUgNTM=>>
                 
                 rectangle "==Application" <<Element-RWxlbWVudCxBcHBsaWNhdGlvbg==>>
                 

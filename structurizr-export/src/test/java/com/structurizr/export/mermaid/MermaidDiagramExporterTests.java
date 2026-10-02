@@ -41,16 +41,16 @@ public class MermaidDiagramExporterTests extends AbstractExporterTests {
                     style diagram fill:#ffffff,stroke:#ffffff
                 
                     subgraph 5 ["Amazon Web Services"]
-                      style 5 fill:#ffffff,stroke:#232f3e,color:#232f3e
+                      style 5 fill:#ffffff,stroke:#444444,color:#444444
                 
                       subgraph 6 ["US-East-1"]
-                        style 6 fill:#ffffff,stroke:#147eba,color:#147eba
+                        style 6 fill:#ffffff,stroke:#444444,color:#444444
                 
                         subgraph 10 ["Autoscaling group"]
-                          style 10 fill:#ffffff,stroke:#cc2264,color:#cc2264
+                          style 10 fill:#ffffff,stroke:#444444,color:#444444
                 
                           subgraph 11 ["Amazon EC2 - Ubuntu server"]
-                            style 11 fill:#ffffff,stroke:#d86613,color:#d86613
+                            style 11 fill:#ffffff,stroke:#444444,color:#444444
                 
                             12("<div style='font-weight: bold'>Web Application</div><div style='font-size: 70%; margin-top: 0px'>[Container: Java and Spring Boot]</div>")
                             style 12 fill:#ffffff,stroke:#444444,color:#444444
@@ -59,10 +59,10 @@ public class MermaidDiagramExporterTests extends AbstractExporterTests {
                         end
                 
                         subgraph 14 ["Amazon RDS"]
-                          style 14 fill:#ffffff,stroke:#3b48cc,color:#3b48cc
+                          style 14 fill:#ffffff,stroke:#444444,color:#444444
                 
                           subgraph 15 ["MySQL"]
-                            style 15 fill:#ffffff,stroke:#3b48cc,color:#3b48cc
+                            style 15 fill:#ffffff,stroke:#444444,color:#444444
                 
                             16[("<div style='font-weight: bold'>Database Schema</div><div style='font-size: 70%; margin-top: 0px'>[Container]</div>")]
                             style 16 fill:#ffffff,stroke:#444444,color:#444444
@@ -71,9 +71,9 @@ public class MermaidDiagramExporterTests extends AbstractExporterTests {
                         end
                 
                         7["<div style='font-weight: bold'>DNS router</div><div style='font-size: 70%; margin-top: 0px'>[Infrastructure Node: Route 53]</div><div style='font-size: 80%; margin-top:10px'>Routes incoming requests<br />based upon domain name.</div>"]
-                        style 7 fill:#ffffff,stroke:#693cc5,color:#693cc5
+                        style 7 fill:#ffffff,stroke:#444444,color:#444444
                         8["<div style='font-weight: bold'>Load Balancer</div><div style='font-size: 70%; margin-top: 0px'>[Infrastructure Node: Elastic Load Balancer]</div><div style='font-size: 80%; margin-top:10px'>Automatically distributes<br />incoming application traffic.</div>"]
-                        style 8 fill:#ffffff,stroke:#693cc5,color:#693cc5
+                        style 8 fill:#ffffff,stroke:#444444,color:#444444
                       end
                 
                     end

@@ -188,7 +188,7 @@
         } ]
       },
       "terminology" : { },
-      "themes" : [ "https://static.structurizr.com/themes/amazon-web-services-2020.04.30/theme.json" ]
+      "themes" : [ "https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/theme.json" ]
     },
     "deploymentViews" : [ {
       "automaticLayout" : {

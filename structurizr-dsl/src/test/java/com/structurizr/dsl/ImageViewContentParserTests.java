@@ -379,8 +379,8 @@ class ImageViewContentParserTests extends AbstractTests {
         context.getFeatures().enable(Features.HTTPS);
         context.getHttpClient().allow(".*");
 
-        parser.parseImage(context, null, tokens("image", "https://static.structurizr.com/img/structurizr-banner.png"));
-        assertEquals("https://static.structurizr.com/img/structurizr-banner.png", imageView.getContent());
+        parser.parseImage(context, null, tokens("image", "https://playground.structurizr.com/static/img/structurizr-banner-light.png"));
+        assertEquals("https://playground.structurizr.com/static/img/structurizr-banner-light.png", imageView.getContent());
     }
 
     @Test
@@ -392,8 +392,8 @@ class ImageViewContentParserTests extends AbstractTests {
         context.getFeatures().enable(Features.HTTPS);
         context.getHttpClient().allow(".*");
 
-        parser.parseImage(context, null, tokens("image", "https://static.structurizr.com/img/structurizr-banner.png"));
-        assertEquals("https://static.structurizr.com/img/structurizr-banner.png", imageView.getContentLight());
+        parser.parseImage(context, null, tokens("image", "https://playground.structurizr.com/static/img/structurizr-banner-light.png"));
+        assertEquals("https://playground.structurizr.com/static/img/structurizr-banner-light.png", imageView.getContentLight());
     }
 
     @Test
@@ -405,8 +405,8 @@ class ImageViewContentParserTests extends AbstractTests {
         context.getFeatures().enable(Features.HTTPS);
         context.getHttpClient().allow(".*");
 
-        parser.parseImage(context, null, tokens("image", "https://static.structurizr.com/img/structurizr-banner.png"));
-        assertEquals("https://static.structurizr.com/img/structurizr-banner.png", imageView.getContentDark());
+        parser.parseImage(context, null, tokens("image", "https://playground.structurizr.com/static/img/structurizr-banner-dark.png"));
+        assertEquals("https://playground.structurizr.com/static/img/structurizr-banner-dark.png", imageView.getContentDark());
     }
 
 }

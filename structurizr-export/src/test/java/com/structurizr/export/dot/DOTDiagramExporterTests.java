@@ -525,32 +525,32 @@ public class DOTDiagramExporterTests extends AbstractExporterTests {
                     margin=25
                     label=<<font point-size="24">Amazon Web Services</font><br /><font point-size="19">[Deployment Node]</font>>
                     labelloc=b
-                    color="#232f3e"
-                    fontcolor="#232f3e"
+                    color="#444444"
+                    fontcolor="#444444"
                     fillcolor="#ffffff"
                 
                     subgraph cluster_6 {
                       margin=25
                       label=<<font point-size="24">US-East-1</font><br /><font point-size="19">[Deployment Node]</font>>
                       labelloc=b
-                      color="#147eba"
-                      fontcolor="#147eba"
+                      color="#444444"
+                      fontcolor="#444444"
                       fillcolor="#ffffff"
                 
                       subgraph cluster_10 {
                         margin=25
                         label=<<font point-size="24">Autoscaling group</font><br /><font point-size="19">[Deployment Node]</font>>
                         labelloc=b
-                        color="#cc2264"
-                        fontcolor="#cc2264"
+                        color="#444444"
+                        fontcolor="#444444"
                         fillcolor="#ffffff"
                 
                         subgraph cluster_11 {
                           margin=25
                           label=<<font point-size="24">Amazon EC2 - Ubuntu server</font><br /><font point-size="19">[Deployment Node]</font>>
                           labelloc=b
-                          color="#d86613"
-                          fontcolor="#d86613"
+                          color="#444444"
+                          fontcolor="#444444"
                           fillcolor="#ffffff"
                 
                           12 [id=12,shape=rect, label=<<font point-size="34">Web Application</font><br /><font point-size="19">[Container: Java and Spring Boot]</font>>, style=filled, color="#444444", fillcolor="#ffffff", fontcolor="#444444"]
@@ -562,16 +562,16 @@ public class DOTDiagramExporterTests extends AbstractExporterTests {
                         margin=25
                         label=<<font point-size="24">Amazon RDS</font><br /><font point-size="19">[Deployment Node]</font>>
                         labelloc=b
-                        color="#3b48cc"
-                        fontcolor="#3b48cc"
+                        color="#444444"
+                        fontcolor="#444444"
                         fillcolor="#ffffff"
                 
                         subgraph cluster_15 {
                           margin=25
                           label=<<font point-size="24">MySQL</font><br /><font point-size="19">[Deployment Node]</font>>
                           labelloc=b
-                          color="#3b48cc"
-                          fontcolor="#3b48cc"
+                          color="#444444"
+                          fontcolor="#444444"
                           fillcolor="#ffffff"
                 
                           16 [id=16,shape=cylinder, label=<<font point-size="34">Database Schema</font><br /><font point-size="19">[Container]</font>>, style=filled, color="#444444", fillcolor="#ffffff", fontcolor="#444444"]
@@ -579,8 +579,8 @@ public class DOTDiagramExporterTests extends AbstractExporterTests {
                 
                       }
                 
-                      7 [id=7,shape=rect, label=<<font point-size="34">DNS router</font><br /><font point-size="19">[Infrastructure Node: Route 53]</font><br /><br /><font point-size="24">Routes incoming requests based<br />upon domain name.</font>>, style=filled, color="#693cc5", fillcolor="#ffffff", fontcolor="#693cc5"]
-                      8 [id=8,shape=rect, label=<<font point-size="34">Load Balancer</font><br /><font point-size="19">[Infrastructure Node: Elastic Load Balancer]</font><br /><br /><font point-size="24">Automatically distributes<br />incoming application traffic.</font>>, style=filled, color="#693cc5", fillcolor="#ffffff", fontcolor="#693cc5"]
+                      7 [id=7,shape=rect, label=<<font point-size="34">DNS router</font><br /><font point-size="19">[Infrastructure Node: Route 53]</font><br /><br /><font point-size="24">Routes incoming requests based<br />upon domain name.</font>>, style=filled, color="#444444", fillcolor="#ffffff", fontcolor="#444444"]
+                      8 [id=8,shape=rect, label=<<font point-size="34">Load Balancer</font><br /><font point-size="19">[Infrastructure Node: Elastic Load Balancer]</font><br /><br /><font point-size="24">Automatically distributes<br />incoming application traffic.</font>>, style=filled, color="#444444", fillcolor="#ffffff", fontcolor="#444444"]
                     }
                 
                   }

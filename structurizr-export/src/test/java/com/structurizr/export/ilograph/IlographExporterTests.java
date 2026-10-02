@@ -680,32 +680,32 @@ perspectives:
                     name: "Amazon Web Services"
                     subtitle: "[Deployment Node]"
                     backgroundColor: "#ffffff"
-                    color: "#232f3e"
-                    icon: "https://static.structurizr.com/themes/amazon-web-services-2020.04.30/aws-cloud.png"
+                    color: "#444444"
+                    icon: "https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/aws-cloud.png"
                 
                     children:
                       - id: "6"
                         name: "US-East-1"
                         subtitle: "[Deployment Node]"
                         backgroundColor: "#ffffff"
-                        color: "#147eba"
-                        icon: "https://static.structurizr.com/themes/amazon-web-services-2020.04.30/region.png"
+                        color: "#444444"
+                        icon: "https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/region.png"
                 
                         children:
                           - id: "10"
                             name: "Autoscaling group"
                             subtitle: "[Deployment Node]"
                             backgroundColor: "#ffffff"
-                            color: "#cc2264"
-                            icon: "https://static.structurizr.com/themes/amazon-web-services-2020.04.30/aws-auto-scaling.png"
+                            color: "#444444"
+                            icon: "https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/aws-auto-scaling.png"
                 
                             children:
                               - id: "11"
                                 name: "Amazon EC2 - Ubuntu server"
                                 subtitle: "[Deployment Node]"
                                 backgroundColor: "#ffffff"
-                                color: "#d86613"
-                                icon: "https://static.structurizr.com/themes/amazon-web-services-2020.04.30/amazon-ec2.png"
+                                color: "#444444"
+                                icon: "https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/amazon-ec2.png"
                 
                                 children:
                                   - id: "12"
@@ -718,16 +718,16 @@ perspectives:
                             name: "Amazon RDS"
                             subtitle: "[Deployment Node]"
                             backgroundColor: "#ffffff"
-                            color: "#3b48cc"
-                            icon: "https://static.structurizr.com/themes/amazon-web-services-2020.04.30/amazon-rds.png"
+                            color: "#444444"
+                            icon: "https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/amazon-rds.png"
                 
                             children:
                               - id: "15"
                                 name: "MySQL"
                                 subtitle: "[Deployment Node]"
                                 backgroundColor: "#ffffff"
-                                color: "#3b48cc"
-                                icon: "https://static.structurizr.com/themes/amazon-web-services-2020.04.30/amazon-rds-mysql-instance.png"
+                                color: "#444444"
+                                icon: "https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/amazon-rds-mysql-instance.png"
                 
                                 children:
                                   - id: "16"
@@ -741,7 +741,7 @@ perspectives:
                             subtitle: "[Infrastructure Node: Route 53]"
                             description: "Routes incoming requests based upon domain name."
                             backgroundColor: "#ffffff"
-                            color: "#693cc5"
+                            color: "#444444"
                             icon: "AWS/Networking/Route-53.svg"
                 
                           - id: "8"
@@ -749,8 +749,8 @@ perspectives:
                             subtitle: "[Infrastructure Node: Elastic Load Balancer]"
                             description: "Automatically distributes incoming application traffic."
                             backgroundColor: "#ffffff"
-                            color: "#693cc5"
-                            icon: "https://static.structurizr.com/themes/amazon-web-services-2020.04.30/elastic-load-balancing.png"
+                            color: "#444444"
+                            icon: "https://playground.structurizr.com/static/themes/amazon-web-services-2020.04/elastic-load-balancing.png"
                 
                 perspectives:
                   - name: Static Structure

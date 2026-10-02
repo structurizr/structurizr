@@ -23,14 +23,14 @@ public class HttpClientTests {
     @Tag("IntegrationTest")
     void get_WithAllowedUrl() {
         HttpClient httpClient = new HttpClient();
-        httpClient.allow("https://static.structurizr.com/themes/amazon-web-services.*");
+        httpClient.allow("https://playground.structurizr.com/static/themes/amazon-web-services.*");
 
-        httpClient.get("https://static.structurizr.com/themes/amazon-web-services-2023.01.31/icons.json");
+        httpClient.get("https://playground.structurizr.com/static/themes/amazon-web-services-2023.01/theme.json");
 
         try {
-            httpClient.get("https://static.structurizr.com/themes/microsoft-azure-2024.07.15/icons.json");
+            httpClient.get("https://playground.structurizr.com/static/themes/microsoft-azure-2024.07/theme.json");
         } catch (Exception e) {
-            assertEquals("Access to https://static.structurizr.com/themes/microsoft-azure-2024.07.15/icons.json is not permitted", e.getMessage());
+            assertEquals("Access to https://playground.structurizr.com/static/themes/microsoft-azure-2024.07/theme.json is not permitted", e.getMessage());
         }
     }
 
