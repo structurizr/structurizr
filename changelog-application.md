@@ -1,5 +1,11 @@
 # Changelog
 
+## unreleased
+
+## inspect
+
+- Fixes https://github.com/structurizr/structurizr/issues/131 (inspect exits successfully when 256 violations are shown).
+
 ## 2026.09.19
 
 ### local

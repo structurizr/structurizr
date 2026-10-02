@@ -19,7 +19,7 @@ public class PushCommand extends AbstractCommand {
         super("push");
     }
 
-    public void run(String... args) throws Exception {
+    public boolean run(String... args) throws Exception {
         Options options = new Options();
 
         Option option = new Option("url", "apiUrl", true, "Structurizr API URL");
@@ -97,12 +97,12 @@ public class PushCommand extends AbstractCommand {
         } catch (ParseException e) {
             log.error(e.getMessage());
             showHelp(options);
-            System.exit(1);
+            return false;
         }
 
         if (StringUtils.isNullOrEmpty(workspacePath) && StringUtils.isNullOrEmpty(imagePath)) {
             log.error("One of -workspace or -image are required");
-            System.exit(1);
+            return false;
         }
 
         if (debug) {
@@ -134,7 +134,7 @@ public class PushCommand extends AbstractCommand {
             archivePath = path.getParentFile();
             if (!path.exists()) {
                 log.error(" - workspace path " + workspacePath + " does not exist");
-                System.exit(1);
+                return false;
             }
 
             log.info(" - creating new workspace");
@@ -160,6 +160,7 @@ public class PushCommand extends AbstractCommand {
         }
 
         log.info(" - finished");
+        return true;
     }
 
 }

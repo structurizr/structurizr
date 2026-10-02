@@ -13,11 +13,11 @@ public class GenerateCommand extends AbstractCommand {
         super("generate");
     }
 
-    public void run(String... args) throws Exception {
+    public boolean run(String... args) throws Exception {
         if (args.length == 1) {
             log.fatal("Missing subcommand");
             log.fatal("Expected one of: " + SYSTEM_LANDSCAPE_SUBCOMMAND);
-            System.exit(1);
+            return false;
         }
 
         String subcommand = args[1];
@@ -27,8 +27,10 @@ public class GenerateCommand extends AbstractCommand {
         } else {
             log.fatal("Unexpected subcommand: " + subcommand);
             log.fatal("Expected one of: " + SYSTEM_LANDSCAPE_SUBCOMMAND);
-            System.exit(1);
+            return false;
         }
+
+        return true;
     }
 
 }

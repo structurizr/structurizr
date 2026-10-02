@@ -15,7 +15,7 @@ public class CreateCommand extends AbstractCommand {
         super("create");
     }
 
-    public void run(String... args) throws Exception {
+    public boolean run(String... args) throws Exception {
         Options options = new Options();
 
         Option option = new Option("url", "apiUrl", true, "Structurizr API URL");
@@ -45,7 +45,7 @@ public class CreateCommand extends AbstractCommand {
         } catch (ParseException e) {
             log.error(e.getMessage());
             showHelp(options);
-            System.exit(1);
+            return false;
         }
 
         log.debug("Creating workspace at " + apiUrl);
@@ -67,7 +67,7 @@ public class CreateCommand extends AbstractCommand {
             log.info(" - URL: " + apiUrl.substring(0, apiUrl.indexOf("/api")) + workspace.getPrivateUrl());
         }
 
-        System.exit(workspace != null ? 0 : 1);
+        return workspace != null;
     }
 
 }

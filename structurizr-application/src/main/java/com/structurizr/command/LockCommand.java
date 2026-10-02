@@ -14,7 +14,7 @@ public class LockCommand extends AbstractCommand {
         super("lock");
     }
 
-    public void run(String... args) throws Exception {
+    public boolean run(String... args) throws Exception {
         Options options = new Options();
 
         Option option = new Option("url", "apiUrl", true, "Structurizr API URL");
@@ -44,7 +44,7 @@ public class LockCommand extends AbstractCommand {
         } catch (ParseException e) {
             log.error(e.getMessage());
             showHelp(options);
-            System.exit(1);
+            return false;
         }
 
         log.info("Locking workspace " + workspaceId + " at " + apiUrl);
@@ -61,7 +61,7 @@ public class LockCommand extends AbstractCommand {
 
         log.info(" - finished");
 
-        System.exit(locked ? 0 : 1);
+        return locked;
     }
 
 }

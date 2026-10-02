@@ -8,8 +8,9 @@ public class ServerCommand extends AbstractCommand {
         super("server");
     }
 
-    public void run(String... args) throws Exception {
+    public boolean run(String... args) throws Exception {
         Server.main(args);
+        return true;
     }
 
 }

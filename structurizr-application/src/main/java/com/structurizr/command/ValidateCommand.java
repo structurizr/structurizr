@@ -16,7 +16,7 @@ public class ValidateCommand extends AbstractCommand {
         super("validate");
     }
 
-    public void run(String... args) throws Exception {
+    public boolean run(String... args) throws Exception {
         Options options = new Options();
 
         Option option = new Option("w", "workspace", true, "Path or URL to the workspace JSON/DSL file");
@@ -34,7 +34,7 @@ public class ValidateCommand extends AbstractCommand {
         } catch (ParseException e) {
             log.error(e.getMessage());
             showHelp(options);
-            System.exit(1);
+            return false;
         }
 
         log.debug("Validating workspace at " + workspacePathAsString);
@@ -49,11 +49,12 @@ public class ValidateCommand extends AbstractCommand {
         } catch (Exception e) {
             // print the error and exit
             log.error(e.getMessage());
-            System.exit(1);
+            return false;
         }
 
         log.debug(" - validated");
         log.debug(" - finished");
+        return true;
     }
 
 }

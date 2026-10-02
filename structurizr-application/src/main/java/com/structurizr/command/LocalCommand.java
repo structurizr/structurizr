@@ -8,8 +8,9 @@ public class LocalCommand extends AbstractCommand {
         super("local");
     }
 
-    public void run(String... args) throws Exception {
+    public boolean run(String... args) throws Exception {
         Local.main(args);
+        return true;
     }
 
 }

@@ -32,7 +32,7 @@ public class PullCommand extends AbstractCommand {
         super("pull");
     }
 
-    public void run(String... args) throws Exception {
+    public boolean run(String... args) throws Exception {
         Options options = new Options();
 
         Option option = new Option("url", "apiUrl", true, "Structurizr API URL");
@@ -86,7 +86,7 @@ public class PullCommand extends AbstractCommand {
         } catch (ParseException e) {
             log.error(e.getMessage());
             showHelp(options);
-            System.exit(1);
+            return false;
         }
 
         if (StringUtils.isNullOrEmpty(outputPath)) {
@@ -108,6 +108,8 @@ public class PullCommand extends AbstractCommand {
         } else {
             pullWorkspace(Long.parseLong(workspaceId), !json);
         }
+
+        return true;
     }
 
     private void pullWorkspace(long workspaceId, boolean store) throws Exception {

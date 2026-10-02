@@ -17,7 +17,7 @@ public class DeleteCommand extends AbstractCommand {
         super("delete");
     }
 
-    public void run(String... args) throws Exception {
+    public boolean run(String... args) throws Exception {
         Options options = new Options();
 
         Option option = new Option("url", "apiUrl", true, "Structurizr API URL");
@@ -59,7 +59,7 @@ public class DeleteCommand extends AbstractCommand {
         } catch (ParseException e) {
             log.error(e.getMessage());
             showHelp(options);
-            System.exit(1);
+            return false;
         }
 
         if (StringUtils.isNullOrEmpty(branch)) {
@@ -68,7 +68,7 @@ public class DeleteCommand extends AbstractCommand {
                 Scanner scanner = new Scanner(System.in);
                 String answer = scanner.nextLine();
                 if (!answer.equalsIgnoreCase("y")) {
-                    System.exit(1);
+                    return false;
                 }
             }
 
@@ -79,14 +79,14 @@ public class DeleteCommand extends AbstractCommand {
 
             boolean deleted = client.deleteWorkspace(workspaceId);
             log.debug(" - " + deleted);
-            System.exit(deleted ? 0 : 1);
+            return deleted;
         } else {
             if (!force) {
                 System.out.println("Delete branch " + branch + " from workspace " + workspaceId + " at " + apiUrl + "? (y/n)");
                 Scanner scanner = new Scanner(System.in);
                 String answer = scanner.nextLine();
                 if (!answer.equalsIgnoreCase("y")) {
-                    System.exit(1);
+                    return false;
                 }
             }
 
@@ -97,7 +97,7 @@ public class DeleteCommand extends AbstractCommand {
 
             boolean deleted = client.deleteBranch(branch);
             log.debug(" - " + deleted);
-            System.exit(deleted ? 0 : 1);
+            return deleted;
         }
 
     }

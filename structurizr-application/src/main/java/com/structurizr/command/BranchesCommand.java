@@ -17,7 +17,7 @@ public class BranchesCommand extends AbstractCommand {
         super("branches");
     }
 
-    public void run(String... args) throws Exception {
+    public boolean run(String... args) throws Exception {
         Options options = new Options();
 
         Option option = new Option("url", "apiUrl", true, "Structurizr API URL");
@@ -53,7 +53,7 @@ public class BranchesCommand extends AbstractCommand {
         } catch (ParseException e) {
             log.error(e.getMessage());
             showHelp(options);
-            System.exit(1);
+            return false;
         }
 
         WorkspaceApiClient client = new WorkspaceApiClient(apiUrl, workspaceId, apiKey);
@@ -69,6 +69,8 @@ public class BranchesCommand extends AbstractCommand {
                 log.info(" - " + branch);
             }
         }
+
+        return true;
     }
 
 }

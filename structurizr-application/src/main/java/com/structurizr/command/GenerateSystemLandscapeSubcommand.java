@@ -23,7 +23,7 @@ public class GenerateSystemLandscapeSubcommand extends AbstractCommand {
         super("generate");
     }
 
-    public void run(String... args) throws Exception {
+    public boolean run(String... args) throws Exception {
         Options options = new Options();
 
         Option option = new Option("i", "input", true, "Path to the workspace JSON/DSL files");
@@ -54,7 +54,7 @@ public class GenerateSystemLandscapeSubcommand extends AbstractCommand {
             File inputPath = new File(cmd.getOptionValue("input"));
             if (!inputPath.exists()) {
                 log.fatal("The input path does not exist at " + inputPath.getAbsolutePath());
-                System.exit(1);
+                return false;
             }
             log.info("Loading workspaces from " + inputPath.getAbsolutePath());
 
@@ -76,14 +76,19 @@ public class GenerateSystemLandscapeSubcommand extends AbstractCommand {
 
             Collection<Workspace> workspaces = loadWorkspaces(inputPath, includeFilter, excludeFilter);
             SystemLandscapeGenerator systemLandscapeGenerator = createSystemLandscapeGenerator(relationships);
+            if (systemLandscapeGenerator == null) {
+                return false;
+            }
+
             Workspace workspace = systemLandscapeGenerator.generate(workspaces);
 
             log.info("Writing system landscape workspace to " + outputFile.getAbsolutePath());
             WorkspaceUtils.saveWorkspaceToJson(workspace, outputFile);
+            return true;
         } catch (ParseException e) {
             log.error(e.getMessage());
             showHelp(options);
-            System.exit(1);
+            return false;
         }
     }
 
@@ -135,7 +140,7 @@ public class GenerateSystemLandscapeSubcommand extends AbstractCommand {
                 systemLandscapeGenerator.setRelationshipStrategy(SystemLandscapeGenerator.RelationshipsStrategy.All);
             } else {
                 log.fatal("Invalid relationships strategy " + relationships + " (expected first or all)");
-                System.exit(1);
+                return null;
             }
         }
 

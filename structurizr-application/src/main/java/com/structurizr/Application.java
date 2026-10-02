@@ -34,9 +34,9 @@ public class Application {
 		register(new VersionCommand());
 		register(new AbstractCommand("help") {
 			@Override
-			public void run(String... args) {
+			public boolean run(String... args) {
 				printUsage();
-				System.exit(0);
+				return true;
 			}
 		});
 	}
@@ -55,7 +55,8 @@ public class Application {
 			String commandName = args[0];
 			AbstractCommand command = COMMANDS.get(commandName);
 			if (command != null) {
-				command.run(args);
+				boolean success = command.run(args);
+				System.exit(success ? 0 : 1);
 			} else {
 				System.out.println("Unknown command: " + commandName);
 				printUsage();

@@ -26,7 +26,7 @@ public class InspectCommand extends AbstractCommand {
         super("inspect");
     }
 
-    public void run(String... args) throws Exception {
+    public boolean run(String... args) throws Exception {
         Options options = new Options();
 
         Option option = new Option("w", "workspace", true, "Path or URL to the workspace JSON/DSL file");
@@ -56,7 +56,7 @@ public class InspectCommand extends AbstractCommand {
         } catch (ParseException e) {
             log.error(e.getMessage());
             showHelp(options);
-            System.exit(1);
+            return false;
         }
 
         if (StringUtils.isNullOrEmpty(inspectorName)) {
@@ -113,14 +113,15 @@ public class InspectCommand extends AbstractCommand {
                         }
                     }
 
-                    System.exit(counter); // non-zero if there are violations shown
+                    return counter == 0; // non-zero if there are violations shown
                 }
             }
         } catch (Exception e) {
-            // print the error and exit
             log.error(e.getMessage());
-            System.exit(1);
+            return false;
         }
+
+        return true;
     }
 
     private Inspector findInspector(String name, Workspace workspace, File workspacePath) {

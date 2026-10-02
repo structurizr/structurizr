@@ -13,7 +13,7 @@ public class VersionCommand extends AbstractCommand {
         super("version");
     }
 
-    public void run(String... args) throws Exception {
+    public boolean run(String... args) throws Exception {
         log.info("structurizr: " + new Version().getBuildNumber());
 
         try {
@@ -24,6 +24,8 @@ public class VersionCommand extends AbstractCommand {
 
         log.info("Java: " + System.getProperty("java.version") + "/"  + System.getProperty("java.vendor") + " (" + System.getProperty("java.home") + ")");
         log.info("OS: " + System.getProperty("os.name") + " "  + System.getProperty("os.version") + " (" + System.getProperty("os.arch") + ")");
+
+        return true;
     }
 
 }

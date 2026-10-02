@@ -41,7 +41,7 @@ public abstract class AbstractCommand {
         return name;
     }
 
-    public abstract void run(String... args) throws Exception;
+    public abstract boolean run(String... args) throws Exception;
 
     String getAgent() {
         return "structurizr/" + getClass().getPackage().getImplementationVersion();

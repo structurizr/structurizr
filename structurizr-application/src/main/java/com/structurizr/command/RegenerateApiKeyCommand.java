@@ -16,7 +16,7 @@ public class RegenerateApiKeyCommand extends AbstractCommand {
         super("regenerate-apikey");
     }
 
-    public void run(String... args) throws Exception {
+    public boolean run(String... args) throws Exception {
         Options options = new Options();
 
         Option option = new Option("url", "apiUrl", true, "Structurizr API URL");
@@ -52,7 +52,7 @@ public class RegenerateApiKeyCommand extends AbstractCommand {
         } catch (ParseException e) {
             log.error(e.getMessage());
             showHelp(options);
-            System.exit(1);
+            return false;
         }
 
         log.debug("Regenerating API key for workspace " + workspaceId + " at " + apiUrl);
@@ -70,7 +70,7 @@ public class RegenerateApiKeyCommand extends AbstractCommand {
             log.info(response.getApiKey());
         }
 
-        System.exit(response != null ? 0 : 1);
+        return true;
     }
 
 }

@@ -19,7 +19,7 @@ public class MergeCommand extends AbstractCommand {
         super("merge");
     }
 
-    public void run(String... args) throws Exception {
+    public boolean run(String... args) throws Exception {
         Options options = new Options();
 
         Option option = new Option("w", "workspace", true, "Path or URL to the workspace JSON/DSL file");
@@ -56,7 +56,7 @@ public class MergeCommand extends AbstractCommand {
         } catch (ParseException e) {
             log.error(e.getMessage());
             showHelp(options);
-            System.exit(1);
+            return false;
         }
 
         log.info("Merging layout");
@@ -83,17 +83,17 @@ public class MergeCommand extends AbstractCommand {
 
             if (viewWithoutLayout == null) {
                 log.info(" - \"" + viewKey + "\" does not exist in " + workspaceWithoutLayoutPath);
-                System.exit(1);
+                return false;
             } else if (!(viewWithoutLayout instanceof ModelView)) {
                 log.info(" - \"" + viewKey + "\" is not a model view in " + workspaceWithoutLayoutPath);
-                System.exit(1);
+                return false;
             }
             if (viewWithLayout == null) {
                 log.info(" - \"" + viewKey + "\" does not exist in " + workspaceWithLayoutPath);
-                System.exit(1);
+                return false;
             } else if (!(viewWithLayout instanceof ModelView)) {
                 log.info(" - \"" + viewKey + "\" is not a model view in " + workspaceWithLayoutPath);
-                System.exit(1);
+                return false;
             }
 
             ((ModelView)viewWithoutLayout).copyLayoutInformationFrom((ModelView)viewWithLayout);
@@ -104,6 +104,7 @@ public class MergeCommand extends AbstractCommand {
         WorkspaceUtils.saveWorkspaceToJson(workspaceWithoutLayout, outputFile);
 
         log.info(" - finished");
+        return true;
     }
 
 }
