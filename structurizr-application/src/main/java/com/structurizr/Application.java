@@ -51,19 +51,23 @@ public class Application {
 			System.exit(1);
 		}
 
+		boolean success;
 		try {
 			String commandName = args[0];
 			AbstractCommand command = COMMANDS.get(commandName);
 			if (command != null) {
-				boolean success = command.run(args);
-				System.exit(success ? 0 : 1);
+				success = command.run(args);
 			} else {
 				System.out.println("Unknown command: " + commandName);
 				printUsage();
-				System.exit(1);
+				success = false;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			success = false;
+		}
+
+		if (!success) {
 			System.exit(1);
 		}
 	}
