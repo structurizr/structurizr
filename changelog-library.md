@@ -1,6 +1,6 @@
 # Changelog
 
-## unreleased
+## v6.2.4 (26th October 2026)
 
 ### structurizr-export
 
