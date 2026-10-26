@@ -1,6 +1,14 @@
 # Changelog
 
-## unreleased
+## 2026.10.26
+
+## local
+
+- Fixes https://github.com/structurizr/structurizr/issues/135 (Decision explorer graph overflows its modal on wide screens).
+
+## server
+
+- Fixes https://github.com/structurizr/structurizr/issues/135 (Decision explorer graph overflows its modal on wide screens).
 
 ## inspect
 

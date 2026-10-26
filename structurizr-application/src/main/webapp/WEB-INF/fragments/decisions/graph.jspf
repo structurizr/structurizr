@@ -1,6 +1,9 @@
 <div class="modal fade" id="graphModal" tabindex="-1" role="dialog" aria-labelledby="informationModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-fullscreen">
         <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
             <div id="graphContent" class="modal-body">
                 <%@ include file="/WEB-INF/fragments/tooltip.jspf" %>
                 <div class="centered">
@@ -391,10 +394,15 @@
     function openGraphModal() {
         if (graph !== undefined) {
             $('#graphModal').modal('show');
+            quickNavigation.disable();
         }
     }
 
     $('#graphModal').on('shown.bs.modal', function (e) {
         resizeGraph();
+    });
+
+    $('#graphModal').on('hidden.bs.modal', function (e) {
+        quickNavigation.enable();
     });
 </script>
