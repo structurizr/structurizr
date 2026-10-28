@@ -4,7 +4,7 @@ import com.structurizr.configuration.StructurizrProperties;
 import com.structurizr.server.Server;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.boot.web.servlet.context.ServletWebServerInitializedEvent;
+import org.springframework.boot.web.server.servlet.context.ServletWebServerInitializedEvent;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;

@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.*;
+import java.util.function.Supplier;
 
 public class MockHttpServletResponse implements HttpServletResponse {
 
@@ -59,7 +60,27 @@ public class MockHttpServletResponse implements HttpServletResponse {
 
     @Override
     public void sendRedirect(String s) throws IOException {
+    }
 
+    @Override
+    public void sendRedirect(String location, boolean clearBuffer) throws IOException {
+    }
+
+    @Override
+    public void sendRedirect(String location, int sc) throws IOException {
+    }
+
+    @Override
+    public void setTrailerFields(Supplier<Map<String, String>> supplier) {
+    }
+
+    @Override
+    public Supplier<Map<String, String>> getTrailerFields() {
+        return null;
+    }
+
+    @Override
+    public void sendRedirect(String location, int sc, boolean clearBuffer) throws IOException {
     }
 
     @Override

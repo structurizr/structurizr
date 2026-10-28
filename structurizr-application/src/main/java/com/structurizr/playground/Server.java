@@ -14,11 +14,10 @@ import org.apache.tomcat.util.descriptor.web.JspPropertyGroupDescriptorImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.session.SessionAutoConfiguration;
 import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEvent;
-import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.tomcat.servlet.TomcatServletWebServerFactory;
+import org.springframework.boot.web.server.servlet.ConfigurableServletWebServerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
@@ -35,7 +34,7 @@ import java.util.Properties;
 import static com.structurizr.configuration.StructurizrProperties.DATA_DIRECTORY;
 import static com.structurizr.configuration.StructurizrProperties.THEMES;
 
-@EnableAutoConfiguration(exclude = { SessionAutoConfiguration.class })
+@EnableAutoConfiguration()
 @ComponentScan(basePackages = "com.structurizr.playground")
 @SpringBootConfiguration
 public class Server extends SpringBootServletInitializer {
@@ -82,7 +81,7 @@ public class Server extends SpringBootServletInitializer {
 	}
 
 	@Bean
-	ConfigurableServletWebServerFactory configurableServletWebServerFactory ( ) {
+    ConfigurableServletWebServerFactory configurableServletWebServerFactory ( ) {
 		return new TomcatServletWebServerFactory() {
 			@Override
 			protected void postProcessContext(Context context) {

@@ -10,10 +10,9 @@ import org.apache.tomcat.util.descriptor.web.JspPropertyGroup;
 import org.apache.tomcat.util.descriptor.web.JspPropertyGroupDescriptorImpl;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.session.SessionAutoConfiguration;
-import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.tomcat.servlet.TomcatServletWebServerFactory;
+import org.springframework.boot.web.server.servlet.ConfigurableServletWebServerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -25,7 +24,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 
-@EnableAutoConfiguration(exclude = { SessionAutoConfiguration.class })
+@EnableAutoConfiguration()
 @ComponentScan(basePackages = "com.structurizr.server")
 @SpringBootConfiguration
 @EnableScheduling
