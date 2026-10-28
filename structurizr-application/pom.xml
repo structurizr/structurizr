@@ -39,13 +39,6 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>io.netty</groupId>
-        <artifactId>netty-bom</artifactId>
-        <version>4.2.17.Final</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
         <groupId>org.junit</groupId>
         <artifactId>junit-bom</artifactId>
         <version>5.14.4</version>
@@ -110,6 +103,7 @@
       <groupId>jakarta.annotation</groupId>
       <artifactId>jakarta.annotation-api</artifactId>
     </dependency>
+
     <dependency>
       <groupId>com.structurizr</groupId>
       <artifactId>structurizr-dsl</artifactId>
@@ -132,6 +126,7 @@
         </exclusion>
       </exclusions>
     </dependency>
+
     <dependency>
       <groupId>org.codehaus.groovy</groupId>
       <artifactId>groovy-jsr223</artifactId>
@@ -147,6 +142,7 @@
       <artifactId>jruby-core</artifactId>
       <version>10.0.2.0</version>
     </dependency>
+
     <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-core</artifactId>
@@ -161,11 +157,6 @@
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.bouncycastle</groupId>
-      <artifactId>bcpkix-jdk18on</artifactId>
-      <version>1.86</version>
     </dependency>
 
     <dependency>
@@ -260,27 +251,14 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- forced dependencies to resolve vulnerabilities -->
+    <!-- pinned dependency to resolve CVE-2026-8763 and CVE-2026-13506 -->
     <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
-      <version>2.22.3</version>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcpkix-jdk18on</artifactId>
+      <version>1.86</version>
     </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-core</artifactId>
-      <version>2.22.3</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-      <version>3.21.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-api</artifactId>
-      <version>2.26.1</version>
-    </dependency>
+
+    <!-- pinned dependency to resolve CVE-2026-102554 -->
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
