@@ -8,6 +8,10 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.tomcat.util.descriptor.web.JspConfigDescriptorImpl;
 import org.apache.tomcat.util.descriptor.web.JspPropertyGroup;
 import org.apache.tomcat.util.descriptor.web.JspPropertyGroupDescriptorImpl;
+import org.springframework.ai.mcp.server.common.autoconfigure.McpServerStatelessAutoConfiguration;
+import org.springframework.ai.mcp.server.common.autoconfigure.annotations.McpServerAnnotationScannerAutoConfiguration;
+import org.springframework.ai.mcp.server.common.autoconfigure.annotations.StatelessServerSpecificationFactoryAutoConfiguration;
+import org.springframework.ai.mcp.server.webmvc.autoconfigure.McpServerStatelessWebMvcAutoConfiguration;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.tomcat.servlet.TomcatServletWebServerFactory;
@@ -24,7 +28,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 
-@EnableAutoConfiguration()
+@EnableAutoConfiguration(
+		exclude = {
+				McpServerStatelessWebMvcAutoConfiguration.class,
+				McpServerStatelessAutoConfiguration.class,
+				StatelessServerSpecificationFactoryAutoConfiguration.class,
+				McpServerAnnotationScannerAutoConfiguration.class
+		})
 @ComponentScan(basePackages = "com.structurizr.server")
 @SpringBootConfiguration
 @EnableScheduling

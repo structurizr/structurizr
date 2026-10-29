@@ -11,6 +11,11 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.tomcat.util.descriptor.web.JspConfigDescriptorImpl;
 import org.apache.tomcat.util.descriptor.web.JspPropertyGroup;
 import org.apache.tomcat.util.descriptor.web.JspPropertyGroupDescriptorImpl;
+import org.springframework.ai.mcp.server.common.autoconfigure.McpServerAutoConfiguration;
+import org.springframework.ai.mcp.server.common.autoconfigure.McpServerStatelessAutoConfiguration;
+import org.springframework.ai.mcp.server.common.autoconfigure.annotations.McpServerAnnotationScannerAutoConfiguration;
+import org.springframework.ai.mcp.server.common.autoconfigure.annotations.StatelessServerSpecificationFactoryAutoConfiguration;
+import org.springframework.ai.mcp.server.webmvc.autoconfigure.McpServerStatelessWebMvcAutoConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -34,7 +39,13 @@ import java.util.Properties;
 import static com.structurizr.configuration.StructurizrProperties.DATA_DIRECTORY;
 import static com.structurizr.configuration.StructurizrProperties.THEMES;
 
-@EnableAutoConfiguration()
+@EnableAutoConfiguration(
+		exclude = {
+			McpServerStatelessWebMvcAutoConfiguration.class,
+			McpServerStatelessAutoConfiguration.class,
+			StatelessServerSpecificationFactoryAutoConfiguration.class,
+			McpServerAnnotationScannerAutoConfiguration.class
+	})
 @ComponentScan(basePackages = "com.structurizr.playground")
 @SpringBootConfiguration
 public class Server extends SpringBootServletInitializer {

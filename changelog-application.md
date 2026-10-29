@@ -1,5 +1,11 @@
 # Changelog
 
+## unreleased
+
+## mcp
+
+- Integrates the previously standalone MCP server via the new [mcp](https://docs.structurizr.com/mcp) command.
+
 ## 2026.10.26
 
 ## local

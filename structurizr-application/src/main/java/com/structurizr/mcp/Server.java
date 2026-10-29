@@ -1,19 +1,27 @@
 package com.structurizr.mcp;
 
 import com.structurizr.util.StringUtils;
+import com.structurizr.util.Version;
 import com.structurizr.view.ThemeUtils;
 import org.apache.commons.cli.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-@SpringBootApplication
-public class Server {
+import static com.structurizr.configuration.StructurizrProperties.*;
+
+@EnableAutoConfiguration()
+@ComponentScan(basePackages = "com.structurizr.mcp")
+@SpringBootConfiguration
+public class Server extends SpringBootServletInitializer {
 
 	private static final String DSL = "dsl";
 	private static final String SERVER_CREATE = "server-create";
@@ -26,6 +34,8 @@ public class Server {
 	private static final String THEMES_ENVIRONMENT_VARIABLE_NAME = "STRUCTURIZR_THEMES";
 
 	public static void main(String[] args) throws Exception {
+		configureLogging();
+
 		Log log = LogFactory.getLog(Server.class);
 
 		log.info("***********************************************************************************");
@@ -124,6 +134,12 @@ public class Server {
 		SpringApplication app = new SpringApplication(Server.class);
 		app.setAdditionalProfiles(profiles.toArray(new String[0]));
 		app.run(args);
+	}
+
+	private static void configureLogging() {
+		System.setProperty(LOGGING_LEVEL_STRUCTURIZR, "info");
+		System.setProperty(LOGGING_LEVEL_OTHER, "warn");
+		System.setProperty(LOGGING_FILENAME, "");
 	}
 
 }

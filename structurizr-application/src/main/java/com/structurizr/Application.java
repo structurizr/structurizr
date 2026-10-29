@@ -16,6 +16,8 @@ public class Application {
 		register(new LocalCommand());
 		register(new ServerCommand());
 
+		register(new McpCommand());
+
 		register(new PushCommand());
 		register(new PullCommand());
 		register(new LockCommand());
