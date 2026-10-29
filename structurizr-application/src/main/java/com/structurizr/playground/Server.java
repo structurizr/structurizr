@@ -1,17 +1,14 @@
 package com.structurizr.playground;
 
 import com.structurizr.configuration.Configuration;
-import com.structurizr.configuration.Profile;
 import com.structurizr.view.ThemeUtils;
 import jakarta.annotation.PreDestroy;
-import jakarta.servlet.Filter;
 import org.apache.catalina.Context;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.tomcat.util.descriptor.web.JspConfigDescriptorImpl;
 import org.apache.tomcat.util.descriptor.web.JspPropertyGroup;
 import org.apache.tomcat.util.descriptor.web.JspPropertyGroupDescriptorImpl;
-import org.springframework.ai.mcp.server.common.autoconfigure.McpServerAutoConfiguration;
 import org.springframework.ai.mcp.server.common.autoconfigure.McpServerStatelessAutoConfiguration;
 import org.springframework.ai.mcp.server.common.autoconfigure.annotations.McpServerAnnotationScannerAutoConfiguration;
 import org.springframework.ai.mcp.server.common.autoconfigure.annotations.StatelessServerSpecificationFactoryAutoConfiguration;
@@ -22,16 +19,12 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEvent;
 import org.springframework.boot.tomcat.servlet.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.servlet.ConfigurableServletWebServerFactory;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.web.filter.CharacterEncodingFilter;
-import org.springframework.web.servlet.resource.ResourceUrlEncodingFilter;
 
 import java.io.File;
-import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
@@ -65,30 +58,6 @@ public class Server extends SpringBootServletInitializer {
 		SpringApplication app = new SpringApplication(Server.class);
 		app.addListeners((ApplicationListener<ApplicationEnvironmentPreparedEvent>) event -> Configuration.getInstance().banner(Server.class));
 		app.run(args);
-	}
-
-	@Bean
-	FilterRegistrationBean<? extends Filter> characterEncodingFilterRegistration() {
-		CharacterEncodingFilter filter = new CharacterEncodingFilter();
-		filter.setEncoding(StandardCharsets.UTF_8.name());
-		filter.setForceResponseEncoding(false);
-
-		FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<>();
-		registrationBean.setFilter(filter);
-		registrationBean.addUrlPatterns("/*");
-
-		return registrationBean;
-	}
-
-	@Bean
-	FilterRegistrationBean<? extends Filter> resourceUrlEncodingFilterRegistration() {
-		ResourceUrlEncodingFilter filter = new ResourceUrlEncodingFilter();
-
-		FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<>();
-		registrationBean.setFilter(filter);
-		registrationBean.addUrlPatterns("/*");
-
-		return registrationBean;
 	}
 
 	@Bean
