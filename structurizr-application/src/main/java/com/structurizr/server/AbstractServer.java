@@ -1,7 +1,6 @@
 package com.structurizr.server;
 
 import jakarta.annotation.PreDestroy;
-import jakarta.servlet.Filter;
 import org.apache.catalina.Context;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,15 +15,11 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.tomcat.servlet.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.servlet.ConfigurableServletWebServerFactory;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.web.filter.CharacterEncodingFilter;
-import org.springframework.web.servlet.resource.ResourceUrlEncodingFilter;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 
@@ -39,30 +34,6 @@ import java.util.List;
 @SpringBootConfiguration
 @EnableScheduling
 public abstract class AbstractServer extends SpringBootServletInitializer {
-
-	@Bean
-	public FilterRegistrationBean<? extends Filter> characterEncodingFilterRegistration() {
-		CharacterEncodingFilter filter = new CharacterEncodingFilter();
-		filter.setEncoding(StandardCharsets.UTF_8.name());
-		filter.setForceResponseEncoding(false);
-
-		FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<>();
-		registrationBean.setFilter(filter);
-		registrationBean.addUrlPatterns("/*");
-
-		return registrationBean;
-	}
-
-	@Bean
-	public FilterRegistrationBean<? extends Filter> resourceUrlEncodingFilterRegistration() {
-		ResourceUrlEncodingFilter filter = new ResourceUrlEncodingFilter();
-
-		FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<>();
-		registrationBean.setFilter(filter);
-		registrationBean.addUrlPatterns("/*");
-
-		return registrationBean;
-	}
 
 	@Bean
 	public ConfigurableServletWebServerFactory configurableServletWebServerFactory ( ) {
