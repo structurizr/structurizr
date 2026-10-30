@@ -47,8 +47,9 @@ class LocalFileSystemMultipleWorkspaceAdapterTests extends AbstractWorkspaceAdap
         new File(dataDirectory, "3-software-system-a").mkdir();
         new File(dataDirectory, "04-software-system-c").mkdir();
         new File(dataDirectory, "005-software-system-d").mkdir();
-        FileUtils.write(new File(dataDirectory, "7"), "text");
-        FileUtils.write(new File(dataDirectory, "08"), "text");
+        FileUtils.write(new File(dataDirectory, "7"), "text"); // ignore - file
+        FileUtils.write(new File(dataDirectory, "08"), "text"); // ignore - file
+        new File(dataDirectory, "-software-system-e").mkdir(); // ignore - directory name doesn't include workspace ID
 
         List<Long> workspaceIds = workspaceAdapter.getWorkspaceIds();
         assertEquals(5, workspaceIds.size());

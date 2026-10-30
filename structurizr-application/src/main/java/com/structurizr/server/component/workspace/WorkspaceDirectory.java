@@ -4,7 +4,7 @@ class WorkspaceDirectory {
 
     private static final String WORKSPACE_ID_REGEX = "\\d*";
     private static final String WORKSPACE_ID_NAME_SEPARATOR = "-";
-    private static final String WORKSPACE_ID_AND_NAME_REGEX = "\\d*" + WORKSPACE_ID_NAME_SEPARATOR + "[a-zA-Z0-9_-]*";
+    private static final String WORKSPACE_ID_AND_NAME_REGEX = "\\d+" + WORKSPACE_ID_NAME_SEPARATOR + "[a-zA-Z0-9_-]*";
 
     static long parseWorkspaceId(String directoryName) {
         long id = 0;

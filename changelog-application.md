@@ -2,6 +2,10 @@
 
 ## unreleased
 
+## local
+
+- Fixes https://github.com/structurizr/structurizr/issues/137 (Local multi-workspace home page returns HTTP 500 when the data directory contains a directory starting with "-").
+
 ## mcp
 
 - Integrates the previously standalone MCP server via the new [mcp](https://docs.structurizr.com/mcp) command.
