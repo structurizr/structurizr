@@ -30,7 +30,7 @@ import java.util.TimerTask;
 
 abstract class LocalFileSystemWorkspaceAdapter extends AbstractFileSystemWorkspaceAdapter {
 
-    private static final Log log = LogFactory.getLog(LocalFileSystemWorkspaceAdapter.class);
+    protected static final Log log = LogFactory.getLog(LocalFileSystemWorkspaceAdapter.class);
 
     private long lastModifiedDate = 0;
 

@@ -1,12 +1,8 @@
 package com.structurizr.server.component.workspace;
 
 import com.structurizr.Workspace;
-import com.structurizr.configuration.Configuration;
-import com.structurizr.configuration.Profile;
 import com.structurizr.server.domain.WorkspaceMetadata;
-import com.structurizr.server.web.AbstractTestsBase;
 import com.structurizr.util.FileUtils;
-import com.structurizr.util.StringUtils;
 import com.structurizr.util.WorkspaceUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +13,8 @@ import java.util.List;
 import java.util.Properties;
 
 import static com.structurizr.configuration.StructurizrProperties.DATA_DIRECTORY;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class LocalFileSystemMultipleWorkspaceAdapterTests extends AbstractWorkspaceAdapterTests {
 
@@ -61,6 +58,16 @@ class LocalFileSystemMultipleWorkspaceAdapterTests extends AbstractWorkspaceAdap
     }
 
     @Test
+    void getWorkspaceIds_WhenThereAreDuplicateIds() {
+        new File(dataDirectory, "1-software-system").mkdir();
+        new File(dataDirectory, "01-software-system").mkdir();
+
+        List<Long> workspaceIds = workspaceAdapter.getWorkspaceIds();
+        assertEquals(1, workspaceIds.size());
+        assertEquals(1L, workspaceIds.getFirst());
+    }
+
+    @Test
     void getDataDirectory_WhenTheDirectoryNameIsTheId() {
         File workspace1Directory = new File(dataDirectory, "1");
         workspace1Directory.mkdir();
@@ -93,6 +100,18 @@ class LocalFileSystemMultipleWorkspaceAdapterTests extends AbstractWorkspaceAdap
         assertEquals(workspace1Directory.getAbsolutePath(), workspaceAdapter.getDataDirectory(1).getAbsolutePath());
         assertEquals(workspace2Directory.getAbsolutePath(), workspaceAdapter.getDataDirectory(2).getAbsolutePath());
         assertEquals(workspace3Directory.getAbsolutePath(), workspaceAdapter.getDataDirectory(3).getAbsolutePath());
+    }
+
+    @Test
+    void getDataDirectory_WhenThereAreDuplicateIds() {
+        File workspace1Directory = new File(dataDirectory, "01-software-system");
+        workspace1Directory.mkdir();
+
+        File workspace2Directory = new File(dataDirectory, "1-software-system");
+        workspace2Directory.mkdir();
+
+        // "01-software-system" is before "1-software-system", alphabetically
+        assertEquals(workspace1Directory.getAbsolutePath(), workspaceAdapter.getDataDirectory(1).getAbsolutePath());
     }
 
     @Test

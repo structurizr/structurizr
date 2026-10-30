@@ -4,6 +4,7 @@ import com.structurizr.configuration.Configuration;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,11 +22,16 @@ class LocalFileSystemMultipleWorkspaceAdapter extends LocalFileSystemWorkspaceAd
         List<Long> workspaceIds = new ArrayList<>();
 
         if (files != null) {
+            Arrays.sort(files);
             for (File file : files) {
                 if (file != null && file.isDirectory()) {
                     long id = parseWorkspaceId(file.getName());
                     if (id > 0) {
-                        workspaceIds.add(id);
+                        if (workspaceIds.contains(id)) {
+                            log.warn("A workspace with ID " + id + " already exists - ignoring " + file.getName());
+                        } else {
+                            workspaceIds.add(id);
+                        }
                     }
                 }
             }
@@ -40,6 +46,7 @@ class LocalFileSystemMultipleWorkspaceAdapter extends LocalFileSystemWorkspaceAd
         if (!directory.exists() || !directory.isDirectory()) {
             File[] files = dataDirectory.listFiles();
             if (files != null) {
+                Arrays.sort(files);
                 for (File file : files) {
                     if (file.isDirectory() && parseWorkspaceId(file.getName()) == workspaceId) {
                         return file;
