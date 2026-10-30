@@ -400,6 +400,9 @@ public class Configuration {
         log.info("                                                      ");
         log.info(getProfile() + " v" + new Version().getBuildNumber());
 
+        log.info("Java: " + System.getProperty("java.version") + "/"  + System.getProperty("java.vendor") + " (" + System.getProperty("java.home") + ")");
+        log.info("OS: " + System.getProperty("os.name") + " "  + System.getProperty("os.version") + " (" + System.getProperty("os.arch") + ")");
+
         logAllProperties(log, getProperties());
         log.info("***********************************************************************************");
 
