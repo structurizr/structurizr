@@ -113,7 +113,7 @@ class ThemeParserTests extends AbstractTests {
             fail();
         } catch (Exception e) {
             assertTrue(e.getMessage().startsWith("Theme my-theme.json does not exist at"));
-            assertTrue(e.getMessage().endsWith("/src/test/resources/themes/my-theme.json"));
+            assertTrue(e.getMessage().endsWith("/src/test/resources/themes/my-theme.json".replace('/', File.separatorChar)));
         }
     }
 
@@ -128,7 +128,7 @@ class ThemeParserTests extends AbstractTests {
             parser.parseTheme(context, dslFile, tokens("theme", "themes"));
             fail();
         } catch (Exception e) {
-            assertTrue(e.getMessage().endsWith("/src/test/resources/themes is not a file"));
+            assertTrue(e.getMessage().endsWith("/src/test/resources/themes is not a file".replace('/', File.separatorChar)));
         }
     }
 

@@ -160,7 +160,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
     }
 
     private String getParsedDsl() {
-        return String.join(System.lineSeparator(), dslSourceLines);
+        return String.join("\n", dslSourceLines);
     }
 
     void parse(DslParserContext context, File path) throws StructurizrDslParserException {
