@@ -74,7 +74,7 @@ public class DefaultDocumentationImporter implements DocumentationImporter {
                 String filename = section.getFilename();
 
                 filename = filename.replace(path.getCanonicalPath(), "");
-                if (filename.startsWith("/")) {
+                if (filename.startsWith(File.separator)) {
                     filename = filename.substring(1);
                 }
 

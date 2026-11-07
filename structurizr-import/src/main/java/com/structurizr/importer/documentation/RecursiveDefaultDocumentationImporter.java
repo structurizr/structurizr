@@ -36,14 +36,16 @@ public class RecursiveDefaultDocumentationImporter extends DefaultDocumentationI
                 importFile(documentable, path);
             }
 
-            // now trim the filenames
+            // now trim the filenames and normalise path separators
             for (Section section : documentable.getDocumentation().getSections()) {
                 String filename = section.getFilename();
 
                 filename = filename.replace(path.getCanonicalPath(), "");
-                if (filename.startsWith("/")) {
+                if (filename.startsWith(File.separator)) {
                     filename = filename.substring(1);
                 }
+
+                filename = filename.replace('\\', '/');
 
                 section.setFilename(filename);
             }

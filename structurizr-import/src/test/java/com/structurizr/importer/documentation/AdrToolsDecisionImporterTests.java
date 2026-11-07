@@ -68,7 +68,7 @@ public class AdrToolsDecisionImporterTests {
             decisionImporter.importDocumentation(workspace, new File("pom.xml"));
             fail();
         } catch (IllegalArgumentException iae) {
-            assertTrue(iae.getMessage().endsWith("/pom.xml is not a directory."));
+            assertTrue(iae.getMessage().endsWith("pom.xml is not a directory."));
         }
     }
 

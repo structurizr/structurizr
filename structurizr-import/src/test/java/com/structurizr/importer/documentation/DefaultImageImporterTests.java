@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -167,6 +168,11 @@ public class DefaultImageImporterTests {
         File tempDirectory = Files.createTempDirectory("test").toFile();
         File hiddenFolder = new File(tempDirectory, ".structurizr");
         hiddenFolder.mkdir();
+        try {
+            Files.setAttribute(hiddenFolder.toPath(), "dos:hidden", true, LinkOption.NOFOLLOW_LINKS);
+        } catch (UnsupportedOperationException e) {
+            // ignore
+        }
 
         File source = new File("./src/test/resources/docs/images/images/image.png");
         File destination = new File(hiddenFolder, "image.png");
