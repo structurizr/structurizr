@@ -129,7 +129,7 @@ public class WorkspaceApiClientTests {
             fail();
         } catch (Exception e) {
             assertTrue(e.getMessage().startsWith("Image does not exist at "));
-            assertTrue(e.getMessage().endsWith("/image.png"));
+            assertTrue(e.getMessage().endsWith("image.png"));
         }
     }
 
@@ -140,7 +140,7 @@ public class WorkspaceApiClientTests {
             client.putImage(new File("src/test/resources/theme.json"));
             fail();
         } catch (Exception e) {
-            assertTrue(e.getMessage().endsWith("/theme.json is not a supported image file."));
+            assertTrue(e.getMessage().endsWith("theme.json is not a supported image file."));
         }
     }
 

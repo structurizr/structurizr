@@ -1,6 +1,8 @@
 package com.structurizr.io.json;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.util.DefaultIndenter;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -19,6 +21,10 @@ class AbstractJsonWriter {
                 .enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY).build();
 
         if (indentOutput) {
+            DefaultIndenter unixIndenter = new DefaultIndenter("  ", "\n");
+            DefaultPrettyPrinter prettyPrinter = new DefaultPrettyPrinter();
+            prettyPrinter.indentObjectsWith(unixIndenter);
+            objectMapper.setDefaultPrettyPrinter(prettyPrinter);
             objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         }
 

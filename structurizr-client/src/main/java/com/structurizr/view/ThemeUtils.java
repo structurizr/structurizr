@@ -1,6 +1,8 @@
 package com.structurizr.view;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.util.DefaultIndenter;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -284,6 +286,12 @@ public final class ThemeUtils {
     private static void write(Workspace workspace, Writer writer) throws Exception {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
+
+            DefaultIndenter unixIndenter = new DefaultIndenter("  ", "\n");
+            DefaultPrettyPrinter prettyPrinter = new DefaultPrettyPrinter();
+            prettyPrinter.indentObjectsWith(unixIndenter);
+            objectMapper.setDefaultPrettyPrinter(prettyPrinter);
+
             objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
             objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
             objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
